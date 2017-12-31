@@ -1,0 +1,60 @@
+
+\Level 0 {File and stream I/O}
+
+If you want to send output anywhere else than the terminal screen, you
+need the \indextermfort{write} statement, which looks like:
+\begin{verbatim}
+write (unit,format) data
+\end{verbatim}
+where \n{format} and \n{data} are as described above. The new element
+is the \indexterm{unit}, which is a numerical indication of an output
+device, such as a file.
+
+\Level 1 {Units}
+
+\begin{verbatim}
+Open(11)
+\end{verbatim}
+will result in a file with a name typically \n{fort11}.
+\begin{verbatim}
+Open(11,FILE="filename")
+\end{verbatim}
+Many other options for error handling, new vs old file, etc.
+
+After this:
+\begin{verbatim}
+Write (11,fmt) data
+\end{verbatim}
+Again options for errors and such.
+
+\Level 1 {Other write options}
+
+\begin{verbatim}
+write(unit,fmt,ADVANCE="no") data
+\end{verbatim}
+will not issue a newline.
+
+\indextermfort{open} \indextermfort{close}
+
+\Level 0 {Unformatted output}
+\label{sec:rawdataf}
+
+So far we have looked at ascii output, which is nice to look at for a
+human , but is not the right medium to communicate data to another
+program.
+\begin{itemize}
+\item Ascii output requires time-consuming conversion.
+\item Ascii rendering leads to loss of precision.
+\end{itemize}
+Therefore, if you want to output data that is later to be read by a
+program, it is best to use \indextermsub{binary}{output} or
+\indextermsub{unformatted}{output}, sometimes also called
+\indextermsub{raw}{output}.
+
+\begin{block}{Unformatted output}
+  Indicated by lack of format specification:
+\begin{verbatim}
+write (*) data
+\end{verbatim}
+  Note: may not be portable between machines.
+\end{block}

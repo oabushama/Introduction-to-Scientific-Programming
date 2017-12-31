@@ -1,0 +1,90 @@
+
+\Level 0 {Example: linked lists}
+
+\begin{block}{Linked list}
+  \begin{itemize}
+  \item Linear data structure
+  \item more flexible for insertion~/ deletion
+  \item \ldots~but slower in access
+  \end{itemize}
+\end{block}
+
+One of the standard examples of using pointers is the
+\indexterm{linked list}. This is a dynamic one-dimensional structure
+that is more flexible than an array. Dynamically extending an array
+would require re-allocation, while in a list an element can be
+inserted.
+
+\begin{exercise}
+  Using a linked list may be more flexible than using an array.
+  On the other hand, accessing an element in a linked list is
+  more expensive, both absolutely and as order-of-magnitude in the size
+  of the list.
+
+  Make this argument precise.
+\end{exercise}
+
+\begin{block}{Linked list datatypes}
+  \begin{itemize}
+  \item Node: value field, and pointer to next node.
+  \item List: pointer to head node.
+  \end{itemize}
+  \verbatimsnippet{linklistf}
+\end{block}
+
+A list is based on a simple data structure, a node, which contains a
+value field and a pointer to another node.
+
+By way of example, we create a dynamic list of integers, sorted by
+size. To maintain the sortedness, we need to append or insert nodes,
+as required.
+
+Here are the basic definitions of a node, and a list which is
+basically a repository for the head node:
+%
+\verbatimsnippet{linklistf}
+
+\begin{block}{List initialization}
+  First element becomes the list head:
+
+\verbatimsnippet{listheadf}
+  
+\end{block}
+
+Initially, the list is empty, meaning that the `head' pointer is
+un-associated. The first time we add an element to the list, we create
+a node and assign it as the head of the list:
+%
+\verbatimsnippet{listheadf}
+
+\begin{block}{Attaching a node}
+  Keep the list sorted: new largest element attached at the end.
+  
+  \verbatimsnippet{listattachf}
+\end{block}
+
+Adding a value to a list can be done two ways. If the new element is
+larger than all elements in the list, a new node needs to be appended
+to the last one. Let's assume we have managed
+to let \n{current} point at the last node of the list,
+then here is how to 
+attaching a new node from it:
+%
+\verbatimsnippet{listattachf}
+
+\begin{block}{Inserting 1}
+  Find the insertion point:
+\verbatimsnippet{listfindf}
+\end{block}
+
+Inserting an element in the list is harder.
+First of all, you need to find the two nodes,
+\n{previous} and \n{current}, between which to insert the new node:
+%
+\verbatimsnippet{listfindf}
+
+\begin{block}{Inserting 2}
+  The actual insertion requires rerouting some pointers:
+  %
+  \verbatimsnippet{listinsertf}
+\end{block}

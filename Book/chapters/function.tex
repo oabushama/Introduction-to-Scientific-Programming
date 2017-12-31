@@ -1,0 +1,309 @@
+
+\Level 0 {Parameter passing}
+\label{sec:passing}
+\index{parameter|see{function, parameter}}
+
+C++~functions resemble mathematical functions:
+you have seen that a function can have an input and an
+output. In fact, they can have multiple inputs.
+The following style of programming is very much inspired by
+mathematical functions, and is known as \indextermdef{functional programming}:
+\begin{itemize}
+\item A function has one result, which is returned through a return
+  statement. The function call then looks like
+\begin{verbatim}
+y = f(x1,x2,x3);
+\end{verbatim}
+\item The definition of the C++ parameter passing mechanism says that
+  input arguments are copied to the function, meaning that they don't
+  change in the calling program:
+  %
+  \snippetwithoutput{passvalue}{func}{passvalue}
+
+  We say that the input argument is
+  \emph{passed by value}\index{parameter!pass by value}.
+  In this example, the function parameter \n{x} acts as a local
+  variable in the function, and it is initialized with a copy fo the
+  value of \n{number} in the main program.
+\end{itemize}
+
+\begin{slide}{Mathematical type function}
+  \label{sl:func-functional}
+  Pretty good design:
+  \begin{itemize}
+  \item pass data into a function,
+  \item return result through \n{return} statement.
+  \item Parameters are copied into the function.
+%  \item Mark parameters as \n{const}, just in case:
+  \item \indexterm{pass by value}
+  \end{itemize}
+  \snippetwithoutput{passvalue}{func}{passvalue}
+\end{slide}
+
+Having only one output is a limitation on functions. Therefore there
+is a mechanism for altering the input parameters and returning
+(possibly multiple) results that way. To do this, you use an ampersand
+for the parameter in the function definition:
+
+\begin{block}{Parameter passing by reference}
+  \label{sl:pass-by-ref}
+\begin{verbatim}
+void f(int &i) {
+  i = /* some expression */ ;
+};
+int main() {
+  int i;
+  f(i);
+  // i now has the value that was set in the function
+}
+\end{verbatim}
+\end{block}
+
+Using the ampersand, the parameter is
+\emph{passed by reference}\index{pass by reference}:
+instead of copying the value, the function receives a \emph{reference}:
+information where the variable is stored in memory.
+
+We also the following terminology for function parameters:
+\begin{itemize}
+\item \emph{input}\index{parameter!input|textbf} parameters: passed by
+  value, so that it only functions as input to the function, and no
+  result is output through this parameter;
+\item \emph{output}\index{parameter!output|textbf} parameters: passed
+  by reference so that they return an `output' value to the program.
+\item \emph{throughput}\index{parameter!throughput|textbf} parameters:
+  these are passed by reference, and they have an initial value when
+  the function is called. In C++, unlike Fortran, there is no real
+  separate syntax for these.
+\end{itemize}
+
+\begin{slide}{Results other than through return}
+  \label{sl:func-err-return}
+  Also good design:
+  \begin{itemize}
+  \item Return no function result,
+  \item or return \index{return status} (0~is success, nonzero various
+    informative statuses), and
+  \item return other information by changing the parameters.
+  \item \indexterm{pass by reference}
+  \item Parameters are also called `input', `output', `throughput'.
+  \end{itemize}
+\end{slide}
+
+\begin{block}{Pass by reference example 1}
+  \label{sl:pass-reference0}
+\begin{verbatim}
+void f( int &i ) {
+  i = 5;
+}
+int main() {
+  int var = 0;
+  f(var);
+  cout << var << endl;
+\end{verbatim}
+Compare the difference with leaving out the reference.
+\end{block}
+
+As an example, consider a function that tries to read a value from a
+file. With anything file-related, you always have to worry about the
+case of the file not existing and such. So our function return:
+\begin{itemize}
+\item a boolean value to indicate whether the read succeeded, and
+\item the actual value if the read succeeded.
+\end{itemize}
+The following is a common idiom, where the success value is returned
+through the \n{return} statement, and the value through a parameter.
+
+\begin{block}{Pass by reference example 2}
+  \label{sl:pass-reference}
+\begin{verbatim}
+bool can_read_value( int &value ) {
+  int file_status = try_open_file();
+  if (file_status==0) 
+    value = read_value_from_file();
+  return file_status!=0;
+}
+
+int main() {
+  int n;
+  if (!can_read_value(n))
+    // if you can't read the value, set a default
+    n = 10;
+\end{verbatim}
+\end{block}
+
+\begin{exercise}
+  \label{ex:swap}
+  Write a function \n{swapij} of two parameters that exchanges the input values:
+\begin{verbatim}
+int i=2,j=3;
+swapij(i,j);
+// now i==3 and j==2
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:div-remain}
+  Write a function that tests divisibility and returns a remainder:
+
+{\small
+\begin{verbatim}
+int number,divisor,remainder;
+// get the number and divisor from the user
+if ( is_divisible(number,divisor,remainder) )
+  cout << number << " is divisible by " << divisor << endl;
+else
+  cout << number << "/" << divisor <<
+      " has remainder " << remainder << endl;
+\end{verbatim}
+}
+\end{exercise}
+
+\Level 0 {Recursive functions}
+\label{sec:recursion}
+
+In mathematics, sequences are often recursively defined. For instance,
+the sequence of factorials $n\mapsto f_n\equiv n!$ can be defined as
+\[ f_0=1,\qquad \forall_{n>0}\colon f_n=n\times f_{n-1}. \]
+Instead of using a subscript, we write an argument in parentheses
+\[ F(n) = n \times F(n-1) \qquad \hbox{if $n>0$, otherwise~$1$} \]
+and now it looks like a C++ function:
+\begin{verbatim}
+int factorial(int n)
+\end{verbatim}
+is the function header of a factorial function. So what would the
+function body be? We need a \n{return} statement, and what we return
+should be $n \times F(n-1)$:
+\begin{verbatim}
+int factorial(int n) {
+  return n*factorial(n-1);
+} // almost correct, but not quite
+\end{verbatim}
+So what happens if you write
+\begin{verbatim}
+int f3; f3 = factorial(3);
+\end{verbatim}
+Well,
+\begin{itemize}
+\item The expression \n{factorial(3)} calls the \n{factorial}
+  function, substituting~\n{3} for the argument~\n{n}.
+\item The return statement returns \n{n*factorial(n-1)}, in this case
+  \n{3*factorial(2)}.
+\item But what is \n{factorial(2)}? Evaluating that expression means
+  that the \n{factorial} function is called again, but now with \n{n}
+  equal to~2.
+\item Evaluating \n{factorial(2)} returns \n{2*factorial(1)},\ldots
+\item \ldots~which returns \n{1*factorial(0)},\ldots
+\item \ldots~which return~\ldots
+\item Uh oh. We forgot to include the case where \n{n} is zero. Let's
+  fix that:
+\begin{verbatim}
+int factorial(int n) {
+  if (n==0)
+    return 1;
+  else
+    return n*factorial(n-1);
+}
+\end{verbatim}
+\item Now \n{factorial(0)} is~1, so \n{factorial(1)} is
+  \n{1*factorial(0)}, which is~1,\ldots
+\item \ldots~so \n{factorial(2)} is~2, and \n{factorial(3)} is~6.
+\end{itemize}
+
+\begin{slide}{Recursion}
+  \label{sl:func-recur}
+  Functions are allowed to call themselves, which is known
+  as~\indexterm{recursion}. You can define factorial as
+  \[ F(n) = n \times F(n-1) \qquad \hbox{if $n>1$, otherwise~$1$} \]
+\begin{verbatim}
+int factorial( int n ) {
+  if (n==1)
+    return 1;
+  else
+    return n*factorial(n-1);
+}
+\end{verbatim}
+\end{slide}
+
+\begin{exercise}
+  \label{ex:recur-sum}
+  The sum of squares:
+  \[ S_n = \sum_{n=1}^N n^2 \]
+  can be defined recursively as
+  \[ S_1=1,\qquad S_n = n^2 + S_{n-1}. \]
+  Write a recursive function that implements this second definition.
+  Test it on numbers that are input by the user.
+
+  Then write a program that prints the first 100 sums of squares.
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:recur-fib}
+  Write a recursive function for computing Fibonacci numbers:
+  \[ F_0=1,\qquad F_1=1,\qquad F_{n}=F_{n-1}+F_{n-2} \]
+  First write a program that computes $F_n$ for a value~$n$ that is
+  input by the user.
+
+  Then write a program that prints out a sequence of Fibonacci
+  numbers; the user should input how many.
+\end{exercise}
+
+If you let your Fibonacci program print out each time it computes a
+value, you'll see that most values are computed several times. (Math
+question: how many times?) This is wasteful in running time. This
+problem is addressed in section~\ref{sec:memo}.
+
+\Level 0 {More function topics}
+
+\Level 1 {Default arguments}
+
+\begin{block}{Default arguments}
+  \label{sl:def-arg}
+  Functions can have \indextermsub{default}{argument}(s):
+\begin{verbatim}
+double distance( double x, double y=0. ) {
+  return sqrt( (x-y)*(x-y) );
+}
+  ...
+  d = distance(x); // distance to origin
+  d = distance(x,y); // distance between two points
+\end{verbatim}
+Any default argument(s) should come last in the parameter list.
+\end{block}
+
+\Level 1 {Polymorphic functions}
+\label{sec:polyfunc}
+
+\begin{block}{Polymorphic functions}
+  \label{sl:func-poly}
+  You can have multiple functions with the same name:
+\begin{verbatim}
+double sum(double a,double b) {
+  return a+b; }
+double sum(double a,double b,double c) {
+  return a+b+c; }
+\end{verbatim}
+Distinguished by input parameters: can not differ only in return type.
+\end{block}
+
+\Level 0 {Review questions}
+
+\begin{exercise}
+  \label{ex:cpp-funcloop1}
+  Suppose a function
+\begin{verbatim}
+bool f(int);
+\end{verbatim}
+is given, which is true for some positive input value. Write a main program that
+finds the smallest positive input value for which \n{f} is true.
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:cpp-funcloop2}
+  Suppose a function
+\begin{verbatim}
+bool f(int);
+\end{verbatim}
+is given, which is true for some negative input value. Write a main program that
+finds the (negative) input with smallest absolute value for which \n{f} is true.
+\end{exercise}

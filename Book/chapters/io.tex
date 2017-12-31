@@ -1,0 +1,223 @@
+
+\begin{exercise}
+  \label{ex:fixedpout}
+  Use integer output to print fixed point numbers aligned on the
+  decimal:
+\begin{verbatim}
+  1.345
+ 23.789
+456.1234
+\end{verbatim}
+  Use four spaces for both the integer and fractional part.
+\end{exercise}
+
+\begin{block}{Hexadecimal}
+  \label{sl:io-hex}
+  Hex output is useful for pointers (chapter~\ref{ch:pointer}):
+  %
+  \verbatimsnippet{coutpoint}
+  %
+  Back to decimal:
+\begin{verbatim}
+cout << hex << i << dec << j;
+\end{verbatim}
+\end{block}
+
+\Level 0 {Floating point output}
+
+\begin{block}{Floating point precision}
+  \label{sl:io-float}
+  Use \n{setprecision} to set the number of digits before and after
+  decimal point:
+\begin{verbatim}
+  x = 1.234567;
+  for (int i=0; i<10; i++) {
+    cout << setprecision(4) << x << endl;
+    x *= 10;
+  }
+\end{verbatim}
+\end{block}
+
+\begin{block}{Output}
+  \label{sl:io-float-out}
+\begin{verbatim}
+1.235
+12.35
+123.5
+1235
+1.235e+04
+1.235e+05
+1.235e+06
+1.235e+07
+1.235e+08
+1.235e+09
+\end{verbatim}
+(Notice the rounding)
+\end{block}
+
+\begin{block}{Fixed point precision}
+  \label{sl:io-fix}
+  Fixed precision applies to fractional part:
+\begin{verbatim}
+cout << "Fixed precision applies to fractional part:" << endl;
+x = 1.234567;
+cout << fixed;
+for (int i=0; i<10; i++) {
+  cout << setprecision(4) << x << endl;
+  x *= 10;
+}
+\end{verbatim}
+\end{block}
+
+\begin{block}{Output}
+  \label{sl:io-fix-out}
+\begin{verbatim}
+1.2346
+12.3457
+123.4567
+1234.5670
+12345.6700
+123456.7000
+1234567.0000
+12345670.0000
+123456700.0000
+1234567000.0000
+\end{verbatim}
+\end{block}
+
+\begin{block}{Aligned fixed point output}
+  \label{sl:io-align}
+  Combine width and precision:
+\begin{verbatim}
+x = 1.234567;
+cout << fixed;
+for (int i=0; i<10; i++) {
+  cout << setw(10) << setprecision(4) << x << endl;
+  x *= 10;
+}
+\end{verbatim}
+\end{block}
+
+\begin{block}{Output}
+  \label{sl:io-align-out}
+\begin{verbatim}
+    1.2346
+   12.3457
+  123.4567
+ 1234.5670
+12345.6700
+123456.7000
+1234567.0000
+12345670.0000
+123456700.0000
+1234567000.0000
+\end{verbatim}
+\end{block}
+
+\begin{block}{Scientific notation}
+  \label{sl:io-sci}
+\begin{verbatim}
+cout << "Combine width and precision:" << endl;
+x = 1.234567;
+cout << scientific;
+for (int i=0; i<10; i++) {
+  cout << setw(10) << setprecision(4) << x << endl;
+  x *= 10;
+}
+\end{verbatim}
+\end{block}
+
+\begin{block}{Output}
+  \label{sl:io-sci-out}
+\begin{verbatim}
+Combine width and precision:
+1.2346e+00
+1.2346e+01
+1.2346e+02
+1.2346e+03
+1.2346e+04
+1.2346e+05
+1.2346e+06
+1.2346e+07
+1.2346e+08
+1.2346e+09
+\end{verbatim}
+\end{block}
+
+\Level 0 {Saving and restoring settings}
+
+\begin{verbatim}
+ios::fmtflags old_settings = cout.flags();
+\end{verbatim}
+
+\begin{verbatim}
+cout.flags(old_settings);
+\end{verbatim}
+
+\begin{verbatim}
+int old_precision = cout.precision();
+\end{verbatim}
+
+\begin{verbatim}
+cout.precision(old_precision);
+\end{verbatim}
+
+\Level 0 {File output}
+
+\begin{block}{Text output to file}
+  \label{sl:io-file}
+Streams are general: work the same for console out and file out.
+\begin{verbatim}
+#include <fstream>
+\end{verbatim}
+Use:
+\verbatimsnippet{fio}
+\end{block}
+
+\begin{block}{Binary output}
+  \label{sl:io-bin}
+  \verbatimsnippet{fiobin}
+\begin{verbatim}
+  
+\end{verbatim}
+\end{block}
+
+\Level 1 {Output your own classes}
+\label{sec:lessless}
+
+You have used statements like:
+\begin{verbatim}
+cout << ``My value is: `` << myvalue << endl;
+\end{verbatim}
+How does this work? The `double less' is an operator with a left
+operand that is a stream, and a right operand for which output is
+defined; the result of this operator is again a stream. Recursively,
+this means you can chain any number of applications of~\verb+<<+
+together.
+
+If you want to output a class that you wrote yourself, you have to
+define how the \n{<<} operator deals with your class.
+
+\verbatimsnippet{classostream}
+
+\Level 0 {Input}
+
+\begin{block}{Better terminal input}
+  \label{sl:getline}
+  It is better to use \indextermtt{getline}. This returns a string,
+  rather than a value, so you need to convert it with the following bit
+  of magic:
+  %
+  \verbatimsnippet{readin}
+
+  You can not use \n{cin} and \n{getline} in the same program.
+
+  More info:
+  \url{http://www.cplusplus.com/forum/articles/6046/}.
+
+\end{block}
+
+\Level 1 {Input streams}
+
+Test, mostly for file streams: \indextermtt{is_eof} \indextermtt{is_open}
+

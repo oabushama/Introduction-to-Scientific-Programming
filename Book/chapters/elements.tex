@@ -1,0 +1,50 @@
+
+\begin{exercise}
+  \label{ex:modulus}
+  Write a program that ask for two integer numbers \n{n1,n2}.
+  \begin{itemize}
+  \item Assign the integer ratio $n_1/n_2$ to a variable.
+  \item Can you use this variable to compute the modulus
+    \[ n_1\mod n_2 \]
+    (without using the \n{\char`\%} modulus operator!)\\
+    Print out the value you get.
+  \item Also print out the result from using the modulus operator:\n{\char`\%}.
+  \end{itemize}
+\end{exercise}
+
+Complex numbers exist, see section~\ref{sec:stl-complex}.
+
+\Level 0 {Library functions}
+
+Some functions, such as \indexterm{abs} can be included through \indextermtt{cmath}:
+\begin{verbatim}
+#include <cmath>
+using std::abs;
+\end{verbatim}
+Others, such as \indexterm{max}, are in the less common \indextermtt{algorithm}:
+\begin{verbatim}
+#include <algorithm>
+using std::max;
+\end{verbatim}
+
+\Level 0 {Review questions}
+
+\begin{exercise}
+  \label{ex:cpp-mod}
+What is the output of:
+\begin{verbatim}
+int m=32, n=17;
+cout << n%m << endl;
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:cpp-cube}
+  Given
+\begin{verbatim}
+int n;
+\end{verbatim}
+write code that
+uses elementary mathematical operators to compute n-cubed: $n^3$.
+Do you get the correct result for all~$n$? Explain.
+\end{exercise}

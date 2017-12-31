@@ -1,0 +1,42 @@
+
+\Level 0 {Templated classes}
+
+The most common use of templates is probably to define templated
+classes.
+You have in fact seen this mechanism in action:
+\begin{block}{Templated vector}
+  \label{sl:template-vector}
+  the \ac{STL} contains
+  in effect
+\begin{verbatim}
+template<typename T>
+class vector {
+private:
+  // data definitions omitted
+public:
+  T at(int i) { /* return element i */ };
+  int size() { /* return size of data */ };
+  // much more
+}
+\end{verbatim}
+\end{block}
+
+\Level 0 {Templating over non-types}
+
+THESE EXAMPLES ARE NOT GOOD.
+
+See:
+\url{https://www.codeproject.com/Articles/257589/An-Idiots-Guide-to-Cplusplus-Templates-Part}
+
+\begin{block}{Templating a value}
+  Templeting over integral types, not double.
+
+  The templated quantity is a value:
+  %
+  \verbatimsnippet{itemplate}
+\end{block}
+
+\begin{exercise}
+  Write a class that contains an array. The length of the array should
+  be templated.
+\end{exercise}
