@@ -33,7 +33,7 @@ book :
 	make pdf FILE=${FILE}
 	cp ${FILE}.pdf ${FILE}-book.pdf
 	make upload FILE=${FILE}-book
-	cp ${FILE}-book.pdf ${HOME}/Current/SSC/ISP/ISP2017/${BOOKNAME}.pdf
+#cp ${FILE}-book.pdf ${HOME}/Current/SSC/ISP/ISP2017/${BOOKNAME}.pdf
 manual :
 	@echo "Formatting as instructor manual"
 	@cp a.tex qa.tex
@@ -113,13 +113,16 @@ snippets :
 	        ; do \
 	      cat $$c | awk -v fn=$${c##*/} -v fd=$$d \
 	          'BEGIN {f=0; ff=0; file="foo"} \
-	           /codesnippet end/ {f=0} \
+	           /answersnippet end/  {f=0} \
+	           /codesnippet end/    {f=0} \
 	           /examplesnippet end/ {f=0} \
 	           f==1 && ff==1 { print "//" FS fd "/" fn > file; ff=0 } \
 	           f==1 {print $$0 > file} \
-	           /codesnippet/ && $$2==file { print "  /* ... */" > file } \
+	           /answersnippet/  && $$2==file { print "  /* ... */" > file } \
+	           /codesnippet/    && $$2==file { print "  /* ... */" > file } \
 	           /examplesnippet/ && $$2==file { print "  /* ... */" > file } \
-	           /codesnippet/ && !/end/ {f=1; ff=0; file=$$2 } \
+	           /answersnippet/  && !/end/ {f=1; ff=0; file=$$2 } \
+	           /codesnippet/    && !/end/ {f=1; ff=0; file=$$2 } \
 	           /examplesnippet/ && !/end/ {f=1; ff=1; file=$$2 } \
 	          ' ; \
 	    done >/dev/null 2>&1 ; \
