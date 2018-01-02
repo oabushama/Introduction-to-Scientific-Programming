@@ -1,3 +1,118 @@
+% -*- latex -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% This TeX file is part of the course
+%%%% Introduction to Scientific Programming in C++/Fortran2003
+%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%%
+%%%% simplex.tex : simple exercises
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Level 0 {Arithmetic}
+
+\begin{enumerate}
+\item
+  Given
+\begin{verbatim}
+int n;
+\end{verbatim}
+write code that
+uses elementary mathematical operators to compute n-cubed: $n^3$.
+
+Do you get the correct result for all~$n$? Explain.
+\item What is the output of:
+\begin{verbatim}
+int m=32, n=17;
+cout << n%m << endl;
+\end{verbatim}
+\end{enumerate}
+
+\Level 0 {Scope}
+
+\begin{enumerate}
+\item Is this a valid program?
+\begin{verbatim}
+void f() { i = 1; }
+int main() {
+  int i=2;
+  f();
+  return 0;
+}
+\end{verbatim}
+If yes, what does it do; if no, why not?
+\item What is the output of:
+\begin{verbatim}
+#include <iostream>
+using namespace std;
+int main() {
+  int i=5;
+  if (true) { i = 6; }
+  cout << i << endl;
+  return 0;
+}
+\end{verbatim}
+\item What is the output of:
+\begin{verbatim}
+#include <iostream>
+using namespace std;
+int main() {
+  int i=5;
+  if (true) { int i = 6; }
+  cout << i << endl;
+  return 0;
+}
+\end{verbatim}
+\item What is the output of:
+\begin{verbatim}
+#include <iostream>
+using namespace std;
+int main() {
+  int i=2;
+  i += /* 5;
+  i += */ 6;
+  cout << i << endl;
+  return 0;
+}
+\end{verbatim}
+\end{enumerate}
+
+\Level 0 {Looping}
+
+\begin{enumerate}
+\item Suppose a function
+\begin{verbatim}
+bool f(int);
+\end{verbatim}
+is given, which is true for some positive input value. Write a main program that
+finds the smallest positive input value for which \n{f} is true.
+\item Suppose a function
+\begin{verbatim}
+bool f(int);
+\end{verbatim}
+is given, which is true for some negative input value. Write a main program that
+finds the (negative) input with smallest absolute value for which \n{f} is true.
+\end{enumerate}
+
+\Level 0 {Subprograms}
+
+\begin{exercise}
+  \label{ex:flooppos}
+  Write the missing function \n{pos_input} that
+  \begin{itemize}
+  \item reads a number from the user
+  \item returns it
+  \item and returns whether the number is positive
+  \end{itemize}
+  in such a way to make this code work:
+  
+  \snippetwithoutput{flooppos}{funcf}{looppos}
+
+  Hint: is \n{pos_input} a \n{SUBROUTINE} or \n{FUNCTION}? If the
+  latter, what is the type of the function result? How many parameters
+  does it have otherwise? Where does the variable \n{user_input} get
+  its value? So what is the type of the parameter(s) of the function?
+\end{exercise}
 
 \Level 0 {Object oriented exercises}
 

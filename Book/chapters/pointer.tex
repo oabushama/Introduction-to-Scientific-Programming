@@ -1,3 +1,35 @@
+% -*- latex -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% This TeX file is part of the course
+%%%% Introduction to Scientific Programming in C++/Fortran2003
+%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%%
+%%%% pointer.tex : about pointers
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Level 0 {What is a pointer}
+
+The term pointer is used to denote a reference to a quantity. The
+reason that people like to use C++ and C as high performance languages is
+that pointers are actually memory addresses. So you're programming
+`close to the bare metal' and are in fargoing control over what your program
+does.
+
+\Level 0 {Pointers and addresses, C style}
+\label{sec:cderef}
+
+You have learned about variables, and maybe you have a mental concept
+of variables as `named memory locations'. That is not too far of:
+while you are in the (dynamic) scope of a variable, it corresponds to
+a fixed memory location.
+
+\begin{exercise}
+  \label{ex:varmemscope}
+  When does a variable not always correspond to the same location in
+  memory?
+\end{exercise}
 
 There is a mechanism of finding the actual address of a variable: you
 prefix its name by an ampersand. 

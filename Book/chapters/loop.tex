@@ -1,3 +1,248 @@
+% -*- latex -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% This TeX file is part of the course
+%%%% Introduction to Scientific Programming in C++/Fortran2003
+%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%%
+%%%% loop.tex : loop constructs
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Level 0 {Basic `for' statement}
+\label{sec:for}
+
+There are many cases where you want to repeat an operation or series
+of operations:
+\begin{itemize}
+\item A time-dependent numerical simulation executes a fixed number of
+  steps, or until some stoping test.
+\item Recurrences: \[ x_{i+1} = f(x_i). \]
+\item Inspect or transformation every element of a database table.
+\end{itemize}
+(Fine point: the first two cases actually need to be performed in
+sequences, while the last one corresponds more to a mathematical
+`forall' quantor.)
+
+What you need is known as a~\indextermdef{loop}: a~number of
+statements that get repeated. The two types of loop statement in C++ are:
+\begin{itemize}
+\item the \indextermsub{for}{loop} which is typically associated with
+  a pre-determined number of repetitions, and with the repeated
+  statements being based on a counter of some sort; and
+\item the \indextermsub{while}{loop}, where the statements are
+  repeated indefinitely until some condition is satisfied.
+\end{itemize}
+We will now consider the for loop; the while loop comes in
+section~\ref{sec:loopuntil}.
+
+In the most common case, a for loop has a
+\indextermbus{loop}{counter}, ranging from some lower to some upper
+bound. And example showing the syntax for this simple case is:
+\begin{verbatim}
+for (int var=low; var<upper; var++) {
+  // statements involving the loop variable:
+  cout << "The square of " << var << " is " << var*var << endl;
+}
+\end{verbatim}
+The \n{for} line is called the \indextermbus{loop}{header}, and the
+statements between curly brackets the \indextermbus{loop}{body}.
+
+\begin{slide}{Repeat statement}
+  \label{sl:for}
+  Sometimes you need to repeat a statement a number of times. That's
+  where the \indextermdef{loop} comes in. A~loop has a counter, called
+  a~\indexterm{loop variable}, which (usually) ranges from a lower bound
+  to an upper bound.
+
+  Here is the syntax in the simplest case:
+\begin{verbatim}
+for (int var=low; var<upper; var++) {
+  // statements involving var
+  cout << "The square of " << var << " is " << var*var << endl;
+}
+\end{verbatim}
+\begin{cnote}
+Use compiler flag \n{-std=c99}.
+\end{cnote}
+\end{slide}
+
+\begin{exercise}
+  \label{ex:manyhello}
+  Read an integer value, and print `Hello world' that many times.
+\end{exercise}
+
+The loop header has three components, all of which are optional.
+\begin{itemize}
+\item An initialization. This is usually a declaration and
+  initialization of an integer \indextermbus{loop}{variable}. Using
+  floating point values is less advisable.
+\item A stopping test, usually involving the loop variable. If you
+  leave this out, you need a different mechanism for stopping the
+  loop; see~\ref{sec:loopuntil}.
+\item An increment, often~\n{i++} or spelled out \n{i=i+1}. You can let the loop count down by using~\n{i--}.
+\end{itemize}
+
+Some variations on the simple case.
+\begin{itemize}
+\item The loop variable can be defined outside the loop:
+\begin{verbatim}
+int var;
+for (var=low; var<upper; var++) {
+\end{verbatim}
+but it's cleaner to make it local. However:
+\begin{verbatim}
+int var;
+..... code that sets var .....
+for ( ; var<upper; var++) {
+  ...
+}
+\end{verbatim}
+\item The stopping test can be omitted
+\begin{verbatim}
+for (int var=low; ; var++) { ... }
+\end{verbatim}
+if the loops ends in some other way. You'll see this later.
+\item The stopping test doesn't need to be an upper bound:
+\begin{verbatim}
+for (int var=high-1; var>=low; var--) { ... }
+\end{verbatim}
+\item Here are a couple of popular increments:
+  \begin{itemize}
+  \item \n{i++} for a loop that counts forward;
+  \item \n{i--} for a loop that counts backward;
+  \item \n{i+=2} to cover only odd or even numbers, depending on
+    where you started;
+  \item \n{i*=10} to cover powers of ten.
+  \end{itemize}
+\end{itemize}
+
+\begin{slide}{Loop syntax}
+  \label{sl:for-syntax}
+  \begin{itemize}
+  \item Loop variable is usually an integer.
+  \item The stopping test be any test; can even be empty.
+  \item The increment can be a decrement or something like \n{var*=10}
+  \item Any and all of initialization, test, increment can be empty:\\
+    \n{for(;;) {...}}
+  \item (The loop variable can be defined outside the loop:
+\begin{verbatim}
+int var;
+for (var=low; var<upper; var++) {
+\end{verbatim}
+but it's cleaner to make it local.)
+  \end{itemize}
+\end{slide}
+
+Quite often, the loop body will contain another loop. For instance,
+you may want to iterate over all elements in a matrix. Both loops will
+have their own unique loop variable.
+\begin{verbatim}
+for (int i=0; i<m; i++)
+  for (int j=0; j<n; j++)
+    ...
+\end{verbatim}
+
+\begin{slide}{Nested loops}
+  \label{sl:for-nest}
+  Traversing a matrix:
+\begin{verbatim}
+for (int i=0; i<m; i++)
+  for (int j=0; j<n; j++)
+    ...
+\end{verbatim}
+\end{slide}
+
+\begin{exercise}
+  \label{ex:ij-triangle}
+  Write an $i,j$ loop that prints out all pairs with
+  \[ 1\leq i,j\leq 10,\quad  j\leq i. \]
+  Output one line for each \n{i} value.
+
+  Same, but 
+  \[ 1\leq i,j\leq 10,\quad |i-j|<2. \]
+\end{exercise}
+
+\Level 0 {Looping until}
+\label{sec:loopuntil}
+
+The basic for loop looks pretty deterministic: a loop variable ranges
+through a more-or-less prescribes set of values. This is appopriate
+for looping over the elements of an array, but not if you are coding
+some process that needs to run until some dynamically determined
+condition is satisfied. In this section you will see some ways of
+coding such cases.
+
+First of all, the stopping test in the `for' loop is optional:
+\begin{verbatim}
+for (int var=low; ; var=var+1) { ... }
+\end{verbatim}
+
+\begin{slide}{Indefinite looping}
+  \label{sl:for-inf}
+  Sometimes you want to iterate some statements not a predetermined
+  number of times, but until a certain condition is met. There are two
+  ways to do this.
+
+  First of all, you can use a `for' loop and leave the upperbound
+  unspecified:
+\begin{verbatim}
+for (int var=low; ; var=var+1) { ... }
+\end{verbatim}
+\end{slide}
+
+So how do you end such a loop? For that you use the
+\indextermtt{break} statement. If the execution encounters this
+statement, it will continue with the first statement after the loop.
+
+\begin{verbatim}
+for (int var=low; ; var=var+1) {
+  // statements;
+  if (some_test) break;
+  // more statements;
+}
+\end{verbatim}
+
+\begin{slide}{Break out of a loop}
+  \label{sl:for-break}
+  This loop would run forever, so you need a different way to end
+  it. For this, use the \indextermttdef{break} statement:
+\begin{verbatim}
+for (int var=low; ; var=var+1) {
+  statement;
+  if (some_test) break;
+  statement;
+}
+\end{verbatim}
+\end{slide}
+
+\ifIncludeAnswers
+\vfill\eject
+\fi
+
+\begin{figure}[ht]
+  \hbox\bgroup
+  \includegraphics[scale=.4]{ij-by-diagonal}
+  \includegraphics[scale=.4]{ij-by-diagonal-arrow}
+  \egroup
+  \caption{Traversal of $i,j$ range by $i+j=c$}
+\end{figure}
+
+For the following exercise, see figure~\ref{fig:ij-diag}.
+
+\begin{exercise}
+  \label{ex:ij-product}
+  Write a double loop over $0\leq i,j<10$ that prints the first pair
+  where the product of indices satisfies $i\cdot j> N$, where $N$~is a
+  number your read in. A~good test case is $N=40$.
+
+  Can you traverse the $i,j$ indices such that they first enumerate
+  all pairs $i+j=1$, then $i+j=2$, then $i+j=3$ et cetera? Again, you
+  should report the first pair $i,j$ for which $i\cdot j>N$.
+
+  Write a program that prints out both pairs, each on a separate line,
+  with the numbers separated with a comma, for instance~\n{8,5}.
+\end{exercise}
 
 Another mechanism to alter the control flow in a loop is the
 \indextermtt{continue} statement. If this is encountered, execution

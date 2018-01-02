@@ -29,4 +29,9 @@ book :
 lectures :
 	@cd Lectures
 
-
+.PHONY: clean
+clean :
+	@/bin/rm -f *~
+	@for d in Book ; do \
+	    ( cd $$d ; make clean ) ; \
+	done

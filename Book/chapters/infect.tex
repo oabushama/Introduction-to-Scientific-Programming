@@ -1,3 +1,100 @@
+% -*- latex -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% This TeX file is part of the course
+%%%% Introduction to Scientific Programming in C++/Fortran2003
+%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%%
+%%%% infect.tex : exercises for infectious disease simulation
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+This section contains a sequence of exercises that builds up to a
+somewhat realistic simulation of the spread of infectious
+diseases. 
+
+\Level 0 {Model design}
+
+It is possible to model disease propagation statistically, but here we
+will build an explicit simulation: we will maintain an explicit
+description of all
+the people in the population, and track for each of them their status.
+
+We will use a simple model where a person can be:
+\begin{itemize}
+\item sick: when they are sick, they can infect other people;
+\item susceptible: they are healthy, but can be infected;
+\item recovered: they have been sick, but no longer carry the disease,
+  and can not be infected for a second time;
+\item inocculated: they are healthy, do not carry the disease, and can
+  not be infected.
+\end{itemize}
+In more complicated models a person could be infectious during only
+part of their illness, or there could be secondary infections with
+other diseases, et cetera. We keep it simple here:
+any sick person is infectious.
+
+In the exercises below we will gradually develop a somewhat realistic
+model of how the disease spreads from an infectious person. We always
+start with just one person infected.
+The program will then track the population from day to day,
+running indefinitely until none of the population
+is sick. Since there is no re-infection, the run will always end.
+
+\Level 1 {Other ways of modeling}
+
+Instead of capturing every single person in code, a~`contact network'
+model,
+it is possible to use an
+\ac{ODE} approach to disease modeling. You would then model the
+percentage of infected persons by a single scalar, and derive
+relations for that and other scalars~\cite{Anderson:population1979}.
+
+\url{http://mathworld.wolfram.com/Kermack-McKendrickModel.html}
+
+This is known as a `compartmental model'. Both the contact network and
+the compartmental model capture part of the truth. In fact, they can
+be combined. We can consider a country as a set of cities, where
+people travel between any pair of cities. We then use a compartmental
+model inside a city, and a contact network between cities.
+
+\Level 0 {Coding up the basics}
+
+\prerequisite{\ref{ch:object}}
+
+We start by writing code that models a single person. The main methods
+serve to infect a person, and to track their state. We need to have
+some methods for inspecting that state. 
+
+The intended output looks something like:
+\begin{verbatim}
+On day 10, Joe is susceptible
+On day 11, Joe is susceptible
+On day 12, Joe is susceptible
+On day 13, Joe is susceptible
+On day 14, Joe is sick (5 to go)
+On day 15, Joe is sick (4 to go)
+On day 16, Joe is sick (3 to go)
+On day 17, Joe is sick (2 to go)
+On day 18, Joe is sick (1 to go)
+On day 19, Joe is recovered
+\end{verbatim}
+
+\begin{exercise}
+  \label{ex:infect:person}
+  Write a \n{Person} class with methods:
+  \begin{itemize}
+  \item \n{status_string()} : returns a description of the
+    person's state;
+  \item \n{update()} : update the person's status to the next day;
+  \item \n{infect(n)} : infect a person, with the disease to run for
+    $n$ days;
+  \item \n{is_stable()} : report whether the person has been sick and
+    is recovered.
+  \end{itemize}
+  The main program should execute these statements in a loop:
+  \verbatimsnippet{infect0}
+\end{exercise}
 
 Your main program could for instance look like:
 \verbatimsnippet{infect0}

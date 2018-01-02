@@ -6,7 +6,7 @@
 #### by Victor Eijkhout (eijkhout@tacc.utexas.edu)
 #### copyright 2017 Victor Eijkhout
 ####
-#### guide/Makefile : makefile for textbook and such
+#### guide/Makefile : makefile for public version of the textbook
 ####
 ################################################################
 
@@ -14,7 +14,7 @@
 info ::
 
 info ::
-	@echo "make all : code snippets, book, manual"
+	@echo "make all : code snippets, book"
 .PHONY: all
 all : snippets
 	make manual book FILE=${FILE}
@@ -22,7 +22,7 @@ all : snippets
 FILE = ispbook
 .PHONY: onepass format book manual pdf
 info ::
-	@echo "make onepass/format book/manual [FILE=(default: ${FILE})]"
+	@echo "make onepass/format book [FILE=(default: ${FILE})]"
 format onepass :
 	@mkdir -p frames
 	TEXINPUTS=${TEXINPUTS}:chapters:snippets.code:graphics pdflatex --shell-escape ${FILE}
@@ -31,27 +31,13 @@ book :
 	@echo "Formatting as student book"
 	@cp q.tex qa.tex
 	make pdf FILE=${FILE}
-	cp ${FILE}.pdf ${FILE}-book.pdf
-	make upload FILE=${FILE}-book
-#cp ${FILE}-book.pdf ${HOME}/Current/SSC/ISP/ISP2017/${BOOKNAME}.pdf
-manual :
-	@echo "Formatting as instructor manual"
-	@cp a.tex qa.tex
-	make pdf FILE=${FILE}
-	mv ${FILE}.pdf ${FILE}-manual.pdf
-	@make upload FILE=${FILE}-manual
+	cp ${FILE}.pdf ${BOOKNAME}.pdf
 pdf :
 	make snippets
 	make onepass FILE=${FILE}
 	make extract_exercises extract_slides
 	makeindex ${FILE}
 	make onepass FILE=${FILE}
-.PHONY: upload
-info ::
-	@echo "make upload [FILE=(default: ${FILE})]"
-BOOKNAME=EijkhoutIntroSciProgramming
-upload :
-	cp ${FILE}.pdf ${HOME}/Dropbox/Scicomp/ISP
 
 
 ####

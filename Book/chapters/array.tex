@@ -1,3 +1,112 @@
+% -*- latex -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% This TeX file is part of the course
+%%%% Introduction to Scientific Programming in C++/Fortran2003
+%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%%
+%%%% array.tex : basic language elements
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Level 0 {Static arrays}
+\label{sec:staticarray}
+
+An \indextermdef{array} is an indexed data structure, that for each
+index stores an integer, floating point number, character,
+object,\ldots
+In scientific applications, arrays often correspond to vectors and
+matrices, potentialy of quite large size. (If you know about
+\acfp{FEM}, you know that vectors can have sizes in the millions or beyond.)
+
+To define an array you need to declare its size, and you need to give
+it its contents. Those actions don't necessarily have to occur
+together. (And the contents can later change, as with any other variable.)
+However, 
+if you know the array size and contents already before you run your
+code, you can create the whole array in one statement. There is more
+than one syntax for doing so.
+%
+\verbatimsnippet{arrayinit}
+
+As you see in this example, if \n{a}~is an array, and \n{i} and
+integer, then \n{a[i]} is the i'th element.
+\begin{itemize}
+\item An array element \n{a[i]} can be used to get the value of an
+  array element, or it can occur in the left-hand side of an
+  assignment to set the value.
+\item The \indextermbus{array}{index} (or
+  \indextermbus{array}{subscript}) \n{i} starts numbering at zero.
+\item Therefore, if an array has $n$ elements, its last element has
+  index~\n{n-1}.
+\item If you try to get an array elements outside the bounds of the
+  array, your program may give a runtime error, but that does not
+  necessarily happen. You could just get some random value.
+\item An array does not contain the information about its size: you
+  have to store that in variable.
+\end{itemize}
+
+\Level 1 {Ranging over an array}
+\label{sec:arrayrange}
+
+If you need to consider all the elements in an array, there are two
+cases. First:
+
+\begin{block}{Range over elements}
+  \label{sl:array-range}
+  You can write a \indextermsub{range-based}{for} loop, which
+  considers the elements as a collection.
+\begin{verbatim}
+for ( float e : array )
+  // statement about element with value e
+for (auto e : array)
+  // same, with type deduced by compiler
+\end{verbatim}
+
+\snippetwithoutput{rangemax}{array}{rangemax}
+\end{block}
+
+(You can spell out \n{for (float e : array)} but \indextermtt{auto} is
+quite convenient.)
+
+\begin{block}{Indexing the elements}
+  \label{sl:index-range}
+  You can write an \indextermsub{indexed}{for} loop, which uses an
+  index variable that ranges from the first to the last element.
+\begin{verbatim}
+for (int i= /* from first to last index */ )
+  // statement about index i
+\end{verbatim}
+\snippetwithoutput{idxmax}{array}{idxmax}
+\end{block}
+
+\begin{exercise}
+  \label{ex:array-max}
+  Find the element with maximum absolute value in an array. Use:
+\begin{verbatim}
+int numbers[] = {1,-4,2,-6,5};
+\end{verbatim}
+Which mechanism do you use for traversing the array?
+
+Hint:
+\begin{verbatim}
+#include <cmath>
+..
+absx = abs(x);
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:array-maxidx}
+  Find the location of the first negative element in an array.
+
+  Which mechanism do you use?
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:array-sorted}
+  Check whether an array is sorted.
+\end{exercise}
 
 \Level 0 {Vector class for arrays}
 \label{sec:stdvector}
