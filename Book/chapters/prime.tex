@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% prime.tex : exercises for prime number finding
 %%%%
@@ -145,11 +145,14 @@ operate on that structure or on its members.
 
 \begin{exercise}
   \label{ex:prime:sequence}
-  Write a class \n{primegenerator} that contains the members of the
-  structure, and the functions \n{nextprime}, \n{isprime}. The
+  Write a class \n{primegenerator} that contains members
+  \n{number_of_primes_found} and
+  \n{last_number_tested}, and methods \n{nextprime}, \n{isprime}.
+  %
+  {\footnotesize Hint: the
   function \n{nextprime} does not need the object as argument,
   because the members are in the object, and therefore global
-  to that function.
+  to that function.}
 
   Your main program should look as follows:
   %

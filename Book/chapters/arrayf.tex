@@ -9,6 +9,11 @@
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+Array handling in Fortran is similar to C++ in some ways, but there
+are differences, such as that  Fortran indexing starts at~1, rather
+than~0. More importantly, Fortran has better handling of
+multi-dimensional arrays.
+
 \Level 0 {Static arrays}
 
 The preferred way for specifying an array size is:
@@ -116,6 +121,18 @@ array(i,j) = 5./2
   is laid out in (linear) memory:
 
   \includegraphics[scale=.1]{arraybycol}
+
+  `First index varies quickest'
+\end{block}
+
+\begin{block}{Array printing}
+  \label{sl:farray-print}
+  Fill array by rows:
+  \[ \begin{matrix}1&2&\ldots&N\\ N+1&\ldots\\ &\ldots\\ &&&MN
+  \end{matrix}
+  \]
+  %
+  \snippetwithoutput{printarray}{arrayf}{printarray}
 \end{block}
 
 \Level 1 {Querying an array}
@@ -261,6 +278,8 @@ ranges:
     to get indices up to~\n{n},
   \item {\tt n:} % \n{n:}
     to get indices \n{n} and up.
+  \item {\tt m:n}
+    indices in range \n{m,...,n}.
   \end{itemize}
 \end{block}
 

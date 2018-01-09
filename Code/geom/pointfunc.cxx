@@ -2,9 +2,9 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
- **** pointprivate.cxx : Vector class with private data
+ **** pointfun.cxx : class with method
  ****
  ****************************************************************/
 

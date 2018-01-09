@@ -68,7 +68,7 @@ for ( .... ) {
 Consider a class that has methods that return an internal member by
 reference, once as const reference and once not:
 %
-\snippetwithoutput{getsetref}{const}{constref}
+\snippetwithoutput{constref}{const}{constref}
 
 We can make visible the difference between pass by value and pass by
 const-reference if we define a class where the
@@ -80,7 +80,7 @@ Now if we define two functions, with the two parameter passing
 mechanisms, we see that passing by value invokes the copy constructor,
 and passing by const reference does not:
 %
-\snippetwithoutput{fwithcopyref}{const}{fwithcopyref}
+\snippetwithoutput{constcopy}{const}{constcopy}
 
 \Level 1 {Const methods}
 
@@ -129,6 +129,57 @@ z = t.f();
 Since the methods did not alter the object, the compiler can conclude
 that \n{x,z} are the same, and skip the calculation for~\n{z}.
 \end{itemize}
+
+\Level 0 {Auto}
+
+This is not actually obscure, but it intersects many other topics.
+
+\Level 1 {Declarations}
+
+Sometimes the type of a variable is obvious:
+\begin{verbatim}
+std::vector< std::shared_ptr< myclass >>*
+  myvar = new std::vector< std::shared_ptr< myclass >>
+                ( 20, new myclass(1.3) );
+\end{verbatim}
+(Vector of 20 shared pointers to \n{myclass}, initialized with unique instances.)
+You can write this as:
+\begin{verbatim}
+auto myvar =
+  new std::vector< std::shared_ptr< myclass >>
+            ( 20, new myclass(1.3) );
+\end{verbatim}
+
+\begin{block}{Auto plus}
+  \label{sl:auto-plus-const}
+  Keywords like \n{const} and the reference character~\n{\&} can be
+  added:
+\begin{verbatim}
+// class member
+  some_object my_object;
+// class method:
+  some_object &get_some_object() { return my_object; };
+// main program:
+auto object_copy  = thing.get_some_object();
+auto &object_mutable  = thing.get_some_object();
+const auto &object_immutable  = thing.get_some_object();
+\end{verbatim}
+\end{block}
+
+\Level 1 {Iterating}
+
+\begin{block}{Auto iterators}
+  \label{sl:auto-iterator}
+\begin{verbatim}
+vector<int> myvector(20);
+for ( auto copy_of_int : myvector )
+s += copy_of_int;
+for ( auto ref_to_int : myvector )
+ref_to_int = s;
+\end{verbatim}
+Can be used with anything that is iteratable\\
+(vector, map, your own classes!)
+\end{block}
 
 \Level 0 {Casts}
 \label{sec:cast}

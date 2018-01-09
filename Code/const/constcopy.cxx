@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** constcopy.cxx : demonstate yes/no copying
  ****
@@ -25,7 +25,7 @@ public:
 };
 //codesnippet end
 
-//codesnippet fwithcopyref
+//codesnippet constcopy
 void f_with_copy(has_int other) {
   cout << "function with copy" << endl; };
 void f_with_ref(const has_int &other) {
@@ -38,7 +38,7 @@ int main() {
   cout << "Demonstrating the copy constructor..." << endl;
   has_int other_int(an_int);
   
-//codesnippet fwithcopyref
+//codesnippet constcopy
   cout << "Calling f with copy..." << endl;  
   f_with_copy(an_int);
 

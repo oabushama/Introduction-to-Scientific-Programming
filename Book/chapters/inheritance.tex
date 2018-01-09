@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% inheritance.tex : about the relation between classes
 %%%%
@@ -55,6 +55,8 @@ class Person {
 \end{slide}
 
 At this time, do exercises in section~\ref{sec:FuncHasPoint}.
+
+\Level 1 {Accessors and other methods}
 
 Sometimes a class can behave as if it includes an object of another
 class, while not actually doing so. For instance, a line segment can
@@ -137,7 +139,8 @@ public:
     { .... }
   Segment( Point start,Point end ) { ... }
 \end{verbatim}
-Advantage: with a good API you can change your mind about the implementation!
+Advantage: with a good API you can change your mind about the
+implementation without bothering the user.
 \end{slide}
 
 At this time, do the exercises in section~\ref{sec:poly-rectangle}
@@ -160,7 +163,7 @@ public:
 };
 class Special : public General {
 public:
-  void special_method() { g = ... };
+  void special_method() { ... g ... };
 };
 \end{verbatim}
 

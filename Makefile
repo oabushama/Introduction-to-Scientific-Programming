@@ -23,7 +23,7 @@ info ::
 BOOKNAME = EijkhoutIntroSciProgramming
 BOOKSRC = ispbook
 book :
-	@cd Book; make pdf ; cp ${BOOKSRC}.pdf ../${BOOKNAME}.pdf
+	@cd Book; make book
 
 .PHONY: lectures
 lectures :

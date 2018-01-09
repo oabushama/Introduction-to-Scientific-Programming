@@ -4,7 +4,7 @@
 #### This makefile is part of the course
 #### Introduction to Scientific Programming in C++ and Fortran
 #### by Victor Eijkhout (eijkhout@tacc.utexas.edu)
-#### copyright 2017 Victor Eijkhout
+#### copyright 2017/8 Victor Eijkhout
 ####
 #### guide/Makefile : makefile for public version of the textbook
 ####
@@ -32,6 +32,7 @@ book :
 	@cp q.tex qa.tex
 	make pdf FILE=${FILE}
 	cp ${FILE}.pdf ${BOOKNAME}.pdf
+	cp ${BOOKNAME}.pdf ..
 pdf :
 	make snippets
 	make onepass FILE=${FILE}
@@ -88,6 +89,7 @@ snippets :
 	        $$root/code/iof \
 	        $$root/code/loopf \
 	        $$root/code/objectf \
+	        $$root/code/pointerf \
 	        $$root/code/slice \
 	        $$root/code/stringf \
 	        $$root/code/structf \

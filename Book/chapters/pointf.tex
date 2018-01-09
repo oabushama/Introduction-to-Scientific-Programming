@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% pointf.tex : arrays in Fortran
 %%%%
@@ -16,6 +16,7 @@ abstract.
 \Level 0 {Basic pointer operations}
 
 \begin{block}{Pointers are aliases}
+  \label{sl:fpoint}
   \begin{itemize}
   \item Pointer points at an object
   \item Access object through pointer
@@ -31,6 +32,14 @@ object of elementary or derived data type. You can access the object
 through the alias. The difference with actually using the object, is
 that you can decide what object the pointer points at.
 
+\begin{block}{C++ vs Fortran pointers}
+  \label{sl:cpoint-vs-fpoint}
+  Fortran pointers are automatically
+  \emph{dereferenced}\index{pointer!dereferencing}: if you print a
+  pointer you print the object it references, not some representation
+  of the pointer.
+\end{block}
+
 The \indextermtt{pointer} definition
 \begin{verbatim}
 real,pointer :: point_at_real
@@ -38,6 +47,7 @@ real,pointer :: point_at_real
 defined a pointer that can point at a real variable.
 
 \begin{block}{Setting the pointer}
+  \label{sl:fpoint-set}
   \begin{itemize}
   \item You have to declare that a variable is pointable:
 \begin{verbatim}
@@ -68,6 +78,7 @@ print *,point_at_real
 it behaves as if you were using the value of what it points at.
 
 \begin{block}{Pointer example}
+  \label{sl:fpoint-ex}
   \verbatimsnippet{pointatreal}
   %
   \begin{enumerate}
@@ -79,6 +90,7 @@ it behaves as if you were using the value of what it points at.
 \end{block}
 
 \begin{block}{Assign pointer from other pointer}
+  \label{sl:fpoint-copy}
 \begin{verbatim}
 real,pointer :: point_at_real,also_point
 point_at_real => x
@@ -105,15 +117,53 @@ right-hand side to be the target of the left-hand side.
   memory errors.}
 
 \begin{exercise}
+  \label{ex:fpoint-fun}
   Write a routine that accepts an array and a pointer, and on return
   has that pointer pointing at the largest array element:
   %
   \verbatimsnippet{arraypointmain}
 \end{exercise}
 
+\begin{block}{Pointer status}
+  \label{sl:fpoint-stat}
+  \begin{itemize}
+  \item \indextermfort{Nullify}: zero a pointer
+  \item \indextermfort{Associated}: test whether assigned
+  \end{itemize}  
+\end{block}
+
+\begin{block}{Dynammic allocation}
+  \label{sl:fpoint-dynamic}
+  Associate unnamed memory:
+\begin{verbatim}
+Integer,Pointer,Dimension(:) :: array_point
+Allocate( array_point(100) )
+\end{verbatim}  
+\end{block}
+
+\Level 0 {Pointers and arrays}
+
+You can set a pointer to an array:
+\begin{verbatim}
+real(8),dimension(10),target :: array
+real(8),pointer,dimension(:) :: array_ptr
+
+array_ptr => array
+\end{verbatim}
+More surprising, you can set pointers to array slices:
+\begin{verbatim}
+array_ptr => array(2:)
+array_ptr => array(1:size(array):2)
+\end{verbatim}
+
+In case you're wondering, this does not create temporary arrays, but
+the compiler adds descriptions to the pointers, to translate code
+automatically to strided indexing.
+
 \Level 0 {Example: linked lists}
 
 \begin{block}{Linked list}
+  \label{sl:flink1}
   \begin{itemize}
   \item Linear data structure
   \item more flexible for insertion~/ deletion
@@ -137,6 +187,7 @@ inserted.
 \end{exercise}
 
 \begin{block}{Linked list datatypes}
+  \label{sl:flink2}
   \begin{itemize}
   \item Node: value field, and pointer to next node.
   \item List: pointer to head node.
@@ -157,6 +208,7 @@ basically a repository for the head node:
 \verbatimsnippet{linklistf}
 
 \begin{block}{List initialization}
+  \label{sl:flink3}
   First element becomes the list head:
 
 \verbatimsnippet{listheadf}
@@ -170,6 +222,7 @@ a node and assign it as the head of the list:
 \verbatimsnippet{listheadf}
 
 \begin{block}{Attaching a node}
+  \label{sl:flink4}
   Keep the list sorted: new largest element attached at the end.
   
   \verbatimsnippet{listattachf}
@@ -185,6 +238,7 @@ attaching a new node from it:
 \verbatimsnippet{listattachf}
 
 \begin{block}{Inserting 1}
+  \label{sl:flink5}
   Find the insertion point:
 \verbatimsnippet{listfindf}
 \end{block}
@@ -196,6 +250,7 @@ First of all, you need to find the two nodes,
 \verbatimsnippet{listfindf}
 
 \begin{block}{Inserting 2}
+  \label{sl:flink6}
   The actual insertion requires rerouting some pointers:
   %
   \verbatimsnippet{listinsertf}

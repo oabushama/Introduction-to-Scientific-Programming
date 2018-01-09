@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% function.tex : functions
 %%%%
@@ -402,7 +402,11 @@ y = f(x1,x2,x3);
   \item Parameters are copied into the function.
 %  \item Mark parameters as \n{const}, just in case:
   \item \indexterm{pass by value}
+  \item `functional programming'
   \end{itemize}
+\end{slide}
+\begin{slide}{Functional programming example}
+  \label{sl:func-functional-ex}
   \snippetwithoutput{passvalue}{func}{passvalue}
 \end{slide}
 
@@ -448,7 +452,7 @@ We also the following terminology for function parameters:
   Also good design:
   \begin{itemize}
   \item Return no function result,
-  \item or return \index{return status} (0~is success, nonzero various
+  \item or return \indexterm{return status} (0~is success, nonzero various
     informative statuses), and
   \item return other information by changing the parameters.
   \item \indexterm{pass by reference}
@@ -457,7 +461,7 @@ We also the following terminology for function parameters:
 \end{slide}
 
 \begin{block}{Pass by reference example 1}
-  \label{sl:pass-reference0}
+  \label{sl:pass-reference1}
 \begin{verbatim}
 void f( int &i ) {
   i = 5;
@@ -481,7 +485,7 @@ The following is a common idiom, where the success value is returned
 through the \n{return} statement, and the value through a parameter.
 
 \begin{block}{Pass by reference example 2}
-  \label{sl:pass-reference}
+  \label{sl:pass-reference2}
 \begin{verbatim}
 bool can_read_value( int &value ) {
   int file_status = try_open_file();

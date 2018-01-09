@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% array.tex : basic language elements
 %%%%
@@ -59,7 +59,7 @@ cases. First:
 \begin{verbatim}
 for ( float e : array )
   // statement about element with value e
-for (auto e : array)
+for ( auto e : array )
   // same, with type deduced by compiler
 \end{verbatim}
 
@@ -107,6 +107,13 @@ absx = abs(x);
   \label{ex:array-sorted}
   Check whether an array is sorted.
 \end{exercise}
+
+\begin{block}{Range over elements by reference}
+  \label{sl:array-range-ref}
+  Range-based loop indexing makes a copy of the array element. If you
+  want to alter the array, use a reference:
+\snippetwithoutput{rangescale}{array}{rangescale}
+\end{block}
 
 \Level 0 {Vector class for arrays}
 \label{sec:stdvector}
@@ -156,7 +163,7 @@ for ( auto e : my_vector)
   cout << e;
 \end{verbatim}
 \n{e} is a copy of the array element.
-\snippetwithoutput{vectorrange}{array}{vectorrangecopy}
+\snippetwithoutput{vectorrangecopy}{array}{vectorrangecopy}
 \end{block}
 
 \begin{block}{Ranging over a vector by reference}

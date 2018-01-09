@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% object.tex : we get down to OOP!
 %%%%
@@ -338,7 +338,7 @@ variable~\n{x}.
 
 \begin{block}{Setting members through accessor}
   \label{sl:setmember}
-  \snippetwithoutput{objaccessref}{object}{access_ref}
+  \snippetwithoutput{objaccessref}{object}{accessref}
 \end{block}
 
 If the internal variable is something indexable:
@@ -353,16 +353,19 @@ public:
 You define the subscript operator~\n{[]} for the object, in terms of
 indexing of the private vector.
 
-\Level 1 {Methods}
+\Level 1 {Accessability}
 
-Methods can be 
-\begin{itemize}
-\item private, because they are only used internally;
-\item public, because they should be usable from outside a class
-  object, for instance in the main program;
-\item protected, because they should be usable in derived classes (see
-  section~\ref{sec:derive-method}).
-\end{itemize}
+\begin{slide}{Access levels}
+  \label{sl:private-etc}
+  Methods and data can be 
+  \begin{itemize}
+  \item private, because they are only used internally;
+  \item public, because they should be usable from outside a class
+    object, for instance in the main program;
+  \item protected, because they should be usable in derived classes (see
+    section~\ref{sec:derive-method}).
+  \end{itemize}
+\end{slide}
 
 You can have multiple methods with the same name, as long as they can
 be distinguished by their argument types. This is known as \indexterm{overloading}.
@@ -416,6 +419,12 @@ possibilities; see for instance:
 %
 \verbatimsnippet{classwithcopy}
 
+\begin{slide}{Copy constructor}
+  \label{sl:class-copy}
+  Default copy constructors are defined. You can redefine them as needed.
+  \verbatimsnippet{classwithcopy}
+\end{slide}
+
 \Level 1 {Destructor}
 
 Just there is a constructor routine to create an object, there is a
@@ -444,6 +453,26 @@ Example:
 %% After the nested scope
 %% \end{verbatim}
 
+\begin{slide}{Destructor}
+  \label{sl:class-destruct}
+  \begin{itemize}
+  \item Every class \n{myclass} has a \emph{destructor} \n{~myclass}
+    defined by default.
+  \item The default destructor does nothing:
+\begin{verbatim}
+~myclass() {};
+\end{verbatim}
+\item A destructor is called when the object goes out of scope.\\
+  Great way to prevent memory leaks!
+\end{itemize}
+\end{slide}
+
+\begin{slide}{Destructor example}
+  \label{sl:class-destruct-ex}
+  Destructor called implicitly:
+\snippetwithoutput{destructor}{object}{destructor}
+\end{slide}
+
 
 \begin{exercise}
   \label{ex:destruct-trace}
@@ -460,16 +489,23 @@ public:
 used as
 \begin{verbatim}
 { HasInt v(5);
-  v.set(6)
+  v.set(6);
+  v.set(-2);
 }
 \end{verbatim}
 which gives output
 \begin{verbatim}
 **** creating object with 5 ****
 **** setting object to 6 ****
-**** object destroyed after 1 update ****
+**** setting object to -2 ****
+**** object destroyed after 2 updates ****
 \end{verbatim}
 \end{exercise}
+
+\begin{block}{Destructors and exceptions}
+  \label{sl:exceptobj}
+  \snippetwithoutput{exceptobj}{object}{exceptobj}
+\end{block}
 
 % {Relations between classes}
 %\SetBaseLevel 1

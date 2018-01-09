@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% bookmacs.tex : macros for typsetting the source of the textbook
 %%%%
@@ -17,14 +17,51 @@
 \openout\chapterlist=chapternames.tex
 \newcommand\CHAPTER[2]{
 \Level 0 {#1}\label{ch:#2}
+\global\chaptersourcelist{}
 \def\chapshortname{#2}
 {\SetBaseLevel 1 \input chapters/#2
+ % section with source files
+ \listchaptersources
+ % add chapter to list of chapters
  \write\chapterlist{\chapshortname}
  \openout\nx=exercises/\chapshortname-nx.tex
  \write\nx{\arabic{excounter}}
  \closeout\nx
  \SetBaseLevel 0
 }}
+
+% each chapter has a list of sources
+\newtoks\chaptersourcelist
+\newcommand\addchaptersource[1]{
+  \edef\temp{\global\chaptersourcelist={\the\chaptersourcelist #1}}\temp
+}
+\newcommand\listchaptersources{
+  \expandafter\ChapterSourceHeader\the\chaptersourcelist\LSR
+  %\tracingmacros=2 \tracingonline=1
+  %\texttt{\the\chaptersourcelist}\par
+  \expandafter\ListSourcesRecursively\the\chaptersourcelist\LSR
+}
+\def\LSR{\LSR}
+\def\ChapterSourceHeader#1\LSR{
+  \def\test{#1\LSR}
+  \ifx\test\LSR
+  \else
+    \Level 0 {Sources used in this chapter}
+  \fi
+}
+\def\ListSourcesRecursively#1{
+  \def\test{#1}
+  \ifx\test\LSR
+  \else
+    % list the file
+    \textbf{Listing of code/#1}:
+    {\footnotesize \verbatiminput{../code/#1.cxx}}
+    {\footnotesize \verbatiminput{../code/#1.F90}}
+    \par
+    % continue
+    \expandafter\ListSourcesRecursively
+  \fi
+}
 
 %%%%
 %%%% Page layout
@@ -304,8 +341,7 @@
    \leavevmode
    \begin{sl}\small
    \def\verbatim@startline{\verbatim@line{\leavevmode\relax}}%
-   \hbox{%\kern-\unitindent 
-         \textbf Solution to exercise \arabic{chapter}.\arabic{excounter}.\hspace{1em}}%
+   \hbox{\textbf Solution to exercise \arabic{chapter}.\arabic{excounter}.\hspace{1em}}%
      \ignorespaces\it
    \input{\CommentCutFile}
    \end{sl}\fi
@@ -322,13 +358,18 @@
 
 \makeatletter
 \newcommand{\snippetwithoutput}[3]{
-  \par\vbox{
+  % go into vertical mode
+  \par
+  % record this file as bracketed name
+  \addchaptersource{{#2/#3}}
+  % make nice two-column layout
+  \vbox{
   \begin{multicols}{2}
     \def\verbatim@startline{\verbatim@line{\leavevmode\relax}}
     \footnotesize\textbf{Code:}
     \codesnippet{#1}
     \par\hbox{}\vfill\columnbreak
-    \textbf{Output:}
+    \textbf{Output from running #3 in code directory #2:}
     \hbox{}
     \immediate\write18{ cd ../code/#2 && make #3 && make run_#3 > #3.out }
     \verbatiminput{../code/#2/#3.out}

@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% pointer.tex : about pointers
 %%%%
@@ -300,6 +300,7 @@ if (something) {
   array = new double[26];
 }
 \end{verbatim}
+(Size in doubles, not in bytes as in C)
 \end{block}
 
 \begin{block}{Memory leak1}
@@ -322,7 +323,7 @@ int main() {
 
 \end{block}
 
-\begin{block}{Memory leak2}
+\begin{block}{Memory leaks}
   \label{sl:leak2}
 \begin{verbatim}
 for (int i=0; i<large_num; i++) {
@@ -344,6 +345,16 @@ for (int i=0; i<large_num; i++) {
 delete(array);
 \end{verbatim}
 The C++ \n{vector} does not have this problem, because it obeys scope rules.
+\end{block}
+
+\begin{block}{Stop using C!}
+  \label{sl:no-c-malloc}
+  No need for \n{malloc} or \n{new}
+  \begin{itemize}
+  \item Use \n{std::string} for character arrays, and
+  \item \n{std::vector} for everything else.
+  \end{itemize}
+  No performance hit if you don't dynamically alter the size.
 \end{block}
 
 \Level 2 {Malloc}
@@ -427,18 +438,27 @@ reference count reaches zero, the object is deallocated or destroyed.
 
 \begin{block}{Shared pointers}
   \label{sl:shared-ptr}
+Shared pointers look like regular pointers:
 \begin{verbatim}
 #include <memory>
 
+std::shared_ptr<myobject> obj_ptr
+    = std::shared_ptr<myobject>( new myobject(x) );
+obj_ptr->mymethod(1.1);
+cout << obj_ptr->member << endl;
+
 auto array = std::shared_ptr<double>( new double[100] );
+// ILLEGAL: array[1] = 2.14;
+array->at(2) = 3.15;
 \end{verbatim}
 \end{block}
 
 As an illustration, let's take a class that reports its construction
 and destruction:
 %
-\begin{block}{Constructor and destructor tracing}
+\begin{block}{Reference counting illustrated}
   \label{sl:construct-destruct-trace}
+  We need a class with constructor and destructor tracing:
   \verbatimsnippet{thingcall}
 \end{block}
 
@@ -446,7 +466,7 @@ and destruction:
 and
 \begin{block}{Trace1: pointer overwrite}
   \label{sl:shared-ptr-overwrite}
-  let's create a pointer and overwrite it:
+  Let's create a pointer and overwrite it:
   %
   \snippetwithoutput{shareptr1}{pointer}{ptr1}
 \end{block}

@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2016/7 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2016-8 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** destructor.cxx : illustration of objects going out of scope
  ****
@@ -16,8 +16,12 @@ using std::endl;
 //examplesnippet destructor
 class SomeObject {
 public:
-  SomeObject() { cout << "calling the constructor" << endl; };
-  ~SomeObject() { cout << "calling the destructor" << endl; };
+  SomeObject() { cout <<
+    "calling the constructor" 
+    << endl; };
+  ~SomeObject() { cout <<
+    "calling the destructor" 
+    << endl; };
 };
 //examplesnippet end
 
