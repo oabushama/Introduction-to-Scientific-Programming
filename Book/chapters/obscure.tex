@@ -132,7 +132,8 @@ that \n{x,z} are the same, and skip the calculation for~\n{z}.
 
 \Level 0 {Auto}
 
-This is not actually obscure, but it intersects many other topics.
+This is not actually obscure, but it intersects many other topics, so
+we put it here for now.
 
 \Level 1 {Declarations}
 
@@ -150,10 +151,60 @@ auto myvar =
             ( 20, new myclass(1.3) );
 \end{verbatim}
 
-\begin{block}{Auto plus}
-  \label{sl:auto-plus-const}
-  Keywords like \n{const} and the reference character~\n{\&} can be
-  added:
+\begin{slide}{Type deduction}
+  \label{sl:auto-deduct}
+In:
+\begin{verbatim}
+std::vector< std::shared_ptr< myclass >>*
+  myvar = new std::vector< std::shared_ptr< myclass >>
+                ( 20, new myclass(1.3) );
+\end{verbatim}
+the compiler can figure it out:
+\begin{verbatim}
+auto myvar =
+  new std::vector< std::shared_ptr< myclass >>
+            ( 20, new myclass(1.3) );
+\end{verbatim}
+\end{slide}
+
+\begin{block}{Type deduction in functions}:
+  \label{sl:auto-fun}
+  Return type can be deduced in C++17:
+  \verbatimsnippet{autofun}  
+\end{block}
+
+\begin{block}{Type deduction in functions}:
+  \label{sl:auto-method}
+  Return type can be deduced in C++17:
+  \verbatimsnippet{autoclass}  
+\end{block}
+
+\begin{block}{Auto and references, 1}
+  \label{sl:auto-ref1}
+  \n{auto} discards references and such:
+  %
+  \snippetwithoutput{autoplain}{auto}{plainget}
+\end{block}
+
+\begin{block}{Auto and references, 2}
+  \label{sl:auto-ref2}
+  Combine \n{auto} and references:
+  %
+  \snippetwithoutput{autoref}{auto}{refget}
+\end{block}
+
+\begin{block}{Auto and references, 3}
+  \label{sl:auto-ref3}
+  For good measure:
+  %
+  \snippetwitherror{constautoref}{auto}{constrefget}
+\end{block}
+
+\begin{comment}
+  \begin{block}{Auto plus}
+    \label{sl:auto-plus-const}
+    Keywords like \n{const} and the reference character~\n{\&} can be
+    added:
 \begin{verbatim}
 // class member
   some_object my_object;
@@ -164,7 +215,8 @@ auto object_copy  = thing.get_some_object();
 auto &object_mutable  = thing.get_some_object();
 const auto &object_immutable  = thing.get_some_object();
 \end{verbatim}
-\end{block}
+  \end{block}
+\end{comment}
 
 \Level 1 {Iterating}
 
@@ -173,9 +225,9 @@ const auto &object_immutable  = thing.get_some_object();
 \begin{verbatim}
 vector<int> myvector(20);
 for ( auto copy_of_int : myvector )
-s += copy_of_int;
-for ( auto ref_to_int : myvector )
-ref_to_int = s;
+  s += copy_of_int;
+for ( auto &ref_to_int : myvector )
+  ref_to_int = s;
 \end{verbatim}
 Can be used with anything that is iteratable\\
 (vector, map, your own classes!)

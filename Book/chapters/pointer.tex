@@ -484,28 +484,3 @@ destructor will not be called until all references to the object
   \snippetwithoutput{shareptr2}{pointer}{ptr2}
 \end{block}
 
-\endinput
-
-\verbatimsnippet{shareptr1}
-creates an object and overwrites the pointer, causing the object to be
-destroyed:
-\begin{verbatim}
-set pointer1
-calling constructor
-overwrite pointer
-calling destructor
-\end{verbatim}
-
-Illustrating how the object is not destroyed until all references are
-gone:
-%
-\verbatimsnippet{shareptr2}
-gives:
-\begin{verbatim}
-set pointer2
-calling constructor
-set pointer3 by copy
-overwrite pointer2
-overwrite pointer3
-calling destructor
-\end{verbatim}

@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% proto.tex : about prototypes and separate compilation
 %%%%
@@ -199,7 +199,9 @@ This also prevents recursive inclusion of header files.
 
 \Level 0 {Prototypes for class methods}
 
-Header file:
+\begin{block}{Class prototypes}
+  \label{sl:class-proto}
+  Header file:
 \begin{verbatim}
 class something {
 public:
@@ -213,6 +215,7 @@ double something::somedo(vector v) {
    .... something with v ....
 };
 \end{verbatim}
+\end{block}
 
 \Level 0 {Header files and templates}
 

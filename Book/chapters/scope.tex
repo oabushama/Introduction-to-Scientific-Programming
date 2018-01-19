@@ -58,22 +58,13 @@ int main() {
 }
 \end{verbatim}  
 \end{slide}
+
 \Level 1 {Shadowing}
 
 Scope can be limited by an occurrence of a variable by the same name:
-\begin{verbatim}
-int main() {
-  int i = 3;
-  if ( something ) {
-    int i = 5;
-  }
-  cout << i << endl; // gives 3
-  if ( something ) {
-    float i = 1.2;
-  }
-  cout << i << endl; // again 3
-}
-\end{verbatim}
+%
+\snippetwithoutput{shadowtrue}{basic}{shadowtrue}
+%
 The first variable \n{i} has lexical scope of the whole program, minus
 the two conditionals. While its
 \emph{lifetime}\index{variable!lifetime} is the whole program, it is
@@ -99,6 +90,13 @@ Variable \n{i} is shadowed: invisible for a while.\\
 After the lifetime of the shadowing variable, its value is unchanged
 from before.
 \end{slide}
+
+\begin{block}{Shadowing and scope are lexical}
+  \label{sl:scope-shadowfalse}
+  This is independent of dynamic / runtime behaviour!
+  %
+  \snippetwithoutput{shadowfalse}{basic}{shadowfalse}
+\end{block}
 
 \Level 1 {Lifetime versus reachability}
 

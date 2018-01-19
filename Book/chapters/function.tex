@@ -367,11 +367,22 @@ body of another function.
 
 \Level 0 {Parameter passing}
 \label{sec:passing}
-\index{parameter|see{function, parameter}}
+\index{parameter|seealso{function, parameter}}
 
 C++~functions resemble mathematical functions:
 you have seen that a function can have an input and an
 output. In fact, they can have multiple inputs.
+
+We start by studying functions that look like these mathematical
+functions. They involve a \indextermbus{parameter}{passing} mechanism
+called
+\emph{passing by value}\index{parameter!pass by value}.
+%
+Later we will then look at
+\emph{passing by reference}\index{parameter!pass by reference}.
+
+\Level 1 {Pass by value}
+
 The following style of programming is very much inspired by
 mathematical functions, and is known as \indextermdef{functional programming}:
 \begin{itemize}
@@ -410,16 +421,37 @@ y = f(x1,x2,x3);
   \snippetwithoutput{passvalue}{func}{passvalue}
 \end{slide}
 
+\Level 1 {Pass by reference}
+\index{pass by reference|see{parameter, pass by reference}}
+  
 Having only one output is a limitation on functions. Therefore there
 is a mechanism for altering the input parameters and returning
-(possibly multiple) results that way. To do this, you use an ampersand
-for the parameter in the function definition:
+(possibly multiple) results that way. You do this by not copying
+values into the function parameters, but by turning the function
+parameters into aliases of the variables at the place where the
+function is called.
+
+We need the concept of a \indextermdef{reference}:
+\begin{block}{Reference}
+  \label{sl:cpp-reference}
+  A reference indicated with an ampersand, and it acts as an alias of
+  the thing it references.
+  %
+  \snippetwithoutput{refint}{basic}{ref}
+  %
+  (You will not use references often this way.)
+\end{block}
+
+You can make a function parameter into a reference of a variable in
+the main program:
 
 \begin{block}{Parameter passing by reference}
   \label{sl:pass-by-ref}
+The function parameter \n{n} becomes a reference to the variable \n{i}
+in the main program:
 \begin{verbatim}
-void f(int &i) {
-  i = /* some expression */ ;
+void f(int &n) {
+  n = /* some expression */ ;
 };
 int main() {
   int i;
@@ -455,7 +487,7 @@ We also the following terminology for function parameters:
   \item or return \indexterm{return status} (0~is success, nonzero various
     informative statuses), and
   \item return other information by changing the parameters.
-  \item \indexterm{pass by reference}
+  \item \emph{pass by reference}
   \item Parameters are also called `input', `output', `throughput'.
   \end{itemize}
 \end{slide}
@@ -653,7 +685,7 @@ double sum(double a,double b) {
 double sum(double a,double b,double c) {
   return a+b+c; }
 \end{verbatim}
-Distinguished by input parameters: can not differ only in return type.
+Distinguished by type or number of input arguments: can not differ only in return type.
 \end{block}
 
 \Level 0 {Review questions}

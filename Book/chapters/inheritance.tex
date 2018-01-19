@@ -87,25 +87,36 @@ This illustrates how object-oriented programming can decouple the
 \begin{slide}{Literal and figurative has-a}
   \label{sl:obj-hasa-ish}
 \small
-Compare:
+  A line segment has a starting point and an end point.
+\begin{multicols}{2}
+  A \n{Segment}
+  class can store those points:
 \begin{verbatim}
 class Segment {
 private:
   Point starting_point,ending_point;
+public:
+  Point get_the_end_point() {
+    return ending_point; };
 }
   ...
   Segment somesegment;
   Point somepoint = somesegment.get_the_end_point();
 \end{verbatim}
-  Versus:
+or store one and derive the other:
 \begin{verbatim}
 class Segment {
 private:
   Point starting_point;
   float length,angle;
+public:
+  Point get_the_end_point() {
+    /* some computation from the
+       starting point */ };
 }
 \end{verbatim}
-Implementation vs API.
+\end{multicols}
+Implementation vs API: implementation can be very different from user interface.
 \end{slide}
 
 Related to this decoupling, a class can also have two very different constructors.
@@ -161,6 +172,7 @@ protected: // note!
 public:
  void general_method() {};
 };
+
 class Special : public General {
 public:
   void special_method() { ... g ... };
@@ -178,6 +190,7 @@ protected: // note!
 public:
  void general_method() {};
 };
+
 class Special : public General {
 public:
   void special_method() { g = ... };
@@ -215,7 +228,7 @@ int main() {
   Special special_object;
   special_object.general_method();
 \end{verbatim}
-Data needs to be \n{protected}, not \n{private}, to be inheritable.
+Members and methods need to be \n{protected}, not \n{private}, to be inheritable.
 \end{slide}
 
 The derived class has its own constructor, with the same name as the

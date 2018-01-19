@@ -13,17 +13,16 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-//codesnippet classwithcopy
 class has_int {
 private:
   int mine{1};
 public:
   has_int(int v) { mine = v; };
-  has_int(has_int &other) {
-    cout << "(calling copy constructor)" << endl;
-    mine = other.mine; };
+  has_int(has_int &other) { cout <<
+      "(calling copy constructor)" << endl;
+    mine = other.mine;
+  };
 };
-//codesnippet end
 
 //codesnippet constcopy
 void f_with_copy(has_int other) {
@@ -35,8 +34,6 @@ void f_with_ref(const has_int &other) {
 int main() {
 
   has_int an_int(5);
-  cout << "Demonstrating the copy constructor..." << endl;
-  has_int other_int(an_int);
   
 //codesnippet constcopy
   cout << "Calling f with copy..." << endl;  

@@ -3,11 +3,39 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% iof.tex : input and output in Fortran
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Level 0 {Types of I/O}
+
+Fortran has ASCII, for \emph{formatted}\indextermsub{formatted}{I/O},
+and binary, or \emph{unformatted}\indextermsub{unformatted}{I/O}.
+Formatted I/O uses default formatting, but you can specify formatting,
+in the I/O statement itself, or separately in a \n{Format} statement.
+
+\begin{slide}{Types of I/O}
+  \label{sl:fio-types}
+  \begin{itemize}
+  \item Formatted vs unformatted
+  \item Default formatting vs specified format
+  \end{itemize}
+\end{slide}
+
+\begin{block}{I/O commands}
+  \label{sl:fio-commands}
+  \begin{itemize}
+  \item \indextermfort{Print} simple output to terminal
+  \item \indextermfort{Write} output to terminal or file (`unit')
+  \item \indextermfort{read} input from terminal or file
+  \item \indextermfort{Open}, \indextermfort{Close} for files and
+    streams
+  \item \indextermfort{Format} format specification that can be used
+    in multiple statements.
+  \end{itemize}
+\end{block}
 
 \Level 0 {Print to terminal}
 
@@ -18,16 +46,6 @@ print *,"The result is",result
 In its easiest form, you use the star to indicate that you don't care
 about formatting; after the comma you can then have any number of
 comma-separated strings and variables.
-
-\begin{slide}{I/O commands}
-  \label{sl:fio-commands}
-  \begin{itemize}
-  \item \n{print} simple output to terminal
-  \item \n{write} output to terminal or file (`unit')
-  \item \n{read} input from terminal or file
-  \item \n{open}, \n{close} for files and streams
-  \end{itemize}
-\end{slide}
 
 \begin{block}{Formatted and unformatted I/O}
   \begin{itemize}
@@ -127,6 +145,7 @@ give it a \indexterm{label}:
     Direct use in print statement:  
 \begin{verbatim}
 print '(a6,3f5.3)',"Result",x,y,z
+print '("Result:",3f5.3)',x,y,z
 \end{verbatim}
 \item Format statement:
   \end{itemize}
@@ -159,7 +178,7 @@ print '("Result:",3f5.3)',x,y,z
   \label{sl:fformat-rep}
 \begin{verbatim}
 print '( 3i4 )', i1,i2,i3
-print '( e(i2,":",f7.4) )', i1,r1,i2,r2,i3,r2
+print '( 3(i2,":",f7.4) )', i1,r1,i2,r2,i3,r2
 \end{verbatim}
 \end{block}
 

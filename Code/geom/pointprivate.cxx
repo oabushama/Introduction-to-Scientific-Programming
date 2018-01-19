@@ -21,21 +21,22 @@ public:
   Vector( double x,double y ) {
     vx = x; vy = y;
   };
-  double x() { return vx; }; // `accessor'
-  double y() { return vy; };
   //codesnippet end
   //codesnippet pointprivateset
-  void setx( double newx ) { vx = newx; };
-  void sety( double newy ) { vy = newy; };
+  double x() { return vx; };
+  double y() { return vy; };
+  void setx( double newx ) {
+    vx = newx; };
+  void sety( double newy ) {
+    vy = newy; };
   //codesnippet end
-//codesnippet pointprivate
-};
+  //codesnippet pointprivatedefine
+}; // end of class definition
 
 int main() {
   Vector p1(1.,2.);
   //codesnippet end
   cout << "p1 = " << p1.x() << "," << p1.y() << endl;
-  //codesnippet end
 
   //codesnippet pointprivatesetuse
   p1.setx(3.12);

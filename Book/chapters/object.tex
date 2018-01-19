@@ -67,6 +67,7 @@ can for instance be used to initialize data members:
   \label{sl:class-construct}
   Use a \indexterm{constructor}: function with same name as the class.
   \verbatimsnippet{pointprivate}
+  \verbatimsnippet{pointprivatedefine}
 \end{slide}
 
 \Level 1 {Interface versus implementation}
@@ -79,10 +80,14 @@ separate interface and implementation of a class.
 
 \begin{block}{Example of accessor functions}
   \label{sl:pointaccess}
-  \verbatimsnippet{pointaccess}
-  \verbatimsnippet{pointprivateset}
-  Usage:
-  \verbatimsnippet{pointprivatesetuse}
+  Getting and setting of members values is done through accessor functions:
+  \begin{multicols}{2}
+    \verbatimsnippet{pointprivate}
+    \verbatimsnippet{pointprivateset}
+    \verbatimsnippet{pointprivatedefine}
+    Usage:
+    \verbatimsnippet{pointprivatesetuse}
+  \end{multicols}
 \end{block}
 
 \begin{block}{Interface versus implementation}
@@ -97,6 +102,8 @@ separate interface and implementation of a class.
 
 \begin{block}{Private access gone wrong}
   \label{sl:privatenogood}
+  We make a class with two members that sum to one.\\
+  You don't want to be able to change just one of them!
 \begin{verbatim}
 class SumIsOne {
 public: 
@@ -108,6 +115,7 @@ int main() {
   pointfive.y = .6;
 }
 \end{verbatim}
+In general: enforce predicates on the members.
 \end{block}
 
 \Level 1 {Initialization}
@@ -130,6 +138,23 @@ private:
   \label{sl:class-init}
   Other syntax for initialization:
   \verbatimsnippet{classpointinit}
+\end{block}
+
+\begin{block}{`this'}
+  \label{sl:class-this}
+  Inside an object, a \indexterm{pointer} to the object is available
+  as \indextermtt{this}:
+\begin{verbatim}
+class Myclass {
+private:
+  int myint;
+public:
+  Myclass(int myint) {
+    this->myint = myint;
+  };
+};
+\end{verbatim}
+(also for calling functions inside the object that need the object as argument)
 \end{block}
 
 If the data members follow a \indextermtt{public} directive, code
@@ -184,7 +209,8 @@ private,, you define an \acf{API} for the class:
   \label{sl:obj-func}
   \snippetwithoutput{pointfunc}{geom}{pointfunc}
   %\verbatimsnippet{pointfunc}
-  We call such internal functions `methods'
+  We call such internal functions `methods'.\\
+  Data members, even \n{private}, are global to the methods.
 \end{slide}
 
 So far you have seen methods that use the data members of an object to
@@ -240,7 +266,7 @@ pointdefault.cxx:32:21: error: no matching function for call to
                 'Vector::Vector()'
    Vector p1(1.,2.), p2;
 \end{verbatim}
-So:
+The problem is with \n{p2}. How is it created? We need to define two constructors:
 \verbatimsnippet{pointdef1}
 \end{slide}
 
@@ -418,12 +444,30 @@ constructor, you need to know its prototype. There are a couple of
 possibilities; see for instance:
 %
 \verbatimsnippet{classwithcopy}
+\snippetwithoutput{classwithcopyuse}{object}{copyscalar}
 
 \begin{slide}{Copy constructor}
   \label{sl:class-copy}
-  Default copy constructors are defined. You can redefine them as needed.
-  \verbatimsnippet{classwithcopy}
+  \begin{multicols}{2}
+    \begin{itemize}
+    \item
+      Several default copy constructors are defined
+    \item They copy an object, recursively.
+    \item You can redefine them as needed.
+    \end{itemize}
+    \vfill\columnbreak
+    \verbatimsnippet{classwithcopy}
+  \end{multicols}
+  \snippetwithoutput{classwithcopyuse}{object}{copyscalar}
 \end{slide}
+
+\begin{block}{Copying is recursive}
+  \label{sl:class-copy-vector}
+  Class with a vector:
+  \verbatimsnippet{classwithcopyvector}
+  Copying is recursive, so the copy has its own vector:
+  \snippetwithoutput{classwithcopyvectoruse}{object}{copyvector}
+\end{block}
 
 \Level 1 {Destructor}
 
