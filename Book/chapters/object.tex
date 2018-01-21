@@ -186,6 +186,8 @@ the object. In order to change them we need functions, which we call
   \verbatimsnippet{pointprivateset}
 \end{block}
 
+\Level 1 {Methods}
+
 With the accessors, you have just seen a first example of a class
 \indextermdef{method}: a function that is only defined for objects of
 that class, and that have access to the private data of that object.
@@ -196,12 +198,13 @@ Let's now look at more meaningful methods. For instance, for the
 \snippetwithoutput{pointfunc}{geom}{pointfunc}
 
 By making these functions public, and the data members
-private,, you define an \acf{API} for the class:
+private, you define an \acf{API} for the class:
 \begin{itemize}
 \item You are defining operations for that class; they are the only
   way to access the data of the object.
-\item The methods can use the data of the object, or alter it.
-\item The actual data of the object is not accessible from outside the
+\item The methods can use the data of the object, or alter it. All
+  data members, even when declared \n{private}, or global to the methods.
+\item  Data members declared \n{private} are not accessible from outside the
   object.
 \end{itemize}
 
@@ -223,6 +226,43 @@ For instance, you may want to scale a vector by some amount:
   \label{sl:obj-func-on}
   \snippetwithoutput{pointscaleby}{geom}{pointscaleby}
 \end{slide}
+
+\begin{block}{Direct alteration of internals}
+  \label{sl:obj-return-ref}
+  Return a reference to a private member:
+\begin{verbatim}
+class Vector {
+private:
+  double vx,vy;
+public:
+double &x() { return vx; };
+};
+int main() {
+  Vector v;
+  v.x() = 3.1;
+}
+\end{verbatim}
+\end{block}
+
+\begin{block}{Reference to internals}
+  \label{sl:obj-return-const-ref}
+  Returning a reference saves you on copying.\\
+  Prevent unwanted changes by using a `const reference'.
+\begin{verbatim}
+class Grid {
+private:
+  vector<Point> thepoints;
+public:
+  const vector<Point> &points() {
+    return thepoints; };
+};
+int main() {
+  Grid grid;
+  cout << grid.points()[0];
+  // grid.points()[0] = whatever ILLEGAL
+}
+\end{verbatim}
+\end{block}
 
 The methods you have seen so far only returned elementary
 datatypes. It is also possible to return an object, even from the same

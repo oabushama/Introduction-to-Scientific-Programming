@@ -59,7 +59,7 @@ Program Norms
 
   print *,"SectionMg"
   !!codesnippet fsectionmg
-  y(1:5:2) = z(1:3)
+  y(1:5:2) = z(:)
   print '(i3)',y
   !!codesnippet end
   print *,"sectionmg"
