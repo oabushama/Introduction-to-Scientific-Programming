@@ -150,3 +150,8 @@ using namespace std;
 \end{verbatim}
 in a header file. Anyone using the header would have no idea what
 functions are suddenly defined.
+
+\begin{slide}{Big namespace no-no}
+  \label{sl:h-no-using}
+  Do not put \n{using} in a header file that a user may include.
+\end{slide}

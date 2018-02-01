@@ -2,14 +2,11 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2016/7 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2016-8 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** vectorinit.cxx : 
  ****
  ****************************************************************/
-
-#include <iostream>
-using namespace std;
 
 //codesnippet pointinit
 struct vector_a { double x; double y; } ;

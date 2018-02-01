@@ -9,8 +9,13 @@
  ****************************************************************/
 
 #include <iostream>
+using std::cout;
+using std::endl;
 #include <iomanip>
-using namespace std;
+using std::right;
+using std::setbase;
+using std::setfill;
+using std::setw;
 
 int main() {
 

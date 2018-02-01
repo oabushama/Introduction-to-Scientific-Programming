@@ -8,10 +8,19 @@
  ****
  ****************************************************************/
 
-#include <fstream>
 #include <iostream>
+using std::cin;
+using std::cout;
+using std::endl;
 #include <iomanip>
-using namespace std;
+using std::right;
+using std::setbase;
+using std::setfill;
+using std::setw;
+
+#include <fstream>
+using std::ofstream;
+using std::ios;
 
 int main() {
 

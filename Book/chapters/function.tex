@@ -70,6 +70,7 @@ Code becomes more readable: introduce application terminology.
 
 \begin{block}{Code reuse}
   \label{sl:function-reuse}
+Example: multiple norm calculations:
   \begin{multicols}{2}
     \small
     Repeated code:
@@ -99,7 +100,8 @@ int main() {
 \end{verbatim}
   \end{multicols}
   Code becomes shorter, easier to maintain.\\
-  (Don't worry about array stuff in this example)
+  (Don't worry about array stuff in this example)\\
+  Introduces application terminology.
 \end{block}
 
 \Level 0 {Function definition and call}
@@ -421,7 +423,17 @@ y = f(x1,x2,x3);
   \snippetwithoutput{passvalue}{func}{passvalue}
 \end{slide}
 
+Passing a variable to a routine passes the value; in the routine, the
+variable is local.
+
+\verbatimsnippet{localparm}
+
+You can local changes:
+
+\verbatimsnippet{readonlyparm}
+
 \Level 1 {Pass by reference}
+\label{sec:pass-by-ref}
 \index{pass by reference|see{parameter, pass by reference}}
   
 Having only one output is a limitation on functions. Therefore there
@@ -494,16 +506,8 @@ We also the following terminology for function parameters:
 
 \begin{block}{Pass by reference example 1}
   \label{sl:pass-reference1}
-\begin{verbatim}
-void f( int &i ) {
-  i = 5;
-}
-int main() {
-  int var = 0;
-  f(var);
-  cout << var << endl;
-\end{verbatim}
-Compare the difference with leaving out the reference.
+  \snippetwithoutput{setbyref}{basic}{setbyref}
+  Compare the difference with leaving out the reference.
 \end{block}
 
 As an example, consider a function that tries to read a value from a

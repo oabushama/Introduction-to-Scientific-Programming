@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++11/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% if.tex : conditionals
 %%%%
@@ -124,9 +124,9 @@ If you have a number of cases corresponding to specific integer
 values, there is the \indextermtt{switch} statement.
 
 \begin{block}{Switch statement example}
-\label{sl:switch}
-%\verbatimsnippet{switchstatement}
-\snippetwithoutput{switchstatement}{basic}{switch}
+  \label{sl:switch}
+  Cases are executed consecutively until you `break':
+  \snippetwithoutput{switchstatement}{basic}{switch}
 \end{block}
 
 \Level 0 {Scopes}
@@ -174,5 +174,7 @@ if ( something ) {
     \texttt{!}&not&\n{!( x>1 && x<2 )}\\
     \hline
   \end{tabular}
-  
+
+  \emph{Precendence}\index{precedence} rules are common sense. When in
+  doubt, use parentheses.
 \end{block}

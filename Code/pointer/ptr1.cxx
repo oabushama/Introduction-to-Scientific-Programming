@@ -9,8 +9,11 @@
  ****************************************************************/
 
 #include <iostream>
+using std::cout;
+using std::endl;
+
 #include <memory>
-using namespace std;
+using std::shared_ptr;
 
 //codesnippet thingcall
 class thing {

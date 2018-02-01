@@ -101,7 +101,8 @@ public:
 }
   ...
   Segment somesegment;
-  Point somepoint = somesegment.get_the_end_point();
+  Point somepoint =
+    somesegment.get_the_end_point();
 \end{verbatim}
 or store one and derive the other:
 \begin{verbatim}
@@ -199,6 +200,7 @@ public:
 int main() {
   Special special_object;
   special_object.general_method();
+  special_object.special_method();
 }
 \end{verbatim}
 \end{slide}

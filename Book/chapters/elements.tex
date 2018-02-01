@@ -394,6 +394,38 @@ found = true;
   Print out \n{true} and \n{false}. What do you get?
 \end{exercise}
 
+\Level 1 {Strings}
+
+Strings, that is, strings of characters, are not a C++ built-in
+datatype. Thus, they take some extra setup to use.
+See chapter~\ref{ch:string} for a full discussion.
+For now, if you
+want to use strings:
+
+\begin{block}{Quick intro to strings}
+  \label{sl:quick-string}
+  \begin{itemize}
+  \item Add the following at the top of your file:
+\begin{verbatim}
+#include <string>
+using std::string;
+\end{verbatim}
+\item Declare string variables as
+\begin{verbatim}
+string name;
+\end{verbatim}
+\item And you can now \n{cin} and \n{cout} them.
+  \end{itemize}
+\end{block}
+
+\begin{exercise}
+  \label{ex:ask-for-name}
+  Write a program that asks for the user's first name, and prints
+  something like \n{Hello, Victor!} in response.
+
+  What happens if you enter first and last name?
+\end{exercise}
+
 \Level 0 {Input/Output, or I/O as we say}
 \label{sec:io}
 
@@ -416,6 +448,10 @@ cout << "Here is the root: " << sqrt(x) << endl;
   There is also a \indexterm{cin}, which serves to take user input and
   put it in a numerical variable.
 \begin{verbatim}
+// add at the top of your program:
+using std::cin;
+
+// then in your main:
 int i;
 cin >> i;
 \end{verbatim}

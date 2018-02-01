@@ -57,6 +57,8 @@ cases. First:
   You can write a \indextermsub{range-based}{for} loop, which
   considers the elements as a collection.
 \begin{verbatim}
+for ( int i=0; i<N; i++) {
+  float e = array[i]; /* something with e */ };
 for ( float e : array )
   // statement about element with value e
 for ( auto e : array )
@@ -131,6 +133,7 @@ This takes a new syntax:
 #include <vector>
 using std::vector;
 
+vector<type> name;
 vector<type> name(size);
 vector<type> name(size,value);
 \end{verbatim}
@@ -239,10 +242,12 @@ size of a vector: it has that information internally.
 \begin{slide}{Vector methods}
   \label{sl:vector-method}
   \begin{itemize}
-  \item Get elements with \n{ar[3]} (zero-based indexing).
+  \item Get elements with \n{ar[3]} (zero-based indexing).\\
+    (for C programmers: this is not dereferencing, this uses an
+    operator method)
   \item Get elements, including bound checking, with \n{ar.at(3)}.
   \item Size: \n{ar.size()}.
-  \item Other functions: \n{front}, \n{back}, \n{insert}, \n{erase}.
+  \item Other functions: \n{front}, \n{back}.
   \end{itemize}
 \end{slide}
 
@@ -260,6 +265,8 @@ vector<int> array(5);
 array.push_back(35);
 cout << array.size(); // is now 6 !
 \end{verbatim}
+also \n{pop_back}, \n{insert}, \n{erase}.\\
+Flexibility comes with a price.
 \end{block}
 
 This is not a good way of creating arrays: if you know the size, it is
@@ -496,6 +503,7 @@ scalar arguments.
 vector<float> row(20);
 vector<vector<float>> rows(10,row);
 \end{verbatim}
+Vector of vectors.
 \end{block}
 
 This is not contiguous.

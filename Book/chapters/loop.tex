@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% loop.tex : loop constructs
 %%%%
@@ -20,9 +20,14 @@ of operations:
 \item Recurrences: \[ x_{i+1} = f(x_i). \]
 \item Inspect or transformation every element of a database table.
 \end{itemize}
-(Fine point: the first two cases actually need to be performed in
-sequences, while the last one corresponds more to a mathematical
-`forall' quantor.)
+
+\begin{remark}
+  The first two cases actually need to be performed in
+  sequence, while the last one corresponds more to a mathematical
+  `forall' quantor. This difference can be exploited when you learn
+  \indextermsub{parallel}{programming}. Fortran has a
+  \indextermbus{do}{concurrent} loop construct for this.
+\end{remark}
 
 What you need is known as a~\indextermdef{loop}: a~number of
 statements that get repeated. The two types of loop statement in C++ are:
@@ -38,7 +43,7 @@ section~\ref{sec:loopuntil}.
 
 In the most common case, a for loop has a
 \indextermbus{loop}{counter}, ranging from some lower to some upper
-bound. And example showing the syntax for this simple case is:
+bound. An example showing the syntax for this simple case is:
 \begin{verbatim}
 for (int var=low; var<upper; var++) {
   // statements involving the loop variable:
@@ -69,7 +74,7 @@ Use compiler flag \n{-std=c99}.
 
 \begin{exercise}
   \label{ex:manyhello}
-  Read an integer value, and print `Hello world' that many times.
+  Read an integer value with \n{cin}, and print `Hello world' that many times.
 \end{exercise}
 
 The loop header has three components, all of which are optional.
@@ -77,9 +82,9 @@ The loop header has three components, all of which are optional.
 \item An initialization. This is usually a declaration and
   initialization of an integer \indextermbus{loop}{variable}. Using
   floating point values is less advisable.
-\item A stopping test, usually involving the loop variable. If you
-  leave this out, you need a different mechanism for stopping the
-  loop; see~\ref{sec:loopuntil}.
+\item A stopping test, usually
+  involving the loop variable. If you leave this out, you need a
+  different mechanism for stopping the loop; see~\ref{sec:loopuntil}.
 \item An increment, often~\n{i++} or spelled out \n{i=i+1}. You can let the loop count down by using~\n{i--}.
 \end{itemize}
 
@@ -93,19 +98,21 @@ for (var=low; var<upper; var++) {
 but it's cleaner to make it local. However:
 \begin{verbatim}
 int var;
-..... code that sets var .....
+... code that sets var ...
 for ( ; var<upper; var++) {
-  ...
+  ... loop body ...
 }
+... code that uses the final value of var ...
 \end{verbatim}
 \item The stopping test can be omitted
 \begin{verbatim}
 for (int var=low; ; var++) { ... }
 \end{verbatim}
 if the loops ends in some other way. You'll see this later.
-\item The stopping test doesn't need to be an upper bound:
+\item The stopping test doesn't need to be an upper bound. Here is an
+  example of a loop that counts down to a lower bound.
 \begin{verbatim}
-for (int var=high-1; var>=low; var--) { ... }
+for (int var=high; var>=low; var--) { ... }
 \end{verbatim}
 \item Here are a couple of popular increments:
   \begin{itemize}
@@ -115,6 +122,21 @@ for (int var=high-1; var>=low; var--) { ... }
     where you started;
   \item \n{i*=10} to cover powers of ten.
   \end{itemize}
+\item The test is performed before each iteration:
+  \snippetwithoutput{pretest}{basic}{pretest}
+  (Historical note: at some point Fortran was post-test)
+\item The loop body can be a single statement:
+\begin{verbatim}
+if (x<0)
+  x = -x;
+\end{verbatim}
+or a block:
+\begin{verbatim}
+if (x<0) {
+  cout << "Error" << endl;
+  x = -x;
+}
+\end{verbatim}
 \end{itemize}
 
 \begin{slide}{Loop syntax}
@@ -122,6 +144,7 @@ for (int var=high-1; var>=low; var--) { ... }
   \begin{itemize}
   \item Loop variable is usually an integer.
   \item The stopping test be any test; can even be empty.
+  \item The stopping test is performed at the start of each iteration.
   \item The increment can be a decrement or something like \n{var*=10}
   \item Any and all of initialization, test, increment can be empty:\\
     \n{for(;;) {...}}
@@ -131,6 +154,7 @@ int var;
 for (var=low; var<upper; var++) {
 \end{verbatim}
 but it's cleaner to make it local.)
+\item Loop body is a single statement or a block.
   \end{itemize}
 \end{slide}
 
@@ -239,9 +263,10 @@ For the following exercise, see figure~\ref{fig:ij-diag}.
 
   Can you traverse the $i,j$ indices such that they first enumerate
   all pairs $i+j=1$, then $i+j=2$, then $i+j=3$ et cetera? Again, you
-  should report the first pair $i,j$ for which $i\cdot j>N$.
+  should report the first pair $i,j$ for which $i\cdot j>N$. Hint:
+  write a loop over the sum value $1,2,3,\ldots$, then find~$i,j$.
 
-  Write a program that prints out both pairs, each on a separate line,
+  You program should print out both pairs, each on a separate line,
   with the numbers separated with a comma, for instance~\n{8,5}.
 \end{exercise}
 
@@ -273,8 +298,8 @@ for (int var=low; var<N; var++) {
 
 \begin{block}{While loop}
   \label{sl:while}
-  The other possibility is a \indextermttdef{while} loop, which repeats until a
-  condition is met.
+  The other possibility for `looping until' is a
+  \indextermttdef{while} loop, which repeats until a condition is met.
 
   Syntax:
 \begin{verbatim}

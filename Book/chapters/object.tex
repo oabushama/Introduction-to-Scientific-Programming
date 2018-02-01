@@ -235,7 +235,7 @@ class Vector {
 private:
   double vx,vy;
 public:
-double &x() { return vx; };
+  double &x() { return vx; };
 };
 int main() {
   Vector v;
@@ -450,6 +450,8 @@ myobject + anotherobject
 is legal.
 
 The syntax for this is
+\begin{block}{Operator overloading}
+  \label{sl:object-operator}
 \begin{verbatim}
 <returntype> operator<op>( <argument> ) { <definition> }
 \end{verbatim}
@@ -464,6 +466,8 @@ public:
   };
 };
 \end{verbatim}
+Can even redefine equals and parentheses.
+\end{block}
 
 See section~\ref{sec:overloadbracket} for redefining the parentheses
 and square brackets.
@@ -547,7 +551,8 @@ Example:
 ~myclass() {};
 \end{verbatim}
 \item A destructor is called when the object goes out of scope.\\
-  Great way to prevent memory leaks!
+  Great way to prevent memory leaks: dynamic data can be released
+  in the destructor.
 \end{itemize}
 \end{slide}
 

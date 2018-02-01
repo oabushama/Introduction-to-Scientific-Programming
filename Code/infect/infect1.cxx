@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** infect1.cxx : multiple persons random infection
  ****               using classes
@@ -11,12 +11,15 @@
 
 #include <cmath>
 #include <iostream>
+using std::cin;
+using std::cout;
+using std::endl;
 #include <iomanip>
+using std::setw;
+
 #include <random>
 #include <ctime>
 #include <vector>
-
-using namespace std;
 
 #include "infect_lib.h"
 

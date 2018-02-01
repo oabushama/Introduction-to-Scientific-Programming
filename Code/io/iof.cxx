@@ -2,15 +2,23 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2016 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2016/8 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** iof.cxx : formatted float io
  ****
  ****************************************************************/
 
 #include <iostream>
+using std::cout;
+using std::endl;
 #include <iomanip>
-using namespace std;
+using std::fixed;
+using std::scientific;
+using std::setprecision;
+using std::right;
+using std::setbase;
+using std::setfill;
+using std::setw;
 
 int main() {
 

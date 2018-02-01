@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% obscure.tex : other stuff
 %%%%
@@ -297,53 +297,175 @@ want to force the type to be something else, there is the
 treat this thing as such-and-such a type, no matter how it was
 defined.
 
-\Level 1 {Casting constants}
+In C, there was only one casting mechanism:
+\begin{verbatim}
+sometype x;
+othertype y = (othertype)x;
+\end{verbatim}
+This mechanism is still available as the
+\indextermtt{reinterpret_cast}, which does `take this byte and pretend
+it is the following type':
+\begin{verbatim}
+sometype x;
+auto y = reinterpret_cast<othertype>(x);
+\end{verbatim}
+
+The inheritance mechanism necessitates another casting mechanism.
+An object from a derived class contains in it all the information of
+the base class. It is easy enough to take a pointer to the derived
+class, the bigger object, and cast it to a pointer to the base object.
+The other way is harder.
+
+Consider:
+\begin{verbatim}
+class Base {};
+class Derived : public Base {};
+Base *dobject = new Derived;
+\end{verbatim}
+Can we now cast dobject to a pointer-to-derived ?
+\begin{itemize}
+\item \indextermtt{static_cast} assumes that you know what you are
+  doing, and it moves the pointer regardless.
+\item \indextermtt{dynamic_cast} checks whether \n{dobject} was
+  actually of class \n{Derived} before it moves the pointer, and
+  returns \indextermtt{nullptr} otherwise.
+\end{itemize}
+
+\begin{remark}
+  One further problem with the C-style casts is that their syntax is
+  hard to spot, for instance by searching in an editor.
+  Because C++ casts have a unique keyword, they are easily recognized.
+\end{remark}
+
+\begin{slide}{C++ casts}
+  \label{sl:cpp-casts}
+  Old-style `take this byte and pretend it is XYZ':
+  \n{reinterpret_cast}
+  
+  Casting with classes:
+  \begin{itemize}
+  \item \n{static_cast} cast base to derived without check.
+  \item \n{dynamic_cast} cast base to derived with check.
+  \end{itemize}
+  Adding/removing const: \n{const_cast}
+
+  Syntactically clearly recognizable.
+\end{slide}
+
+Further reading \url{https://www.quora.com/How-do-you-explain-the-differences-among-static_cast-reinterpret_cast-const_cast-and-dynamic_cast-to-a-new-C++-programmer/answer/Brian-Bi}
+
+\Level 1 {Static cast}
 
 One use of casting is to convert to constants to a `larger' type. For
 instance, allocation does not use integers but \indextermtt{size_t}.
 
 \verbatimsnippet{longintcast}
 
-C++ pointers are really memory addresses, with no type information to it.
-With a \indexterm{cast} it becomes possible change your mind about
-what a pointer is.
+However, if the
+conversion is possible, the result may still not be `correct'.
+%
+\snippetwithoutput{longcast}{cast}{intlong}
+%
+There are no runtime tests on static casting.
 
-The statis cast is also useful for dealing with a \indextermsub{void}{pointer}.
+Static casts are a good way of casting back void pointers to what they
+were originally.
 
-The \indextermtt{static_cast} has the safety feature that the compiler
-will complain if the conversion is not possible.
+\begin{slide}{Const cast}
+  \label{sl:const-cast}
+  \verbatimsnippet{longintcast}
+  \snippetwithoutput{longcast}{cast}{intlong}  
+\end{slide}
 
 \Level 1 {Dynamic cast}
+
+Consider the case where we have a base class and derived classes.
+%
+\verbatimsnippet{polybase}
+%
+Also suppose that we have a function that takes a pointer to the base
+class:
+%
+\verbatimsnippet{polymain}
+%
+The function can discover what derived class the base pointer refers
+to:
+%
+\verbatimsnippet{polycast}
+
+\begin{slide}{Pointer to base class}
+  \label{sl:dyn-base-ptr}
+  \begin{multicols}{2}
+    Class and derived:
+    \verbatimsnippet{polybase}
+    \vfill\columnbreak
+    Pass base pointer:
+    \verbatimsnippet{polymain}
+    \vfill\hbox{}
+  \end{multicols}
+\end{slide}
 
 If we have a pointer to a derived object, stored in a pointer to a
 base class object, it's possible to turn it safely into a derived
 pointer again:
+%
+\snippetwithoutput{polycast}{cast}{deriveright}
+
+On the other hand, a \indextermtt{static_cast} would not do the job:
+%
+\snippetwithoutput{polywrong}{cast}{derivewrong}
+
+\begin{slide}{Cast to derived class}
+  \label{sl:dyn-cast}
+  \snippetwithoutput{polycast}{cast}{deriveright}
+  \snippetwithoutput{polywrong}{cast}{derivewrong}
+\end{slide}
+
+Note: the base class needs to be polymorphic, meaning that that pure
+virtual method is needed. This is not the case with a static cast,
+but, as said, this does not work correctly in this case.
+
+\Level 1 {Const cast}
+
+With \indextermtt{const_cast} you can add or remove const from a
+variable. This is the only cast that can do this.
+
+\Level 1 {Reinterpret cast}
+
+The \indextermtt{reinterpret_cast} can take any type and turn it into
+any other. This is of course very dangerous.
+
+\Level 1 {A word about void pointers}
+
+A traditional use for casts in~C was the treatment of
+\indextermsub{void}{pointer}s. The need for this is not as severe in
+C++ as it was before.
+
+A typical use of void pointers appears in the
+PETSc~\cite{petsc-efficient,petsc-home-page} library. Normally when
+you call a library routine, you have no further access to what happens
+inside that routine. However, PETSc has the functionality for you to
+specify a monitor so that you can print out internal quantities.
 \begin{verbatim}
-derived_object *derived_pointer;
-basic_class *basic_pointer;
-derived_pointer = dynamic_cast<derived_object*>(basic_pointer);
-if (derived_pointer==nullptr)
-  // cast failed
+int KSPSetMonitor(KSP ksp,
+  int (*monitor)(KSP,int,PetscReal,void*),
+  void *context,
+  // one parameter omitted
+  );
 \end{verbatim}
+Here you can declare your own monitor routine that will be called
+internally: the library makes a \indexterm{call-back} to your code.
+Since the library can not predict whether your monitor routine may
+need further information in order to function, there is the
+\n{context} argument, where you can pass a structure as void pointer.
 
-Using a \n{static_cast} here would lead to a compiler error.
-
-\Level 1 {Legacy mechanism}
-
-The syntax `open parenthesis, type, closing parenthesis' means:
-\begin{itemize}
-\item take whatever you have here,
-\item and interpret it as the specified type.
-\end{itemize}
-Example:
+This mechanism is no longer needed in C++ where you would use a
+\indexterm{lambda}:
 \begin{verbatim}
-int i[2];
-double *point_at_real = (double*)i;
-cout << "Print two integers as double: " << *point_at_real << endl;
+KSPSetMonitor( ksp,
+  [mycontext] (KSP k,int ,PetscReal r) -> int {
+    my_monitor_function(k,r,mycontext); } );
 \end{verbatim}
-
-This is very dangerous. It is also impossible to search for such a
-thing in your editor. Please use the mechanisms above.
 
 \Level 0 {lvalue vs rvalue}
 \label{sec:lrvalue}
