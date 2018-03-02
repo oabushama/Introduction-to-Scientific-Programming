@@ -34,7 +34,15 @@ int f(int i) { return g(i); }
 
 Prototypes are useful if you spread your program over multiple
 files. You would put your functions in one file
-and the main program in another:
+and the main program in another. Splitting your code over multiple
+files is good software engineering practice for a number of
+reasons. For instance, it decreases compilation
+time: if you make a small change, only that file needs to be recompiled.
+
+In this example a function \n{tester}
+is defined in a different file from the main program, so we need to
+tell \n{main} what the function looks like in order for the main
+program to be compilable:
 \begin{multicols}{2}  
 \begin{verbatim}
 // file: def.cxx
@@ -53,9 +61,8 @@ int main() {
 }
 \end{verbatim}
 \end{multicols}
-
-Or you could use your function in multiple programs and you would have to
-write it only once.
+(However, you would not do things like this in practice. See the next
+section about header files.)
 
 \Level 1 {Header files}
 \label{sec:hfile}
@@ -155,7 +162,10 @@ int main() {
   processnumber = // some system call
 };
 \end{verbatim}
-It is then defined in functions defined in your program file.
+It is then defined in the main program and any functions defined in your program file.
+
+Warning: it is tempting to define variables global but this is a
+dangerous practice.
 
 If your program has multiple files, you should not put `\n{int processnumber}'
 in the other files, because that would create a new variable, that is

@@ -28,26 +28,37 @@ If you do want to make the change visible in the
 %
 \verbatimsnippet{refparm}
 %
-There is no change to the calling program. (Some people find this bad,
+There is no change to the calling program. (Some people who are used
+to~C find this bad,
 since you can not see from the use of a function whether it passes
 %
 \emph{by reference}\index{parameter!passing!by reference}
 %
 or \emph{by value}\index{parameter!passing!by value}.)
 
-Arrays are always pass by reference:
-%
-\verbatimsnippet{arrayparm}
-%
-This is due to the fact that an array is really a pointer to memory;
-see~\ref{sec:arraypointer}. On the other hand, a \n{std::vector} is
-copied if you do not pass a reference.
-
-The old-style way of doing things:
-%
-\verbatimsnippet{starparm}
-
 \Level 0 {Pass by reference}
+
+If you use a mathematical style of subprograms, where some values go
+in, and a new entity comes out, in effect all the inputs can be
+copied. This style is called
+\indexterm{functional programming}, and
+there is much to be said for it. For instance, it makes it possible
+for the compiler to reason about your program.
+The only thing you have to worry
+about is the cost of copying, if the inputs are of non-trivial size,
+such as arrays.
+
+However, sometimes you want to alter the inputs, so instead of a copy
+you need a way of accessing the actual input object. That's what
+\emph{references}\index{reference} are invented for: to allow a subprogram access to the
+actual input entity.
+
+A bonus of using references is that you do not incur the cost of
+copying. So what if you want this efficiency, but your program is
+really functional in design? Then you can use a
+\indextermsub{const}{reference}: the argument is passed by reference,
+but you indicate explicitly that the subprogram does not alter it,
+again allowing compiler optimizations.
 
 \begin{block}{Reference: change argument}
 \label{sl:refarg-change}
@@ -104,7 +115,7 @@ The problem with this solution is that the calling program can now
 alter the private member. To prevent that, use a
 \emph{const reference}\index{reference!const!to class member}:
 %
-\verbatimsnippet{getsetref}
+\snippetwithoutput{constref}{const}{constref}
 
 Output of this fragment:
 \begin{verbatim}

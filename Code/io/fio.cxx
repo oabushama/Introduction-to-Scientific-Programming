@@ -18,8 +18,10 @@ using std::setbase;
 using std::setfill;
 using std::setw;
 
+//codesnippet fio
 #include <fstream>
 using std::ofstream;
+//codesnippet end
 
 int main() {
 
@@ -31,6 +33,7 @@ int main() {
   int number;
   cout << "A number please: ";
   cin >> number;
+  cout << endl;
   //codesnippet fio
   file_out << number << endl;
   file_out.close();

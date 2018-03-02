@@ -150,19 +150,23 @@ it would be convenient to store bottomleft/topright points.
 
 \begin{exercise}
   \label{ex:geom:rect2}
-  Make a class \n{Rectangle} (sides parallel to axes) with two constructors:
+  \begin{itemize}
+  \item
+    Make a class \n{Rectangle} (sides parallel to axes) with a constructor:
 \begin{verbatim}
-Rectangle(Point bl,Point tr);
 Rectangle(Point bl,float w,float h);
 \end{verbatim}
-  and functions
+The logical implementation is to store these quantities.
+Implement methods
 \begin{verbatim}
 float area(); float width(); float height();
 \end{verbatim}
-  Let the \n{Rectangle} object store two \n{Point} objects.
-
-  Then rewrite your exercise so that the \n{Rectangle} stores only one
-  point (say, lower left), plus the width and height.
+\item Add a second constructor
+\begin{verbatim}
+Rectangle(Point bl,Point tr);
+\end{verbatim}
+\item Rewrite your class so that it stores two \n{Point} objects.
+\end{itemize}
 \end{exercise}
 
 The previous exercise illustrates an important point: for well
@@ -196,3 +200,20 @@ by efficiency) while the program that uses the class does not change.
   internally. Let \n{LinearFunction} inherit.
 \end{exercise}
 
+\Level 0 {More stuff}
+
+\prerequisite{\ref{sec:class-ref}}
+
+The \n{Rectangle} class stores at most one corner, but may be
+convenient to sometimes have an array of all four corners.
+
+\begin{exercise}
+  \label{ex:geom:corners}
+  Add a method
+\begin{verbatim}
+const vector<Point> &corners()
+\end{verbatim}
+to the \n{Rectangle} class. The result is an array of all four
+corners, not in any order. Show by a compiler error that the array can
+not be altered.
+\end{exercise}

@@ -16,24 +16,32 @@ and binary, or \emph{unformatted}\indextermsub{unformatted}{I/O}.
 Formatted I/O uses default formatting, but you can specify formatting,
 in the I/O statement itself, or separately in a \n{Format} statement.
 
-\begin{slide}{Types of I/O}
-  \label{sl:fio-types}
-  \begin{itemize}
-  \item Formatted vs unformatted
-  \item Default formatting vs specified format
-  \end{itemize}
-\end{slide}
+Fortran I/O can be described as \indextermsub{list-directed}{I/O}:
+both input and output commands take a list of item, possibly with
+formatting specified.
 
 \begin{block}{I/O commands}
   \label{sl:fio-commands}
   \begin{itemize}
   \item \indextermfort{Print} simple output to terminal
   \item \indextermfort{Write} output to terminal or file (`unit')
-  \item \indextermfort{read} input from terminal or file
+  \item \indextermfort{Read} input from terminal or file
   \item \indextermfort{Open}, \indextermfort{Close} for files and
     streams
   \item \indextermfort{Format} format specification that can be used
     in multiple statements.
+  \end{itemize}
+\end{block}
+
+\begin{block}{Formatted and unformatted I/O}
+  \label{sl:fio-types}
+  \begin{itemize}
+  \item Formatted: ascii output. This is good for reporting, but not
+    for numeric data storage.
+  \item Unformatted: binary output. Great for further processing of
+    output data. See section~\ref{sec:rawdataf}.
+  \item Beware: binary data is machine-dependent. Use \indexterm{hdf5}
+    for portable binary.
   \end{itemize}
 \end{block}
 
@@ -46,17 +54,6 @@ print *,"The result is",result
 In its easiest form, you use the star to indicate that you don't care
 about formatting; after the comma you can then have any number of
 comma-separated strings and variables.
-
-\begin{block}{Formatted and unformatted I/O}
-  \begin{itemize}
-  \item Formatted: ascii output. This is good for reporting, but not
-    data analysis.
-  \item Unformatted: binary output. Great for further processing of
-    output data. See section~\ref{sec:rawdataf}.
-  \item Beware: binary data is machine-dependent. Use \indexterm{hdf5}
-    for portable binary.
-  \end{itemize}
-\end{block}
 
 \Level 1 {Print on one line}
 
@@ -73,6 +70,16 @@ will print the items on one line.
 print *,( i*i,i=1,n)
 \end{verbatim}
 \end{block}
+
+\begin{slide}{Simple print}
+  \label{sl:fio-print}
+  All on one line:
+\begin{verbatim}
+print *,"The result is",result
+print *,item1,item2,item3
+print *,( i*i,i=1,n)  
+\end{verbatim}
+\end{slide}
 
 \Level 1 {Printing arrays}
 
@@ -126,6 +133,11 @@ print '("Result:",3f5.3)',x,y,z
 \end{itemize}
 Putting a number in front of a single specifier indicates that it is
 to be repeated.
+
+If the data takes more positions than the format specifier allows, a
+string of asterisks is printed:
+%
+\snippetwithoutput{fasterisk}{fio}{asterisk}
 
 If you find yourself using the same format a number of times, you can
 give it a \indexterm{label}:
@@ -246,7 +258,7 @@ write(unit,fmt,ADVANCE="no") data
 \end{verbatim}
 will not issue a newline.
 
-\indextermfort{open} \indextermfort{close}
+\indextermfort{open} \indextermfort{Close}
 
 \Level 0 {Unformatted output}
 \label{sec:rawdataf}

@@ -99,30 +99,10 @@ cout << hex << i << dec << j;
   \label{sl:io-float}
   Use \n{setprecision} to set the number of digits before and after
   decimal point:
-\begin{verbatim}
-  x = 1.234567;
-  for (int i=0; i<10; i++) {
-    cout << setprecision(4) << x << endl;
-    x *= 10;
-  }
-\end{verbatim}
-\end{block}
-
-\begin{block}{Output}
-  \label{sl:io-float-out}
-\begin{verbatim}
-1.235
-12.35
-123.5
-1235
-1.235e+04
-1.235e+05
-1.235e+06
-1.235e+07
-1.235e+08
-1.235e+09
-\end{verbatim}
-(Notice the rounding)
+  %
+  \snippetwithoutput{formatfloat}{io}{formatfloat}
+  %
+  (Notice the rounding)
 \end{block}
 
 \begin{block}{Fixed point precision}

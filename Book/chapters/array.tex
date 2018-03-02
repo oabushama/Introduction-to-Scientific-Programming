@@ -14,10 +14,10 @@
 
 An \indextermdef{array} is an indexed data structure, that for each
 index stores an integer, floating point number, character,
-object,\ldots
+object, et cetera.
 In scientific applications, arrays often correspond to vectors and
-matrices, potentialy of quite large size. (If you know about
-\acfp{FEM}, you know that vectors can have sizes in the millions or beyond.)
+matrices, potentialy of quite large size. (If you know about the
+\acf{FEM}, you know that vectors can have sizes in the millions or beyond.)
 
 To define an array you need to declare its size, and you need to give
 it its contents. Those actions don't necessarily have to occur
@@ -27,7 +27,7 @@ if you know the array size and contents already before you run your
 code, you can create the whole array in one statement. There is more
 than one syntax for doing so.
 %
-\verbatimsnippet{arrayinit}
+\snippetwithoutput{arrayinit}{array}{staticinit}
 
 As you see in this example, if \n{a}~is an array, and \n{i} and
 integer, then \n{a[i]} is the i'th element.
@@ -40,25 +40,28 @@ integer, then \n{a[i]} is the i'th element.
 \item Therefore, if an array has $n$ elements, its last element has
   index~\n{n-1}.
 \item If you try to get an array elements outside the bounds of the
-  array, your program may give a runtime error, but that does not
+  array, the compiler will only detect this in simple cases. More
+  likely, your program may give a runtime error, but that does not
   necessarily happen. You could just get some random value.
-\item An array does not contain the information about its size: you
-  have to store that in variable.
+\item You can not query the size of an array by its name: you have to
+  store that information separately in a variable.
 \end{itemize}
 
 \Level 1 {Ranging over an array}
 \label{sec:arrayrange}
 
-If you need to consider all the elements in an array, there are two
-cases. First:
+If you need to consider all the elements in an array, you typically
+use a \n{for} loop. There are various ways of doing this.
+
+First of all consider the cases where you consider the array as a
+collection of elements, and the loop functions like a mathematical
+`for all'.
 
 \begin{block}{Range over elements}
   \label{sl:array-range}
   You can write a \indextermsub{range-based}{for} loop, which
   considers the elements as a collection.
 \begin{verbatim}
-for ( int i=0; i<N; i++) {
-  float e = array[i]; /* something with e */ };
 for ( float e : array )
   // statement about element with value e
 for ( auto e : array )
@@ -68,8 +71,12 @@ for ( auto e : array )
 \snippetwithoutput{rangemax}{array}{rangemax}
 \end{block}
 
-(You can spell out \n{for (float e : array)} but \indextermtt{auto} is
+(You can spell out the type of the array element, but such type
+specifications can be complexit. In that case, using \indextermtt{auto} is
 quite convenient.)
+
+If you actually need the array index of the element, you can use a
+traditional \n{for} loop with loop variable.
 
 \begin{block}{Indexing the elements}
   \label{sl:index-range}
@@ -79,6 +86,8 @@ quite convenient.)
 for (int i= /* from first to last index */ )
   // statement about index i
 \end{verbatim}
+Example: find the maximum element and where it occurs.
+%
 \snippetwithoutput{idxmax}{array}{idxmax}
 \end{block}
 
@@ -121,9 +130,11 @@ absx = abs(x);
 \label{sec:stdvector}
 
 Statically allocated arrays are enough for many purposes. However, as
-pointed out above, they have some disadvantages. In this section we
+pointed out above, they are not perfect; for instance, you have to
+remember their size, and out-of-bound accesses are not always
+detected. In this section we
 will look at one way of dynamically creating arrays: through the STL
-\n{vector}.
+\n{vector} class that is more convenient and safe.
 
 This takes a new syntax:
 
@@ -234,7 +245,8 @@ The existence of this method means that you don't have to remember the
 size of a vector: it has that information internally.
 
 \begin{advanced}
-  The vector class is a template class: the type that it uses (int,
+  The vector class is a template class (see chapter~\ref{ch:template}
+  for details): the type that it uses (int,
   float) is not predetermined, but you can make a vector object out of
   whatever type you like.
 \end{advanced}
@@ -260,13 +272,12 @@ Use the \n{push_back} method to add elements at the end:
 
 \begin{block}{Dynamic extension}
   \label{sl:vector-dynamic}
-\begin{verbatim}
-vector<int> array(5);
-array.push_back(35);
-cout << array.size(); // is now 6 !
-\end{verbatim}
-also \n{pop_back}, \n{insert}, \n{erase}.\\
-Flexibility comes with a price.
+  Extend with \indextermtt{push_back}:
+  %
+  \snippetwithoutput{vectorend}{array}{vectorend}
+  %
+  also \n{pop_back}, \n{insert}, \n{erase}.\\
+  Flexibility comes with a price.
 \end{block}
 
 This is not a good way of creating arrays: if you know the size, it is
@@ -276,12 +287,11 @@ Other methods that change the size: \n{insert}, \n{erase}.
 
 \Level 1 {Vector assignment}
 
-The limitation that you couldn't create an array in an object still
-holds:
+You may want an object that contains a vector, where the size of the
+vector is passed to the constructor. Since the class definition is an
+abstract definition of all the object, clearly you can not have the
+array size there.
 
-\begin{block}{Can you make a class around a vector?}
-  \label{sl:class-with-vector}
-  Vector needs to be created with the object:
 \begin{verbatim}
 class witharray {
 private:
@@ -292,7 +302,27 @@ public:
   }
 }
 \end{verbatim}
-\end{block}
+
+\begin{slide}{Can you make a class around a vector?}
+  \label{sl:class-with-vector}
+  Vector needs to be created with the object, so you can not have the
+  size in the class definition
+\begin{verbatim}
+class witharray {
+private:
+  vector<int> the_array( ???? );
+public:
+  witharray( int n ) {
+    thearray( ???? n ???? );
+  }
+}
+\end{verbatim}
+\end{slide}
+
+The solution is to specify a vector without size in the class
+definition, which creates a vector of size zero. When you create an
+object, you then create a vector of the right size, and write that
+over the vector member of the object.
 
 \begin{block}{Create and assign}
   \label{sl:class-has-vector}
@@ -376,7 +406,7 @@ then sorts it.)
 
 \Level 1 {Dynamic size of vector}
 
-Writing
+It is tempting to use \n{push_back} to create a vector dynamically.
 
 \begin{block}{Dynamic size extending}
   \label{sl:vector-extend}
@@ -391,8 +421,46 @@ iarray.push_back(4);
 \end{verbatim}
 \end{block}
 
-to add elements to the vector, dynamically resizing it. Since this
-requires operating system actions, it will probably be inefficient.
+However, this dynamic resizing involves memory management, and maybe
+operating system functions. This will probably be
+inefficient. Therefore you should use such dynamic mechanisms only
+when strictly necessary.
+
+\Level 1 {Iterators}
+\label{sec:iterator}
+
+You have seen how you can iterate over a vector
+\begin{itemize}
+\item by a for loop over the indices, and
+\item with a range-based loop over the indices.
+\end{itemize}
+There is a third way, which is actually the basic mechanism underlying
+the range-based looping.
+
+An \indextermdef{iterator} is a pointer to a vector element. Mirroring
+the index-loop convention of
+\begin{verbatim}
+for (int i=0; i<hi; i++)
+  element = vec.at(i);
+\end{verbatim}
+you can iterate:
+\begin{verbatim}
+for (auto elt_ptr=vec.begin(); elt_ptr<vec.end(); ++elt_ptr)
+  element = *elt_ptr;
+\end{verbatim}
+Some remarks:
+\begin{itemize}
+\item This is one of the very few places where you need the asterisk in C++
+  for \indexterm{dereferencing}.
+\item As with a normal loop, the \n{end} iterator point just beyond the end
+  of the vector.
+\item You can do \indextermbus{pointer}{arithmetic} on iterators, as
+  you can see in the \verb-++elt_ptr- update part of the loop header.
+\end{itemize}
+Another illustration of pointer arithmetic on iterators is getting the
+last element of a vector:
+%
+\snippetwithoutput{vectorend}{array}{vectorend}
 
 \Level 1 {Timing}
 
@@ -457,9 +525,10 @@ Notice how you have to remember the array length yourself? This is all
 much easier by using a \n{std::vector}. See
 \url{http://www.cplusplus.com/articles/37Mf92yv/}.
 
-The \n{new} mechanism is a cleaner variant of \indextermtt{malloc},
-which was the dynamic allocation mechanism in~C. It is still
-available, but should not be used.
+The \indextermtt{new} mechanism is a cleaner variant of \indextermtt{malloc},
+which was the dynamic allocation mechanism in~C. Malloc is still
+available, but should not be used. There are even very few legitimate
+uses for \n{new}.
 
 \Level 0 {Wrapping a vector in an object}
 
@@ -471,26 +540,6 @@ because you want to add some methods.
 Unfortunately this means you may have to recreate some methods:
 %
 \verbatimsnippet{vectorinheritat}
-
-\Level 0 {Old-style arrays}
-
-Static arrays are really an abuse of the equivalence of arrays and
-addresses of the C programming language. This appears for instance in
-parameter passing mechanisms.
-
-\Level 1 {Arrays and subprograms}
-
-Arrays can be passed to a subprogram, but the bound is unknown there.
-%
-\verbatimsnippet{arraypass}
-%
-\begin{exercise}
-  Rewrite the above exercises where the sorting tester or the maximum
-  finder is in a subprogram.
-\end{exercise}
-
-Subprograms can alter array elements. This was not possible with
-scalar arguments.
 
 \Level 0 {Multi-dimensional cases}
 
@@ -550,7 +599,30 @@ A.element(2,3) = 7.24;
   Implement matrix-matrix multiplication.
 \end{exercise}
 
-\Level 0 {Multi-dimensional arrays}
+\Level 0 {Old-style arrays}
+
+Static arrays are really an abuse of the equivalence of arrays and
+addresses of the C programming language. This appears for instance in
+parameter passing mechanisms.
+
+\Level 1 {C-style arrays and subprograms}
+
+Arrays can be passed to a subprogram, but the bound is unknown there.
+%
+\verbatimsnippet{arraypass}
+%
+\begin{exercise}
+  Rewrite the above exercises where the sorting tester or the maximum
+  finder is in a subprogram.
+\end{exercise}
+
+Unlike with scalar arguments, array arguments can be altered by a
+subprogram: it is as if the array is always passed by reference. This is
+not strictly true: what happens is that the address of the first
+element of the array is passed. Thus we are really dealing with pass
+by value, but it is the array address that is passed rather than its value.
+
+\Level 1 {Multi-dimensional arrays}
 
 Multi-dimensional arrays can be declared and used with a simple extension of
 the prior syntax:
@@ -599,44 +671,6 @@ We can now also understand how arrays are passed to functions:
 \item In the higher dimensional case, the subprogram needs to know the
   size of all dimensions except for the first one.
 \end{itemize}
-
-\Level 0 {Dynamically allocated arrays}
-\label{sec:arraynew}
-
-(To properly understand this section, you also need to read
-section~\ref{sec:arraypointer}.)
-
-A declaration 
-\begin{verbatim}
-float ar[500];
-\end{verbatim}
-is local to the scope it is in. This has some problems:
-\begin{itemize}
-\item Allocated on the \indexterm{stack}; may lead to stack overflow.
-\item Can not be used as a class member:
-\begin{verbatim}
-class thing {
-private:
-  double array[ ???? ];
-public:
-  thing(int n) {
-    array[ n ] ???? this does not work
-  }
-}
-\end{verbatim}
-\item Can not be returned from subprogram:
-\begin{verbatim}
-void make_array( double array[],int n ) {
-  double array[n] ???? does not work
-}
-int main() {
-  ....
-  make_array(array,100);
-}
-\end{verbatim}
-\end{itemize}
-
-We will now look at several strategies for dynamically creating arrays.
 
 \Level 0 {Exercises}
 

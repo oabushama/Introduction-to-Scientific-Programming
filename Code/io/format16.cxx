@@ -11,11 +11,11 @@
 #include <iostream>
 using std::cout;
 using std::endl;
+//codesnippet format16
 #include <iomanip>
-using std::right;
 using std::setbase;
 using std::setfill;
-using std::setw;
+//codesnippet end
 
 int main() {
 

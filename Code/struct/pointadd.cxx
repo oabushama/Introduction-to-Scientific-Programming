@@ -20,7 +20,7 @@ struct vector { double x; double y; } ;
 //codesnippet structreturn
 struct vector vector_add
       ( struct vector p1,
-	struct vector p2 ) {
+        struct vector p2 ) {
    struct vector p_add =
      {p1.x+p2.x,p1.y+p2.y};
    return p_add;

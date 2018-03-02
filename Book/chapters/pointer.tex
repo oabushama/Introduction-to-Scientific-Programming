@@ -12,10 +12,11 @@
 \Level 0 {What is a pointer}
 
 The term pointer is used to denote a reference to a quantity. The
-reason that people like to use C++ and C as high performance languages is
+reason that people like to use C as high performance language is
 that pointers are actually memory addresses. So you're programming
 `close to the bare metal' and are in fargoing control over what your program
-does.
+does. C++~also has pointers, but there are fewer uses for them than
+for C~pointers. When possible, references should be used.
 
 \Level 0 {Pointers and addresses, C style}
 \label{sec:cderef}
@@ -84,20 +85,12 @@ the pointer points to, you need to \indexterm{dereference} it.
 
 \begin{block}{Dereferencing}
   \label{sl:starderef}
-    Using \n{*addr} `dereferences' the pointer: gives the thing it
-    points to;\\
-    the value of what
-    is in the memory location.
-
-\begin{verbatim}
-int i;
-int* addr = &i;
-i = 5;
-cout << *addr;
-i = 6;
-cout << *addr;
-\end{verbatim}
-This will print~\n{5} and~\n{6}:
+  Using \n{*addr} `dereferences' the pointer: gives the thing it
+  points to;\\
+  the value of what
+  is in the memory location.
+  %
+  \snippetwithoutput{cintpointer}{pointer}{cintpointer}
 \end{block}
 
 \begin{block}{illustration}
@@ -423,112 +416,3 @@ never release, because in the intervening code another pointer to it
 may have been set. However, if that doesn't happen, the memory is both
 allocated, and unreachable. That's what memory leaks are about.
 
-\Level 0 {Safer pointers in C++}
-\label{sec:shared_ptr}
-
-Section~\ref{sec:memleak} showed how how memory can become
-unreachable. The \indexterm{C++11} standard has mechanisms that can
-help solve this problem\footnote{A mechanism along these lines already
-  existed in the `weak pointer', but it was all but unusable.}.
-
-A `shared pointer' is a pointer that keeps count of how many times the
-object is pointed to. If one of these pointers starts pointing
-elsewhere, the shared pointer decreases this `reference count'. If the
-reference count reaches zero, the object is deallocated or destroyed.
-
-\begin{block}{Shared pointers}
-  \label{sl:shared-ptr}
-Shared pointers look like regular pointers:
-\begin{verbatim}
-#include <memory>
-
-std::shared_ptr<myobject> obj_ptr
-    = std::shared_ptr<myobject>( new myobject(x) );
-obj_ptr->mymethod(1.1);
-cout << obj_ptr->member << endl;
-
-auto array = std::shared_ptr<double>( new double[100] );
-// ILLEGAL: array[1] = 2.14;
-array->at(2) = 3.15;
-\end{verbatim}
-\end{block}
-
-As an illustration, let's take a class that reports its construction
-and destruction:
-%
-\begin{block}{Reference counting illustrated}
-  \label{sl:construct-destruct-trace}
-  We need a class with constructor and destructor tracing:
-  \verbatimsnippet{thingcall}
-\end{block}
-
-%
-and
-\begin{block}{Trace1: pointer overwrite}
-  \label{sl:shared-ptr-overwrite}
-  Let's create a pointer and overwrite it:
-  %
-  \snippetwithoutput{shareptr1}{pointer}{ptr1}
-\end{block}
-%
-You see that overwriting the pointer does not cause a
-\indexterm{memory leak}, as would happen with C-style pointers, but
-causes destruction of the object it points to.
-
-Next we overwrite a pointer, but after having copied it. Now the
-destructor will not be called until all references to the object
---~both the original pointer and the copy~-- have been overwritten.
-%
-\begin{block}{Trace2: pointer copy}
-  \label{sl:shared-ptr-copy}
-  \snippetwithoutput{shareptr2}{pointer}{ptr2}
-\end{block}
-
-\Level 1 {Shared from this}
-
-There is a problem with shared pointers in the case where a method has
-to produce a pointer. For instance, to program linked lists you want a
-method:
-\begin{slide}{Linked list code}
-  \label{sl:share-ptr-node}  
-\begin{verbatim}
-node *node::prepend_or_append(node *other) {
-  if (other->value>this->value) {
-    this->tail = other;
-    return this;
-  } else {
-    other->tail = this;
-    return other;
-  }
-};
-\end{verbatim}
-Can we do this with shared pointers?
-\end{slide}
-
-\begin{block}{A problem with shared pointers}
-  \label{sl:share-ptr-node-sh}
-\begin{verbatim}
-shared_pointer<node> node:prepend_or_append
-    ( shared_ptr<node> other ) {
-  if (other->value>this->value) {
-    this->tail = other;
-\end{verbatim}
-So far so good. However, \n{this} is a \n{node*}, not a
-\n{shared_ptr<node}, so
-\begin{verbatim}
-    return this;
-\end{verbatim}
-returns the wrong type.
-\end{block}
-
-\begin{block}{Solution: shared from this}
-  \label{sl:share-ptr-node-from}
-  Solution: define your node class with (warning, major magic alert):
-\begin{verbatim}
-class node : public enable_shared_from_this<node> {
-\end{verbatim}
-This allows you to write:
-\begin{verbatim}
-    return this->shared_from_this();
-\end{verbatim}
-\end{block}

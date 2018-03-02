@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% algodata.tex : introductin to algorithms and data structures
 %%%%
@@ -15,8 +15,9 @@ The main data structure you have seen so far is the array. In this
 section we briefly sketch some more complicated data structures.
 
 \Level 1 {Stack}
+\index{stack|(textbf}
 
-A \indextermdef{stack} is a data structure that is a bit like an
+A \emph{stack} is a data structure that is a bit like an
 array, except that you can only see the last element:
 \begin{itemize}
 \item You can inspect the last element;
@@ -37,7 +38,10 @@ int pop();
 \end{verbatim}
 \end{exercise}
 
+\index{stack|)}
+
 \Level 1 {Linked lists}
+\index{list!linked|(textbf}
 \label{sec:linklist}
 
 \prerequisite{\ref{ch:pointer}}
@@ -49,7 +53,7 @@ middle. Instead:
 \item copy data over (with insertion),
 \item delete old array storage
 \end{itemize}
-This is very expensive. (It's what happens in a
+This is expensive. (It's what happens in a
 C++~\indextermtt{vector}; section~\ref{sec:stdvector-dynamic}.)
 
 \begin{figure}[ht]
@@ -63,7 +67,7 @@ C++~\indextermtt{vector}; section~\ref{sec:stdvector-dynamic}.)
 \end{figure}
 
 If you need to do lots of insertions, make a
-\indextermsub{linked}{list}. The basic data structure is a \n{Node},
+\emph{linked list}. The basic data structure is a \n{Node},
 which contains 
 \begin{enumerate}
 \item
@@ -161,6 +165,8 @@ covers that case.
   %
   \verbatimsnippet{liststep5}
 \end{exercise}
+
+\index{list!linked|)}
 
 \Level 1 {Trees}
 

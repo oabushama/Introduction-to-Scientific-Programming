@@ -14,11 +14,12 @@ using std::endl;
 
 #include <memory>
 using std::shared_ptr;
+using std::make_shared;
 
 class thing {
 public:
-  thing() { cout << "calling constructor\n"; };
-  ~thing() { cout << "calling destructor\n"; };
+  thing()  { cout << ".. calling constructor\n"; };
+  ~thing() { cout << ".. calling destructor\n"; };
 };
 
 int main() {
@@ -26,8 +27,7 @@ int main() {
   //codesnippet shareptr2
   cout << "set pointer2" << endl;
   auto thing_ptr2 =
-    shared_ptr<thing>
-      ( new thing );
+    make_shared<thing>();
   cout << "set pointer3 by copy"
        << endl;
   auto thing_ptr3 = thing_ptr2;
@@ -38,6 +38,13 @@ int main() {
        << endl;
   thing_ptr3 = nullptr;
   //codesnippet end
+
+#if 0
+  // alternatively
+  auto thing_ptr2 =
+    shared_ptr<thing>
+      ( new thing );
+#endif
 
   return 0;
 }

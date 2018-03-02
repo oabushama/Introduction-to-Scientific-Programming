@@ -161,6 +161,7 @@ the compiler adds descriptions to the pointers, to translate code
 automatically to strided indexing.
 
 \Level 0 {Example: linked lists}
+\index{list!linked!in Fortran|(}
 
 \begin{block}{Linked list}
   \label{sl:flink1}
@@ -172,7 +173,7 @@ automatically to strided indexing.
 \end{block}
 
 One of the standard examples of using pointers is the
-\indexterm{linked list}. This is a dynamic one-dimensional structure
+\emph{linked list}. This is a dynamic one-dimensional structure
 that is more flexible than an array. Dynamically extending an array
 would require re-allocation, while in a list an element can be
 inserted.
@@ -255,3 +256,6 @@ First of all, you need to find the two nodes,
   %
   \verbatimsnippet{listinsertf}
 \end{block}
+
+\index{list!linked!in Fortran|)}
+

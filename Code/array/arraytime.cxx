@@ -29,7 +29,9 @@ int main() {
   {
     //codesnippet vectorflex
     vector<int> flex;
+    //codesnippet end
     point = std::chrono::system_clock::now();
+    //codesnippet vectorflex
     for (int i=0; i<LENGTH; i++)
       flex.push_back(i);
     //codesnippet end
@@ -42,7 +44,9 @@ int main() {
   {
     //codesnippet vectorat
     vector<int> stat(LENGTH);
+    //codesnippet end
     point = std::chrono::system_clock::now();
+    //codesnippet vectorat
     for (int i=0; i<LENGTH; i++)
       stat.at(i) = i;
     //codesnippet end
@@ -55,8 +59,10 @@ int main() {
   {
     //codesnippet vectorsub
     vector<int> stat(LENGTH);
+    //codesnippet end
     stat[0] = 0.;
     point = std::chrono::system_clock::now();
+    //codesnippet vectorsub
     for (int i=0; i<LENGTH; i++)
       stat[i] = i;
     //codesnippet end
@@ -69,7 +75,9 @@ int main() {
   {
     //codesnippet vectornew
     int *stat = new int[LENGTH];
+    //codesnippet end    
     point = std::chrono::system_clock::now();
+    //codesnippet vectornew
     for (int i=0; i<LENGTH; i++)
       stat[i] = i;
     //codesnippet end    

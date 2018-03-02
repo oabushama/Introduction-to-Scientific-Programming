@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** fibomemo.cxx : fibonacci with memoization
  ****
@@ -40,7 +40,7 @@ int fibonacci_memoized( vector<int> &values, int top ) {
   //cout << "set f(" << top << ") to " << values[top] << endl;
   return values[top];
 }
-//codesnipet end
+//codesnippet end
 
 int main() {
   int fibo_n;

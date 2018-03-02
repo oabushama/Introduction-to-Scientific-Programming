@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% struct.tex : about structures
 %%%%
@@ -69,6 +69,8 @@ int main() {
 
 \begin{block}{Struct initialization}
   \label{sl:structinit}
+  You assign a whole struct, or set defaults in the definition.
+  %
   \verbatimsnippet{pointinit}
 \end{block}
 
@@ -93,6 +95,7 @@ you can not use the brace-assignment.
 \begin{block}{Returning structures}
   \label{sl:struct-return}
   You can return a structure from a function:
+  %
   \snippetwithoutput{structreturn}{struct}{pointadd}
 
   (Something weird here with scopes: the explanation is that the
@@ -112,7 +115,8 @@ you can not use the brace-assignment.
   that multiplies a matrix times a vector.
 
   Can you make a matrix structure that is based on the vector
-  structure, for instance using it to store the matrix columns?
+  structure, for instance using vectors to store the matrix rows, and
+  then using the inner product method to multiply matrices?
 \end{exercise}
 
 \begin{block}{Passing structures by reference}

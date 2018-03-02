@@ -14,12 +14,13 @@ using std::endl;
 
 #include <memory>
 using std::shared_ptr;
+using std::make_shared;
 
 //codesnippet thingcall
 class thing {
 public:
-  thing() { cout << "calling constructor\n"; };
-  ~thing() { cout << "calling destructor\n"; };
+  thing()  { cout << ".. calling constructor\n"; };
+  ~thing() { cout << ".. calling destructor\n"; };
 };
 //codesnippet end
 
@@ -29,12 +30,16 @@ int main() {
   cout << "set pointer1"
        << endl;
   auto thing_ptr1 =
-    shared_ptr<thing>
-      ( new thing );
+    make_shared<thing>();
   cout << "overwrite pointer"
        << endl;
   thing_ptr1 = nullptr;
   //codesnippet end
+
+#if 0
+  // alternatively
+  auto thing_ptr1 = shared_ptr<thing>( new thing );
+#endif
 
   return 0;
 }

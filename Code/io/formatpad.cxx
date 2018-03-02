@@ -11,19 +11,19 @@
 #include <iostream>
 using std::cout;
 using std::endl;
+//codesnippet formatpad
 #include <iomanip>
-using std::right;
-using std::setbase;
 using std::setfill;
 using std::setw;
+//codesnippet formatpad
 
 int main() {
 
   //codesnippet formatpad
   for (int i=1; i<200000000; i*=10)
     cout << "Number: "
-	 << setfill('.') << setw(6) << i << endl;
-  cout << endl;
+         << setfill('.') << setw(6) << i
+	 << endl;
   //codesnippet end
   
   return 0;

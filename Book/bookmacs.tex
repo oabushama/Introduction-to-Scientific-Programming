@@ -158,9 +158,9 @@
                    \raggedright \ignorespaces \fi
                  }
                  {}%{\end{quote}
-\newenvironment{cnote}{\begin{quotation}\emph{C difference:\ }}{\end{quotation}}
-\newenvironment{f77note}{\begin{quotation}\emph{F77 note:\ }}{\end{quotation}}
-\newenvironment{advanced}{\begin{quotation}\emph{Advanced note:\ }}{\end{quotation}}
+\newenvironment{cnote}{\begin{quotation}\noindent\emph{C difference:\ }}{\end{quotation}}
+\newenvironment{f77note}{\begin{quotation}\noindent\emph{F77 note:\ }}{\end{quotation}}
+\newenvironment{advanced}{\begin{quotation}\noindent\emph{Advanced note:\ }}{\end{quotation}}
 
 %%%%
 %%%% More
@@ -369,7 +369,9 @@
     \footnotesize\textbf{Code:}
     \codesnippet{#1}
     \par\hbox{}\vfill\columnbreak
-    \textbf{Output from running #3 in code directory #2:}
+    { \raggedright
+      \textbf{Output from running #3 in code directory#2:}
+    }
     \hbox{}
     \immediate\write18{ cd ../code/#2 && make #3 && make run_#3 > #3.out }
     \verbatiminput{../code/#2/#3.out}
@@ -391,7 +393,7 @@
     \par\hbox{}\vfill\columnbreak
     \textbf{Output from running #3 in code directory #2:}
     \hbox{}
-    \immediate\write18{ cd ../code/#2 && make #3.o > #3.out 2>&1 }
+    \immediate\write18{ cd ../code/#2 && make error_#3.o > #3.out 2>&1 }
     \verbatiminput{../code/#2/#3.out}
     \par\hbox{}\vfill\hbox{}
   \end{multicols}

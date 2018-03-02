@@ -22,15 +22,19 @@ public:
   int& int_to_set() { return mine; };
   void inc() { mine++; };
 };
+//codesnippet end
 
 int main() {
 
+//codesnippet constref
   has_int an_int;
   an_int.inc(); an_int.inc(); an_int.inc();
-  cout << "Contained int is now: " << an_int.int_to_get() << endl;
+  cout << "Contained int is now: "
+       << an_int.int_to_get() << endl;
   /* Compiler error: an_int.int_to_get() = 5; */
   an_int.int_to_set() = 17;
-  cout << "Contained int is now: " << an_int.int_to_get() << endl;
+  cout << "Contained int is now: "
+       << an_int.int_to_get() << endl;
   //codesnippet end
   
   return 0;

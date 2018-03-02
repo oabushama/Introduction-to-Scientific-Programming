@@ -11,12 +11,41 @@
 
 \Level 0 {General discussion}
 
-Sources or errors:
-\begin{itemize}
-\item Array indexing. See section~\ref{sec:stdvector}.
-\item Null pointers
-\item Division by zero and other numerical errors.
-\end{itemize}
+When you're programming, making errors is close to inevitable.
+%
+\emph{Syntax errors}\index{syntax!error}, violations of the grammar of
+the language, will be caught by the compiler, and prevent generation
+of an executable. In this section we will therefore talk about
+%
+\emph{runtime errors}\index{runtime error}: behaviour at runtime that
+is other than intended.
+
+Here are some sources of runtime errors
+\begin{description}
+\item[Array indexing] Using an index outside the array bounds may give
+  a runtime error:
+\begin{verbatim}
+vector<float> a(10);
+for (int i=0; i<=10; i++)
+  a.at(i) = x; // runtime error
+\end{verbatim}
+or undefined behaviour:
+\begin{verbatim}
+vector<float> a(10);
+for (int i=0; i<=10; i++)
+  a[i] = x;
+\end{verbatim}
+See further section~\ref{sec:stdvector}.
+\item[Null pointers] Using an uninitialized pointer is likely to crash
+  your program:
+\begin{verbatim}
+Object *x;
+if (false) x = new Object;
+x->method();
+\end{verbatim}
+\item[Numerical errors] such as division by zero will not crash your
+  program, so catching them takes some care.
+\end{description}
 
 Guarding against errors.
 \begin{itemize}
@@ -63,7 +92,7 @@ void do_something() {
   \emph{catching}\index{exception!catch}
   the exception:
 \begin{verbatim}
-throw {
+try {
   do_something();
 } catch (int i) {
   cout << "doing something failed: error=" << i << endl;
@@ -110,9 +139,9 @@ try {
 \end{verbatim}
 \end{block}
 
-\begin{block}{Catch-all}
+\begin{block}{Catch any exception}
   \label{sl:exception-catchall}
-  Catch all exceptions:
+  Catch exceptions without specifying the type:
 \begin{verbatim}
 try {
   // something
@@ -121,6 +150,28 @@ try {
 }
 \end{verbatim}
 \end{block}
+
+\begin{exercise}
+  Define the function \[ f(x)=x^3-19x^2+79x+100 \] and evaluate
+  $\sqrt{f(i)}$ for the integers $i=0\ldots20$.
+  \begin{itemize}
+  \item First write the program naively, and print out the root. Where is
+    $f(i)$ negative? What does your program print?
+  \item You see that floating point errors such as the root of a negative number
+    do not make your program crash or
+    something like that. Alter your program to throw an exception if
+    $f(i)$ is negative, catch the exception, and print an error
+    message.
+  \item Alter your program to test the output of the \n{sqrt} call,
+    rather than its input.
+    Use the function \indextermtt{isnan}
+\begin{verbatim}
+#include <cfenv>
+using std::isnan;  
+\end{verbatim}
+    and again throw an exception.
+  \end{itemize}
+\end{exercise}
 
 \begin{block}{More about exceptions}
   \label{sl:exception-more}
@@ -134,6 +185,7 @@ void funk() throw();
   \indextermtt{bad_exception}, etc.
 \item An exception handler can throw an exception; to rethrow the same
   exception use `\n{throw;}' without arguments.
-\item Exceptions delete all stack data, but not \n{new} data.
+\item Exceptions delete all stack data, but not \n{new} data. Also,
+  destructors are called; section~\ref{sec:destructor}.
   \end{itemize}
 \end{block}

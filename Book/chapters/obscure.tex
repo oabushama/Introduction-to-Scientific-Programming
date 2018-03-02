@@ -105,8 +105,8 @@ class Things {
 private:
   int var;
 public:
-  int f(int ivar,int c) const {
-    return var+c; // typo: should be `ivar'
+  f(int &ivar,int c) const {
+    var += c; // typo: should be `ivar'
   }
 }
 \end{verbatim}
@@ -143,8 +143,8 @@ std::vector< std::shared_ptr< myclass >>*
   myvar = new std::vector< std::shared_ptr< myclass >>
                 ( 20, new myclass(1.3) );
 \end{verbatim}
-(Vector of 20 shared pointers to \n{myclass}, initialized with unique instances.)
-You can write this as:
+(Pointer to vector of 20 shared pointers to \n{myclass}, initialized
+with unique instances.)  You can write this as:
 \begin{verbatim}
 auto myvar =
   new std::vector< std::shared_ptr< myclass >>
@@ -234,6 +234,7 @@ Can be used with anything that is iteratable\\
 \end{block}
 
 \Level 0 {Lambdas}
+\label{sec:lambda}
 
 The C++11 mechanism of \indextermbus{lambda}{expression}s makes
 dynamic definition of functions possible.
@@ -249,7 +250,7 @@ Store lambda in a variable:
 \verbatimsnippet{lambdavar}
 \end{block}
 
-A non-trivial use of lambdas uses the capture to fix one argument of a
+A non-trivial use of lambdas uses the \indexterm{capture} to fix one argument of a
 function.
 Let's say we want a function that computes exponentials for some fixed
 exponent value. We take the 
@@ -417,7 +418,12 @@ On the other hand, a \indextermtt{static_cast} would not do the job:
 
 \begin{slide}{Cast to derived class}
   \label{sl:dyn-cast}
+  This is how to do it:
+  %
   \snippetwithoutput{polycast}{cast}{deriveright}
+  %
+  Do not use this function \n{g}:
+  %
   \snippetwithoutput{polywrong}{cast}{derivewrong}
 \end{slide}
 
@@ -429,11 +435,6 @@ but, as said, this does not work correctly in this case.
 
 With \indextermtt{const_cast} you can add or remove const from a
 variable. This is the only cast that can do this.
-
-\Level 1 {Reinterpret cast}
-
-The \indextermtt{reinterpret_cast} can take any type and turn it into
-any other. This is of course very dangerous.
 
 \Level 1 {A word about void pointers}
 
@@ -460,12 +461,13 @@ need further information in order to function, there is the
 \n{context} argument, where you can pass a structure as void pointer.
 
 This mechanism is no longer needed in C++ where you would use a
-\indexterm{lambda}:
+\indexterm{lambda} (section~\ref{sec:lambda}):
 \begin{verbatim}
 KSPSetMonitor( ksp,
   [mycontext] (KSP k,int ,PetscReal r) -> int {
     my_monitor_function(k,r,mycontext); } );
 \end{verbatim}
+
 
 \Level 0 {lvalue vs rvalue}
 \label{sec:lrvalue}

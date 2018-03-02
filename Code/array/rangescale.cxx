@@ -20,7 +20,6 @@ int main() {
 
   //examplesnippet rangescale
   int numbers[] = {1,4,2,6,5};
-  int tmp_max = numbers[0];
   for ( auto &v : numbers )
     v *= 3;
   cout << "Scale 0'th by 3: " << numbers[0] << endl;

@@ -22,14 +22,14 @@ int main() {
     int i = 3;
     if ( something ) {
       int i = 5;
-      cout << i << endl;
+      cout << "Local: " << i << endl;
     }
-    cout << i << endl;
+    cout << "Global: " << i << endl;
     if ( something ) {
       float i = 1.2;
-      cout << i << endl;
+      cout << "Local again: " << i << endl;
     }
-    cout << i << endl;
+    cout << "Global again: " << i << endl;
     //codesnippet end
     cout << "true" << endl;
   }
@@ -41,14 +41,15 @@ int main() {
     int i = 3;
     if ( something ) {
       int i = 5;
-      cout << i << endl;
+      cout << "Local: " << i << endl;
     }
-    cout << i << endl;
+    cout << "Global: " << i << endl;
     if ( something ) {
       float i = 1.2;
       cout << i << endl;
+      cout << "Local again: " << i << endl;
     }
-    cout << i << endl;
+    cout << "Global again: " << i << endl;
     //codesnippet end
     cout << "false" << endl;
   }

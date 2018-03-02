@@ -197,7 +197,8 @@ some process that needs to run until some dynamically determined
 condition is satisfied. In this section you will see some ways of
 coding such cases.
 
-First of all, the stopping test in the `for' loop is optional:
+First of all, the stopping test in the `for' loop is optional, so you
+can write an indefinite loop as:
 \begin{verbatim}
 for (int var=low; ; var=var+1) { ... }
 \end{verbatim}
@@ -215,7 +216,7 @@ for (int var=low; ; var=var+1) { ... }
 \end{verbatim}
 \end{slide}
 
-So how do you end such a loop? For that you use the
+How do you end such a loop? For that you use the
 \indextermtt{break} statement. If the execution encounters this
 statement, it will continue with the first statement after the loop.
 
@@ -294,6 +295,7 @@ for (int var=low; var<N; var++) {
   statement;
 }
 \end{verbatim}
+The only difference is in layout.
 \end{block}
 
 \begin{block}{While loop}
@@ -332,7 +334,7 @@ is an example in which the second syntax is more appropriate.
   \label{sl:while3}
   \verbatimsnippet{dowhile}
 
-  More elegant.
+  The post-test syntax leads to more elegant code.
 \end{block}
 
 \begin{exercise}
@@ -373,6 +375,8 @@ is an example in which the second syntax is more appropriate.
   40\rightarrow 20\rightarrow 10\rightarrow 5\cdots \]
   }
 
+  (What happens if you keep iterating after reaching~1?)
+  
   Try all starting values $u_1=1,\ldots,1000$ to find the values that
   lead to the longest sequence: every time you find a sequence that is
   longer than the previous maximum, print out the starting number.

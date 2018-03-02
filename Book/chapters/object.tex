@@ -28,7 +28,7 @@ That's what an object is:
   are the functions that operate on that object.
 \end{itemize}
 C++ does not actually have a `object' keyword; instead you define a
-class with the \indextermttdef{class} which describes all the objects
+class with the \indextermttdef{class} keyword, which describes all the objects
 of that class.
 
 First of all, you can make an object look pretty much like a
@@ -514,6 +514,7 @@ possibilities; see for instance:
 \end{block}
 
 \Level 1 {Destructor}
+\label{sec:destructor}
 
 Just there is a constructor routine to create an object, there is a
 \indextermdef{destructor} to destroy the object.
@@ -593,6 +594,8 @@ which gives output
 
 \begin{block}{Destructors and exceptions}
   \label{sl:exceptobj}
+  The destructor is called when you throw an exception:
+  %
   \snippetwithoutput{exceptobj}{object}{exceptobj}
 \end{block}
 

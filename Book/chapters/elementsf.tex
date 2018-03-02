@@ -216,7 +216,17 @@ where
 \end{itemize}
 \end{slide}
 
-\Level 1 {Data types}
+\begin{block}{Data types}
+  \begin{itemize}
+  \item Numeric: \indextermfort{Integer}, \indextermfort{Real},
+    \indextermfort{Complex}. Further specifications for numerical precision.
+  \item Logical: \indextermfort{Logical}.
+  \item Character: \indextermfort{Character}. Strings are realized as
+    arrays of characters; chapter~\ref{ch:stringf}.
+  \end{itemize}  
+\end{block}
+
+\Level 1 {Declarations}
 \label{sec:ftype}
 
 Fortran has a somewhat unusual treatment of data types: if you don't
@@ -301,6 +311,14 @@ Force a constant to be \n{real(8)}:
   \end{itemize}
 \end{block}
 
+\begin{block}{Complex}
+  \label{sl:fcomplex}
+  Complex constants are written as a pair of reals in parentheses.\\
+  There are some basic operations.
+  %
+  \snippetwithoutput{fcomplex}{basicf}{complex}
+\end{block}
+
 \Level 1 {Initialization}
 
 Variables can be initialized in their declaration:
@@ -382,6 +400,18 @@ PRINT *,n
 \end{block}
 
 \Level 0 {Review questions}
+
+\begin{exercise}
+  What is the output for this fragment, assuming \n{i,j} are integers?
+  %
+  \verbatimsnippet{idiv}
+\end{exercise}
+
+\begin{exercise}
+  What is the output for this fragment, assuming \n{i,j} are integers?
+  %
+  \verbatimsnippet{fdiv}
+\end{exercise}
 
 \begin{exercise}
   \label{ex:f-elt-rev1}

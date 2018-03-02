@@ -26,19 +26,24 @@ int main() {
 
   //codesnippet rhsref
   myclass obj(5);
-  cout << "object data: " << obj.data() << endl;
+  cout << "object data: "
+       << obj.data() << endl;
   int dcopy = obj.data();
   dcopy++;
-  cout << "object data: " << obj.data() << endl;
+  cout << "object data: "
+       << obj.data() << endl;
   int &dref = obj.data();
   dref++;
-  cout << "object data: " << obj.data() << endl;
+  cout << "object data: "
+       << obj.data() << endl;
   auto dauto = obj.data();
   dauto++;
-  cout << "object data: " << obj.data() << endl;
+  cout << "object data: "
+       << obj.data() << endl;
   auto &aref = obj.data();
   aref++;
-  cout << "object data: " << obj.data() << endl;
+  cout << "object data: "
+       << obj.data() << endl;
   //codesnippet end
 
   return 0;

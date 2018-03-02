@@ -12,19 +12,20 @@
 using std::cin;
 using std::cout;
 using std::endl;
+//codesnippet formatleft
 #include <iomanip>
 using std::left;
-using std::right;
-using std::setbase;
 using std::setfill;
 using std::setw;
+//codesnippet end
 
 int main() {
 
   //codesnippet formatleft
   for (int i=1; i<200000000; i*=10)
     cout << "Number: "
-	 << left << setfill('.') << setw(6) << i << endl;
+         << left << setfill('.') << setw(6)
+	 << i << endl;
   //codesnippet end
   cout << endl;
   
