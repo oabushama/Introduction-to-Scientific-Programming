@@ -18,7 +18,8 @@ int main() {
   //codesnippet pretest
   cout << "before the loop" << endl;
   for (int i=5; i<4; i++)
-    cout << "in iteration " << i << endl;
+    cout << "in iteration "
+	 << i << endl;
   cout << "after the loop" << endl;
   //codesnippet end
   return 0;

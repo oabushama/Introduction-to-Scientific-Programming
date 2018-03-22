@@ -38,7 +38,7 @@ statements that get repeated. The two types of loop statement in C++ are:
 \item the \indextermsub{while}{loop}, where the statements are
   repeated indefinitely until some condition is satisfied.
 \end{itemize}
-We will now consider the for loop; the while loop comes in
+We will now first consider the \n{for} loop; the \n{while} loop comes in
 section~\ref{sec:loopuntil}.
 
 In the most common case, a for loop has a
@@ -87,6 +87,14 @@ The loop header has three components, all of which are optional.
   different mechanism for stopping the loop; see~\ref{sec:loopuntil}.
 \item An increment, often~\n{i++} or spelled out \n{i=i+1}. You can let the loop count down by using~\n{i--}.
 \end{itemize}
+This is how a loop is executed.
+\begin{itemize}
+\item The initialization is performed.
+\item At the start of each iteration, including the very first, the
+  stopping test is performed. If the test is true, the iteration is
+  performed with the current value of the loop variable(s).
+\item At the end of each iteration, the increment is performed.
+\end{itemize}
 
 Some variations on the simple case.
 \begin{itemize}
@@ -124,7 +132,9 @@ for (int var=high; var>=low; var--) { ... }
   \end{itemize}
 \item The test is performed before each iteration:
   \snippetwithoutput{pretest}{basic}{pretest}
-  (Historical note: at some point Fortran was post-test)
+  %
+  (Historical note: at some point Fortran was post-test, so one
+  iteration was also performed.)
 \item The loop body can be a single statement:
 \begin{verbatim}
 if (x<0)
@@ -183,8 +193,9 @@ for (int i=0; i<m; i++)
   \[ 1\leq i,j\leq 10,\quad  j\leq i. \]
   Output one line for each \n{i} value.
 
-  Same, but 
-  \[ 1\leq i,j\leq 10,\quad |i-j|<2. \]
+  Now write an $i,j$ loop that prints all pairs with
+  \[ 1\leq i,j\leq 10,\quad |i-j|<2, \]
+  again printing one line per \n{i} value.
 \end{exercise}
 
 \Level 0 {Looping until}
@@ -348,6 +359,37 @@ is an example in which the second syntax is more appropriate.
 \end{exercise}
 
 \Level 0 {Exercises}
+
+\begin{exercise}
+  For each of the following loop headers, how many times is the body
+  executed? (You can assume that the body does not change the loop variable.)
+  \begin{itemize}
+  \item 
+\begin{verbatim}
+for (int i=0; i<0; i++)
+\end{verbatim}
+  \item 
+\begin{verbatim}
+for (int i=0; i<=0; i++)
+\end{verbatim}
+  \item 
+\begin{verbatim}
+for (int i=0; i<=0; ++i)
+\end{verbatim}
+  \item 
+\begin{verbatim}
+for (int i=0; i<0; i--)
+\end{verbatim}
+  \item 
+\begin{verbatim}
+for (int i=0; i<=0; i--)
+\end{verbatim}
+  \item 
+\begin{verbatim}
+for (int i=0; i>-1; i--)
+\end{verbatim}
+  \end{itemize}
+\end{exercise}
 
 \begin{exercise}
   \label{ex:pythagoras}
