@@ -9,10 +9,13 @@
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\Level 0 {What is a pointer}
+The term pointer is used to denote a reference to a quantity.  This
+chapter will explain pointers, and give some uses for them.  If you
+don't already speak~C, skip to the first subsection.
 
-The term pointer is used to denote a reference to a quantity.
-There is less need for pointers in C++ than there was in~C.
+If you do
+already know~C, we remark that there is less need for pointers in C++
+than there was in~C.
 
 \begin{itemize}
 \item To pass an argument
@@ -31,14 +34,43 @@ There is less need for pointers in C++ than there was in~C.
 
 Legitimate needs:
 \begin{itemize}
-\item Objects on the heap. Use \indextermtt{shared_ptr} or
-  \indextermtt{unique_ptr}; section~\ref{sec:shared_ptr}.
+\item Linked lists and \acp{DAG}; see the example in section~\ref{sec:linklist}.
+\item Objects on the heap.
 \item Use \indextermtt{nullptr} as a signal.
 \end{itemize}
 
-\begin{block}{Shared pointers}
+\Level 0 {Making a shared pointer}
+
+If you declare a variable \n{x} as integer, that is
+\begin{verbatim}
+int x;
+\end{verbatim}
+then \n{x} `is' an integer. Sometimes, however, you want to refer to a
+variable indirectly: you want to say `look at this integer, and now
+look at that integer'. You can do that with pointers.
+
+Let's first say something about how pointers are used. If you have an
+object \n{Obj X} with a member \n{y}, you access that with \n{X.y}; if you
+have a pointer~\n{X} to such an object, you write \n{X->y}.
+
+So what is the type of this latter~\n{X} and how did you create it?
+\begin{verbatim}
+shared_ptr<Obj> X =
+    make_shared<Obj>( /* constructor args */ )
+  // or:
+auto X = make_shared<Obj>( /* args */ )
+\end{verbatim}
+
+This requires at the top of your file:
+\begin{verbatim}
+#include <memory>
+using std::shared_ptr;
+using std::make_shared;
+\end{verbatim}
+
+\begin{slide}{Shared pointers}
   \label{sl:shared-ptr}
-Shared pointers look like regular pointers:
+Make and use shared pointer:
 \begin{verbatim}
 #include <memory>
 
@@ -52,7 +84,18 @@ auto array = std::shared_ptr<double>( new double[100] );
 // ILLEGAL: array[1] = 2.14;
 array->at(2) = 3.15;
 \end{verbatim}
-\end{block}
+\end{slide}
+
+\Level 0 {Garbage collection}
+
+The big problem with C-style pointers is the chance of a
+\indexterm{memory leak}. If a pointer to a block of memory goes out of
+scope, the block still exists, but is no longer accessible. Shared
+pointers do not have this problem: if they go out of scope, or are
+overwritten, the destructor on the object is called, thereby releasing
+any allocated memory.
+
+An example.
 
 \begin{block}{Reference counting illustrated}
   \label{sl:construct-destruct-trace}
@@ -67,28 +110,70 @@ array->at(2) = 3.15;
   \snippetwithoutput{shareptr1}{pointer}{ptr1}
 \end{block}
 
+However, if a pointer is copied, there are two pointers to the same
+block of memory, and only when both disappear, or point elsewhere, is
+the object deallocated.
+
 \begin{block}{Pointer copy}
   \label{sl:shared-ptr-copy}
   \snippetwithoutput{shareptr2}{pointer}{ptr2}
 \end{block}
 
-\begin{block}{Linked list code}\par 
-  \label{sl:share-ptr-node}
+\Level 0 {More about pointers}
+
+\Level 1 {Get the pointed data}
+
+Most of the time, accessing the target of the pointer through the
+arrow notation is enough. However, if you actually want the object,
+you can get it with \indextermtt{get}:
 \begin{verbatim}
-node *node::prepend_or_append(node *other) {
+X->y;
+// is the same as
+X.get().y;
+\end{verbatim}
+
+You can use this to make a shared pointer to an old-style allocated
+block of data:
+%
+\snippetwithoutput{ptrarray}{pointer}{ptrarray}
+%
+but notice that you have none of the safeguards of a \n{vector}: no
+bound checking, no function to query the size.
+
+\Level 1 {Pointers to non-objects}
+
+In the introduction to this chapter we argued that many of the uses
+for pointers that existed in~C have gone away in C++, and the main one
+left is the case where multiple objects share `ownership' of some
+other object.
+
+You can still make shared pointers to scalar data, for instance to an
+array of scalars. You then get the advantage of the memory management,
+but you do not get the \n{size} function and such that you would have
+if you'd used a \n{vector} object.
+%
+\snippetwithoutput{ptrarray}{pointer}{ptrarray}
+
+\Level 1 {Shared pointer to `this'}
+
+Inside an object method, the object is accessible as
+\indextermtt{this}. This is a pointer in the classical sense. So what
+if you want to refer to `this' but you need a shared pointer?
+
+For instance, suppose you're writing a linked list code, and your
+\n{node} class has a method \n{prepend_or_append} that gives a shared
+pointer to the new head of the list. Your code would start something
+like this, handling the case where the new node is appended to the current:
+\begin{verbatim}
+shared_pointer<node> node:append
+    ( shared_ptr<node> other ) {
   if (other->value>this->value) {
     this->tail = other;
-    return this;
-  } else {
-    other->tail = this;
-    return other;
-  }
-};
 \end{verbatim}
-Can we do this with shared pointers?
-\end{block}
+But now you need to return this node, as a shared pointer. But
+\n{this} is a \n{node*}, not a \n{shared_ptr<node>}.
 
-\begin{block}{A problem with shared pointers}
+\begin{slide}{A problem with shared pointers}
   \label{sl:share-ptr-node-sh}
 \begin{verbatim}
 shared_pointer<node> node:prepend_or_append
@@ -102,9 +187,19 @@ So far so good. However, \n{this} is a \n{node*}, not a
     return this;
 \end{verbatim}
 returns the wrong type.
-\end{block}
+\end{slide}
 
-\begin{block}{Solution: shared from this}
+The solution here is that you can return
+\begin{verbatim}
+    return this->shared_from_this();
+\end{verbatim}
+if you have defined your node class to inherit from what probably
+looks like magic:
+\begin{verbatim}
+class node : public enable_shared_from_this<node>
+\end{verbatim}
+
+\begin{slide}{Solution: shared from this}
   \label{sl:share-ptr-node-from}
   It is possible to have a `shared pointer to this' if you
   define your node class with (warning, major magic alert):
@@ -115,4 +210,4 @@ This allows you to write:
 \begin{verbatim}
     return this->shared_from_this();
 \end{verbatim}
-\end{block}
+\end{slide}
