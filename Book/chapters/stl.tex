@@ -30,19 +30,6 @@ using std::function;
 \end{verbatim}
 see section~\ref{sec:usename}.
 
-\Level 0 {Containers}
-
-Vectors (section~\ref{sec:stdvector}) and strings
-(chapter~\ref{ch:string}) are special cases of a STL
-\indextermdef{container}. Methods such as \n{push_back} and \n{insert}
-apply to all containers.
-
-\Level 1 {Iterators}
-
-The container class has a subclass \indextermdef{iterator} that can be
-used to iterate through all elements of a container. This was
-discussed in section~\ref{sec:iterator}.
-
 \Level 0 {Complex numbers}
 \label{sec:stl-complex}
 
@@ -57,6 +44,84 @@ complex<double> d(1.,3.);
 \end{verbatim}
 Math operator like \n{+,*} are defined, as are math functions.
 
+\Level 0 {Containers}
+
+Vectors (section~\ref{sec:stdvector}) and strings
+(chapter~\ref{ch:string}) are special cases of a STL
+\indextermdef{container}. Methods such as \n{push_back} and \n{insert}
+apply to all containers.
+
+\Level 1 {Maps: associative arrays}
+
+Arrays use an integer-valued index. Sometimes you may wish to use an
+index that is not ordered, or for which the ordering is not relevant.
+A~common example is looking up information by string, such as finding
+the age of a person, given their name. This is sometimes called
+`indexing by content', and the data structure that supports this is
+formally known as an \indextermsub{associative}{array}.
+
+In C++ this is implemented through a \indextermttdef{map}:
+\begin{verbatim}
+#include <map>
+using std::map;
+map<string,int> age;
+\end{verbatim}
+is set of
+pairs where the first item (which is used for indexing) is of type
+\n{string}, and the second item (which is found) is of type \n{int}.
+
+A map is made by inserting the elements one-by-one:
+\begin{verbatim}
+#include <map>
+using std::make_pair;
+age.insert(make_pair("Alice",29));
+age["Bob"] = 32;
+\end{verbatim}
+
+You can range over a map:
+\begin{verbatim}
+for ( auto person : age )
+  cout << person.first << " has age " << person.second << endl;
+\end{verbatim}
+
+\Level 1 {Iterators}
+
+The container class has a subclass \indextermdef{iterator} that can be
+used to iterate through all elements of a container. This was
+discussed in section~\ref{sec:iterator}.
+
+\Level 0 {Tuples}
+\label{sec:tuple}
+
+Remember how in section~\ref{sec:pass-by-ref} we said that if you
+wanted to return more than one value, you could not do that through a
+return value, and had to use an \indextermsub{output}{parameter}?
+Well, using the \ac{STL} there is a different solution.
+
+You can make a \indextermdef{tuple}: an entity that comprises several
+components, possibly of different type, and which unlike a
+\indextermtt{struct} you do not need to define beforehand.
+
+\begin{lstlisting}
+std::tuple<int,double> id = std:
+id = std::make_tuple<int,double>(3,5.12);
+std::get<0>(id) += 1;
+\end{lstlisting}
+
+This does not look terribly elegant. Fortunately,
+\emph{C++17}\index{C++!C++17} can use denotations and the \n{auto}
+keyword to make this considerably shorter. A typical idiom would be:
+
+\begin{lstlisting}
+auto f_int_double() {
+  return { 3, 5.12 };
+}
+int main() {
+  auto[index,value] = f_int_double();
+}
+\end{lstlisting}
+
 \Level 0 {Random numbers}
 
 \Level 0 {Time}
+

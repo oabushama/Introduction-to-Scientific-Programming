@@ -26,7 +26,7 @@ public:
 
 int main() {
 
-  //codesnippet constautoref
+  //codesnippet constrefget
   A my_a(5.7);
   const auto &get_data = my_a.access();
   get_data += 1;

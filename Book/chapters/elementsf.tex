@@ -48,6 +48,17 @@ print *,"Hello world!"
 to the empty program, and compile and run it.
 \end{exercise}
 
+Fortran ignores \emph{case}\index{Fortran!case ignores}!
+Both keywords such as \n{Begin} or \n{Program} can just as well be written as
+\n{bEGIN} or \n{PrOgRaM}.
+%% \footnote{Fortran also ignores spaces. Please
+%%   don't use that fact; it only makes your program confusing to read.}.
+
+A program optionally has a \indextermfort{stop} statement, which can
+return a message to the \ac{OS}.
+%
+\snippetwithoutput{stop}{basicf}{stopf}
+
 \Level 0 {Main program}
 
 Fortran does not use curly brackets to delineate blocks, instead you
@@ -281,14 +292,22 @@ You can set this in the declaration:
   \indextermtt{iso_c_binding} module.
 \end{block}
 
-You can set the precision of floating point numbers with
-\indextermttdef{selected_real_kind}, where the argument is the number
-of significant digits.
+\Level 1 {Precision}
 
-\Level 1 {Constants}
+In Fortran you can actually ask for a type with specified precision.
+\begin{itemize}
+\item For integers you can specify the number of decimal digits with
+  \indextermttdef{selected_int_kind}\n{($n$)}.
+\item For floating point numbers can specify the number of
+  significant digits, and optionally the decimal exponent range with
+  \indextermttdef{selected_real_kind}\n{($p$[,$r$])}.
+  of significant digits.
+\item To query the type of a variable, use the function
+  \indextermttdef{kind}, which returns an integer.
+\end{itemize}
 
-Since there are 4-byte and 8-byte reals, how is that for real
-constants? Writing \n{3.14} will usually be a single precision
+Likewise, you can specify the precision of a constant.
+Writing \n{3.14} will usually be a single precision
 real. The question is then, if you write
 \begin{block}{Single precision constants}
   \label{sl:fsingle}

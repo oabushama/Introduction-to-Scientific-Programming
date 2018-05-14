@@ -54,8 +54,9 @@ int main() {
     ( [threshold] (int i) -> bool { return i>threshold; } );
   for (int i=0; i<upperbound; i++)
     greaterthan.add(i);
-  cout << "Ints under " << upperbound <<
-    " greater than " << threshold << ": " << greaterthan.size() << endl;
+  cout << "Ints under " << upperbound 
+       << " greater than " << threshold << ": "
+       << greaterthan.size() << endl;
   //codesnippet end
 
   return 0;

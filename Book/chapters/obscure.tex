@@ -197,7 +197,7 @@ auto myvar =
   \label{sl:auto-ref3}
   For good measure:
   %
-  \snippetwitherror{constautoref}{auto}{constrefget}
+  \snippetwitherror{constrefget}{auto}{constrefget}
 \end{block}
 
 \begin{comment}
@@ -601,4 +601,28 @@ BigThing& operator=( BigThing &&other ) {
   return *this;
 }
 \end{verbatim}
+
+\Level 0 {Move semantics}
+
+With overloaded addition on matrices (or any other big object):
+\begin{lstlisting}
+Matrix operator+(Matrix &a,Matrix &b);
+\end{lstlisting}
+the actual addition will involve a copy:
+\begin{lstlisting}
+Matrix c = a+b;
+\end{lstlisting}
+
+Use a move constructor:
+\begin{lstlisting}
+class Matrix {
+private:
+  Representation rep;
+public:
+  Matrix(Matrix &&a) {
+    rep = a.rep;
+    a.rep = {};
+  }
+};
+\end{lstlisting}
 

@@ -17,6 +17,7 @@ using std::cout;
 using std::endl;
 
 #include <memory>
+using std::make_shared;
 using std::shared_ptr;
 
 #include <vector>
@@ -32,11 +33,11 @@ public:
   Node() {}
   Node(int i,int init=1 ) { key = i; count = 1; };
   void addleft( int value) {
-    left = shared_ptr<Node>( new Node(value) );
+    left = make_shared<Node>(value);
     hasleft = true;
   };
   void addright( int value ) {
-    right = shared_ptr<Node>( new Node(value) );
+    right = make_shared<Node>(value);
     hasright = true;
   };
   //codesnippet end

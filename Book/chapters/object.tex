@@ -72,7 +72,7 @@ can for instance be used to initialize data members:
 
 \Level 1 {Interface versus implementation}
 
-In the example above, the data members of the \n{Vector} class were
+In the first example above, the data members of the \n{Vector} class were
 declared \n{public}, meaning that they are accessable from the calling
 (main) program. While this is initially convenient for coding, it is a bad idea
 in the long term. For a variety of reasons it is good practice to
@@ -138,6 +138,11 @@ private:
   \label{sl:class-init}
   Other syntax for initialization:
   \verbatimsnippet{classpointinit}
+  Even:
+  \snippetwithoutput{pointinitxy}{geom}{pointinitxy}
+
+  \emph{Initializer lists}\index{initializer list} can be used as denotations.
+  \verbatimsnippet{initcurlypoint}
 \end{block}
 
 \begin{block}{`this'}
@@ -380,44 +385,34 @@ public:
 This has advantages:
 \begin{itemize}
 \item You can print out any time you get/set the value; great for
-  debugging
+  debugging:
+\begin{verbatim}
+void set_x(float v) {
+  cout << "setting: " << v << endl;
+  x = v; }
+\end{verbatim}
 \item You can catch specific values: if \n{x} is always supposed to be
   positive, print an error (throw an exception) if nonpositive.
 \end{itemize}
 
-Better accessor:
-\begin{verbatim}
-class thing {
-private:
- float x;
-public:
- float &the_x() { return x; };
-};
-int main () {
-  thing t;
-  t.the_x() = 5;
-  cout << t.the_x();
-}
-\end{verbatim}
-The function \n{the_x} returns a reference to the internal
-variable~\n{x}.
+Having two accessors can be a little clumsy. Is it possible to use the
+same accessor for getting and setting?
 
 \begin{block}{Setting members through accessor}
   \label{sl:setmember}
+  %
+  Use a single accessor for getting and setting:
+
   \snippetwithoutput{objaccessref}{object}{accessref}
+  %
+  The function \n{the_x} returns a reference to the internal
+  variable~\n{x}.
 \end{block}
 
-If the internal variable is something indexable:
-\begin{verbatim}
-class thing {
-private:
-  vector<float> x;
-public:
-  operator[](int i) { return x[i]; };
-};
-\end{verbatim}
-You define the subscript operator~\n{[]} for the object, in terms of
-indexing of the private vector.
+Of course you should only do this if you want the internal variable to
+be directly changable!
+
+This is a good time to do the exercises in section~\ref{ex:pointfunc}.
 
 \Level 1 {Accessability}
 
@@ -483,9 +478,10 @@ my_object x,y; // regular or default constructor
 x = y;         // copy constructor
 \end{verbatim}
 Usually the copy constructor that is implicitly defined does the right
-thing: it copies all data members. If you want to define your own copy
-constructor, you need to know its prototype. There are a couple of
-possibilities; see for instance:
+thing: it copies all data members. (If you want to define your own copy
+constructor, you need to know its prototype. We will not go into that.)
+
+Example of the copy constructor in action:
 %
 \verbatimsnippet{classwithcopy}
 \snippetwithoutput{classwithcopyuse}{object}{copyscalar}

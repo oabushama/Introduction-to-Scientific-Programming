@@ -4,8 +4,8 @@ import re
 import sys
 
 if len(sys.argv)<2:
-    print "Invalid commandline <<%s>>" % str(sys.argv)
-    print "Usage: cutspace.py fn"; sys.exit(1)
+    print("Invalid commandline <<%s>>" % str(sys.argv))
+    print("Usage: cutspace.py fn"); sys.exit(1)
 
 fn = sys.argv[1]
 f = open(fn,"r")

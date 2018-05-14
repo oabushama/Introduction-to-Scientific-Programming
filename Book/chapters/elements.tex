@@ -44,7 +44,7 @@ This is a minimal program:
 \codesnippet{nullprogc}
 %
 \begin{enumerate}
-\item The first two lines are magic, for now. Always include them.
+\item The first three lines are magic, for now. Always include them.
 \item The \n{main} line indicates where the program starts; between
   its opening and closing brace will be the
   \indextermbus{program}{statements}.
@@ -79,6 +79,37 @@ Here is a statement that at least produces some output:
   \item \n{program} without extension usually indicates an \indexterm{executable}.
   \end{itemize}
 \end{block}
+
+\Level 1 {A quick word about unix commands}
+
+The compile line
+\begin{verbatim}
+g++ -o myprogram myprogram.cxx
+\end{verbatim}
+can be thought of as consisting of three parts:
+\begin{itemize}
+\item The command \n{g++} that starts the line and determines what is
+  going to happen;
+\item The argument \n{myprogram.cxx} that ends the line is the main
+  thing that the command works on; and
+\item The option/value pair \n{-o myprogram}. Most Unix commands have
+  various options that are, as the name indicates, optional. For
+  instance you can tell the compiler to try very hard to make a fast program:
+\begin{verbatim}
+g++ -O3 -o myprogram myprogram.cxx
+\end{verbatim}
+  Options can appear in any order, so this last command is equivalent to
+\begin{verbatim}
+g++ -o myprogram -O3 myprogram.cxx
+\end{verbatim}
+\end{itemize}
+Be careful not to mix up argument and option. If you type
+\begin{verbatim}
+g++ -o myprogram.cxx myprogram
+\end{verbatim}
+then Unix will reason: `\n{myprogram.cxx} is the output, so if that
+file already exists (which, yes, it does) let's just empty it before
+we do anything else'. And you have just lost your program.
 
 \Level 0 {Statements}
 \label{sec:statements}
@@ -155,7 +186,7 @@ A program could not do much without storing data: input data,
 temporary data for intermediate results, and final results.
 Data is stored in \emph{variables}\index{variable},  which have
 \begin{itemize}
-\item a name, so that can refer to them,
+\item a name, so that you can refer to them,
 \item a \indexterm{datatype}, and
 \item a value.
 \end{itemize}
@@ -231,8 +262,8 @@ double re_part,im_part;
 
 \begin{block}{Where do declarations go?}
   \label{sl:declwhere}
-  Declarations can go pretty much anywhere in your program, but need
-  to come before use of the variable.
+  Declarations can go pretty much anywhere in your program, but they need
+  to come before the first use of the variable.
 
   Note: it is legal to define a variable before the main program\\
   but that's not a good idea. Please only declare \emph{inside} main\\
@@ -251,6 +282,7 @@ double re_part,im_part;
     discussed later; section~\ref{sec:stl-complex}.
   \item 
     For characters: \n{char}. Strings are complicated.
+  \item Truth values: \n{bool}
   \item 
     You can make your own types. Later.
   \end{itemize}
@@ -264,7 +296,7 @@ Setting a variable
 i = 5;
 \end{verbatim}
 means storing a value in the memory location. It is
-not defining a mathematical equality
+not the same as defining a mathematical equality
 \[ \hbox{let $i=5$}. \]
 
 \begin{block}{Assignment}
@@ -378,6 +410,58 @@ In a computer, integers are stored very differently from
   (See Eijkhout, Introduction to High Performance Computing, chapter~3.)
 \end{block}
 
+\begin{exercise}
+  \label{ex:macheps}
+  It is not hard to see that the definition of floating point numbers
+  leads to gaps. Suppose in base 10 you to digits behind the decimal
+  point, for instance \n{5.14}, then \n{5.147} is not representable,
+  and it will either be rounded to \n{5.15} or truncated to \n{5.14}.
+
+  Define 
+\begin{verbatim}
+float one = 1.;
+\end{verbatim}
+  and see what the smallest value \n{float eps} is that you can add to
+  one so that the result is not one.
+\end{exercise}
+
+\Level 1 {Number values and undefined values}
+\label{sec:naninf}
+
+A computer allocates a fixed amount of space for integers and floating
+point numbers, typically 4 or 8 bytes. That means that not all numbers
+are representable.
+\begin{itemize}
+\item Using 4 bytes, that is 32 bits, we can represent $2^{32}$
+  integers. Typically this is the range $-2^{31}\ldots 0 \ldots
+  2^{31}-1$.
+\item Floating point numbers are representated by a sign bit, an
+  exponent, and a number of significant digits.
+  For 4-byte numbers, the number of significant (decimal) digits is
+  around~6; for 8-byte numbers it is around 15.
+\end{itemize}
+
+If you compute a number that `fall in between the gaps' of the
+representable numbers, it gets truncated or rounded. The effects of
+this on your computation constitute its own field of numerical
+mathematics, called \indexterm{roundoff error analysis}.
+
+If a number goes outside the bounds of what is representable, it
+becomes either:
+\begin{itemize}
+\item \indextermtt{inf}: infinity. This happens if you add or multiply
+  enough large numbers together. There is of course also a value
+  \n{-inf}. Or:
+\item \indextermtt{NAN}: not a number. This happens if you subtract
+  one \n{inf} from another, or do things such as taking the
+  root of a negative number.
+\end{itemize}
+Your program will not be interrupted if a \n{nan} or \n{inf} is
+generated: the computation will merrily (and at full speed) progress with these numbers.
+
+Some people advocate filling uninitialized memory with such illegal
+values, to make it recognizable as such.
+
 \Level 1 {Boolean values}
 
 \begin{block}{Truth values}
@@ -416,7 +500,7 @@ using std::string;
 \begin{verbatim}
 string name;
 \end{verbatim}
-\item And you can now \n{cin} and \n{cout} them.
+\item And you can now \n{cin} (see section~\ref{sec:io}) and \n{cout} them.
   \end{itemize}
 \end{block}
 
@@ -500,7 +584,7 @@ x = pow(3,.5);
 For squaring, usually better to write \n{x*x} than \n{pow(x,2)}.
 \end{block}
 
-\begin{block}{Arithmetic expressions}
+\begin{slide}{Arithmetic expressions}
   \label{sl:arith-expr}
   \begin{itemize}
   \item
@@ -515,23 +599,13 @@ For squaring, usually better to write \n{x*x} than \n{pow(x,2)}.
 \end{verbatim}
   \item Modulus: \n{\char`\%}
   \end{itemize}
-\end{block}
+\end{slide}
 
 \Level 1 {Truth values}
 
 In addition to numerical types, there are truth values,
 \indextermtt{true} and \indextermtt{false}, with all the usual logical
 operators defined on them.
-
-Logical expressions in C++ are evaluated using
-\indextermsub{shortcut}{operators}: you can write
-\begin{verbatim}
-x>=0 && sqrt(x)<2
-\end{verbatim}
-If \n{x}~is negative, the second part will never be evaluated because
-the `and' conjunction can already be concluded to be false.
-Similarly, `or' conjunctions will only be evaluated until the first
-true clause.
 
 \begin{block}{Boolean expressions}
   \label{sl:bool-expr}
@@ -544,6 +618,16 @@ true clause.
 \end{verbatim}
   \end{itemize}
 \end{block}
+
+Logical expressions in C++ are evaluated using
+\indextermsub{shortcut}{operators}: you can write
+\begin{verbatim}
+x>=0 && sqrt(x)<2
+\end{verbatim}
+If \n{x}~is negative, the second part will never be evaluated because
+the `and' conjunction can already be concluded to be false.
+Similarly, `or' conjunctions will only be evaluated until the first
+true clause.
 
 The `true' and `false' constants could strictly speaking be stored in
 a single bit. C++~does not do that, but there are bit
@@ -647,7 +731,7 @@ For floating point result do:
   \label{ex:modulus}
   Write a program that ask for two integer numbers \n{n1,n2}.
   \begin{itemize}
-  \item Assign the integer ratio $n_1/n_2$ to a variable.
+  \item Assign the integer ratio $n_1/n_2$ to an integer variable.
   \item Can you use this variable to compute the modulus
     \[ n_1\mod n_2 \]
     (without using the \n{\char`\%} modulus operator!)\\

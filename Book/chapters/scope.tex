@@ -91,12 +91,25 @@ After the lifetime of the shadowing variable, its value is unchanged
 from before.
 \end{slide}
 
-\begin{block}{Shadowing and scope are lexical}
-  \label{sl:scope-shadowfalse}
-  This is independent of dynamic / runtime behaviour!
+This is independent of dynamic / runtime behaviour!
+
+\begin{exercise}
+  \label{ex:shadowfalse}
+  What is the output of this code?
   %
-  \snippetwithoutput{shadowfalse}{basic}{shadowfalse}
-\end{block}
+  \verbatimsnippet{shadowfalse}
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:loopinitvar}
+  What is the output of this code?
+\begin{verbatim}
+for (int i=0; i<2; i++) {
+  int j; cout << j << endl;
+  j = 2; cout << j << endl;
+}
+\end{verbatim}
+\end{exercise}
 
 \Level 1 {Lifetime versus reachability}
 

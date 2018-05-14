@@ -98,20 +98,20 @@ This is how a loop is executed.
 
 Some variations on the simple case.
 \begin{itemize}
-\item The loop variable can be defined outside the loop:
+\item It is preferable to declare the loop variable in the loop header:
 \begin{verbatim}
 int var;
 for (var=low; var<upper; var++) {
 \end{verbatim}
-but it's cleaner to make it local. However:
+The variable only has
+meaning inside the loop so it should only be defined there.
+
+However, it can also be defined outside the loop:
 \begin{verbatim}
 int var;
-... code that sets var ...
-for ( ; var<upper; var++) {
-  ... loop body ...
-}
-... code that uses the final value of var ...
+for (var=low; var<upper; var++) {
 \end{verbatim}
+You will see an example where this makes sense below.
 \item The stopping test can be omitted
 \begin{verbatim}
 for (int var=low; ; var++) { ... }
@@ -176,6 +176,8 @@ for (int i=0; i<m; i++)
   for (int j=0; j<n; j++)
     ...
 \end{verbatim}
+The \n{i}-loop is called the \indextermsub{outer}{loop}; the
+\n{j}-loop the \indextermsub{inner}{loop}.
 
 \begin{slide}{Nested loops}
   \label{sl:for-nest}
@@ -185,17 +187,23 @@ for (int i=0; i<m; i++)
   for (int j=0; j<n; j++)
     ...
 \end{verbatim}
+\n{i}: outer loop\\
+\n{j}: inner loop.
 \end{slide}
 
 \begin{exercise}
   \label{ex:ij-triangle}
   Write an $i,j$ loop that prints out all pairs with
   \[ 1\leq i,j\leq 10,\quad  j\leq i. \]
-  Output one line for each \n{i} value.
+  Output one line for each \n{i} value. Food for thought: did you use a
+  conditional or a break in the inner loop? If so, can you do it without either?
 
   Now write an $i,j$ loop that prints all pairs with
   \[ 1\leq i,j\leq 10,\quad |i-j|<2, \]
   again printing one line per \n{i} value.
+  Food for thought: this exercise is definitely easiest with a
+  conditional or a break statement in the inner loop, but can you do
+  it without? You probably need a conditional in the outer loop.
 \end{exercise}
 
 \Level 0 {Looping until}
@@ -252,9 +260,23 @@ for (int var=low; ; var=var+1) {
 \end{verbatim}
 \end{slide}
 
-\ifIncludeAnswers
-\vfill\eject
-\fi
+\begin{slide}{Where did the break happen?}
+  \label{sl:for-break-var}
+  A loop with a break is one case where you want the loop variable to
+  be global:
+\begin{verbatim}
+int var;
+... code that sets var ...
+for ( ; var<upper; var++) {
+  ... statements ...
+  if (some condition) break
+  ... more statements ...
+}
+... code that uses the breaking value of var ...
+\end{verbatim}
+\end{slide}
+
+%\ifIncludeAnswers\vfill\eject\fi
 
 \begin{figure}[ht]
   \hbox\bgroup
@@ -349,13 +371,25 @@ is an example in which the second syntax is more appropriate.
 \end{block}
 
 \begin{exercise}
+  \label{ex:squaregrid}
+  Read in an integer~$r$. If it is prime, print a message saying so.
+  If it is not prime, find integers $p\leq q$ so that $r=p\cdot q$ and so
+  that $p$ and $q$ are as close together as possible.
+  For instance, for $r=30$ you should print out \n{5,6}, rather than
+  \n{3,10}. You are allowed to use the function~\n{sqrt}.
+\end{exercise}
+
+\begin{exercise}
   \label{ex:interest}
   One bank account has 100 dollars and earns a 5~percent per year interest
   rate. Another account has 200 dollars but earns only 2~percent per
   year. In both cases the interest is deposited into the account.
   
   After how many years will the amount of money in the first account
-  be more than in the second?
+  be more than in the second? Solve this with a \n{while} loop.
+
+  Food for thought: compare solutions with a pre-test and post-test,
+  and also using a for-loop.
 \end{exercise}
 
 \Level 0 {Exercises}

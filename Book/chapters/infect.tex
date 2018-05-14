@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% infect.tex : exercises for infectious disease simulation
 %%%%
@@ -156,7 +156,7 @@ population.random_infection();
 
 This past exercise was too simplistic: the original patient zero was
 the only one who ever got sick.
-Now we incorporate contagion, seeing how far the disease can spread
+Now let's incorporate contagion, and investigate the spread of the disease
 from a single infected person.
 
 We start with a very simple model of infection.
@@ -166,7 +166,7 @@ We start with a very simple model of infection.
   Read in a number $0\leq p \leq 1$ representing the probability of
   disease transmission upon contact. Incorporate this into the
   program: in each step the direct neighbours of an infected person
-  get sick themselves.
+  can now get sick themselves.
 \begin{verbatim}
 population.set_probability_of_transfer(probability);  
 \end{verbatim}

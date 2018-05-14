@@ -133,8 +133,9 @@ Statically allocated arrays are enough for many purposes. However, as
 pointed out above, they are not perfect; for instance, you have to
 remember their size, and out-of-bound accesses are not always
 detected. In this section we
-will look at one way of dynamically creating arrays: through the STL
-\n{vector} class that is more convenient and safe.
+will look at one way of dynamically creating arrays
+that is more convenient and safe: through the STL
+\indextermttdef{vector} class.
 
 This takes a new syntax:
 
@@ -160,7 +161,33 @@ where
 \end{itemize}
 \end{block}
 
-\begin{block}{Vector elements}
+\begin{remark}
+  There is also an \indextermttdef{array} class, which at first glance
+  looks like a non-resizable variant of \n{vector}. However, it is limited to
+  arrays where the size is known at compile time.
+\end{remark}
+
+\begin{block}{Vector initialization}
+  \label{sl:vector-init}
+  You can initialize a vector with much the same syntax as an array:
+\begin{verbatim}
+vector<int> odd_array{1,3,5,7,9};
+vector<int> even_array = {0,2,4,6,8};
+\end{verbatim}
+(This syntax requires compilation with the \n{-std=c++11}\index{C++11}
+option.)
+\end{block}
+
+\begin{block}{Vector initialization'}
+  \label{sl:vector-initconst}
+  There is a syntax for initializing a vector with a constant:
+\begin{verbatim}
+vector<float> x(25,3.15);
+\end{verbatim}
+which gives a vector of size~25, with all elements initialized to~3.15.
+\end{block}
+
+\begin{block}{Accessing vector elements}
   \label{sl:vectorsub}
   In a number of ways, vector behaves like an array:
 \begin{verbatim}
@@ -188,26 +215,6 @@ for ( auto &e : my_vector)
   e = ....
 \end{verbatim}
 \snippetwithoutput{vectorrangeref}{array}{vectorrangeref}
-\end{block}
-
-\begin{block}{Vector initialization}
-  \label{sl:vector-init}
-  You can initialize a vector with much the same syntax as an array:
-\begin{verbatim}
-vector<int> odd_array{1,3,5,7,9};
-vector<int> even_array = {0,2,4,6,8};
-\end{verbatim}
-(This syntax requires compilation with the \n{-std=c++11}\index{C++11}
-option.)
-\end{block}
-
-\begin{block}{Vector initialization'}
-  \label{sl:vector-initconst}
-  There is a syntax for initializing a vector with a constant:
-\begin{verbatim}
-vector<float> x(25,3.15);
-\end{verbatim}
-which gives a vector of size~25, with all elements initialized to~3.15.
 \end{block}
 
 \begin{block}{Vector copy}
@@ -384,6 +391,16 @@ actually copied into the function.
   \snippetwithoutput{vectorpassval}{array}{vectorpassnot}  
 \end{block}
 
+\begin{exercise}
+  \label{ex:vectorconcat}
+  Write a function that accepts a vector of ints, and returns a vector
+  that contains the input, concatenated with itself. So:
+\begin{verbatim}
+Input: (1,2,3)
+Output: (1,2,3,1,2,3)
+\end{verbatim}
+\end{exercise}
+
 \begin{block}{Vector pass by reference}
   \label{sl:vector-arg-ref}
   If you want to alter the vector, you have to pass by reference:
@@ -397,11 +414,13 @@ actually copied into the function.
   main program work:
 \begin{verbatim}
 int length = 10;
-vector<float> values = random_floats(length);
+vector<float> values = random_vector(length);
 sort(values);
 \end{verbatim}
   (This creates a vector of random values of a specified length, and
 then sorts it.)
+
+See section~\ref{sec:crand} for the random fuction.
 \end{exercise}
 
 \Level 1 {Dynamic size of vector}
@@ -451,7 +470,7 @@ for (auto elt_ptr=vec.begin(); elt_ptr<vec.end(); ++elt_ptr)
 Some remarks:
 \begin{itemize}
 \item This is one of the very few places where you need the asterisk in C++
-  for \indexterm{dereferencing}.
+  for \indexterm{dereferencing}; section~\ref{sec:cderef}.
 \item As with a normal loop, the \n{end} iterator point just beyond the end
   of the vector.
 \item You can do \indextermbus{pointer}{arithmetic} on iterators, as
@@ -481,7 +500,7 @@ timing cost.
   With subscript:
   \verbatimsnippet{vectorsub}
 
-  You can also use \n{new} to allocate:
+  You can also use \n{new} to allocate (see section~\ref{sec:cnew}):
   \verbatimsnippet{vectornew}
 \end{block}
 
@@ -504,31 +523,6 @@ use \n{at} during development of the code, and insert
 #define at(x) operator[](x)
 \end{verbatim}
 for production.
-
-\Level 0 {Use of \texttt{new}}
-
-\prerequisite{\ref{sec:arraypointer}}
-
-There is a dynamic allocation mechanism that is much inspired by
-memory management in~C. Don't use this as your first choice.
-
-Use of \indextermtt{new} uses the 
-equivalence of array and reference.
-%
-\verbatimsnippet{arrayfromfunc}
-
-Since this is not scoped, you have to free the memory yourself:
-%
-\verbatimsnippet{arrayinclass}
-
-Notice how you have to remember the array length yourself? This is all
-much easier by using a \n{std::vector}. See
-\url{http://www.cplusplus.com/articles/37Mf92yv/}.
-
-The \indextermtt{new} mechanism is a cleaner variant of \indextermtt{malloc},
-which was the dynamic allocation mechanism in~C. Malloc is still
-available, but should not be used. There are even very few legitimate
-uses for \n{new}.
 
 \Level 0 {Wrapping a vector in an object}
 
@@ -555,24 +549,8 @@ vector<vector<float>> rows(10,row);
 Vector of vectors.
 \end{block}
 
-This is not contiguous.
-
-\Level 1 {Matrix class based on vector}
-
-You can make a `pretend' matrix by storing a long enough \n{vector} in
-an object:
-%
-\verbatimsnippet{matrixclass}
-
-The syntax for \n{set} and \n{get} can be improved.
-\begin{exercise}
-  Write a method \n{element} of type \n{double&}, so that you can write
-\begin{verbatim}
-A.element(2,3) = 7.24;
-\end{verbatim}
-\end{exercise}
-
-\Level 1 {A matrix class}
+This is not the best implementation of a matrix, for instance because
+the elements are not contiguous. However, let's continue with it for a moment.
 
 \begin{block}{Matrix class}
   \label{sl:matrix-class}
@@ -591,12 +569,29 @@ A.element(2,3) = 7.24;
 \end{verbatim}
 \end{block}
 
-
 \begin{exercise}
   \label{ex:matrix-methods}
   Add methods such as \n{transpose}, \n{scale} to your matrix class.
 
   Implement matrix-matrix multiplication.
+\end{exercise}
+
+\Level 1 {A better matrix class}
+
+You can make a `pretend' matrix by storing a long enough \n{vector} in
+an object:
+%
+\verbatimsnippet{matrixclass}
+
+The most important advantage of this is that it is compatible with how
+many libraries and codes store a matrix traditionally.
+
+The syntax for \n{set} and \n{get} can be improved.
+\begin{exercise}
+  Write a method \n{element} of type \n{double&}, so that you can write
+\begin{verbatim}
+A.element(2,3) = 7.24;
+\end{verbatim}
 \end{exercise}
 
 \Level 0 {Old-style arrays}

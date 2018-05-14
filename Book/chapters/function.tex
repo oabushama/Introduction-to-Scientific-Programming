@@ -386,13 +386,16 @@ body of another function.
   \label{ex:newton-root}
   Early computers had no hardware for computing a square
   root. Instead, they used \indexterm{Newton's method}. Suppose you
-  want to compute \[ x=\sqrt{y}. \] This is equivalent to finding the
-  zero of \[ f_y(x) = x^2-y. \]
-  Newton's method does this by evaluating \[ x_{\mathrm{next}}=x-f_y(x)/f_y'(x) \]
-  until the guess is accurate enough.
+  have a value~$y$ and you want want to compute
+  $x\leftarrow\sqrt{y}$. This is equivalent to finding the zero of
+  \[ f(x) = x^2-y \] where $y$~is fixed. To indicate this dependence
+  on~$y$, we will write~$f_y(x)$. Newton's method then finds the zero by
+  evaluating
+  \[ x_{\mathrm{next}}=x-f_y(x)/f_y'(x) \]
+  until the guess is accurate enough, that is, until $f_y(x)\approx0$.
   \begin{itemize}
   \item Write functions \n{f(x,y)} and \n{deriv(x,y)}, that compute
-    $f_y(x)$ and $f_y'(x)$ for the definition of $f$ above.
+    $f_y(x)$ and $f_y'(x)$ for the definition of $f_y$ above.
   \item Read a value $y$ and iterate until $|\n{f(x,y)}|<10^{-5}$. Print~$x$.
   \item Second part: write a function \n{newton_root} that computes~$\sqrt{y}$.
   \end{itemize}
@@ -420,7 +423,7 @@ The following style of programming is very much inspired by
 mathematical functions, and is known as \indextermdef{functional
   programming}\footnote {There is more to functional programming. For
   instance, strictly speaking your whole program needs to be based on
-  function calling; there is no other code then function definitions
+  function calling; there is no other code than function definitions
   and calls.}.
 \begin{itemize}
 \item A function has one result, which is returned through a return
@@ -601,6 +604,9 @@ else
 }
 \end{exercise}
 
+If you are doing the geometry project, you should now do the exercises
+in section~\ref{sec:geom-basic}.
+
 \Level 0 {Recursive functions}
 \label{sec:recursion}
 
@@ -636,7 +642,7 @@ Well,
   equal to~2.
 \item Evaluating \n{factorial(2)} returns \n{2*factorial(1)},\ldots
 \item \ldots~which returns \n{1*factorial(0)},\ldots
-\item \ldots~which return~\ldots
+\item \ldots~which returns~\ldots
 \item Uh oh. We forgot to include the case where \n{n} is zero. Let's
   fix that:
 \begin{verbatim}
@@ -727,6 +733,26 @@ double sum(double a,double b,double c) {
 \end{verbatim}
 Distinguished by type or number of input arguments: can not differ only in return type.
 \end{block}
+
+\Level 0 {Library functions}
+
+\Level 1 {Random function}
+\label{sed:crand}
+
+There is an easy (but not terribly great) \indextermdef{random number generator} that
+works the same as in~C:
+
+\begin{verbatim}
+#include <random>
+using std::rand;
+float random_fraction =
+    (float)rand()/(float)RAND_MAX;
+\end{verbatim}
+The function \indextermtt{rand} yields an integer --~a different one
+every time you call it~-- in the range from zero to
+\indextermtt{RAND_MAX}.
+Using scaling and casting you can then produce a fraction between zero
+and one with the above code.
 
 \Level 0 {Review questions}
 

@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% io.tex : input and output
 %%%%
@@ -108,60 +108,15 @@ cout << hex << i << dec << j;
 \begin{block}{Fixed point precision}
   \label{sl:io-fix}
   Fixed precision applies to fractional part:
-\begin{verbatim}
-cout << "Fixed precision applies to fractional part:" << endl;
-x = 1.234567;
-cout << fixed;
-for (int i=0; i<10; i++) {
-  cout << setprecision(4) << x << endl;
-  x *= 10;
-}
-\end{verbatim}
-\end{block}
-
-\begin{block}{Output}
-  \label{sl:io-fix-out}
-\begin{verbatim}
-1.2346
-12.3457
-123.4567
-1234.5670
-12345.6700
-123456.7000
-1234567.0000
-12345670.0000
-123456700.0000
-1234567000.0000
-\end{verbatim}
+  %
+  \snippetwithoutput{fixfrac}{io}{fix}
 \end{block}
 
 \begin{block}{Aligned fixed point output}
   \label{sl:io-align}
   Combine width and precision:
-\begin{verbatim}
-x = 1.234567;
-cout << fixed;
-for (int i=0; i<10; i++) {
-  cout << setw(10) << setprecision(4) << x << endl;
-  x *= 10;
-}
-\end{verbatim}
-\end{block}
-
-\begin{block}{Output}
-  \label{sl:io-align-out}
-\begin{verbatim}
-    1.2346
-   12.3457
-  123.4567
- 1234.5670
-12345.6700
-123456.7000
-1234567.0000
-12345670.0000
-123456700.0000
-1234567000.0000
-\end{verbatim}
+  %
+  \snippetwithoutput{align}{io}{align}
 \end{block}
 
 \begin{block}{Scientific notation}
@@ -237,7 +192,7 @@ Use:
 
 You have used statements like:
 \begin{verbatim}
-cout << ``My value is: `` << myvalue << endl;
+cout << "My value is: " << myvalue << endl;
 \end{verbatim}
 How does this work? The `double less' is an operator with a left
 operand that is a stream, and a right operand for which output is
@@ -249,6 +204,12 @@ If you want to output a class that you wrote yourself, you have to
 define how the \n{<<} operator deals with your class.
 
 \verbatimsnippet{classostream}
+
+\Level 0 {Binary output}
+
+\snippetwithoutput{fio}{io}{fio}
+
+\snippetwithoutput{fiobin}{io}{fiobin}
 
 \Level 0 {Input}
 
@@ -266,6 +227,28 @@ define how the \n{<<} operator deals with your class.
   \url{http://www.cplusplus.com/forum/articles/6046/}.
 
 \end{block}
+
+\Level 1 {File input}
+
+\begin{block}{File input streams}
+  \label{sl:filein}
+  Input file stream, method \indextermtt{open}, then use
+  \indextermtt{getline} to read one line at a time:
+  %
+  \verbatimsnippet{filein}
+\end{block}
+
+\begin{exercise}
+  \label{ex:foxcount}
+  Put the following text in a file:
+\begin{verbatim}
+the quick brown fox
+jummps over the
+lazy dog.
+\end{verbatim}
+  Open the file, read it in, and count how often each letter in the
+  alphabet occurs in it
+\end{exercise}
 
 \Level 1 {Input streams}
 

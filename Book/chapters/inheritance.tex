@@ -155,7 +155,7 @@ Advantage: with a good API you can change your mind about the
 implementation without bothering the user.
 \end{slide}
 
-At this time, do the exercises in section~\ref{sec:poly-rectangle}
+At this time, do the exercises in section~\ref{sec:poly-rectangle}.
 
 \Level 0 {Inheritance}
 \label{sec:inheritance}
@@ -289,6 +289,8 @@ public:
   \end{itemize}
 \end{block}
 
+You can now do the exercises in section~\ref{sec:geom-isa}.
+
 \Level 1 {Virtual methods}
 
 \begin{block}{Base vs derived methods}
@@ -349,6 +351,21 @@ public:
   \item Virtual base class: you don't actually define a function in
     the base class, you only say `any derived class has to define this
     function'.
+  \item Friend classes:
+\begin{verbatim}
+class A;
+class B {
+  friend class A;
+private:
+  int i;
+};
+class  A {
+public: 
+  void f(B b) { b.i; };
+};
+\end{verbatim}
+  A \indextermtt{friend} class can access private data and methods
+  even if there is no inheritance relationship.
   \end{itemize}
 \end{block}
 

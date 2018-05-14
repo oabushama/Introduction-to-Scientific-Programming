@@ -40,6 +40,7 @@ Legitimate needs:
 \end{itemize}
 
 \Level 0 {Making a shared pointer}
+\label{sec:shared_ptr}
 
 If you declare a variable \n{x} as integer, that is
 \begin{verbatim}
@@ -56,9 +57,11 @@ have a pointer~\n{X} to such an object, you write \n{X->y}.
 So what is the type of this latter~\n{X} and how did you create it?
 \begin{verbatim}
 shared_ptr<Obj> X =
-    make_shared<Obj>( /* constructor args */ )
+    make_shared<Obj>( /* constructor args */ );
   // or:
-auto X = make_shared<Obj>( /* args */ )
+auto X = make_shared<Obj>( /* args */ );
+  // or:
+auto X = shared_ptr<Obj>( new Obj(/* args */) );
 \end{verbatim}
 
 This requires at the top of your file:
@@ -68,19 +71,22 @@ using std::shared_ptr;
 using std::make_shared;
 \end{verbatim}
 
-\begin{slide}{Shared pointers}
+\begin{block}{Simple example}
   \label{sl:shared-ptr}
-Make and use shared pointer:
-\begin{verbatim}
-#include <memory>
+  \snippetwithoutput{pointx}{pointer}{pointx}
+\end{block}
 
-std::shared_ptr<myobject> obj_ptr
-    = std::make_shared<myobject>(x);
-    // = std::shared_ptr<myobject>( new myobject(x) );
+\begin{slide}{Shared pointers for arrays}
+This offers a safer version of \n{new}. But you should use a
+\n{vector} anyway:
+\begin{verbatim}
+shared_ptr<myobject> obj_ptr
+    = make_shared<myobject>(x);
+    // = shared_ptr<myobject>( new myobject(x) );
 obj_ptr->mymethod(1.1);
 cout << obj_ptr->member << endl;
 
-auto array = std::shared_ptr<double>( new double[100] );
+auto array = shared_ptr<double>( new double[100] );
 // ILLEGAL: array[1] = 2.14;
 array->at(2) = 3.15;
 \end{verbatim}
@@ -125,20 +131,17 @@ the object deallocated.
 
 Most of the time, accessing the target of the pointer through the
 arrow notation is enough. However, if you actually want the object,
-you can get it with \indextermtt{get}:
+you can get it with \indextermtt{get}. Note that this does not give
+you the pointed object, but a traditional pointer so 
 \begin{verbatim}
 X->y;
 // is the same as
-X.get().y;
+X.get()->y;
+// is the same as
+( *X.get() ).y;
 \end{verbatim}
 
-You can use this to make a shared pointer to an old-style allocated
-block of data:
-%
-\snippetwithoutput{ptrarray}{pointer}{ptrarray}
-%
-but notice that you have none of the safeguards of a \n{vector}: no
-bound checking, no function to query the size.
+\snippetwithoutput{pointy}{pointer}{pointy}
 
 \Level 1 {Pointers to non-objects}
 
@@ -211,3 +214,8 @@ This allows you to write:
     return this->shared_from_this();
 \end{verbatim}
 \end{slide}
+
+\Level 1 {Example: linked lists}
+
+The standard example of pointer manipulation is `linked lists'. This
+is discussed in some detail in section~\ref{sec:linklist}.

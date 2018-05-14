@@ -4,7 +4,7 @@
  **** Introduction to Scientific Programming in C++/Fortran2003
  **** copyright 2018 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
- **** staticbound.cxx : bound checking
+ **** staticinit.cxx : initialization of static arrays
  ****
  ****************************************************************/
 
@@ -27,12 +27,8 @@ int main() {
     numbers[3] = 21;
     cout << numbers[3] << endl;
   }
-  {
-    int numbers[5] = {2};
-    numbers[3] *= 2;
-    cout << numbers[3] << endl;
-  }
   //codesnippet end
   
+
   return 0;
 }

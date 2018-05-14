@@ -18,7 +18,13 @@ class has_int {
 private:
   int mine{1};
 public:
-  has_int(int v) { mine = v; };
+  has_int(int v) {
+    cout << "set: " << v << endl;
+    mine = v; };
+  has_int( has_int &h ) {
+    auto v = h.mine;
+    cout << "copy: " << v << endl;
+    mine = v; };
   void printme() { cout
       << "I have: " << mine << endl; };
 };

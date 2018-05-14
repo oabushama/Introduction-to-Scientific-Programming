@@ -3,31 +3,13 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% iff.tex : conditionals in Fortran
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\Level 0 {Boolean variables}
-
-The fortran type for booleans is \indextermfort{Logical}.
-
-The two literals are \n{.true.} and \n{.false.}
-
-\Level 1 {Operators and such}
-
-Operators: \n{.and.} \n{.or.} \n{.not.}
-
-Equivalence between logical expressions:
-\begin{itemize}
-\item \n{.eqv.} : $ (x\wedge y)\vee (\neg x\wedge \neg y)$, with
-  negation
-\item \n{.neqv.} : $ (x\wedge \neg y)\vee (\neg x\wedge  y)$.
-\end{itemize}
-
-
-\Level 0 {Conditionals}
+\Level 0 {Forms of the conditional statement}
 \label{sec:iff}
 
 The Fortran conditional statement uses the \indextermfort{if} keyword:
@@ -60,26 +42,39 @@ checky:   if ( ... some test on y ... ) then
         end if checkx   
 \end{verbatim}
 
-\Level 1 {Operators}
+\Level 0 {Operators}
 
 \begin{block}{Comparison and logical operators}
   \label{sl:foperators}
-  \begin{tabular}{|l|l|l|}
+  \begin{tabular}{|l|l|l|l|}
     \hline
-    Operator&meaning&example\\ \hline
-    \texttt{==}&equals&\texttt{x==y-1}\\
-    \texttt{/=}&not equals&\texttt{x*x*!=5}\\
-    \texttt{>}&greater&\texttt{y>x-1}\\
-    \texttt{>=}&greater or equal&\texttt{sqrt(y)>=7}\\
-    \texttt{<},\texttt{<=}&less, less equal&\texttt{}\\
-    \n{.and.} \n{.or.}&and, or&\n{x<1 .and. x>0}\\
-    \texttt{!}&not&\n{.not.( x>1 .and. x<2 )}\\
+    Operator&old style&meaning&example\\ \hline
+    \texttt{==}&\n{.eq.}&equals&\texttt{x==y-1}\\
+    \texttt{/=}&\n{.ne.}&not equals&\texttt{x*x*!=5}\\
+    \texttt{>} &\n{.gt.}&greater&\texttt{y>x-1}\\
+    \texttt{>=}&\n{.ge.}greater or equal&\texttt{sqrt(y)>=7}\\
+    \texttt{<} &\n{.lt.}&less than\\
+    \texttt{<=}&\n{.le.}&less equal&\texttt{}\\
+    &\n{.and.} \n{.or.}&and, or&\n{x<1 .and. x>0}\\
+    &\texttt{.not.}&not&\n{.not.( x>1 .and. x<2 )}\\
+    &\texttt{.eqv.}&equiv&$ (x\wedge y)\vee (\neg x\wedge \neg y)$\\
+    &\texttt{.neqv.}&not equiv&$ (x\wedge \neg y)\vee (\neg x\wedge  y)$\\
     \hline
   \end{tabular}
 \end{block}
 
 The logical operators such as \n{.AND.} are not short-cut as
 in~C++. Clauses can be evaluated in any order.
+
+\begin{exercise}
+  Read in three grades: Algebra, Biology, Chemistry, each on a scale
+  $1--10$. Compute the average grade, with the conditions:
+  \begin{itemize}
+  \item Algebra is always included.
+  \item Biology is only included if it increases the average.
+  \item Chemistry is only included if it is 6~or more.
+  \end{itemize}
+\end{exercise}
 
 \Level 0 {Select statement}
 
@@ -94,6 +89,12 @@ single values or ranges; works for integers and characters.
   %
   Compiler does checking on overlapping cases!
 \end{block}
+
+\Level 0 {Boolean variables}
+
+The fortran type for booleans is \indextermfort{Logical}.
+
+The two literals are \n{.true.} and \n{.false.}
 
 \Level 0 {Review questions}
 

@@ -183,3 +183,51 @@ level.
 
 And always remember the old truism that `by testing you can only prove
 the presence of errors, never the absence.
+
+\Level 0 {Best practices: C++ Core Guidelines}
+\index{C++!Core Guidelines|(textbf}
+
+The C++ language is big, and some combinations of features are not
+advisable. Around 2015 a number of \emph{Core Guidelines} were drawn
+up that will greatly increase code quality. Note that this is not
+about performance: the guidelines have basically no performance
+implications, but lead to better code.
+
+For instance, the guidelines recommend to use default values as much
+as possible when dealing with multiple constructors:
+\begin{lstlisting}
+class Point { // not this way
+private:
+  double d;
+public:
+  Point( double x,double y,double fudge ) {
+    auto d = ( x*x + y*y ) * (1+fudge); };
+  Point( double x,double y ) {
+    auto d = ( x*x + y*y ); };
+};
+\end{lstlisting}
+This is bad because of code duplication. Slightly better:
+\begin{lstlisting}
+class Point { // not this way
+private:
+  double d;
+public:
+  Point( double x,double y,double fudge ) {
+    auto d = ( x*x + y*y ) * (1+fudge); };
+  Point( double x,double y ) : Point(x,y,0.) {};
+};
+\end{lstlisting}
+which wastes a couple of cycles if fudge is zero.
+Best:
+\begin{lstlisting}
+class Point { // not this way
+private:
+  double d;
+public:
+  Point( double x,double y,double fudge=0. ) {
+    auto d = ( x*x + y*y ) * (1+fudge); };
+};
+\end{lstlisting}
+
+\index{C++!Core Guidelines|)}
+

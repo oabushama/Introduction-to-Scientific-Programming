@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% geom.tex : exercises about geometry objects
 %%%%
@@ -14,13 +14,14 @@ code that manipulates points, lines, shapes.
 These exercises mostly use the material of section~\ref{ch:object}.
 
 \Level 0 {Basic functions}
+\label{sec:geom-basic}
 
 \begin{exercise}
   \label{ex:pointdistance}
   Write a function with (float or double) inputs $x,y$ that returns the distance of
   point $(x,y)$ to the origin.
 
-  Test the following pairs: $1,0$, $0,1$, $1,1$, $3,4$.
+  Test the following pairs: $1,0$; $0,1$; $1,1$; $3,4$.
 \end{exercise}
 
 \begin{exercise}
@@ -38,6 +39,13 @@ These exercises mostly use the material of section~\ref{ch:object}.
     x\\y
   \end{pmatrix}
   \]
+  Your code should look like:
+\begin{verbatim}
+double x,y,alpha;
+// set x,y to some point
+rotate(x,y,alpha);
+// now x,y are rotated over alpha
+\end{verbatim}
 \end{exercise}
 
 \Level 0 {Point class}
@@ -79,8 +87,12 @@ Point() { /* default code */ }
 \begin{verbatim}
 Point p;
 \end{verbatim}
+but which gives an indication that it is undefined:
+%
+\snippetwithoutput{pointnan}{geom}{linearnan}
+%
+Hint: see section~\ref{sec:naninf}.
 \end{exercise}
-
 
 \begin{exercise}
   Advanced. Can you make a \n{Point} class that can accomodate any
@@ -165,6 +177,7 @@ float area(); float width(); float height();
 \begin{verbatim}
 Rectangle(Point bl,Point tr);
 \end{verbatim}
+Can you figure out how to use initializer lists for passing the points?
 \item Rewrite your class so that it stores two \n{Point} objects.
 \end{itemize}
 \end{exercise}
@@ -174,6 +187,7 @@ designed classes you can change the implementation (for instance motivated
 by efficiency) while the program that uses the class does not change.
 
 \Level 0 {Is-a relationship}
+\label{sec:geom-isa}
 
 \prerequisite{\ref{sec:inheritance}}
 
