@@ -52,6 +52,12 @@ for (int var=low; var<upper; var++) {
 \end{verbatim}
 The \n{for} line is called the \indextermbus{loop}{header}, and the
 statements between curly brackets the \indextermbus{loop}{body}.
+Each execution of the loop body is called an
+%
+\emph{iteration}%
+\index{iteration!of a loop|see{loop, iteration}}%
+\index{loop!iteration}%
+.
 
 \begin{slide}{Repeat statement}
   \label{sl:for}
@@ -72,9 +78,30 @@ Use compiler flag \n{-std=c99}.
 \end{cnote}
 \end{slide}
 
+If you want to perform $N$ iterations you can write
+\begin{verbatim}
+for (int iter=0; iter<N; iter++)
+\end{verbatim}
+or
+\begin{verbatim}
+for (int iter=1; iter<=N; iter++)
+\end{verbatim}
+The former is slightly more idiomatic to~C++.
+
 \begin{exercise}
   \label{ex:manyhello}
   Read an integer value with \n{cin}, and print `Hello world' that many times.
+\end{exercise}
+\begin{exercise}
+  \label{ex:counthello}
+  Extend exercise~\ref{ex:manyhello}: the input 17 should now give lines
+\begin{verbatim}
+Hello world 1
+Hello world 2
+....
+Hello world 17
+\end{verbatim}
+Can you do this both with the loop index starting at 0 and~1?\\
 \end{exercise}
 
 The loop header has three components, all of which are optional.
