@@ -251,6 +251,16 @@ cout << words.size(); // will print 37
 The existence of this method means that you don't have to remember the
 size of a vector: it has that information internally.
 
+\begin{exercise}
+  \label{ex:vectornormalize}
+  Create a \n{vector} $x$ of \n{float} elements, and set them to random
+  values.
+
+  Now normalize the vector in $L_2$ norm, that is, scale each element
+  by the same coefficient~$\alpha$ so that $\sum_i x_i^2=1$. Check the
+  correctness of your calculation.
+\end{exercise}
+
 \begin{advanced}
   The vector class is a template class (see chapter~\ref{ch:template}
   for details): the type that it uses (int,
@@ -288,11 +298,93 @@ Use the \n{push_back} method to add elements at the end:
 \end{block}
 
 This is not a good way of creating arrays: if you know the size, it is
-better to reserve the vector at the correct size.
+better to reserve the vector at the correct size:
+\begin{verbatim}
+vector<int> iarray;
+iarray.reserve(100);
+for ( ... )
+  iarray.push_back( ... );
+\end{verbatim}
+
+\begin{exercise}
+  \label{ex:splitoddeven}
+  Write a function that takes a vector of integers, and return two
+  vectors, one containing all the odd inputs, and one containing all
+  the even inputs. So:
+\begin{verbatim}
+input:
+   5,6,2,4,5
+output:
+   5,5
+   6,2,4
+\end{verbatim}
+\end{exercise}
 
 Other methods that change the size: \n{insert}, \n{erase}.
 
-\Level 1 {Vector assignment}
+\Level 1 {Vectors and functions}
+
+\Level 2 {Vector as function return}
+
+\begin{block}{Vector as function return}
+  \label{sl:vector-return}
+  You can have a vector as return type of a function:
+  %
+  \snippetwithoutput{vectorreturn}{array}{vectorreturn}
+\end{block}
+
+\Level 2 {Pass vector to function}
+
+\begin{block}{Vector as function argument}
+  \label{sl:vector-arg}
+  You can pass a vector to a function:
+\begin{verbatim}
+void print0( vector<double> v ) {
+  cout << v[0] << endl;
+};
+\end{verbatim}
+Vectors, like any argument, are passed by value, so the vector is
+actually copied into the function.
+\end{block}
+
+\begin{block}{Vector pass by value example}
+  \label{sl:vector-arg-ex}
+  \snippetwithoutput{vectorpassval}{array}{vectorpassnot}  
+\end{block}
+
+\begin{exercise}
+  \label{ex:vectorconcat}
+  Write a function that accepts a vector of ints, and returns a vector
+  that contains the input, concatenated with itself. So:
+\begin{verbatim}
+Input: (1,2,3)
+Output: (1,2,3,1,2,3)
+\end{verbatim}
+\end{exercise}
+
+\begin{block}{Vector pass by reference}
+  \label{sl:vector-arg-ref}
+  If you want to alter the vector, you have to pass by reference:
+  %
+  \snippetwithoutput{vectorpassref}{array}{vectorpassref}  
+\end{block}
+
+\begin{exercise}
+  \label{ex:vec-rand-sort}
+  Write functions \n{random_vector} and \n{sort} to make the following
+  main program work:
+\begin{verbatim}
+int length = 10;
+vector<float> values = random_vector(length);
+sort(values);
+\end{verbatim}
+  (This creates a vector of random values of a specified length, and
+then sorts it.)
+
+See section~\ref{sec:crand} for the random fuction.
+\end{exercise}
+
+\Level 1 {Vectors in classes}
 
 You may want an object that contains a vector, where the size of the
 vector is passed to the constructor. Since the class definition is an
@@ -361,68 +453,6 @@ technically, it actually does the following:
 \item so now you have an object with a vector of size~\n{n} internally.
 \end{itemize}
 
-\Level 1 {Vectors and functions}
-
-\Level 2 {Vector as function return}
-
-\begin{block}{Vector as function return}
-  \label{sl:vector-return}
-  You can have a vector as return type of a function:
-  %
-  \snippetwithoutput{vectorreturn}{array}{vectorreturn}
-\end{block}
-
-\Level 2 {Pass vector to function}
-
-\begin{block}{Vector as function argument}
-  \label{sl:vector-arg}
-  You can pass a vector to a function:
-\begin{verbatim}
-void print0( vector<double> v ) {
-  cout << v[0] << endl;
-};
-\end{verbatim}
-Vectors, like any argument, are passed by value, so the vector is
-actually copied into the function.
-\end{block}
-
-\begin{block}{Vector pass by value example}
-  \label{sl:vector-arg-ex}
-  \snippetwithoutput{vectorpassval}{array}{vectorpassnot}  
-\end{block}
-
-\begin{exercise}
-  \label{ex:vectorconcat}
-  Write a function that accepts a vector of ints, and returns a vector
-  that contains the input, concatenated with itself. So:
-\begin{verbatim}
-Input: (1,2,3)
-Output: (1,2,3,1,2,3)
-\end{verbatim}
-\end{exercise}
-
-\begin{block}{Vector pass by reference}
-  \label{sl:vector-arg-ref}
-  If you want to alter the vector, you have to pass by reference:
-  %
-  \snippetwithoutput{vectorpassref}{array}{vectorpassref}  
-\end{block}
-
-\begin{exercise}
-  \label{ex:vec-rand-sort}
-  Write functions \n{random_vector} and \n{sort} to make the following
-  main program work:
-\begin{verbatim}
-int length = 10;
-vector<float> values = random_vector(length);
-sort(values);
-\end{verbatim}
-  (This creates a vector of random values of a specified length, and
-then sorts it.)
-
-See section~\ref{sec:crand} for the random fuction.
-\end{exercise}
-
 \Level 1 {Dynamic size of vector}
 
 It is tempting to use \n{push_back} to create a vector dynamically.
@@ -480,6 +510,7 @@ Another illustration of pointer arithmetic on iterators is getting the
 last element of a vector:
 %
 \snippetwithoutput{vectorend}{array}{vectorend}
+\snippetwithoutput{vectorenditerator}{array}{vectorenditerator}
 
 \Level 1 {Timing}
 

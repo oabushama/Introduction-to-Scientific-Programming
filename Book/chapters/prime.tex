@@ -251,3 +251,20 @@ can not really put that method in the base class. However:
 \begin{exercise}
   Add \n{nextprime} as a virtual method to the base class.
 \end{exercise}
+
+\Level 0 {Ranging over the generator}
+
+\prerequisite{Make sure you have studied range-based iterating;
+  section~\ref{sec:range-iter}}
+
+The \indexterm{C++17} mechanism of
+\indextermsub{range-based}{iteration} allows for an even more concise
+syntax.
+
+\begin{exercise}
+  \label{ex:primerange}
+  Write a class \n{primegenerator} with methods \n{begin}, \n{end} and
+  operators \verb|++|, \verb+!=+ so that primes can be generated as:
+  %
+  \verbatimsnippet{primerangecall}
+\end{exercise}

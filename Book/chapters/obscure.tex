@@ -233,6 +233,95 @@ Can be used with anything that is iteratable\\
 (vector, map, your own classes!)
 \end{block}
 
+\Level 0 {Iterating over classes}
+\label{sec:range-iter}
+
+You know that you can iterate over \n{vector} objects:
+\begin{verbatim}
+vector<int> myvector(20);
+for ( auto copy_of_int : myvector )
+  s += copy_of_int;
+for ( auto &ref_to_int : myvector )
+  ref_to_int = s;
+\end{verbatim}
+(Many other \ac{STL} classes are iteratable like this.)
+
+This is not magic: it is possible to iterate over any class
+\n{iteratable} that has a number of conditions satisfied.
+
+The class needs to have:
+\begin{itemize}
+\item a method \n{iteratable iteratable::begin()} that gives an
+  object in the initial state, which we will call the `iterator object'; likewise
+\item a method \n{iteratable iteratable::end()} that gives an 
+  object in the final state; furthermore you need
+\item an increment operator \n{void iteratable::operator++} that
+  advances the iterator object to the next state;
+\item a test \n{bool iteratable::operator!=(const iteratable&)} to determine
+  whether the iteration can continue; finally
+\item a dereference operator \n{iteratable::operator*} that takes the
+  iterator object and returns its state.
+\end{itemize}
+
+Let's make a class, called a \n{bag}, that models a set of integers,
+and we want to enumerate them. For simplicity sake we will make a set
+of contiguous integers:
+%
+\verbatimsnippet{bagdata}
+
+When you create an iterator object it will be copy of the object you
+are iterating over, except that it remembers how far it has
+searched:
+%
+\verbatimsnippet{bagseek}
+
+The \n{begin} method gives a \n{bag} with the seek parameter
+initialized:
+%
+\verbatimsnippet{bagbeginend}
+%
+These routines are public because they are (implicitly) called by the
+client code.
+
+The termination test method is called on the iterator, comparing it to
+the \n{end} object:
+%
+\verbatimsnippet{bagtest}
+
+Finally, we need the increment method and the dereference. Both access
+the \n{seek} member:
+%
+\verbatimsnippet{bagderef}
+
+We can now iterate over a \n{bag}:
+%
+\snippetwithoutput{bagfinditer}{loop}{bagfind}
+
+If we add a method \n{has} to the class:
+%
+\verbatimsnippet{baghastest}
+%
+we can call this:
+%
+\verbatimsnippet{bagtestcall}
+%
+Of course, we could have written this function
+without the range-based iteration, but this implementation is
+particularly elegant.
+
+You can now do exercise~\ref{ex:primerange}, implementing a prime
+number generator with this mechanism.
+
+If you think you understand \n{const}, consider that the \n{has}
+method is conceptually \n{cost}. But if you add that keyword, the
+compiler will complain about that use of \n{*this}, since it is
+altered through the \n{begin} method.
+
+\begin{exercise}
+  \label{ex:rangeconstiter}
+  Find a way to make \n{has} a \n{const} method.
+\end{exercise}
+
 \Level 0 {Lambdas}
 \label{sec:lambda}
 

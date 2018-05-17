@@ -18,12 +18,28 @@ using std::vector;
 
 int main() {
 
-  //codesnippet vectorend
-  vector<int> array(5,2);
-  array.push_back(35);
-  cout << array.size() << endl;
-  cout << *( --array.end() ) << endl;
-  //codesnippet end
+  cout << "End Bracket" << endl;
+  {
+    //codesnippet vectorend
+    vector<int> array(5,2);
+    array.push_back(35);
+    cout << array.size() << endl;
+    cout << array[array.size()-1] << endl;
+    //codesnippet end
+  }
+  cout << "... bracket" << endl;
+
+  cout << "End Iterator" << endl;
+  {
+    //codesnippet vectorenditerator
+    vector<int> array(5,2);
+    array.push_back(35);
+    cout << array.size() << endl;
+    cout << array[array.size()-1] << endl;
+    cout << *( --array.end() ) << endl;
+    //codesnippet end
+  }
+  cout << "... iterator" << endl;
 
   return 0;
 }
