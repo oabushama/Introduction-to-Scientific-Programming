@@ -263,39 +263,70 @@ The class needs to have:
   iterator object and returns its state.
 \end{itemize}
 
-Let's make a class, called a \n{bag}, that models a set of integers,
-and we want to enumerate them. For simplicity sake we will make a set
-of contiguous integers:
-%
-\verbatimsnippet{bagdata}
+\begin{slide}{Requirements}
+  \label{sl:rangemethods}
+  \begin{itemize}
+  \item a method \n{iteratable iteratable::begin()}: initial state
+  \item a method \n{iteratable iteratable::end()}:  final state
+  \item an increment operator \n{void iteratable::operator++}: advance
+  \item a test \n{bool iteratable::operator!=(const iteratable&)}
+  \item a dereference operator \n{iteratable::operator*}: return state
+  \end{itemize}
+\end{slide}
 
-When you create an iterator object it will be copy of the object you
-are iterating over, except that it remembers how far it has
-searched:
-%
-\verbatimsnippet{bagseek}
+\begin{block}{Simple illustration}
+  \label{sl:bagdata}
+  
+  Let's make a class, called a \n{bag}, that models a set of integers,
+  and we want to enumerate them. For simplicity sake we will make a set
+  of contiguous integers:
+  %
+  \verbatimsnippet{bagdata}
+\end{block}
 
-The \n{begin} method gives a \n{bag} with the seek parameter
-initialized:
-%
-\verbatimsnippet{bagbeginend}
-%
-These routines are public because they are (implicitly) called by the
-client code.
+\begin{block}{Internal state}
+  \label{sl:bagseek}
+  When you create an iterator object it will be copy of the object you
+  are iterating over, except that it remembers how far it has
+  searched:
+  %
+  \verbatimsnippet{bagseek}
+\end{block}
 
-The termination test method is called on the iterator, comparing it to
-the \n{end} object:
-%
-\verbatimsnippet{bagtest}
+\begin{block}{Initial/final state}
+  \label{sl:bagbeginend}
+  The \n{begin} method gives a \n{bag} with the seek parameter
+  initialized:
+  %
+  \verbatimsnippet{bagbeginend}
+  %
+  These routines are public because they are (implicitly) called by the
+  client code.
+\end{block}
 
-Finally, we need the increment method and the dereference. Both access
-the \n{seek} member:
-%
-\verbatimsnippet{bagderef}
+\begin{block}{Termination test}
+  \label{sl:bagtest}
+  The termination test method is called on the iterator, comparing it to
+  the \n{end} object:
+  %
+  \verbatimsnippet{bagtest}
+\end{block}
 
-We can now iterate over a \n{bag}:
-%
-\snippetwithoutput{bagfinditer}{loop}{bagfind}
+\begin{block}{Dereference}
+  \label{sl:bagderef}
+  Finally, we need the increment method and the dereference. Both access
+  the \n{seek} member:
+  %
+  \verbatimsnippet{bagderef}
+\end{block}
+
+\begin{block}{Use case}
+  \label{sl:bagfind}
+
+  We can iterate over our own class:
+  %
+  \snippetwithoutput{bagfinditer}{loop}{bagfind}
+\end{block}
 
 If we add a method \n{has} to the class:
 %
@@ -377,6 +408,16 @@ type. Solution: use \n{std::function}
   \label{sl:lambda-classed}
   \verbatimsnippet{lambdaclassed}
 \end{block}
+
+\begin{exercise}
+  \label{ex:newtonlambda}
+  Refer to exercise~\ref{ex:newton-root} for background.
+
+  \snippetwithcomment{rootclass}{
+    This is a class for zero finding with the newton method. The
+    constructor takes a function and the derivative. Figure out what
+    functions to supply to implement root finding.}
+\end{exercise}
 
 \Level 0 {Casts}
 \label{sec:cast}
