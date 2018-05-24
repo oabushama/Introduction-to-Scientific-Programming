@@ -265,8 +265,8 @@ double re_part,im_part;
   Declarations can go pretty much anywhere in your program, but they need
   to come before the first use of the variable.
 
-  Note: it is legal to define a variable before the main program\\
-  but that's not a good idea. Please only declare \emph{inside} main\\
+  Note: it is legal to define a variable before the main program
+  but that's not a good idea. Please only declare \emph{inside} main
   (or inside a function et cetera).
 \end{block}
 
@@ -425,6 +425,8 @@ float one = 1.;
   one so that the result is not one.
 \end{exercise}
 
+Complex numbers exist, see section~\ref{sec:stl-complex}.
+
 \Level 1 {Number values and undefined values}
 \label{sec:naninf}
 
@@ -546,9 +548,9 @@ There is also \n{getline}, which is more general.
 
 \begin{exercise}
   \label{ex:cin-cout3np1}
-  Write a program that 
+  Write a program that :
   \begin{itemize}
-  \item Displays the message \n{Type a number},
+  \item displays the message \n{Type a number},
   \item accepts an integer number from you (use~\n{cin}),
   \item and then prints out three times that number plus one.
   \end{itemize}
@@ -729,18 +731,19 @@ For floating point result do:
 
 \begin{exercise}
   \label{ex:modulus}
-  Write a program that ask for two integer numbers \n{n1,n2}.
+  Write a program that asks for two integer numbers \n{n1,n2}.
   \begin{itemize}
   \item Assign the integer ratio $n_1/n_2$ to an integer variable.
   \item Can you use this variable to compute the modulus
     \[ n_1\mod n_2 \]
     (without using the \n{\char`\%} modulus operator!)\\
     Print out the value you get.
-  \item Also print out the result from using the modulus operator:\n{\char`\%}.
+  \item Also print out the result from using the modulus
+    operator:\n{\char`\%}.
+  \item Investigate the behaviour of your program for negative
+    inputs. Do you get what you were expecting?
   \end{itemize}
 \end{exercise}
-
-Complex numbers exist, see section~\ref{sec:stl-complex}.
 
 \Level 0 {Library functions}
 

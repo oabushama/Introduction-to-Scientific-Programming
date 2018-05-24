@@ -41,6 +41,11 @@ int main() {
   is executed, and you can refer to it during that execution. After
   execution leaves the conditional, the name ceases to exist, and so
   does the integer in memory.
+\item In general you can say that any
+  %
+  \emph{use}\index{definition vs use}
+  of a name has be in the lexical scope of that variable, and after
+  its \emph{definition}.
 \end{itemize}
 
 \begin{slide}{Lexical scope}
@@ -159,15 +164,21 @@ recursive call the outer~\n{i} is still alive, but it is inaccessible.
 
 \Level 2 {Mutual recursion}
 
-If you have two functions \n{f,g} that call each other, you need
+If you have two functions \n{f,g} that call each other,
+\begin{verbatim}
+int f(int i) { return g(i-1); }
+int g(int i) { return f(i+1); }
+\end{verbatim}
+you need a
 %
-\emph{forward declaration}\index{forward declaration!of functions}.
+\emph{forward declaration}\index{forward declaration!of functions}
 %
 \begin{verbatim}
 int g(int);
 int f(int i) { return g(i-1); }
 int g(int i) { return f(i+1); }
 \end{verbatim}
+since the use of name~\n{g} has to come after its declaration.
 
 There is also forward declaration of
 %
@@ -291,7 +302,8 @@ If yes, what does it do; if no, why not?
   What is the output of:
 \begin{verbatim}
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 int main() {
   int i=5;
   if (true) { i = 6; }
@@ -306,7 +318,8 @@ int main() {
   What is the output of:
 \begin{verbatim}
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 int main() {
   int i=5;
   if (true) { int i = 6; }
@@ -321,7 +334,8 @@ int main() {
   What is the output of:
 \begin{verbatim}
 #include <iostream>
-using namespace std;
+using std::cout;
+using std::endl;
 int main() {
   int i=2;
   i += /* 5;

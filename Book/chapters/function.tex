@@ -99,8 +99,10 @@ int InfNorm( float a[],int n) {
 }
 int main() {
   ... // stuff
-  cout << "Inf norm x: " << InfNorm(x,nx) << endl;
-  cout << "Inf norm y: " << InfNorm(y,ny) << endl;
+  cout << "Inf norm x: "
+       << InfNorm(x,nx) << endl;
+  cout << "Inf norm y: " 
+       << InfNorm(y,ny) << endl;
 \end{verbatim}
   \end{multicols}
   Code becomes shorter, easier to maintain.\\
@@ -382,25 +384,6 @@ calling program.
 Functions can not be nested: you can not define a function inside the
 body of another function.
 
-\begin{exercise}
-  \label{ex:newton-root}
-  Early computers had no hardware for computing a square
-  root. Instead, they used \indexterm{Newton's method}. Suppose you
-  have a value~$y$ and you want want to compute
-  $x\leftarrow\sqrt{y}$. This is equivalent to finding the zero of
-  \[ f(x) = x^2-y \] where $y$~is fixed. To indicate this dependence
-  on~$y$, we will write~$f_y(x)$. Newton's method then finds the zero by
-  evaluating
-  \[ x_{\mathrm{next}}=x-f_y(x)/f_y'(x) \]
-  until the guess is accurate enough, that is, until $f_y(x)\approx0$.
-  \begin{itemize}
-  \item Write functions \n{f(x,y)} and \n{deriv(x,y)}, that compute
-    $f_y(x)$ and $f_y'(x)$ for the definition of $f_y$ above.
-  \item Read a value $y$ and iterate until $|\n{f(x,y)}|<10^{-5}$. Print~$x$.
-  \item Second part: write a function \n{newton_root} that computes~$\sqrt{y}$.
-  \end{itemize}
-\end{exercise}
-
 \Level 0 {Parameter passing}
 \label{sec:passing}
 \index{parameter|seealso{function, parameter}}
@@ -467,9 +450,27 @@ variable is local.
 
 \verbatimsnippet{localparm}
 
-You can prevent local changes to the function parameter:
+If you are doing the prime project (chapter~\ref{ch:prime}) you can
+now do exercise~\ref{ex:prime:func}.
 
-\verbatimsnippet{readonlyparm}
+\begin{exercise}
+  \label{ex:newton-root}
+  Early computers had no hardware for computing a square
+  root. Instead, they used \indexterm{Newton's method}. Suppose you
+  have a value~$y$ and you want want to compute
+  $x\leftarrow\sqrt{y}$. This is equivalent to finding the zero of
+  \[ f(x) = x^2-y \] where $y$~is fixed. To indicate this dependence
+  on~$y$, we will write~$f_y(x)$. Newton's method then finds the zero by
+  evaluating
+  \[ x_{\mathrm{next}}=x-f_y(x)/f_y'(x) \]
+  until the guess is accurate enough, that is, until $f_y(x)\approx0$.
+  \begin{itemize}
+  \item Write functions \n{f(x,y)} and \n{deriv(x,y)}, that compute
+    $f_y(x)$ and $f_y'(x)$ for the definition of $f_y$ above.
+  \item Read a value $y$ and iterate until $|\n{f(x,y)}|<10^{-5}$. Print~$x$.
+  \item Second part: write a function \n{newton_root} that computes~$\sqrt{y}$.
+  \end{itemize}
+\end{exercise}
 
 \Level 1 {Pass by reference}
 \label{sec:pass-by-ref}
@@ -594,7 +595,7 @@ swapij(i,j);
 {\small
 \begin{verbatim}
 int number,divisor,remainder;
-// get the number and divisor from the user
+// read in the number and divisor
 if ( is_divisible(number,divisor,remainder) )
   cout << number << " is divisible by " << divisor << endl;
 else
@@ -606,6 +607,12 @@ else
 
 If you are doing the geometry project, you should now do the exercises
 in section~\ref{sec:geom-basic}.
+
+\begin{block}{Const parameters}
+  You can prevent local changes to the function parameter:
+
+  \verbatimsnippet{readonlyparm}
+\end{block}
 
 \Level 0 {Recursive functions}
 \label{sec:recursion}
@@ -680,7 +687,7 @@ int factorial( int n ) {
   can be defined recursively as
   \[ S_1=1,\qquad S_n = n^2 + S_{n-1}. \]
   Write a recursive function that implements this second definition.
-  Test it on numbers that are input by the user.
+  Test it on numbers that are input interactively.
 
   Then write a program that prints the first 100 sums of squares.
 \end{exercise}
@@ -690,16 +697,55 @@ int factorial( int n ) {
   Write a recursive function for computing Fibonacci numbers:
   \[ F_0=1,\qquad F_1=1,\qquad F_{n}=F_{n-1}+F_{n-2} \]
   First write a program that computes $F_n$ for a value~$n$ that is
-  input by the user.
+  input interactively.
 
   Then write a program that prints out a sequence of Fibonacci
-  numbers; the user should input how many.
+  numbers; set interactively how many.
 \end{exercise}
 
 If you let your Fibonacci program print out each time it computes a
 value, you'll see that most values are computed several times. (Math
 question: how many times?) This is wasteful in running time. This
 problem is addressed in section~\ref{sec:memo}.
+
+\Level 1 {Stack overflow}
+
+So far you have seen only very simple recursive functions. Consider
+the function
+\[ \forall_{n>1}\colon g_n = (n-1)\cdot g(n-1),\qquad g(1)=1 \]
+and its implementation:
+\begin{verbatim}
+int multifact( int n ) {
+  if (n==1)
+    return 1;
+  else {
+    int oneless = n-1;
+    return oneless*multifact(oneless);
+  }
+}
+\end{verbatim}
+Now the function has a local variable. Suppose we compute~$g(3)$. That
+involves
+\begin{verbatim}
+int oneless = 2;
+\end{verbatim}
+and then the computation of~$g_2$. But that computation involved 
+\begin{verbatim}
+int oneless = 1;
+\end{verbatim}
+Do we still get the right result for~$g_3$? Is it going to compute
+$g_3=2\cdot g_2$ or $g_3=1\cdot g_2$?
+
+Not to worry: each time you call \n{multifact} a new local variable
+\n{oneless} gets created. That is good, because it means your program
+will be correct\footnote{Historical note: very old versions of Fortran
+  did not do this, and so recursive functions were basically
+  impossible.}, but it also means that if your function has both
+\begin{itemize}
+\item a large amount of local data, and
+\item a large \indextermbus{recursion}{depth},
+\end{itemize}
+it may lead to \indextermbus{stack}{overflow}.
 
 \Level 0 {More function topics}
 
@@ -739,7 +785,7 @@ Distinguished by type or number of input arguments: can not differ only in retur
 \Level 1 {Random function}
 \label{sed:crand}
 
-There is an easy (but not terribly great) \indextermdef{random number generator} that
+There is an easy (but not terribly great) \indextermbusdef{random number}{generator} that
 works the same as in~C:
 
 \begin{verbatim}
@@ -753,6 +799,16 @@ every time you call it~-- in the range from zero to
 \indextermtt{RAND_MAX}.
 Using scaling and casting you can then produce a fraction between zero
 and one with the above code.
+
+If you run your program twice, you will twice get the same sequence of
+random numbers. That is great for debugging your program but not if
+you were hoping to do some statistical analysis. Therefore you can set
+the \indextermbus{random number}{seed} from which the random sequence
+starts by the \indextermtt{srand} function. Example:
+\begin{verbatim}
+srand(time(NULL));
+\end{verbatim}
+seeds the random number generator from the current time.
 
 \Level 0 {Review questions}
 

@@ -306,32 +306,9 @@ for ( ... )
   iarray.push_back( ... );
 \end{verbatim}
 
-\begin{exercise}
-  \label{ex:splitoddeven}
-  Write a function that takes a vector of integers, and return two
-  vectors, one containing all the odd inputs, and one containing all
-  the even inputs. So:
-\begin{verbatim}
-input:
-   5,6,2,4,5
-output:
-   5,5
-   6,2,4
-\end{verbatim}
-\end{exercise}
-
 Other methods that change the size: \n{insert}, \n{erase}.
 
 \Level 1 {Vectors and functions}
-
-\Level 2 {Vector as function return}
-
-\begin{block}{Vector as function return}
-  \label{sl:vector-return}
-  You can have a vector as return type of a function:
-  %
-  \snippetwithoutput{vectorreturn}{array}{vectorreturn}
-\end{block}
 
 \Level 2 {Pass vector to function}
 
@@ -352,15 +329,41 @@ actually copied into the function.
   \snippetwithoutput{vectorpassval}{array}{vectorpassnot}  
 \end{block}
 
+\Level 2 {Vector as function return}
+
+\begin{block}{Vector as function return}
+  \label{sl:vector-return}
+  You can have a vector as return type of a function:
+  %
+  \snippetwithoutput{vectorreturn}{array}{vectorreturn}
+\end{block}
+
 \begin{exercise}
-  \label{ex:vectorconcat}
-  Write a function that accepts a vector of ints, and returns a vector
-  that contains the input, concatenated with itself. So:
+  \label{ex:splitoddeven}
+  Write a function that takes a vector of integers, and return two
+  vectors, one containing all the odd inputs, and one containing all
+  the even inputs. So:
+\begin{verbatim}
+input:
+   5,6,2,4,5
+output:
+   5,5
+   6,2,4
+\end{verbatim}
+\end{exercise}
+
+\begin{comment}
+  %% this one is not as good as the previous
+  \begin{exercise}
+    \label{ex:vectorconcat}
+    Write a function that accepts a vector of ints, and returns a vector
+    that contains the input, concatenated with itself. So:
 \begin{verbatim}
 Input: (1,2,3)
 Output: (1,2,3,1,2,3)
 \end{verbatim}
-\end{exercise}
+  \end{exercise}
+\end{comment}
 
 \begin{block}{Vector pass by reference}
   \label{sl:vector-arg-ref}

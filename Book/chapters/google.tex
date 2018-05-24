@@ -93,7 +93,7 @@ random walk once on each page. Or maybe a couple of times.
   \verbatimsnippet{walkrandomly}
 
   Display the results and analyze. You may find that you finish on
-  certain pages too many times. What's happening?
+  certain pages too many times. What's happening? Fix that.
 \end{exercise}
 
 \Level 0 {Graph algorithms}
@@ -136,66 +136,75 @@ is~one. We start with a random distribution:
 %
 \snippetwithoutput{pdfsetup}{google}{pdfsetup}
 
-\endinput
-
-Assuming you
-have learned about arrays~\ref{ch:array}, in particular the use of
-\n{std::vector}.
-
-The web can be represented as a matrix~$W$ of size~$N$, the number of web
-pages, where $w_{ij}=1$ if page~$i$ has a link to page~$j$ and zero
-otherwise. However, this representation is only conceptual; if you
-actually stored this matrix it would be gigantic and largely full of
-zeros. Therefore we use a \indextermsub{sparse}{matrix}: we store only
-the pairs $(i,j)$ for which $w_{ij}\not=0$. (In this case we can get
-away with storing only the indices; in a general sparse matrix you
-also need to store the actual~$w_{ij}$ value.)
-
 \begin{exercise}
-  Store the sparse matrix representing the web as a
-\begin{verbatim}
-vector< vector<bool> > web;
-\end{verbatim}
-  structure.
-  \begin{enumerate}
-  \item At first, assume that the number of web pages is given and reserve the outer
-    vector. Read in values for nonzero indices and add those to the
-    matrix structure.
-  \item Then, assume that the number of pages is not pre-determined. Read in
-    indices; now you need to create rows as they are needed. Suppose
-    the requested indices are
-\begin{verbatim}
-5,1
-3,5
-1,3
-\end{verbatim}
-    Since your structure has only three rows, you also need to remeber
-    their row numbers.
-  \end{enumerate}
-\end{exercise}
-
-Now we want to model the behaviour of a person clicking on links.
-
-\begin{exercise}
-  Track the probability that a user is on a certain page with a
-  \indextermsub{probability}{vector}:
-\begin{verbatim}
-vector<float> state;
-\end{verbatim}
-  The sum of the entries needs to be~$1$. While the algorithms will
-  mathematically guarantee this, it may be a good idea to test for it
-  every once in a while.
-
-  Now model the user clicking on a link by computing a new probability
-  vector:
+  Implement a class \n{ProbabilityDistribution}, which stores a vector
+  of floating point numbers. Write methods for:
   \begin{itemize}
-  \item if for some page~$p$ \n{state[p]} is positive,
-  \item then for all links~$q$, where \n{web[p][q]} is true,
-  \item the new state gets a contribution of \n{state[p]} divided by
-    the number of $q$-links.
+  \item
+    accessing a specific
+    element,
+  \item setting the whole distribution to random, and
+  \item normalizing
+    so that the sum of the probabilities is~1.
+  \item a method rendering the distribution as string could be useful too.
   \end{itemize}
-  Do you recognize a linear algebra algorithm?
 \end{exercise}
 
-Together this gives an approximation of Google's \indexterm{PageRank}
-algorithm.
+Next we need a method that given a probability distribution,
+gives you the new distribution corresponding to performing a single click.
+
+\begin{exercise}
+  Write the method
+\begin{verbatim}
+ProbabilityDistribution Web::globalclick
+    ( ProbabilityDistribution currentstate );
+\end{verbatim}
+Test it by
+\begin{itemize}
+\item start with a distribution that is nonzero in exactly one page;
+\item print the new distribution corresponding to one click;
+\item do this for several pages and inspect the result visually.
+\end{itemize}
+Then start with a random distribution and run a couple of
+iterations. How fast does the process converge? Compare the result to
+the random walk exercise above.
+\end{exercise}
+
+\begin{exercise}
+  In the random walk exercise you had to deal with the fact that some
+  pages have no outgoing links. In that case you transitioned to a
+  random page. That mechanism is lacking in the \n{globalclick}
+  method. Figure out a way to incorporate this.
+\end{exercise}
+
+Let's simulate some simple `search engine optimization' trick.
+
+\begin{exercise}
+  Add a page that you will artificially made look important: add a
+  number of pages (for instance four times the average number of
+  links) that all link to this page, but no one links to
+  them. (Because of the random clicking they will still sometimes be
+  reached.)
+
+  Compute the rank of the artificially hyped page.
+  Did you manage to trick Google into ranking this page high?
+\end{exercise}
+
+\Level 0 {Graphs and linear algebra}
+
+The probability distribution is essentially a vector. You can also
+represent the web as a matrix~$W$ with $w_{ij}=1$ if page $i$
+links to page~$j$. How can you interpret the \n{globalclick} method in
+these terms?
+
+\begin{exercise}
+  Add the matrix representation of the \n{Web} object and reimplement
+  the \n{globalclick} method. Test for correctness.
+
+  Do a timing comparison.
+\end{exercise}
+
+The iteration you did above to find a stable probability distribution
+corresponds to the `power method' in linear algebra. Look up the
+Perron-Frobenius theory and see what it implies for page ranking.
+

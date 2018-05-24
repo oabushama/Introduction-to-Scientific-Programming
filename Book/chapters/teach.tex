@@ -59,29 +59,45 @@ month is enough to explain Fortran. Remaining time will go to exams
 and elective topics.
 
 \begin{table}[ht]
-  \begin{tabular}{|l|l|p{1in}|p{1in}p{1in}p{1in}|}
+  \setbox0=\hbox{homework }\edef\colwidth{\the\wd0}
+  %\begin{tabular}{|l|l|p{1in}|p{1in}p{1in}p{1in}p{1in}|}
+  \begin{tabular}{|l|p{\colwidth}|p{\colwidth}p{\colwidth}p{\colwidth}p{\colwidth}|}
     \hline
-    lesson$\#$&date&Topic&Exercises&&\\
-    &&&prime&geom&infect\\
+    lesson$\#$&Topic&Exercises&&&\\
+    &&homework&prime&geom&infect\\
     \hline
-    1& 1/18 & Statements and expressions&\ref{ex:prime:sum}, \ref{ex:prime:modvar}&&\\
-    2& 1/24 & Conditionals&\ref{ex:prime:divtest}&&\\
-    3& 1/26 & Control structures&&&\\
-    4& 1/31 & Looping&\ref{ex:prime:test}, \ref{ex:prime:test2}, \ref{ex:prime:while}&&\\
-    5 && continue&&&\\
-    6& 2/06 & Functions&\ref{ex:prime:func}&&\\
-    7 && continue&&\ref{sec:geom-basic}&\\
-    8& 2/12 & I/O (lecture~8)&&&\\
-    9& 2/19 & Structs&\ref{ex:prime:struct}&&\\
-    10& 2/23 & Objects&\ref{ex:prime:sequence}, \ref{ex:prime:goldbach-pqr}&
+    1 & Statements and expressions
+        &\ref{ex:cin-cout3np1}&\ref{ex:prime:sum}, \ref{ex:prime:modvar}&&\\
+    2 & Conditionals&
+        &\ref{ex:prime:divtest}&&\\
+    4 & Looping
+        &&\ref{ex:prime:test}, \ref{ex:prime:test2}, \ref{ex:prime:while}&&\\
+    5 & continue
+        &&&&\\
+    6 & Functions
+        &&\ref{ex:prime:func}&&\\
+    7 & continue
+        &&&\ref{sec:geom-basic}&\\
+    8 & I/O (lecture~8)
+        &&&&\\
+    9 & Structs
+        &&\ref{ex:prime:struct}&&\\
+    10 & Objects
+        &&\ref{ex:prime:sequence}, \ref{ex:prime:goldbach-pqr}&
         \ref{ex:geom:point}&\ref{ex:infect:person}\\
-    11 && continue&&&\\
-    12& 2/28 & has-a relation&&\ref{ex:geom:line}, \ref{ex:geom:line2},
+    11 & continue
+        &&&&\\
+    12 & has-a relation
+        &&&\ref{ex:geom:line}, \ref{ex:geom:line2},
         \ref{ex:geom:rect}, \ref{ex:geom:rect2}&\ref{ex:infect:notransfer}\\
-    13& 3/02 & inheritance&&\ref{ex:geom:square}, \ref{ex:geom:line3}&\\
-    14& 3/07 & Arrays&&&\ref{ex:infect:notransfer} and further\\
-    15 && continue&&&\\
-    16& 3/23 & Strings&&&\\
+    13 & inheritance
+        &&&\ref{ex:geom:square}, \ref{ex:geom:line3}&\\
+    14 & Arrays
+        &&&&\ref{ex:infect:notransfer} and further\\
+    15 & continue
+        &&&&\\
+    16 & Strings
+        &&&&\\
     \hline
   \end{tabular}
   \caption{Two-month lesson plan for C++}
@@ -98,38 +114,22 @@ projects that students gradually build towards.
 \begin{description}
 \item[prime] Prime number testing, culminating in prime number
   sequence objects, and testing a corollary of the Goldbach
-  conjecture.
+  conjecture. Chapter~\ref{ch:prime}.
 \item[geom] Geometry related concepts; this is mostly an exercise in
-  object-oriented programming.
+  object-oriented programming. Chapter~\ref{ch:geom}.
 \item[infect] The spreading of infectuous diseases; these are
-  exercises in basic array programming.
+  exercises in object-oriented design. Students can explore various
+  real-life scenarios. Chapter~\ref{ch:infect}.
+\item[pagerank] The Google Pagerank algorithm. Students program a
+  simulated internet, and explore pageranking, including `search
+  engine optimization'. This exercise uses lots of
+  pointers. Chapter~\ref{ch:google}.
 \end{description}
 
 Rather than including the project exercises in the didactic sections,
 each section of these projects list the prerequisite basic sections.
 
-\iffalse
-\begin{itemize}
-\item[1: 1/18] Statements and expressions
-\item[2: 1/24] Conditionals
-\item[3: 1/26] Control structures
-\item[4: 1/31] Looping
-\item[5] continue
-\item[6: 2/06] Functions
-\item[7] continue
-\item[8: 2/12] I/O (lecture~8)
-\item[9: 2/19] Structs
-\item[10: 2/23] Objects
-\item[11] continue
-\item[12: 2/28] has-a relation
-\item[13: 3/02] inheritance
-\item[14: 3/07] Arrays
-\item[15] continue
-\item[16: 3/23] Strings
-\end{itemize}
-\fi
-
-\Level 1 {Fortran or advanced topics}
+\Level 1 {Choice: Fortran or advanced topics}
 
 After two months of grounding in OOP programming in~C++, the Fortran
 lectures and exercises reprise this sequence, letting the students do

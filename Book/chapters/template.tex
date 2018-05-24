@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% template.tex : on templates
 %%%%
@@ -75,6 +75,17 @@ public:
 }
 \end{verbatim}
 \end{block}
+
+\Level 0 {Specific implementation}
+
+\begin{verbatim}
+template <typename T>
+void f(T);
+template <> 
+void f(char c) { /* code with c */ };
+template <>
+void f(double d) { /* code with d */ };
+\end{verbatim}
 
 \Level 0 {Templating over non-types}
 

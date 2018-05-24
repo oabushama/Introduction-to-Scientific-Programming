@@ -127,8 +127,7 @@ Some variations on the simple case.
 \begin{itemize}
 \item It is preferable to declare the loop variable in the loop header:
 \begin{verbatim}
-int var;
-for (var=low; var<upper; var++) {
+for (int var=low; var<upper; var++) {
 \end{verbatim}
 The variable only has
 meaning inside the loop so it should only be defined there.
@@ -161,7 +160,7 @@ for (int var=high; var>=low; var--) { ... }
   \snippetwithoutput{pretest}{basic}{pretest}
   %
   (Historical note: at some point Fortran was post-test, so one
-  iteration was also performed.)
+  iteration was always performed.)
 \item The loop body can be a single statement:
 \begin{verbatim}
 if (x<0)
@@ -287,7 +286,7 @@ for (int var=low; ; var=var+1) {
 \end{verbatim}
 \end{slide}
 
-\begin{slide}{Where did the break happen?}
+\begin{block}{Where did the break happen?}
   \label{sl:for-break-var}
   A loop with a break is one case where you want the loop variable to
   be global:
@@ -301,7 +300,20 @@ for ( ; var<upper; var++) {
 }
 ... code that uses the breaking value of var ...
 \end{verbatim}
-\end{slide}
+\end{block}
+
+\begin{block}{Test in the loop header}
+  \label{sl:looptest}
+  If the test comes at the start or end of an iteration, you can move it
+  to the loop header:
+\begin{verbatim}
+bool some_test{false};
+for (int var=low; !some_test ; var++) {
+  ... some code ...
+  some_test = ... some condition ...
+}
+\end{verbatim}
+\end{block}
 
 %\ifIncludeAnswers\vfill\eject\fi
 
@@ -488,7 +500,7 @@ for (int i=0; i>-1; i--)
 \begin{exercise}
   Large integers are often printed with a comma (US~usage) or a period
   (European usage) between all triples of digits. Write a program that
-  accepts an integer such as $2542981$ from the user, and prints it as
+  accepts an integer such as $2542981$ from the input, and prints it as
   \n{2,542,981}.
 \end{exercise}
 
