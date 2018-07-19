@@ -95,6 +95,15 @@ Hint: see section~\ref{sec:naninf}.
 \end{exercise}
 
 \begin{exercise}
+  \label{ex:pointrotate-class}
+  Revisit exercise~\ref{ex:pointrotate} using the \n{Point}
+  class. Your code should now look like:
+\begin{verbatim}
+newpoint = point.rotate(alpha);
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise}
   Advanced. Can you make a \n{Point} class that can accomodate any
   number of space dimensions? Hint: use a \n{vector};
   section~\ref{sec:stdvector}. Can you make a constructor where you do
@@ -137,6 +146,21 @@ Implement again the \n{evaluate} function so that
 LinearFunction line(p1,p2);
 cout << "Value at 4.0: " << line.evaluate_at(4.0) << endl;
 \end{verbatim}
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:pointrotate-matrix}
+  Revisit exercises \ref{ex:pointrotate}
+  and~\ref{ex:pointrotate-class}, introducing a \n{Matrix} class. Your
+  code can now look like
+\begin{verbatim}
+newpoint = point.apply(rotation_matrix);
+\end{verbatim}
+  or
+\begin{verbatim}
+newpoint = rotation_matrix.apply(point);
+\end{verbatim}
+  Can you argue in favour of either one?
 \end{exercise}
 
 Suppose you want to write a \n{Rectangle} class, which could have methods such as

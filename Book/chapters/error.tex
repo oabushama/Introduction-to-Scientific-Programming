@@ -122,6 +122,7 @@ try {
     << " msg=" << m.error_msg << endl;
 }
 \end{verbatim}
+You can use exception inheritance!
 \end{block}
 
 \begin{block}{Multiple catches}
@@ -152,6 +153,7 @@ try {
 \end{block}
 
 \begin{exercise}
+  \label{ex:throw-negroot}
   Define the function \[ f(x)=x^3-19x^2+79x+100 \] and evaluate
   $\sqrt{f(i)}$ for the integers $i=0\ldots20$.
   \begin{itemize}
@@ -187,5 +189,52 @@ void funk() throw();
   exception use `\n{throw;}' without arguments.
 \item Exceptions delete all stack data, but not \n{new} data. Also,
   destructors are called; section~\ref{sec:destructor}.
+  \item There is an implicit \n{try/except} block around your
+    main. You can replace the handler for that. See the
+    \indextermtt{exception} header file.
   \end{itemize}
 \end{block}
+
+\Level 0 {Legacy mechanisms}
+
+The traditional approach to error checking is for each routine to
+return an integer parameter that indicates success or absence
+thereof. 
+Problems with this approach arise if it's used inconsistently, for
+instance by a user forgetting to heed the return codes of a library.
+Also, it requires that every level of the function calling hierarchy
+needs to check return codes.
+
+The \indexterm{PETSc} library uses this mechanism
+consistently throughout, and to great effect.
+
+Exceptions are a better mechanism, since
+\begin{itemize}
+\item they can not be ignored, and
+\item they do not require handling on the levels of the calling
+  hierarchy between where the exception is thrown and where it is caught.
+\end{itemize}
+And then there is the fact that memory management is automatic with
+exceptions.
+
+\Level 1 {Legacy C mechanisms}
+
+The \indextermtt{errno} variable and the
+\indextermtt{setjmp}~/ \indextermtt{longjmp} functions should not be
+used. These functions for instance do not the memory management
+advantages of exceptions.
+
+\Level 0 {Tools}
+
+Despite all your careful programming, your code may still compute the
+wrong result or crash with strange errors. There are two tools that
+may then be of assistance:
+\begin{itemize}
+\item \indextermtt{gdb} is the GNU interactive
+  \indexterm{debugger}. With it, you can run your code step-by-step,
+  inspecting variables along way, and detecting various conditions. It
+  also allows you to inspect variables after your code throws an
+  error.
+\item \indextermtt{valgrind} is a memory testing tool. It can detect
+  memory leaks, as well as the use of uninitialized data.
+\end{itemize}

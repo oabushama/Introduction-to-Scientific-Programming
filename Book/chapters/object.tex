@@ -87,9 +87,8 @@ separate interface and implementation of a class.
     \verbatimsnippet{pointprivatedefine}
   \end{multicols}
   Usage:
-  \begin{multicols}{2}
-    \verbatimsnippet{pointprivatesetuse}
-  \end{multicols}
+  %
+  \verbatimsnippet{pointprivatesetuse}
 \end{block}
 
 \begin{block}{Interface versus implementation}
@@ -141,27 +140,10 @@ private:
   Other syntax for initialization:
   \verbatimsnippet{classpointinit}
   Even:
-  \snippetwithoutput{pointinitxy}{geom}{pointinitxy}
+  \snippetwithoutput{classpointinitxy}{geom}{pointinitxy}
 
   \emph{Initializer lists}\index{initializer list} can be used as denotations.
   \verbatimsnippet{initcurlypoint}
-\end{block}
-
-\begin{block}{`this'}
-  \label{sl:class-this}
-  Inside an object, a \indexterm{pointer} to the object is available
-  as \indextermtt{this}:
-\begin{verbatim}
-class Myclass {
-private:
-  int myint;
-public:
-  Myclass(int myint) {
-    this->myint = myint;
-  };
-};
-\end{verbatim}
-(also for calling functions inside the object that need the object as argument)
 \end{block}
 
 If the data members follow a \indextermtt{public} directive, code
@@ -361,6 +343,11 @@ public:
 Use $r,\theta$ for the private variables, do not store $x,y$.
   \end{exercise}
 \end{comment}
+
+\begin{exercise}
+  If you are doing the prime project (chapter~\ref{ch:prime}),
+  now is a good time to do exercise~\ref{ex:prime:sequence}.
+\end{exercise}
 
 \emph{The remainder of this section is advanced material. Make sure
   you have studied section~\ref{sec:class-ref}.}
@@ -601,4 +588,35 @@ which gives output
 %\SetBaseLevel 1
 \input inheritance
 %\SetBaseLevel 0
+
+\Level 0 {More topics about classes}
+
+\begin{block}{`this'}
+  \label{sl:class-this}
+  Inside an object, a \indexterm{pointer} to the object is available
+  as \indextermtt{this}:
+\begin{verbatim}
+class Myclass {
+private:
+  int myint;
+public:
+  Myclass(int myint) {
+    this->myint = myint;
+  };
+};
+\end{verbatim}
+This is not often needed. Typical use case:
+you need to call a function inside a method that needs the object as argument)
+\begin{verbatim}
+class someclass;
+void somefunction(someclass *c) {
+  /* ... */ }
+class someclass {
+// method:
+void somemethod() {
+  somefunction(this);
+};
+\end{verbatim}
+\end{block}
+
 

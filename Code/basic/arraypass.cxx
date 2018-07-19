@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2016 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2016-8 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** arraypass.cxx : arrays are passed by reference
  ****
@@ -14,10 +14,6 @@ using std::endl;
 
 #include <vector>
 using std::vector;
-
-//examplesnippet localparm
-void change_scalar(int i) { i += 1; }
-//examplesnippet end
 
 //examplesnippet readonlyparm
 /* This does not compile:
@@ -41,10 +37,6 @@ int main() {
 
   int number;
 
-  number = 3;
-  change_scalar(number);
-  cout << "is this still 3? " << number << endl;
-  
   number = 3;
   change_scalar_by_reference(number);
   cout << "is this still 3? " << number << endl;

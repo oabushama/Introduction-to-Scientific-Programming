@@ -112,6 +112,35 @@ int main() {
 
 \Level 0 {Function definition and call}
 
+There are two sides to a function:
+\begin{itemize}
+\item
+  The \indextermbus{function}{definition} is done once, typically
+  above the main program;
+\item \indextermbus{function}{call}s can happen multiple times, inside
+  the main or inside other functions.
+\end{itemize}
+
+\begin{multicols}{2}
+  \textbf{Definition:}
+\begin{verbatim}
+void report_evenness(int n) {
+  cout << i;
+  if (i%2==0)
+    cout << " is even";
+  else
+    cout << " is odd";
+  cout << endl;
+}
+\end{verbatim}
+\columnbreak
+\textbf{Call:}
+\begin{verbatim}
+for (int i=0; i<N; i++)
+    report_evenness(i);
+\end{verbatim}
+\end{multicols}
+
 \begin{slide}{Function definition and call}
   \label{sl:def-call}
   \begin{multicols}{2}
@@ -144,28 +173,6 @@ int main() {
 \end{verbatim}
   \end{multicols}
 \end{slide}
-
-Above you saw the \indextermbus{function}{definition}
-
-\begin{multicols}{2}
-  \textbf{Definition:}
-\begin{verbatim}
-void report_evenness(int n) {
-  cout << i;
-  if (i%2==0)
-    cout << " is even";
-  else
-    cout << " is odd";
-  cout << endl;
-}
-\end{verbatim}
-\columnbreak
-\textbf{Call:}
-\begin{verbatim}
-for (int i=0; i<N; i++)
-    report_evenness(i);
-\end{verbatim}
-\end{multicols}
 
 In this example, the function definition consists of:
 \begin{itemize}
@@ -446,12 +453,15 @@ y = f(x1,x2,x3);
 \end{slide}
 
 Passing a variable to a routine passes the value; in the routine, the
-variable is local.
+variable is local. So, in this example
+the value of the argument is not changed:
 
-\verbatimsnippet{localparm}
+\snippetwithoutput{localparm}{func}{localparm}
 
+\begin{exercise}
 If you are doing the prime project (chapter~\ref{ch:prime}) you can
 now do exercise~\ref{ex:prime:func}.
+\end{exercise}
 
 \begin{exercise}
   \label{ex:newton-root}
@@ -552,7 +562,7 @@ We also the following terminology for function parameters:
 
 As an example, consider a function that tries to read a value from a
 file. With anything file-related, you always have to worry about the
-case of the file not existing and such. So our function return:
+case of the file not existing and such. So our function returns:
 \begin{itemize}
 \item a boolean value to indicate whether the read succeeded, and
 \item the actual value if the read succeeded.
@@ -605,13 +615,17 @@ else
 }
 \end{exercise}
 
-If you are doing the geometry project, you should now do the exercises
-in section~\ref{sec:geom-basic}.
+\begin{exercise}
+  If you are doing the geometry project, you should now do the exercises
+  in section~\ref{sec:geom-basic}.
+\end{exercise}
 
 \begin{block}{Const parameters}
   You can prevent local changes to the function parameter:
 
   \verbatimsnippet{readonlyparm}
+
+  This is mostly to protect you against yourself.
 \end{block}
 
 \Level 0 {Recursive functions}
@@ -737,7 +751,7 @@ Do we still get the right result for~$g_3$? Is it going to compute
 $g_3=2\cdot g_2$ or $g_3=1\cdot g_2$?
 
 Not to worry: each time you call \n{multifact} a new local variable
-\n{oneless} gets created. That is good, because it means your program
+\n{oneless} gets created `on the \indexterm{stack}'. That is good, because it means your program
 will be correct\footnote{Historical note: very old versions of Fortran
   did not do this, and so recursive functions were basically
   impossible.}, but it also means that if your function has both
@@ -811,6 +825,58 @@ srand(time(NULL));
 seeds the random number generator from the current time.
 
 \Level 0 {Review questions}
+
+\begin{exercise}
+  What is the output of the following programs (assuming the usual headers):
+
+  \begin{multicols}{2}
+\begin{verbatim}
+int add1(int i) {
+  return i+1;
+}
+int main() {
+  int i=5;
+  i = add1(i);
+  cout << i << endl;
+}
+\end{verbatim}
+\columnbreak
+\begin{verbatim}
+void add1(int i) {
+  i = i+1;
+}
+int main() {
+  int i=5;
+  add1(i);
+  cout << i << endl;
+}
+\end{verbatim}
+  \end{multicols}
+
+  \begin{multicols}{2}
+\begin{verbatim}
+void add1(int &i) {
+  i = i+1;
+}
+int main() {
+  int i=5;
+  add1(i);
+  cout << i << endl;
+}
+\end{verbatim}
+\columnbreak
+\begin{verbatim}
+int add1(int &i) {
+  return i+1;
+}
+int main() {
+  int i=5;
+  i = add1(i);
+  cout << i << endl;
+}
+\end{verbatim}
+  \end{multicols}
+\end{exercise}
 
 \begin{exercise}
   \label{ex:cpp-funcloop1}

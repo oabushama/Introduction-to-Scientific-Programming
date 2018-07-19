@@ -19,7 +19,8 @@ struct vector { double x; double y; } ;
 
 //codesnippet structpass
 double distance
-    ( struct vector p1,struct vector p2 ) {
+  ( struct vector p1,struct vector p2 )
+{
   double d1 = p1.x-p2.x, d2 = p1.y-p2.y;
   return sqrt( d1*d1 + d2*d2 );
 }

@@ -88,6 +88,17 @@ for (int iter=1; iter<=N; iter++)
 \end{verbatim}
 The former is slightly more idiomatic to~C++.
 
+The loop header has three components, all of which are optional.
+\begin{itemize}
+\item An initialization. This is usually a declaration and
+  initialization of an integer \indextermbus{loop}{variable}. Using
+  floating point values is less advisable.
+\item A stopping test, usually
+  involving the loop variable. If you leave this out, you need a
+  different mechanism for stopping the loop; see~\ref{sec:loopuntil}.
+\item An increment, often~\n{i++} or spelled out \n{i=i+1}. You can let the loop count down by using~\n{i--}.
+\end{itemize}
+
 \begin{exercise}
   \label{ex:manyhello}
   Read an integer value with \n{cin}, and print `Hello world' that many times.
@@ -102,18 +113,10 @@ Hello world 2
 Hello world 17
 \end{verbatim}
 Can you do this both with the loop index starting at 0 and~1?\\
+Also, let the numbers count down. What are the starting and final
+value of the loop variable and what is the update? There are several possibilities!
 \end{exercise}
 
-The loop header has three components, all of which are optional.
-\begin{itemize}
-\item An initialization. This is usually a declaration and
-  initialization of an integer \indextermbus{loop}{variable}. Using
-  floating point values is less advisable.
-\item A stopping test, usually
-  involving the loop variable. If you leave this out, you need a
-  different mechanism for stopping the loop; see~\ref{sec:loopuntil}.
-\item An increment, often~\n{i++} or spelled out \n{i=i+1}. You can let the loop count down by using~\n{i--}.
-\end{itemize}
 This is how a loop is executed.
 \begin{itemize}
 \item The initialization is performed.
@@ -285,6 +288,15 @@ for (int var=low; ; var=var+1) {
 }
 \end{verbatim}
 \end{slide}
+
+\begin{exercise}
+  All three parts of a loop header are optional. What would be the
+  meaning of
+\begin{verbatim}
+for (;;) { /* some code */ }
+\end{verbatim}
+?
+\end{exercise}
 
 \begin{block}{Where did the break happen?}
   \label{sl:for-break-var}
@@ -521,7 +533,7 @@ for (int i=0; i>-1; i--)
   there, considering the left or right interval.
   \begin{itemize}
   \item How do you find $x_-,x_+$? This is tricky in general; if you
-    can find them in the interval~$[-10^6,+10^6]$, halt the program.
+    can not find them in the interval~$[-10^6,+10^6]$, halt the program.
   \item Finding the zero exactly may also be tricky or maybe
     impossible. Stop your program if $|x_--x_+|<10^{-10}$.
   \end{itemize}

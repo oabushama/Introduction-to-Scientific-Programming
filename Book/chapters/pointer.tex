@@ -39,6 +39,25 @@ Legitimate needs:
 \item Use \indextermtt{nullptr} as a signal.
 \end{itemize}
 
+\Level 0 {The `arrow' notation}
+
+\begin{block}{Members from pointer}
+  \begin{itemize}
+  \item If \n{x} is object with member~\n{y}:\\ \n{x.y}
+  \item If \n{xx} is pointer to object with member~\n{y}:\\ \n{xx->y}
+  \item In class methods \n{this} is a pointer to the object, so:
+\begin{verbatim}
+class x {
+  int y;
+  x(int v) {
+    this->y = v; }
+}
+\end{verbatim}
+\item Arrow notation works with old-style pointers and new
+  shared/unique pointers.
+  \end{itemize}
+\end{block}
+
 \Level 0 {Making a shared pointer}
 \label{sec:shared_ptr}
 
@@ -96,7 +115,19 @@ array->at(2) = 3.15;
 
 The big problem with C-style pointers is the chance of a
 \indexterm{memory leak}. If a pointer to a block of memory goes out of
-scope, the block still exists, but is no longer accessible. Shared
+scope, the block is not returned to the \ac{OS}, but it is no longer
+accessible.
+\begin{verbatim}
+// the variable `array' doesn't exist
+{
+  // attach memory to `array':
+  double *array = new double[25];
+  // do something with array
+}
+// the variable `array' does not exist anymore
+// but the memory is still reserved.
+\end{verbatim}
+Shared and unique
 pointers do not have this problem: if they go out of scope, or are
 overwritten, the destructor on the object is called, thereby releasing
 any allocated memory.

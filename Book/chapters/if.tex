@@ -110,6 +110,40 @@ if ( something ) {
 \end{verbatim}
 \end{slide}
 
+\Level 0 {Operators}
+
+\begin{block}{Comparison and logical operators}
+  \label{sl:operators}
+  \begin{tabular}{|l|l|l|}
+    \hline
+    Operator&meaning&example\\ \hline
+    \texttt{==}&equals&\texttt{x==y-1}\\
+    \texttt{!=}&not equals&\texttt{x*x*!=5}\\
+    \texttt{>}&greater&\texttt{y>x-1}\\
+    \texttt{>=}&greater or equal&\texttt{sqrt(y)>=7}\\
+    \texttt{<},\texttt{<=}&less, less equal&\texttt{}\\
+    \n{&&},\n{||}&and, or&\n{x<1 && x>0}\\
+    \texttt{!}&not&\n{!( x>1 && x<2 )}\\
+    \hline
+  \end{tabular}
+
+  \emph{Precendence}\index{precedence} rules are common sense. When in
+  doubt, use parentheses.
+\end{block}
+
+\begin{exercise}
+  \label{ex:oddeven}
+  Read in an integer. If it is even, print `even', otherwise print
+  'odd':
+\begin{verbatim}
+if ( /* your test here */ ) 
+  cout << "even" << endl;
+else
+  cout << "odd" << endl;
+\end{verbatim}
+Can you rewrite your test so that the output lines are switched?
+\end{exercise}
+
 \begin{exercise}
   \label{ex:fizzbuzz}
   Read in an integer. If it's a multiple of three print `Fizz!';
@@ -158,23 +192,3 @@ if ( something ) {
 \end{verbatim}
 \end{slide}
 
-\Level 0 {Operators}
-
-\begin{block}{Comparison and logical operators}
-  \label{sl:operators}
-  \begin{tabular}{|l|l|l|}
-    \hline
-    Operator&meaning&example\\ \hline
-    \texttt{==}&equals&\texttt{x==y-1}\\
-    \texttt{!=}&not equals&\texttt{x*x*!=5}\\
-    \texttt{>}&greater&\texttt{y>x-1}\\
-    \texttt{>=}&greater or equal&\texttt{sqrt(y)>=7}\\
-    \texttt{<},\texttt{<=}&less, less equal&\texttt{}\\
-    \n{&&},\n{||}&and, or&\n{x<1 && x>0}\\
-    \texttt{!}&not&\n{!( x>1 && x<2 )}\\
-    \hline
-  \end{tabular}
-
-  \emph{Precendence}\index{precedence} rules are common sense. When in
-  doubt, use parentheses.
-\end{block}
