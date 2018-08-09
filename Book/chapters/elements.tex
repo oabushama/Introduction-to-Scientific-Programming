@@ -368,6 +368,19 @@ double pi{3.14};
   an initialization or in an assignment. Print out the values.
 \end{exercise}
 
+\begin{block}{Integer constants}
+  \label{sl:intvals}
+Sometimes you need a different notation or number of bits:
+\begin{verbatim}
+int d = 42;
+int o = 052;
+int x = 0x2a;
+int X = 0X2A;
+int b = 0b101010; // C++14
+long ell = 42L;
+\end{verbatim}
+\end{block}
+
 \Level 1 {Floating point variables}
 
 Mathematically, integers are a special case of real numbers.
@@ -476,11 +489,6 @@ bool found{false};
 found = true;
 \end{verbatim}
 \end{block}
-
-\begin{exercise}
-  \label{ex:print-truefalse}
-  Print out \n{true} and \n{false}. What do you get?
-\end{exercise}
 
 \Level 1 {Strings}
 

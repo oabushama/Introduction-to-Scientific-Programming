@@ -20,7 +20,7 @@ int main() {
 
   cout << "End Bracket" << endl;
   {
-    //codesnippet vectorend
+    //codesnippet vectorpush
     vector<int> array(5,2);
     array.push_back(35);
     cout << array.size() << endl;
@@ -31,7 +31,7 @@ int main() {
 
   cout << "End Iterator" << endl;
   {
-    //codesnippet vectorenditerator
+    //codesnippet vectorpushiterator
     vector<int> array(5,2);
     array.push_back(35);
     cout << array.size() << endl;

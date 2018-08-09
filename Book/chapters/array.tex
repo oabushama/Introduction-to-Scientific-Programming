@@ -9,8 +9,7 @@
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\Level 0 {Static arrays}
-\label{sec:staticarray}
+\Level 0 {Introduction}
 
 An \indextermdef{array} is an indexed data structure, that for each
 index stores an integer, floating point number, character,
@@ -27,7 +26,7 @@ if you know the array size and contents already before you run your
 code, you can create the whole array in one statement. There is more
 than one syntax for doing so.
 %
-\snippetwithoutput{arrayinit}{array}{staticinit}
+\snippetwithoutput{dynamicinit}{array}{dynamicinit}
 
 As you see in this example, if \n{a}~is an array, and \n{i} and
 integer, then \n{a[i]} is the i'th element.
@@ -43,8 +42,6 @@ integer, then \n{a[i]} is the i'th element.
   array, the compiler will only detect this in simple cases. More
   likely, your program may give a runtime error, but that does not
   necessarily happen. You could just get some random value.
-\item You can not query the size of an array by its name: you have to
-  store that information separately in a variable.
 \end{itemize}
 
 \Level 1 {Ranging over an array}
@@ -68,11 +65,11 @@ for ( auto e : array )
   // same, with type deduced by compiler
 \end{verbatim}
 
-\snippetwithoutput{rangemax}{array}{rangemax}
+\snippetwithoutput{dynamicmax}{array}{dynamicmax}
 \end{block}
 
 (You can spell out the type of the array element, but such type
-specifications can be complexit. In that case, using \indextermtt{auto} is
+specifications can be complex. In that case, using \indextermtt{auto} is
 quite convenient.)
 
 If you actually need the array index of the element, you can use a
@@ -95,7 +92,7 @@ Example: find the maximum element and where it occurs.
   \label{ex:array-max}
   Find the element with maximum absolute value in an array. Use:
 \begin{verbatim}
-int numbers[] = {1,-4,2,-6,5};
+vector<int> numbers = {1,-4,2,-6,5};
 \end{verbatim}
 Which mechanism do you use for traversing the array?
 
@@ -123,31 +120,29 @@ absx = abs(x);
   \label{sl:array-range-ref}
   Range-based loop indexing makes a copy of the array element. If you
   want to alter the array, use a reference:
-\snippetwithoutput{rangescale}{array}{rangescale}
+\snippetwithoutput{dynamicscale}{array}{dynamicscale}
 \end{block}
 
-\Level 0 {Vector class for arrays}
+\Level 1 {Vector are a class}
 \label{sec:stdvector}
 
-Statically allocated arrays are enough for many purposes. However, as
-pointed out above, they are not perfect; for instance, you have to
-remember their size, and out-of-bound accesses are not always
-detected. In this section we
-will look at one way of dynamically creating arrays
-that is more convenient and safe: through the STL
-\indextermttdef{vector} class.
+You wouldn't tell it from the above examples, but vectors actually
+form a \indextermttdef{vector} class. The angle bracket notation means
+that we have a class that is parametrized with the type, so you can
+have vectors of ints, vectors of chars, et cetera.
 
-This takes a new syntax:
+What we were doing above was creating an object and initializing it in
+one go. Let's decouple these actions.
 
 \begin{block}{Vector definition}
   \label{sl:vector-def}
+  Definition, mostly without initialization.
 \begin{verbatim}
 #include <vector>
 using std::vector;
 
 vector<type> name;
 vector<type> name(size);
-vector<type> name(size,value);
 \end{verbatim}
 where
 \begin{itemize}
@@ -157,7 +152,6 @@ where
 \item \n{name} is up to you, and
 \item \n{size} is the (initial size of the array). This is an integer,
   or more precisely, a \n{size_t} parameter.
-\item \n{value} is the uniform initial value of all elements.
 \end{itemize}
 \end{block}
 
@@ -169,7 +163,7 @@ where
 
 \begin{block}{Vector initialization}
   \label{sl:vector-init}
-  You can initialize a vector with much the same syntax as an array:
+  You can initialize a vector as a whole:
 \begin{verbatim}
 vector<int> odd_array{1,3,5,7,9};
 vector<int> even_array = {0,2,4,6,8};
@@ -189,12 +183,18 @@ which gives a vector of size~25, with all elements initialized to~3.15.
 
 \begin{block}{Accessing vector elements}
   \label{sl:vectorsub}
-  In a number of ways, vector behaves like an array:
+  You have already seen the square bracket notation:
 \begin{verbatim}
 vector<double> x(5, 0.1 );
 x[1] = 3.14;
 cout << x[2];
 \end{verbatim}
+Alteratively:
+\begin{verbatim}
+x.at(1) = 3.14;
+cout << x.at(2);
+\end{verbatim}
+Safer, slower.
 \end{block}
 
 \begin{block}{Ranging over a vector}
@@ -291,7 +291,7 @@ Use the \n{push_back} method to add elements at the end:
   \label{sl:vector-dynamic}
   Extend with \indextermtt{push_back}:
   %
-  \snippetwithoutput{vectorend}{array}{vectorend}
+  \snippetwithoutput{vectorpush}{array}{vectorend}
   %
   also \n{pop_back}, \n{insert}, \n{erase}.\\
   Flexibility comes with a price.
@@ -512,8 +512,8 @@ Some remarks:
 Another illustration of pointer arithmetic on iterators is getting the
 last element of a vector:
 %
-\snippetwithoutput{vectorend}{array}{vectorend}
-\snippetwithoutput{vectorenditerator}{array}{vectorenditerator}
+\snippetwithoutput{vectorpush}{array}{vectorend}
+\snippetwithoutput{vectorpushiterator}{array}{vectorenditerator}
 
 \Level 1 {Timing}
 
@@ -627,6 +627,28 @@ The syntax for \n{set} and \n{get} can be improved.
 A.element(2,3) = 7.24;
 \end{verbatim}
 \end{exercise}
+
+\Level 0 {Static arrays}
+\label{sec:staticarray}
+
+For small arrays you can use a different syntax. 
+
+\snippetwithoutput{arrayinit}{array}{staticinit}
+
+This has the
+(minimal) advantage of not having the overhead of a class
+mechanism. On the other hand, it has a number of disadvantages:
+\begin{itemize}
+\item You can not query the size of an array by its name: you have to
+  store that information separately in a variable.
+\item Passing such an array to a function is really passing the
+  address of its first element, so it is always (sort of) by
+  reference.
+\end{itemize}
+
+Range-based indexing works the same as with vectors:
+%
+\snippetwithoutput{rangemax}{array}{rangemax}
 
 \Level 0 {Old-style arrays}
 

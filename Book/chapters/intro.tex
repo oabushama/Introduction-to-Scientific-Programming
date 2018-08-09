@@ -51,7 +51,48 @@
   This course is aimed at people in the last category.
 \end{block}
 
-\vfill\pagebreak
+\Level 1 {Is programming science, art, or craft?}
+
+In the early days of computing, hardware design was seen as
+challenging, while programming was little more than data entry. The
+fact that Fortran stands for `formula translation' speaks of this:
+once you have the math, programming is nothing more than translating
+the math into code. The fact that programs could have subtle errors,
+or \emph{bugs}\index{bug}, came as quite a surprise.
+
+The fact that programming was not as highly valued also had the
+side-effect that many of the early programmers were women. Two famous
+examples were Navy Rear-admiral Grace Hopper, inventor of the Cobol
+language, and Margaret Hamilton who led the development of the Apollo
+program software. This situation changed after the 1960s and certainly
+with the advent of
+PCs\footnote{\url{http://www.sysgen.com.ph/articles/why-women-stopped-coding/27216}}.
+
+There are scientific aspects to programming:
+\begin{itemize}
+\item Algorithms and complexity theory have a lot of math in them.
+\item Programming language design is another mathematically tinged subject.
+\end{itemize}
+
+But for a large part programming is a discipline. What constitutes a
+good program is a matter of taste. That does not mean that there
+aren't recommended practices. In this course we will emphasize certain
+practices that we think lead to good code, as likewise will discourage
+you from certain idioms.
+
+None of this is an exact science. There are multiple programs that
+give the right output. However, programs are rarely static. They often
+need to be amended or extended, or even fixed, if erroneous behaviour
+comes to light, and in that case a badly written program can be a
+detriment to programmer productivity. An important consideration,
+therefore, is intelligibility of the program, to another programmer,
+to your professor in this course, or even to yourself two weeks from
+now.
+
+\begin{slide}{Is programming a craft or a science?}
+  \label{sl:programmingcraft}
+  How about a `discipline'?
+\end{slide}
 
 \Level 1 {Computational thinking}
 
@@ -60,12 +101,12 @@
   Programs can get pretty big:
 
   \begin{multicols}{2}
-    \includegraphics[scale=.12]{hamilton}
+    \includegraphics[scale=.10]{hamilton}
     \vfill\columnbreak
-    \small\sl
-    Margaret Hamilton, director of the Software Engineering Division,
+    \small\textsl
+    {Margaret Hamilton, director of the Software Engineering Division,
     the MIT Instrumentation Laboratory, which developed on-board
-    flight software for the Apollo space program. \par
+    flight software for the Apollo space program.}\par
     \includegraphics[scale=.13]{Margaret_Hamilton_in_action}
     \vfill\hbox{}\columnbreak
   \end{multicols}
@@ -125,6 +166,22 @@
   What is the average search time in the two cases?
 
   Having a  correct solution is not enough!
+\end{block}
+
+\begin{block}{Programming languages are about ideas}
+  \label{sl:sussman}
+  \begin{quotation}
+    A powerful programming language serves as a framework within which
+    we organize our ideas. Every programming language has three
+    mechanisms for accomplishing this:
+    \begin{itemize}
+    \item primitive expressions
+    \item means of combination
+    \item means of abstraction
+    \end{itemize}
+    \textsl{Abelson and Sussman, The Structure and Interpretation of
+      Computer Programs}
+  \end{quotation}
 \end{block}
 
 \begin{block}{Abstraction}

@@ -18,8 +18,8 @@ using std::vector;
 
 int main() {
 
-  //examplesnippet idxmax
   int numbers[] = {1,4,2,6,5};
+  //examplesnippet idxmax
   int tmp_idx = 0;
   int tmp_max = numbers[tmp_idx];
   for (int i=0; i<5; i++) {
