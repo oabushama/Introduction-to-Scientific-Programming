@@ -92,16 +92,6 @@ you can not use the brace-assignment.
   \snippetwithoutput{structpass}{struct}{pointfun}
 \end{block}
 
-\begin{block}{Returning structures}
-  \label{sl:struct-return}
-  You can return a structure from a function:
-  %
-  \snippetwithoutput{structreturn}{struct}{pointadd}
-
-  (In case you're wondering about scopes and lifetimes here: the
-  explanation is that the returned value is copied.)
-\end{block}
-
 \begin{exercise}
   \label{ex:primestruct}
   If you are doing the prime project (chapter~\ref{ch:prime}) you can
@@ -113,6 +103,29 @@ you can not use the brace-assignment.
   Write a function \n{inner_product} that takes two \n{vector}
   structures and computes the inner product.
 \end{exercise}
+
+\begin{block}{Denotations}
+  \label{sl:struct-denote}
+  You can use initializer lists as struct
+  \emph{denotations}\index{struct!denotation}:
+  %
+  \snippetwithoutput{structdenote}{struct}{pointdenote}
+\end{block}
+
+\begin{exercise}
+  \label{ex:struct-denote}
+  Take exercise \ref{ex:vecstruct} and rewrite it to use denotations.
+\end{exercise}
+
+\begin{block}{Returning structures}
+  \label{sl:struct-return}
+  You can return a structure from a function:
+  %
+  \snippetwithoutput{structreturn}{struct}{pointadd}
+
+  (In case you're wondering about scopes and lifetimes here: the
+  explanation is that the returned value is copied.)
+\end{block}
 
 \begin{exercise}
   \label{ex:matstruct}

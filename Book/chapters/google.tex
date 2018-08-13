@@ -20,9 +20,10 @@ Let's start with some basic classes:
 \item A \n{Page} contains some information such as its title and a
   global numbering in Google's datacenter. It also contains a
   collection of links.
-\item A \n{Link} is a pointer to a \n{Page}. It can contain further
+\item We represent a link with a pointer to a \n{Page}. Conceivably
+  we could have a \n{Link} class, containing further
   information such as probability of being clicked, or number of times
-  clicked.
+  clicked, but for now a pointer will do.
 \item Ultimately we want to have a class \n{Web} which contains a
   number of pages and their links. The web object will ultimately also
   contain information such as relative importance of the pages.
@@ -40,10 +41,10 @@ pointer to a page, and clicking updates the value of this pointer.
   %
   \verbatimsnippet{homepage}
 
-  Next, make a class \n{Link}. A~link is metaphorically a pointer to
-  another page, so let the main member of the \n{Link} class be a
-  \n{shared_ptr<Page>}. Write two methods; one to display the link,
-  and one \n{click} that follows the link. Intended code:
+  Next, add links to the page. A~link is a pointer to
+  another page, and since there can be any number of them, you will
+  need a \n{vector} of them.
+  Write a method \n{click} that follows the link. Intended code:
   %
   \verbatimsnippet{utlink}
 \end{exercise}
@@ -81,7 +82,7 @@ that are more popular than others. You can do that by starting a
 random walk once on each page. Or maybe a couple of times.
 
 \begin{exercise}
-  Apart from the size of, what other design parameters are there for
+  Apart from the size of your internet, what other design parameters are there for
   your tests? Can you give a back-of-the-envelope estimation of their effect?
 \end{exercise}
 

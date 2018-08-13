@@ -28,14 +28,24 @@ double distance
 
 int main() {
 
+  cout << "Struct Pass" << endl;
   //codesnippet structpass
   struct vector p1 = { 1.,1. };
-  cout << "Displacement x,y?" << endl;
-  double dx,dy; cin >> dx >> dy;
+  cout << "Displacement x,y?";
+  double dx,dy; cin >> dx >> dy; cout << endl;
   cout << "dx=" << dx << ", dy=" << dy << endl;
   struct vector p2 = { p1.x+dx,p1.y+dy };
   cout << "Distance: " << distance(p1,p2) << endl;
   //codesnippet end
+  cout << ".. struct pass" << endl;
+
+  cout << "Struct Denote" << endl;
+  //codesnippet structdenote
+  cout << "Distance: "
+       << distance( {1.,2.}, {6.,14.} )
+       << endl;
+  //codesnippet end
+  cout << ".. struct denote" << endl;
   
   return 0;
 }

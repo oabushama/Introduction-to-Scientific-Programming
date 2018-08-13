@@ -139,7 +139,7 @@ private:
   \label{sl:class-init}
   Other syntax for initialization:
   \verbatimsnippet{classpointinit}
-  Even:
+  Allows for reuse of names:
   \snippetwithoutput{classpointinitxy}{geom}{pointinitxy}
 
   \emph{Initializer lists}\index{initializer list} can be used as denotations.
@@ -508,7 +508,8 @@ destructor, which you can replace with your own.
 
 A destructor can be useful if your object contains dynamically created
 data: you want to use the destructor to dispose of that dynamic data
-to prevent a \indextermbus{memory}{leak}.
+to prevent a \indextermbus{memory}{leak}. Another example is closing
+files for which the \indextermbus{file}{handle} is stored in the object.
 
 The destructor is typically called without you noticing it. For
 instance, any statically created object is destroyed when the control
@@ -517,15 +518,6 @@ flow leaves its scope.
 Example:
 %
 \snippetwithoutput{destructor}{object}{destructor}
-%% %
-%% gives:
-%% \begin{verbatim}
-%% Before the nested scope
-%% calling the constructor
-%% Inside the nested scope
-%% calling the destructor
-%% After the nested scope
-%% \end{verbatim}
 
 \begin{slide}{Destructor}
   \label{sl:class-destruct}
@@ -538,7 +530,7 @@ Example:
 \end{verbatim}
 \item A destructor is called when the object goes out of scope.\\
   Great way to prevent memory leaks: dynamic data can be released
-  in the destructor.
+  in the destructor. Also: closing files.
 \end{itemize}
 \end{slide}
 

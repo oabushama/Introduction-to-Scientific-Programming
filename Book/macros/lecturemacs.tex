@@ -31,41 +31,12 @@
 %%%%
 \newif\ifInBook \InBookfalse
 \input snippetmacs
+% redefine code location wrt lectures
+\def\codedir{../../code}
 
 \makeatletter
 \renewcommand{\verbatim@font}{\ttfamily\tiny}
 \makeatother
-
-%% \newcommand{\snippetwithoutput}[3]{
-%%   \begin{multicols}{2}
-%%     \small\textbf{Code:}
-%%     \verbatimsnippet{#1}
-%%     \vfill\columnbreak
-%%     \textbf{Output:}
-%%     \immediate\write18{ cd ../../code/#2 && make #3 && make run_#3 > run.out }
-%%     \verbatiminput{../../code/#2/run.out}
-%%     \vfill\hbox{}\columnbreak
-%%   \end{multicols}
-%% }
-%% \newcommand{\snippetwitherror}[3]{
-%%   % go into vertical mode
-%%   \par
-%%   % make nice two-column layout
-%%   \vbox{
-%%   \begin{multicols}{2}
-%%     \def\verbatim@startline{\verbatim@line{\leavevmode\relax}}
-%%     \footnotesize\textbf{Code:}
-%%     \verbatimsnippet{#1}
-%%     \par\hbox{}\vfill\columnbreak
-%%     \textbf{Output from running #3 in code directory #2:}
-%%     \hbox{}
-%%     \immediate\write18{ cd ../../code/#2 && make #3.o > #3.out 2>&1 }
-%%     \verbatiminput{../../code/#2/#3.out}
-%%     \par\hbox{}\vfill\hbox{}
-%%   \end{multicols}
-%%   }
-%% }
-
 
 %%%%
 %%%% Outlines
