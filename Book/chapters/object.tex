@@ -36,7 +36,11 @@ structure:
 %
 \snippetwithoutput{pointstruct}{geom}{pointstruct}
 
+Observations about the above code snippet:
 \begin{itemize}
+\item Again we have separate definition of the class and declaration
+  of the objects. You define the class only once, after which you can
+  make as many objects of that class as you want.
 \item There are data members. We will get to the \n{public} in a
   minute.
 \item You make an object of that class by using the class name as the
@@ -48,6 +52,7 @@ structure:
   \label{sl:class-struct}
   \snippetwithoutput{pointstruct}{geom}{pointstruct}
 
+  Class definition versus object declaration.\\
   We'll get to that `\n{public}' in a minute.
 \end{slide}
 
@@ -55,9 +60,13 @@ structure:
 
 Next we'll look at a syntax for creating class objects that is new. If
 you create an object, you actually call a function that has the same
-name as the class: the \indexterm{constructor}. By default there is a
-constructor which has no arguments, and does nothing. A~constructor
-can for instance be used to initialize data members:
+name as the class: the \indexterm{constructor}.
+Above you had a declaration \n{Vector p1} which was not just a
+declaration: it called the so-called \indextermsub{default}{constructor},
+which has no arguments, and does nothing.
+
+Usually you write your own constructor,
+for instance to initialize data members:
 %
 %\snippetwithoutput{pointconstruct}{geom}{pointconstruct}
 \verbatimsnippet{pointconstruct}
@@ -70,7 +79,7 @@ can for instance be used to initialize data members:
   \verbatimsnippet{pointprivatedefine}
 \end{slide}
 
-\Level 1 {Interface versus implementation}
+\Level 1 {Public and private}
 
 In the first example above, the data members of the \n{Vector} class were
 declared \n{public}, meaning that they are accessable from the calling
@@ -91,7 +100,7 @@ separate interface and implementation of a class.
   \verbatimsnippet{pointprivatesetuse}
 \end{block}
 
-\begin{block}{Interface versus implementation}
+\begin{block}{Public versus private}
   \label{sl:interfaceimpl}
   \begin{itemize}
   \item Implementation: data members, keep \n{private},
@@ -611,4 +620,12 @@ void somemethod() {
 \end{verbatim}
 \end{block}
 
+\Level 0 {Review question}
 
+\begin{exercise}
+  What specifies the capabilities of an object?
+\end{exercise}
+
+\begin{exercise}
+  What determines the state of an object?
+\end{exercise}

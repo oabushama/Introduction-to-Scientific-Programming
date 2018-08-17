@@ -155,6 +155,23 @@ cout << /* we are now going
   least one change that leads to a compiler error.
 \end{exercise}
 
+\begin{block}{Errors}
+  \label{sl:program-errors}
+  There are two types of errors that your program can have:
+  \begin{enumerate}
+  \item \emph{Syntax}\index{error!syntax} or
+    \emph{compile-time}\index{error!compile-time} errors: these arise
+    if what you write is not according to the language specification.
+    The compiler catches these errors, and it refuses to produce an
+    \indexterm{executable}.
+  \item \emph{Run-time}\index{error!run-time} errors: these arise if
+    your code is syntactically correct, and the compiler has produced
+    an executable, but the program does not behave the way you
+    intended or foresaw. Examples are divide-by-zero or indexing
+    outside the bounds of an array.
+  \end{enumerate}
+\end{block}
+
 \begin{block}{Fixed elements}
   \label{sl:fixedstuff}
   You see that certain parts of your program are inviolable:

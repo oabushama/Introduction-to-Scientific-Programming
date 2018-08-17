@@ -23,6 +23,7 @@ public:
   };
   //codesnippet end
   //codesnippet pointprivateset
+public:
   double x() { return vx; };
   double y() { return vy; };
   void setx( double newx ) {

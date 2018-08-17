@@ -18,11 +18,13 @@ class Vector {
 private:
   double vx,vy;
 public:
+  // constructor
   Vector( double userx,double usery ) {
     vx = userx; vy = usery;
   }
   //codesnippet end
   //codesnippet pointaccess
+  // accessors
   double x() { return vx; };
   double y() { return vy; };
   //codesnippet end
