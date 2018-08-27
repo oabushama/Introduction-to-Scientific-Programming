@@ -17,27 +17,30 @@
 \makeatletter
 % code location wrt book
 \def\codedir{../code}
-\newcommand{\snippetwithoutput}[3]{
+\newcommand{\answerwithoutput}[3]{
   % go into vertical mode
   \par
-  % record this file as bracketed name
-  \ifInBook \addchaptersource{{#2/#3}} \fi
   % make nice two-column layout
   \vbox{
-  \begin{multicols}{2}
-    \def\verbatim@startline{\verbatim@line{\leavevmode\relax}}
-    \footnotesize\textbf{Code:}
-    \codesnippet{#1}
-    \par\hbox{}\vfill\columnbreak
-    { \raggedright
-      \textbf{Output from running #3 in code directory #2:}
-    }
-    \hbox{}
-    \immediate\write18{ cd \codedir /#2 && make #3 && make run_#3 > #3.out }
-    \verbatiminput{\codedir /#2/#3.out}
-    \par\hbox{}\vfill\hbox{}
-  \end{multicols}
+    \begin{multicols}{2}
+      \def\verbatim@startline{\verbatim@line{\leavevmode\relax}}
+      \footnotesize\textbf{Code:}
+      \codesnippet{#1}
+      \par\hbox{}\vfill\columnbreak
+      { \raggedright
+        \textbf{Output from running #3 in code directory #2:}
+      }
+      \hbox{}
+      \immediate\write18{ cd \codedir /#2 && make #3 && make run_#3 > #3.out }
+      \verbatiminput{\codedir /#2/#3.out}
+      \par\hbox{}\vfill\hbox{}
+    \end{multicols}
   }
+}
+\newcommand\snippetwithoutput[3]{
+  \answerwithoutput{#1}{#2}{#3}
+  % record this file as bracketed name
+  \ifInBook \addchaptersource{{#2/#3}} \fi
 }
 \newcommand{\snippetwitherror}[3]{
   % go into vertical mode
@@ -74,4 +77,6 @@
   \end{multicols}
   }
 }
+\let\answerwithcomment\snippetwithcomment
+
 \makeatother

@@ -272,3 +272,67 @@ syntax.
   %
   \verbatimsnippet{primerangecall}
 \end{exercise}
+
+\Level 0 {Eratosthenes sieve}
+
+The Eratosthenes sieve is an algorithm for prime numbers that
+step-by-step filters out the multiples of any prime it finds.
+\begin{enumerate}
+\item Start with the integers from~2: $2,3,4,5,6,\ldots$
+\item The first number, 2, is a prime: record it and remove all
+  multiples, giving
+  \[ 3,5,7,9.11,13,15,17\dots \]
+\item The first remaining number, 3, is a prime: record it and remove
+  all multiples, giving
+  \[ 5,7,11,13,17,19,23,25,29\ldots \]
+\item The first remaining number, 5, is a prime: record it and remove
+  all multiples, giving
+  \[ 7,11,13,17,19,23,29,\ldots \]
+\end{enumerate}
+
+We are going to implement this using stream objects. Each of the
+sequences above will be a stream, an object with a method \n{next}
+that gives the next item. Let's start simple.
+
+\begin{exercise}
+  Write a \n{stream} class that generates integers and use it through
+  a pointer.
+  %
+  \answerwithoutput{streamints}{sieve}{ints}
+\end{exercise}
+
+Next, we need a stream that takes another stream as input, and filters
+out values from it.
+
+\begin{exercise}
+  Write a class \n{filtered_stream} with a constructor
+\begin{verbatim}
+filtered_stream(int filter,shared_ptr<stream> input);
+\end{verbatim}
+  that
+  \begin{enumerate}
+  \item Implements \n{next}, giving filtered values,
+  \item by calling the \n{next} method of the input stream and
+    filtering out values.
+  \end{enumerate}
+  %
+  \answerwithoutput{streamodds}{sieve}{odds}
+\end{exercise}
+
+Now you can implement the Eratosthenes sieve by making a
+\n{filtered_stream} for each prime number.
+
+\begin{exercise}
+  Write a program that generates prime numbers as follows.
+  \begin{itemize}
+  \item Maintain a \n{current} stream, that is initially the stream of
+    prime numbers.
+  \item Repeatedly:
+    \begin{itemize}
+    \item Record the first item from the current stream, which is a
+      new prime number;
+    \item and set \n{current} to a new stream that takes \n{current}
+      as input, filtering out multiples of the prime number just found.
+    \end{itemize}
+  \end{itemize}
+\end{exercise}
