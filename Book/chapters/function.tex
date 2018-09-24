@@ -34,44 +34,6 @@ your program.
   \end{itemize}
 \end{slide}
 
-\begin{block}{Example}
-  \label{sl:function-example}
-  \begin{multicols}{2}
-    \small
-    The code for an odd/even test
-\begin{verbatim}
-for (int i=0; i<N; i++) {
-  cout << i;
-  if (i%2==0)
-    cout << " is even";
-  else
-    cout << " is odd";
-  cout << endl;
-}
-\end{verbatim}
-\vfill\hbox{}\columnbreak
-becomes
-\begin{verbatim}
-void report_evenness(int n) {
-  cout << i;
-  if (i%2==0)
-    cout << " is even";
-  else
-    cout << " is odd";
-  cout << endl;
-}
-...
-int main() {
-  ...
-  for (int i=0; i<N; i++)
-    report_evenness(i);
-}
-\end{verbatim}
-  \end{multicols}
-Code becomes more readable (though not necessarily shorter): introduce
-application terminology.
-\end{block}
-
 \begin{block}{Code reuse}
   \label{sl:function-reuse}
 Example: multiple norm calculations:
@@ -91,9 +53,9 @@ cout << "Inf norm y: " << s << endl;
 \vfill\columnbreak
 becomes:
 \begin{verbatim}
-int InfNorm( float a[],int n) {
+int InfNorm( vector<float> a ) {
   float s = 0;
-  for (int i=0; i<n; i++)
+  for (int i=0; i<n.size(); i++)
     s += abs(a[i]);
   return s;
 }
@@ -121,27 +83,7 @@ There are two sides to a function:
   the main or inside other functions.
 \end{itemize}
 
-\begin{multicols}{2}
-  \textbf{Definition:}
-\begin{verbatim}
-void report_evenness(int n) {
-  cout << i;
-  if (i%2==0)
-    cout << " is even";
-  else
-    cout << " is odd";
-  cout << endl;
-}
-\end{verbatim}
-\columnbreak
-\textbf{Call:}
-\begin{verbatim}
-for (int i=0; i<N; i++)
-    report_evenness(i);
-\end{verbatim}
-\end{multicols}
-
-\begin{slide}{Function definition and call}
+\begin{block}{Function definition and call}
   \label{sl:def-call}
   \begin{multicols}{2}
 \begin{verbatim}
@@ -172,7 +114,9 @@ int main() {
 }
 \end{verbatim}
   \end{multicols}
-\end{slide}
+Code becomes more readable (though not necessarily shorter): introduce
+application terminology.
+\end{block}
 
 In this example, the function definition consists of:
 \begin{itemize}
@@ -277,6 +221,16 @@ void print_mod(int n,int d) {
   \end{itemize}
 \end{slide}
 
+\begin{exercise}{Quick review}
+  \label{rev:func-why}
+  True or false?
+  \begin{itemize}
+  \item The purpose of functions is to make your code shorter.
+  \item Using functions makes your code easier to read.
+  \item Functions have to be defined before you can use them.
+  \end{itemize}
+\end{exercise}
+
 \Level 0 {Anatomy of a function definition and call}
 
 Loosely, a function takes input and computes some result which is then returned.
@@ -302,7 +256,7 @@ Formally, a~function consists of:
 \begin{slide}{Anatomy of a function definition}
   \label{sl:func-anatomy}
   \begin{itemize}
-  \item Result type: what's computed. \n{void} if no result
+  \item Result type: what's computed.\\ \n{void} if no result
   \item Name: make it descriptive.
   \item Parameters: zero or more.\\
     \n{int i,double x,double y}\\
@@ -347,15 +301,15 @@ int main() {
 \begin{block}{Functions with input}
   \label{sl:func-ex2}
 \begin{verbatim}
-void print_header(int day) {
+void print_result(int day,float value) {
   cout << "****************" << endl;
   cout << "* Output       *" << endl;
   cout << "****************" << endl;
   cout << "The results for day " << day << ":" << endl;
+  cout << "    " << value << endl;
   }
 int main() {
-  print_header(25);
-  // code that prints results ....
+  print_result(25,3.456);
   return 0;
 }
 \end{verbatim}
@@ -391,6 +345,15 @@ calling program.
 Functions can not be nested: you can not define a function inside the
 body of another function.
 
+\begin{exercise}{Quick review}
+  \label{rev:func-param}
+  True or false?
+  \begin{itemize}
+  \item A function can have only one input
+  \item A function can have only one result
+  \end{itemize}
+\end{exercise}
+
 \Level 0 {Parameter passing}
 \label{sec:passing}
 \index{parameter|seealso{function, parameter}}
@@ -402,12 +365,13 @@ multiple inputs, separated by commas, but they have only one output.
 We start by studying functions that look like these mathematical
 functions. They involve a \indextermbus{parameter}{passing} mechanism
 called
-\emph{passing by value}\index{parameter!pass by value}.
+\emph{passing by value}\index{parameter!passing by value}.
 %
 Later we will then look at
-\emph{passing by reference}\index{parameter!pass by reference}.
+\emph{passing by reference}\index{parameter!passing by reference}.
 
 \Level 1 {Pass by value}
+\index{pass by value|see{parameter, passing by value}}
 
 The following style of programming is very much inspired by
 mathematical functions, and is known as \indextermdef{functional
@@ -435,21 +399,28 @@ y = f(x1,x2,x3);
   value of \n{number} in the main program.
 \end{itemize}
 
+Later we will worry about the cost of this copying.
+
 \begin{slide}{Mathematical type function}
   \label{sl:func-functional}
   Pretty good design:
   \begin{itemize}
   \item pass data into a function,
   \item return result through \n{return} statement.
-  \item Parameters are copied into the function.
+  \item Parameters are copied into the function. (Cost of copying?)
 %  \item Mark parameters as \n{const}, just in case:
   \item \indexterm{pass by value}
   \item `functional programming'
   \end{itemize}
 \end{slide}
-\begin{slide}{Functional programming example}
+
+\begin{slide}{Pass by value example}
   \label{sl:func-functional-ex}
+  Note that the function alters its parameter \n{x}:
+  %
   \snippetwithoutput{passvalue}{func}{passvalue}
+  %
+  but the argument in the main program is not affected.
 \end{slide}
 
 Passing a variable to a routine passes the value; in the routine, the
@@ -463,8 +434,8 @@ If you are doing the prime project (chapter~\ref{ch:prime}) you can
 now do exercise~\ref{ex:prime:func}.
 \end{exercise}
 
-\begin{exercise}
-  \label{ex:newton-root}
+\begin{block}{Background Square roots through Newton}
+  \label{sl:newton-root}
   Early computers had no hardware for computing a square
   root. Instead, they used \indexterm{Newton's method}. Suppose you
   have a value~$y$ and you want want to compute
@@ -474,6 +445,10 @@ now do exercise~\ref{ex:prime:func}.
   evaluating
   \[ x_{\mathrm{next}}=x-f_y(x)/f_y'(x) \]
   until the guess is accurate enough, that is, until $f_y(x)\approx0$.
+\end{block}
+
+\begin{exercise}
+  \label{ex:newton-root}
   \begin{itemize}
   \item Write functions \n{f(x,y)} and \n{deriv(x,y)}, that compute
     $f_y(x)$ and $f_y'(x)$ for the definition of $f_y$ above.
@@ -484,7 +459,7 @@ now do exercise~\ref{ex:prime:func}.
 
 \Level 1 {Pass by reference}
 \label{sec:pass-by-ref}
-\index{pass by reference|see{parameter, pass by reference}}
+\index{pass by reference|see{parameter, passing by reference}}
   
 Having only one output is a limitation on functions. Therefore there
 is a mechanism for altering the input parameters and returning
@@ -524,9 +499,16 @@ int main() {
 \end{block}
 
 Using the ampersand, the parameter is
-\emph{passed by reference}\index{pass by reference}:
+\emph{passed by reference}\index{parameter!passing by reference}:
 instead of copying the value, the function receives a \emph{reference}:
 information where the variable is stored in memory.
+
+\begin{remark}
+  The \emph{pass by reference mechanism in C}%
+  \index{parameter!passing by reference! in C}
+  was different and should not be used in~C++. In fact it was not a
+  true pass by reference, but passing an address by value.
+\end{remark}
 
 We also the following terminology for function parameters:
 \begin{itemize}
@@ -621,6 +603,7 @@ else
 \end{exercise}
 
 \begin{block}{Const parameters}
+  \label{sl:pass-constref}
   You can prevent local changes to the function parameter:
 
   \verbatimsnippet{readonlyparm}
@@ -630,6 +613,7 @@ else
 
 \Level 0 {Recursive functions}
 \label{sec:recursion}
+\index{recursion|see{function, recursive}}
 
 In mathematics, sequences are often recursively defined. For instance,
 the sequence of factorials $n\mapsto f_n\equiv n!$ can be defined as
@@ -681,8 +665,8 @@ int factorial(int n) {
 
 \begin{slide}{Recursion}
   \label{sl:func-recur}
-  Functions are allowed to call themselves, which is known
-  as~\indexterm{recursion}. You can define factorial as
+  A functions is allowed to call itself, making it a \indextermsubdef{recursive}{function}.
+  For example, you can define factorial as
   \[ F(n) = n \times F(n-1) \qquad \hbox{if $n>1$, otherwise~$1$} \]
 \begin{verbatim}
 int factorial( int n ) {
@@ -717,10 +701,17 @@ int factorial( int n ) {
   numbers; set interactively how many.
 \end{exercise}
 
-If you let your Fibonacci program print out each time it computes a
-value, you'll see that most values are computed several times. (Math
-question: how many times?) This is wasteful in running time. This
-problem is addressed in section~\ref{sec:memo}.
+\begin{remark}
+  A function does not need to call itself directly to be recursive; if
+  it does so indirectly we can call this \indextermsubdef{mutual}{recursion}.
+\end{remark}
+
+\begin{remark}
+  If you let your Fibonacci program print out each time it computes a
+  value, you'll see that most values are computed several times. (Math
+  question: how many times?) This is wasteful in running time. This
+  problem is addressed in section~\ref{sec:memo}.
+\end{remark}
 
 \Level 1 {Stack overflow}
 

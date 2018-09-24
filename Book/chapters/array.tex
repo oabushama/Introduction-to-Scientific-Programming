@@ -116,20 +116,36 @@ absx = abs(x);
   Check whether an array is sorted.
 \end{exercise}
 
+\begin{block}{Indexing with pre/post increment}
+  \label{sl:prepostindex}
+Shorthand: 
+\begin{verbatim}
+  x = a[i++]; /* is */ x = a[i]; i++;
+  y = b[++i]; /* is */ i++; y = b[i];
+\end{verbatim}
+\end{block}
+
 \begin{block}{Range over elements by reference}
   \label{sl:array-range-ref}
   Range-based loop indexing makes a copy of the array element. If you
   want to alter the array, use a reference:
-\snippetwithoutput{dynamicscale}{array}{dynamicscale}
+  %
+  \snippetwithoutput{dynamicscale}{array}{dynamicscale}
 \end{block}
+
+\begin{exercise}
+  If you do the prime numbers project, you can now do exercise~\ref{sec:arraysieve}.
+\end{exercise}
 
 \Level 1 {Vector are a class}
 \label{sec:stdvector}
 
 You wouldn't tell it from the above examples, but vectors actually
 form a \indextermttdef{vector} class. The angle bracket notation means
-that we have a class that is parametrized with the type, so you can
-have vectors of ints, vectors of chars, et cetera.
+that we have a class that is parametrized with the type, and you can
+have vectors of ints, vectors of chars, et cetera. We can now say that
+\n{vector<int>} is a type, pronounced `vector-of-int', and you can
+make new variables of that type.
 
 What we were doing above was creating an object and initializing it in
 one go. Let's decouple these actions.
@@ -203,7 +219,7 @@ Safer, slower.
 for ( auto e : my_vector)
   cout << e;
 \end{verbatim}
-Note that \n{e} is a copy of the array element:
+Note that \n{e} is a copy of the vector element:
 \snippetwithoutput{vectorrangecopy}{array}{vectorrangecopy}
 \end{block}
 
@@ -340,7 +356,7 @@ actually copied into the function.
 
 \begin{exercise}
   \label{ex:splitoddeven}
-  Write a function that takes a vector of integers, and return two
+  Write code to take a vector of integers, and construct two
   vectors, one containing all the odd inputs, and one containing all
   the even inputs. So:
 \begin{verbatim}
@@ -350,20 +366,9 @@ output:
    5,5
    6,2,4
 \end{verbatim}
+  Can you write a function that accepts a vector and returns two
+  vectors with the above functionality.
 \end{exercise}
-
-\begin{comment}
-  %% this one is not as good as the previous
-  \begin{exercise}
-    \label{ex:vectorconcat}
-    Write a function that accepts a vector of ints, and returns a vector
-    that contains the input, concatenated with itself. So:
-\begin{verbatim}
-Input: (1,2,3)
-Output: (1,2,3,1,2,3)
-\end{verbatim}
-  \end{exercise}
-\end{comment}
 
 \begin{block}{Vector pass by reference}
   \label{sl:vector-arg-ref}

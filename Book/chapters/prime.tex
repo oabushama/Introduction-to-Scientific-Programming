@@ -14,19 +14,6 @@
 \prerequisite{\ref{sec:expr}}
 
 \begin{exercise}
-  \label{ex:prime:sum}
-  Read two integers into two variables, and print their sum, product,
-  quotient, modulus.
-  
-  %% Do this also with real variables.
-
-  %% What is $5/3$ as integer? If you compute it as a real number~$x$, is
-  %% $3x$ exactly equal to~$5$?
-\end{exercise}
-
-A less common operator is the modulo operator~\n{\char`\%}.
-
-\begin{exercise}
   \label{ex:prime:modvar}
   Read two numbers and print out their modulus. Two ways:
   \begin{itemize}
@@ -89,8 +76,8 @@ prime.
 
 \begin{exercise}
   \label{ex:prime:func}
-  Write a function \n{is_prime} that takes an integer input, and returns a boolean
-  corresponding to whether the input was prime.
+  Write a function \n{is_prime} that has an integer parameter, and returns a boolean
+  corresponding to whether the parameter was prime.
 \begin{verbatim}
 int main() {
   bool isprime;
@@ -149,14 +136,14 @@ operate on that structure or on its members.
 
 \begin{exercise}
   \label{ex:prime:sequence}
-  Write a class \n{primegenerator} that contains members
-  \n{number_of_primes_found} and
-  \n{last_number_tested}, and methods \n{nextprime}, \n{isprime}.
-  %% %
-  %% {\footnotesize Hint: the
-  %% function \n{nextprime} does not need the object as argument,
-  %% because the members are in the object, and therefore global
-  %% to that function.}
+  Write a class \n{primegenerator} that contains 
+  \begin{itemize}
+  \item members  \n{number_of_primes_found} and
+    \n{last_number_tested},
+  \item a method \n{nextprime};
+  \item Also write a function \n{isprime} that does not need to be
+    in the class.
+  \end{itemize}
 
   Your main program should look as follows:
   %
@@ -206,73 +193,6 @@ data and are therefore independent of each other.
   distances increase or decrease with~$p$?
 \end{exercise}
 
-\Level 0 {Arrays}
-
-Another algorithm for finding prime numbers is the
-\indexterm{Eratosthenes sieve}. It goes like this.
-\begin{enumerate}
-\item You take a range of integers, starting at~2.
-\item Now look at the first number. That's a prime number.
-\item Scratch out all of its multiples.
-\item Find the next number that's not scratched out; since that's
-  not a multiple of a previous number, it must be a prime
-  number. Report it, and go back to the previous step.
-\end{enumerate}
-
-The new mechanism you need for this is the data structure for storing
-all the integers.
-\begin{verbatim}
-int N = 1000;
-vector<int> integers(N);
-\end{verbatim}
-
-\begin{exercise}
-  Read in an integer that denotes the largest number you want to test.
-  Make an array of integers that long. Set the elements to the
-  successive integers.
-\end{exercise}
-
-\Level 0 {Inheritance and virtual methods}
-
-If you turn the Eratosthenes sieve into a generator class, you see
-that it has a \n{nextprime} function, just like the other generator
-class you wrote above.
-
-\begin{exercise}
-  Use inheritance to express the commonality between the classes:
-  \begin{itemize}
-  \item Make a \n{generator} base class; it probably remembers the
-    last prime found;
-  \item Make \n{bruteforce_generator} and \n{sieve_generator} classes
-    that derive from \n{generator}, and that each have their own
-    \n{nextprime} method.
-  \end{itemize}
-\end{exercise}
-
-Since the derived classes have different \n{nextprime} methods, you
-can not really put that method in the base class. However:
-
-\begin{exercise}
-  Add \n{nextprime} as a virtual method to the base class.
-\end{exercise}
-
-\Level 0 {Ranging over the generator}
-
-\prerequisite{Make sure you have studied range-based iterating;
-  section~\ref{sec:range-iter}}
-
-The \indexterm{C++17} mechanism of
-\indextermsub{range-based}{iteration} allows for an even more concise
-syntax.
-
-\begin{exercise}
-  \label{ex:primerange}
-  Write a class \n{primegenerator} with methods \n{begin}, \n{end} and
-  operators \verb|++|, \verb+!=+ so that primes can be generated as:
-  %
-  \verbatimsnippet{primerangecall}
-\end{exercise}
-
 \Level 0 {Eratosthenes sieve}
 
 The Eratosthenes sieve is an algorithm for prime numbers that
@@ -290,9 +210,27 @@ step-by-step filters out the multiples of any prime it finds.
   \[ 7,11,13,17,19,23,29,\ldots \]
 \end{enumerate}
 
-We are going to implement this using stream objects. Each of the
-sequences above will be a stream, an object with a method \n{next}
-that gives the next item. Let's start simple.
+\Level 1 {Arrays implementation}
+\label{sec:arraysieve}
+
+The sieve is easily implemented with an array that stores all integers.
+
+\begin{exercise}
+  Read in an integer that denotes the largest number you want to test.
+  Make an array of integers that long. Set the elements to the
+  successive integers.
+\end{exercise}
+
+\Level 1 {Streams implementation}
+\label{sec:streamsieve}
+
+The disadvantage of using an array is that we need to allocate
+an array. What's more, the size is determined by how many integers we
+are going to test, not how many prime numbers we want to generate.
+We are going to take the idea above of having a generator object, and
+apply that to the sieve algorithm: we will now have multiple generator
+objects, each taking the previous as input and erasing certain
+multiples from it.
 
 \begin{exercise}
   Write a \n{stream} class that generates integers and use it through
@@ -335,4 +273,15 @@ Now you can implement the Eratosthenes sieve by making a
       as input, filtering out multiples of the prime number just found.
     \end{itemize}
   \end{itemize}
+\end{exercise}
+
+\Level 1 {Range implementation}
+
+\prerequisite{\ref{sec:range-iter}}
+
+\begin{exercise}
+  \label{ex:primerange}
+  Make a \n{primes} class that can be ranged:
+  %
+  \snippetwithoutput{primerangecall}{primes}{range}
 \end{exercise}

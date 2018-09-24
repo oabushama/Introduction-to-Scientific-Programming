@@ -28,7 +28,7 @@
       \codesnippet{#1}
       \par\hbox{}\vfill\columnbreak
       { \raggedright
-        \textbf{Output from running #3 in code directory #2:}
+        \textbf{Output [#2] #3:}
       }
       \hbox{}
       \immediate\write18{ cd \codedir /#2 && make #3 && make run_#3 > #3.out }
@@ -42,11 +42,11 @@
   % record this file as bracketed name
   \ifInBook \addchaptersource{{#2/#3}} \fi
 }
-\newcommand{\snippetwitherror}[3]{
+
+
+\newcommand{\answerwitherror}[3]{
   % go into vertical mode
   \par
-  % record this file as bracketed name
-  \ifInBook \addchaptersource{{#2/#3}} \fi
   % make nice two-column layout
   \vbox{
   \begin{multicols}{2}
@@ -54,7 +54,7 @@
     \footnotesize\textbf{Code:}
     \codesnippet{#1}
     \par\hbox{}\vfill\columnbreak
-    \textbf{Output from running #3 in code directory #2:}
+        \textbf{Output [#2] #3:}
     \hbox{}
     \immediate\write18{ cd \codedir /#2 && make error_#3.o > #3.out 2>&1 }
     \verbatiminput{\codedir /#2/#3.out}
@@ -62,6 +62,13 @@
   \end{multicols}
   }
 }
+\newcommand\snippetwitherror[3]{
+  \answerwitherror{#1}{#2}{#3}
+  % record this file as bracketed name
+  \ifInBook \addchaptersource{{#2/#3}} \fi
+}
+
+
 \newcommand{\snippetwithcomment}[2]{
   % go into vertical mode
   \par

@@ -15,9 +15,23 @@ In this chapter and the next you are going to learn the C++
 language. But first we need some externalia: how do you deal with any
 program?
 
+\begin{block}{Two kinds of files}
+  \label{sl:sourcebinary}
+  In programming you have two kinds of files:
+  \begin{itemize}
+  \item \emph{source files}\index{file!source}, which are understandable
+    to you, and which you create with an editor such as \n{vi} or
+    \n{emacs}; and
+  \item \emph{binary files}\index{file!binary}, which are understandable
+    to the computer, and unreadable to you.
+  \end{itemize}
+  Your source file(s) is/are translated by binary by a
+  \indexterm{compiler}.
+\end{block}
+
 Let's say that
 \begin{itemize}
-\item you have a source code file \n{myprogram.cxx},
+\item you have a source code file \n{myprogram.cxx};
 \item and you want an executable file called \n{myprogram},
 \item and your compiler is \indextermtt{g++}, the C++ compiler of the
   \indexterm{GNU} project. (If you have the Intel compilers, you will
@@ -39,10 +53,33 @@ with output \n{myprogram}, on \n{myprogram.cxx}'.
 
 So let's do an example.
 
-This is a minimal program:
-%
-\codesnippet{nullprogc}
-%
+\begin{exercise}{The edit-compile-run cycle}
+\label{ex:compile-cycle}
+
+\begin{multicols}{2}
+  Make a file \n{zero.cc} with the following lines:
+  %
+  \verbatimsnippet{nullprogc}
+  %
+  and compile it. Intel compiler:
+\begin{verbatim}
+icpc -o zeroprogram zero.cc
+\end{verbatim}
+\begin{itemize}
+\item \texttt{icpc} : compiler. Alternative Gnu: use \texttt{g++} instead of \texttt{icpc}.
+\item \texttt{-o programname} : output into a binary name of your choosing
+\item \texttt{something.cc} : your source file.
+\end{itemize}
+
+Run this program (it gives no output):
+\begin{verbatim}
+./zeroprogram
+\end{verbatim}
+\end{multicols}
+
+\end{exercise}
+
+In the above program:
 \begin{enumerate}
 \item The first three lines are magic, for now. Always include them.
 \item The \n{main} line indicates where the program starts; between
@@ -50,23 +87,26 @@ This is a minimal program:
   \indextermbus{program}{statements}.
 \item The \n{return} statement indicates successful completion of your program.
 \end{enumerate}
-\begin{exercise}
-  Make a program file with the above lines, compile it and run it.
-\end{exercise}
-As you may have guessed, this program produces absolutely no output.
+As you may have guessed, this program produces absolutely no output
+when you run it.
 
-Here is a statement that at least produces some output:
+\begin{exercise}{Your first useful program}
+  \label{ex:sayhello}
+Add this line:
 %
-\snippetwithoutput{helloc}{basic}{hello}
+\verbatimsnippet{helloc}
+%
+(copying from the pdf file is dangerous! please type it yourself)
 
-
-\begin{exercise}
-  Make a program source file that contains the `hello world'
-  statement, compile it and run it. Think about where the statement goes.
+Compile and run again.
 
   (Did you indent the `hello world' line? Did you editor help you with
   the indentation?)
+
 \end{exercise}
+
+%\snippetwithoutput{helloc}{basic}{hello}
+
 
 \begin{block}{File names}
   \label{sl:file-ext}
@@ -79,6 +119,15 @@ Here is a statement that at least produces some output:
   \item \n{program} without extension usually indicates an \indexterm{executable}.
   \end{itemize}
 \end{block}
+
+\begin{exercise}{Quick review}
+  \label{q:compiler}
+  True or false?
+  \begin{enumerate}
+  \item The programmer only writes source files, no binaries.
+  \item The computer only executes binary files, no human-readable files.
+  \end{enumerate}
+\end{exercise}
 
 \Level 1 {A quick word about unix commands}
 
@@ -180,7 +229,7 @@ cout << /* we are now going
     can not change their definition.
   \item Curly braces and parentheses need to be matched.
   \item There has to be a \n{main} keyword.
-  \item The \n{iostream} and \n{namespace} are usually needed.
+  \item The \n{iostream} and \n{std} are usually needed.
   \end{itemize}
 \end{block}
 
@@ -216,7 +265,7 @@ Think of a variable as a labeled placed in memory.
 \item or given a (new) value in a \indextermbus{variable}{assignment}.
 \end{itemize}
 
-\begin{slide}{Variable declarations}
+\begin{slide}{What's a variable?}
   \label{sl:declaration}
   Programs usually contain data, which is stored in a
   \indextermdef{variable}. A~variable has
@@ -260,6 +309,8 @@ variable may contain random memory contents.
     special characters (except for the underscore).
   \item For letters it matters
     whether you use upper or lowercase: the language is \indexterm{case sensitive}.
+  \item Words such as \n{main} or \n{cout} are \indexterm{reserved words}.
+  \item Usually \n{i} and \n{j} are not the best variable names.
   \end{itemize}
 \end{block}
 
@@ -286,6 +337,15 @@ double re_part,im_part;
   but that's not a good idea. Please only declare \emph{inside} main
   (or inside a function et cetera).
 \end{block}
+
+\begin{exercise}{Quick review}
+  \label{q:varnames}
+  Which of the following are legal variable names?
+  \begin{enumerate}
+  \item \n{mainprogram} \item \n{main} \item \n{Main}
+  \item \n{1forall} \item \n{one4all} \item \n{one_for_all} \item \n{onefor\char`\{all\char`\}}.
+  \end{enumerate}
+\end{exercise}
 
 \Level 1 {Datatypes}
 
@@ -358,12 +418,20 @@ Integer add/subtract one:
 \begin{verbatim}
   i++; j--;  /* same as: */ i=i+1; j=j-1;
 \end{verbatim}
-  Pre/post increment:
-\begin{verbatim}
-  x = a[i++]; /* is */ x = a[i]; i++;
-  y = b[++i]; /* is */ i++; y = b[i];
-\end{verbatim}
 \end{block}
+
+\begin{exercise}
+  \label{q:assign}
+  Which of the following are legal?
+  \begin{enumerate}
+  \item \n{n = n;}
+  \item \n{n = 2n;}
+  \item \n{n = n2;}
+  \item \n{n = 2*k;}
+  \item \n{n/2 = k;}
+  \item \n{n /= k;}
+  \end{enumerate}
+\end{exercise}
 
 \begin{block}{Initialization}
   \label{sl:init-var}
@@ -385,12 +453,35 @@ double pi{3.14};
   an initialization or in an assignment. Print out the values.
 \end{exercise}
 
+\begin{exercise}{Quick review}
+  \label{q:initvar}
+\begin{verbatim}
+#include <iostream>
+using std::cout;
+using std::endl;
+int main() {
+  int i;
+  int j = i+1;
+  cout << j << endl;
+  return 0;
+}
+\end{verbatim}
+What happens?
+\begin{enumerate}
+\item Compiler error
+\item Output: \n{1}
+\item Output is undefined
+\item Error message during running the program.
+\end{enumerate}
+\end{exercise}
+
 \begin{block}{Integer constants}
   \label{sl:intvals}
-Sometimes you need a different notation or number of bits:
+  Integers are normally  written in decimal, and stored in 32 bits.
+  If you need something else:
 \begin{verbatim}
 int d = 42;
-int o = 052;
+int o = 052; // start with zero
 int x = 0x2a;
 int X = 0X2A;
 int b = 0b101010; // C++14
@@ -481,10 +572,10 @@ mathematics, called \indexterm{roundoff error analysis}.
 If a number goes outside the bounds of what is representable, it
 becomes either:
 \begin{itemize}
-\item \indextermtt{inf}: infinity. This happens if you add or multiply
+\item \indextermtt{Inf}: infinity. This happens if you add or multiply
   enough large numbers together. There is of course also a value
   \n{-inf}. Or:
-\item \indextermtt{NAN}: not a number. This happens if you subtract
+\item \indextermtt{NaN}: not a number. This happens if you subtract
   one \n{inf} from another, or do things such as taking the
   root of a negative number.
 \end{itemize}
@@ -527,7 +618,7 @@ using std::string;
 \begin{verbatim}
 string name;
 \end{verbatim}
-\item And you can now \n{cin} (see section~\ref{sec:io}) and \n{cout} them.
+\item And you can now \n{cin} and \n{cout} them.
   \end{itemize}
 \end{block}
 
@@ -744,18 +835,6 @@ For floating point result do:
 \end{slide}
 
 \begin{exercise}
-  \label{ex:C2F}
-  Write two programs, one that reads a temperature in Centigrade and
-  converts to Fahrenheit, and one that does the opposite conversion.
-  \[ C = (F-32)\cdot 5/9,\qquad F = 9/5\,C+32 \]
-  Check your program for the freezing and boiling point of water.\\
-  (Do you know the temperature where Celsius and Fahrenheit are the
-  same?)
-  
-  Can you use Unix pipes to make one accept the output of the other?
-\end{exercise}
-
-\begin{exercise}
   \label{ex:modulus}
   Write a program that asks for two integer numbers \n{n1,n2}.
   \begin{itemize}
@@ -769,6 +848,33 @@ For floating point result do:
   \item Investigate the behaviour of your program for negative
     inputs. Do you get what you were expecting?
   \end{itemize}
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:C2F}
+  Write two programs, one that reads a temperature in Centigrade and
+  converts to Fahrenheit, and one that does the opposite conversion.
+  \[ C = (F-32)\cdot 5/9,\qquad F = 9/5\,C+32 \]
+  Check your program for the freezing and boiling point of water.\\
+  (Do you know the temperature where Celsius and Fahrenheit are the
+  same?)
+  
+  Can you use Unix pipes to make one accept the output of the other?
+\end{exercise}
+
+\begin{exercise}{Quick review}
+  \label{q:vartypes}
+  True of false?
+  \begin{enumerate}
+  \item Within a certain range, all integers are available as values of an
+    integer variable.
+  \item Within a certain range, all real numbers are available as values of a
+    float variable.
+  \item \verb-5(7+2)- is equivalent to~\n{45}.
+  \item \verb+1--1+ is equivalent to zero.
+  \item \verb-int i = 2./3.;- The variable \n{i} is~1.
+  \item \verb-float x = 2/3;- The variable \n{x} is approximately~\n{0.6667}.
+  \end{enumerate}
 \end{exercise}
 
 \Level 0 {Library functions}

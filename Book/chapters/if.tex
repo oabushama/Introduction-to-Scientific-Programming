@@ -112,18 +112,41 @@ if ( something ) {
 
 \Level 0 {Operators}
 
+You have already seen arithmetic expressions; now we need to look at
+logical expressions: just what can be tested in a conditional. 
+Here is a fragment of language grammar that spells out what is
+legal. You see that most of the rules are recursive, but there is an
+important exception.
+
+\begin{block}{What are logical expressions?}
+  \label{sl:logical-syntax}
+\begin{verbatim}
+logical_expression :: 
+  comparison_expression
+  | logical_expression CONJUNCTION comparison_expression
+comparison_expression :: 
+  numerical_expression COMPARE numerical_expression
+numerical_expression :: 
+  quantity
+  | numerical_expression OPERATOR quantity
+quantity :: number | variable
+\end{verbatim}
+\end{block}
+
 \begin{block}{Comparison and logical operators}
   \label{sl:operators}
   \begin{tabular}{|l|l|l|}
     \hline
     Operator&meaning&example\\ \hline
     \texttt{==}&equals&\texttt{x==y-1}\\
-    \texttt{!=}&not equals&\texttt{x*x*!=5}\\
+    \texttt{!=}&not equals&\texttt{x*x!=5}\\
     \texttt{>}&greater&\texttt{y>x-1}\\
     \texttt{>=}&greater or equal&\texttt{sqrt(y)>=7}\\
     \texttt{<},\texttt{<=}&less, less equal&\texttt{}\\
     \n{&&},\n{||}&and, or&\n{x<1 && x>0}\\
+    \n{and},\n{or}&&\n{x<1 and x>0}\\
     \texttt{!}&not&\n{!( x>1 && x<2 )}\\
+    \texttt{not}&&\n{not ( x>1 and x<2 )}\\
     \hline
   \end{tabular}
 
@@ -152,6 +175,35 @@ Can you rewrite your test so that the output lines are switched?
   print nothing.
 \end{exercise}
 
+\begin{review}
+  \label{q:if}
+  True or false?
+  \begin{itemize}
+  \item The tests \n{if (i>0)} and \n{if (0<i)} are equivalent.
+  \item The test
+\begin{verbatim}
+if (i<0 && i>1) 
+  cout << "foo"
+\end{verbatim}
+prints \n{foo} if
+    $i<0$ and also if $i>1$.
+  \item The test 
+\begin{verbatim}
+if (0<i<1)
+  cout << "foo"
+\end{verbatim}
+prints \n{foo} if $i$ is
+    between zero and one.
+  \end{itemize}
+  Any comments on the following?
+\begin{verbatim}
+bool x;
+// ... code with x ...
+if ( x == true )
+  // do something
+\end{verbatim}
+\end{review}
+
 \Level 0 {Switch statement}
 
 If you have a number of cases corresponding to specific integer
@@ -159,8 +211,12 @@ values, there is the \indextermtt{switch} statement.
 
 \begin{block}{Switch statement example}
   \label{sl:switch}
-  Cases are executed consecutively until you `break':
+  Cases are executed consecutively until you `break' out of the switch
+  statement:
+  %
   \snippetwithoutput{switchstatement}{basic}{switch}
+  %
+  Cases have to be single integer.
 \end{block}
 
 \Level 0 {Scopes}

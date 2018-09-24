@@ -175,6 +175,20 @@ using std::isnan;
   \end{itemize}
 \end{exercise}
 
+\begin{block}{Exceptions in constructors}
+  \label{sl:except-construct}
+  A \indexterm{function try block} will catch exceptions,
+    including in initializer lists of constructors.
+\begin{verbatim}
+f::f( int i ) 
+  try : fbase(i) {
+    // constructor body
+  }
+  catch (...) { // handle exception
+  }
+\end{verbatim}
+\end{block}
+
 \begin{block}{More about exceptions}
   \label{sl:exception-more}
   \begin{itemize}
@@ -189,9 +203,13 @@ void funk() throw();
   exception use `\n{throw;}' without arguments.
 \item Exceptions delete all stack data, but not \n{new} data. Also,
   destructors are called; section~\ref{sec:destructor}.
-  \item There is an implicit \n{try/except} block around your
-    main. You can replace the handler for that. See the
-    \indextermtt{exception} header file.
+\item There is an implicit \n{try/except} block around your
+  main. You can replace the handler for that. See the
+  \indextermtt{exception} header file.
+\item Keyword \indextermtt{noexcept}:
+\begin{verbatim}
+void f() noexcept { ... };
+\end{verbatim}
   \end{itemize}
 \end{block}
 

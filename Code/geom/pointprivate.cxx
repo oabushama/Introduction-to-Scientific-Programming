@@ -31,10 +31,12 @@ public:
   void sety( double newy ) {
     vy = newy; };
   //codesnippet end
-  //codesnippet pointprivatedefine
+  //codesnippet pointprivate
 }; // end of class definition
+//codesnippet end
 
 int main() {
+  //codesnippet pointprivatedefine
   Vector p1(1.,2.);
   //codesnippet end
   cout << "p1 = " << p1.x() << "," << p1.y() << endl;

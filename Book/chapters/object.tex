@@ -494,8 +494,12 @@ Example of the copy constructor in action:
     \begin{itemize}
     \item
       Several default copy constructors are defined
-    \item They copy an object, recursively.
-    \item You can redefine them as needed.
+    \item They copy an object:
+      \begin{itemize}
+      \item simple data, including pointers
+      \item included objects recursively.
+      \end{itemize}
+    \item You can redefine them as needed, for instance for deep copy.
     \end{itemize}
     \vfill\columnbreak
     \verbatimsnippet{classwithcopy}
@@ -614,13 +618,32 @@ This is not often needed. Typical use case:
 you need to call a function inside a method that needs the object as argument)
 \begin{verbatim}
 class someclass;
-void somefunction(someclass *c) {
+void somefunction(const someclass &c) {
   /* ... */ }
 class someclass {
 // method:
 void somemethod() {
-  somefunction(this);
+  somefunction(*this);
 };
+\end{verbatim}
+\end{block}
+
+\Level 1 {Static members}
+
+\begin{block}{Static class members}
+  \label{sl:static-member}
+  A static member acts like shared between all objects.
+\begin{verbatim}
+class MyClass {
+private:
+  static object_count;
+public:
+  MyClass() { object_count++; };
+}
+\end{verbatim}
+Initialization has to be done elsewhere:
+\begin{verbatim}
+MyClass::object_count = 0;
 \end{verbatim}
 \end{block}
 

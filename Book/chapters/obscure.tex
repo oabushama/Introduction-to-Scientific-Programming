@@ -228,6 +228,12 @@ for ( auto copy_of_int : myvector )
   s += copy_of_int;
 for ( auto &ref_to_int : myvector )
   ref_to_int = s;
+
+// short for:
+
+for ( std::iterator it=myvector.begin() ;
+      it!=myvector.end() ; ++it )
+  s += *it ; // note the deref
 \end{verbatim}
 Can be used with anything that is iteratable\\
 (vector, map, your own classes!)
@@ -246,20 +252,41 @@ for ( auto &ref_to_int : myvector )
 \end{verbatim}
 (Many other \ac{STL} classes are iteratable like this.)
 
-This is not magic: it is possible to iterate over any class
-\n{iteratable} that has a number of conditions satisfied.
+This is not magic: it is possible to iterate over any class:
+a \emph{class} is 
+\emph{iteratable}\index{class!iteratable} that has a number of conditions satisfied.
 
 The class needs to have:
 \begin{itemize}
-\item a method \n{iteratable iteratable::begin()} that gives an
+\item a method \indextermtt{begin} with prototype
+\begin{verbatim}
+iteratableClass iteratableClass::begin()
+\end{verbatim}
+That gives an
   object in the initial state, which we will call the `iterator object'; likewise
-\item a method \n{iteratable iteratable::end()} that gives an 
+\item a method \indextermtt{end}
+\begin{verbatim}
+iteratableClass iteratableClass::end()} 
+\end{verbatim}
+that gives an 
   object in the final state; furthermore you need
-\item an increment operator \n{void iteratable::operator++} that
+\item an increment operator
+\begin{verbatim}
+void iteratableClass::operator++()
+\end{verbatim}
+that
   advances the iterator object to the next state;
-\item a test \n{bool iteratable::operator!=(const iteratable&)} to determine
+\item a test
+\begin{verbatim}
+bool iteratableClass::operator!=(const iteratableClass&)
+\end{verbatim}
+to determine
   whether the iteration can continue; finally
-\item a dereference operator \n{iteratable::operator*} that takes the
+\item a dereference operator 
+\begin{verbatim}
+iteratableClass::operator*()
+\end{verbatim}
+that takes the
   iterator object and returns its state.
 \end{itemize}
 
@@ -340,8 +367,10 @@ Of course, we could have written this function
 without the range-based iteration, but this implementation is
 particularly elegant.
 
-You can now do exercise~\ref{ex:primerange}, implementing a prime
-number generator with this mechanism.
+\begin{exercise}
+  You can now do exercise~\ref{ex:primerange}, implementing a prime
+  number generator with this mechanism.
+\end{exercise}
 
 If you think you understand \n{const}, consider that the \n{has}
 method is conceptually \n{cost}. But if you add that keyword, the
@@ -411,12 +440,24 @@ type. Solution: use \n{std::function}
 
 \begin{exercise}
   \label{ex:newtonlambda}
-  Refer to exercise~\ref{ex:newton-root} for background.
+  Refer to~\ref{sl:newton-root} for background, and note that finding
+  $x$ such that $f(x)=a$ is equivalent to applying Newton to
+  $f(x)-\nobreak a$.
 
-  \answerwithcomment{rootclass}{
-    This is a class for zero finding with the newton method. The
-    constructor takes a function and the derivative. Figure out what
-    functions to supply to implement root finding.}
+  Implement a class \n{valuefinder} and its \n{double find(double)} method.
+  %
+  \verbatimsnippet{zeroclass}
+  %
+  used as
+  %
+  \verbatimsnippet{newtonroot}
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:morenewtonlambda}
+  Can you write a derived class \n{rootfinder} used as
+  %
+  \verbatimsnippet{newtonlambda1}
 \end{exercise}
 
 \Level 0 {Casts}
@@ -551,7 +592,9 @@ On the other hand, a \indextermtt{static_cast} would not do the job:
   This is how to do it:
   %
   \snippetwithoutput{polycast}{cast}{deriveright}
-  %
+\end{slide}
+\begin{slide}{Cast to derived class, the wrong way}
+  \label{sl:dyn-cast-wrong}
   Do not use this function \n{g}:
   %
   \snippetwithoutput{polywrong}{cast}{derivewrong}

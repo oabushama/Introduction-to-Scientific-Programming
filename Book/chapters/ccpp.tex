@@ -23,7 +23,7 @@ Here are some topics.
 
 There is little employ for \indextermtt{printf} and
 \indextermtt{scanf}. Use \indextermtt{cout} (and~\indextermtt{cerr})
-and \indextermtt{cin} instead.
+and \indextermtt{cin} instead. There is also the \indexterm{fmtlib} library.
 
 Chapter~\ref{ch:io}.
 
@@ -40,15 +40,16 @@ Chapter~\ref{ch:array}.
 
 \Level 0 {Strings}
 
-No more hassling with \indexterm{null
-  terminator}s. A~\indextermtt{string} is an object with operations
-defined on it.
+A \indextermbus{C}{string} is a character array with a \indexterm{null
+  terminator}. On the other hand, a~\indextermtt{string} is an object
+with operations defined on it.
 
 Chapter~\ref{ch:string}.
 
 \Level 0 {Pointers}
 
-There is very little need for pointers.
+Many of the uses for \indextermbus{C}{pointer}s, which are
+really addresses, have gone away.
 \begin{itemize}
 \item Strings are done through \n{std::string}, not character arrays;
   see above.
@@ -64,12 +65,11 @@ There is very little need for pointers.
   \indexterm{constructor}, rather than using \indextermtt{malloc}.
 \end{itemize}
 
-Legitimate needs:
-\begin{itemize}
-\item Objects on the heap. Use \indextermtt{shared_ptr} or
-  \indextermtt{unique_ptr}; section~\ref{sec:shared_ptr}.
-\item Use \indextermtt{nullptr} as a signal.
-\end{itemize}
+There are some legitimate needs for pointers, such as Objects on the
+heap. In that case, use \indextermtt{shared_ptr} or \indextermtt{unique_ptr};
+section~\ref{sec:shared_ptr}.
+The C~pointers are now called \indextermsub{bare}{pointer}s, and they
+can still be used for `non-owning' occurrences of pointers.
 
 \Level 1 {Parameter passing}
 
@@ -80,12 +80,12 @@ No longer by address: now true references! Section~\ref{sec:passing}.
 Objects are structures with functions attached to
 them. Chapter~\ref{ch:object}.
 
-\Level 1 {Namespaces}
+\Level 0 {Namespaces}
 
 No longer name conflicts from loading two packages: each can have its
 own namespace. Chapter~\ref{ch:namespace}.
 
-\Level 1 {Templates}
+\Level 0 {Templates}
 
 If you find yourself writing the same function for a number of types,
 you'll love templates. Chapter~\ref{ch:template}.

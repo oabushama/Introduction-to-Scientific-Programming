@@ -81,10 +81,29 @@ cout << "The second character is <<" <<
 \end{verbatim}
 \end{block}
 
+\begin{block}{Iterating over a string}
+\begin{verbatim}
+for ( auto c : some_string)
+  // do something with the character 'c'
+\end{verbatim}
+\end{block}
+
+\begin{exercise}
+  \label{ex:caesar}
+  The oldest method of writing secret messages is the `Caesar
+  cypher'. You would take an integer~$s$ and rotate every character
+  over that many positions:
+  \[ s\equiv3\colon \hbox{"acdz" $\Rightarrow$ "dfgc"}. \]
+  Write a program that accepts an integer and a string, and display
+  the original string rotated over that many positions.
+\end{exercise}
+
 \begin{block}{More vector methods}
   \label{sl:string-vector-methods}
   Other methods for the vector class apply: \n{insert}, \n{empty},
   \n{erase}, \n{push_back}, et cetera.
+
+  Methods only for \n{string}: \n{find} and such.
 
   \url{http://en.cppreference.com/w/cpp/string/basic_string}
 \end{block}
@@ -123,3 +142,14 @@ cout << "The second character is <<" <<
 
 \n{to_string}
 
+\Level 0 {C strings}
+\label{sec:cstring}
+\index{C!string|(}
+
+In C a string is essentially an array of characters. C~arrays don't
+store their length, but strings do have functions that implicitly or
+explicitly rely on this knowledge, so they have a terminator
+character: ASCII \indextermtt{NULL}. C~strings are called
+\emph{null-terminated}\index{string!null-terminated} for this reason.
+
+\index{C!string|)}

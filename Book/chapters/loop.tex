@@ -126,6 +126,46 @@ This is how a loop is executed.
 \item At the end of each iteration, the increment is performed.
 \end{itemize}
 
+\begin{review}
+  \label{q:loop}
+  For each of the following loop headers, how many times is the body
+  executed? (You can assume that the body does not change the loop variable.)
+  \begin{itemize}
+  \item 
+\begin{verbatim}
+for (int i=0; i<7; i++)
+\end{verbatim}
+  \item 
+\begin{verbatim}
+for (int i=0; i<=7; i++)
+\end{verbatim}
+  \item 
+\begin{verbatim}
+for (int i=0; i<0; i++)
+\end{verbatim}
+  \item What is the last iteration executed? \n{1,2,3}?
+\begin{verbatim}
+for (int i=1; i<=2; i=i+2)
+\end{verbatim}
+  \item What is the last iteration executed? \n{2,4,5}?
+\begin{verbatim}
+for (int i=1; i<=5; i*=2)
+\end{verbatim}
+  \item 
+\begin{verbatim}
+for (int i=0; i<0; i--)
+\end{verbatim}
+  \item 
+\begin{verbatim}
+for (int i=5; i>=0; i--)
+\end{verbatim}
+  \item 
+\begin{verbatim}
+for (int i=5; i>0; i--)
+\end{verbatim}
+  \end{itemize}
+\end{review}
+
 Some variations on the simple case.
 \begin{itemize}
 \item It is preferable to declare the loop variable in the loop header:
@@ -205,7 +245,8 @@ for (int i=0; i<m; i++)
   for (int j=0; j<n; j++)
     ...
 \end{verbatim}
-The \n{i}-loop is called the \indextermsub{outer}{loop}; the
+This is called \indextermbus{loop}{nest}; 
+the \n{i}-loop is called the \indextermsub{outer}{loop} and the
 \n{j}-loop the \indextermsub{inner}{loop}.
 
 \begin{slide}{Nested loops}
@@ -216,23 +257,67 @@ for (int i=0; i<m; i++)
   for (int j=0; j<n; j++)
     ...
 \end{verbatim}
+This is called `loop nest', with\\
 \n{i}: outer loop\\
 \n{j}: inner loop.
 \end{slide}
 
+Traversing an index space (whether that corresponds to an array object
+or not) by $i,j$ is called the \indexterm{lexicographic ordering}.
+Below you'll see that there are also different
+ways.
+
 \begin{exercise}
   \label{ex:ij-triangle}
-  Write an $i,j$ loop that prints out all pairs with
+  Write an $i,j$ loop nest that prints out all pairs with
   \[ 1\leq i,j\leq 10,\quad  j\leq i. \]
-  Output one line for each \n{i} value. Food for thought: did you use a
-  conditional or a break in the inner loop? If so, can you do it without either?
+  Output one line for each \n{i} value.
 
   Now write an $i,j$ loop that prints all pairs with
   \[ 1\leq i,j\leq 10,\quad |i-j|<2, \]
   again printing one line per \n{i} value.
   Food for thought: this exercise is definitely easiest with a
-  conditional or a break statement in the inner loop, but can you do
-  it without? You probably need a conditional in the outer loop.
+  conditional in the inner loop, but can you do
+  it without? 
+\end{exercise}
+
+\begin{figure}[ht]
+  \hbox{%
+    \includegraphics[scale=.4]{ij-lexicographic}
+    \includegraphics[scale=.4]{ij-by-diagonal}
+    }
+  \caption{Lexicographic and diagonal ordering of an index set}  
+  \label{fig:ij-lex}
+\end{figure}
+
+Figure~\ref{fig:ij-lex} illustrates that you can look at the $i,j$
+indices by row/column or by diagonal. Just like rows and columns being
+defined as $i=\mathrm{constant}$ and $j=\mathrm{constant}$
+respectively,
+a diagonal is defined by $i+j=\mathrm{constant}$.
+
+\begin{figure}[ht]
+  \hbox{%
+    \includegraphics[scale=.4]{ij-by-diagonal-arrow}
+    \includegraphics[scale=.4]{ij-targets}
+    }
+  \caption{Lexicographic and diagonal ordering of an index set}  
+  \label{fig:ij-min}
+\end{figure}
+
+\begin{exercise}
+  \label{ex:ij-product}
+  Write a double loop over $0\leq i,j<10$ that prints the first pair
+  where the product of indices satisfies $i\cdot j> N$, where $N$~is a
+  number your read in. A~good test case is $N=40$.
+
+  Secondly, find pair with $i\cdot j>N$, but with the smallest value for $i+j$.
+  Can you traverse the $i,j$ indices such that they first enumerate
+  all pairs $i+j=1$, then $i+j=2$, then $i+j=3$ et cetera? Hint:
+  write a loop over the sum value $1,2,3,\ldots$, then find~$i,j$.
+
+  You program should print out both pairs, each on a separate line,
+  with the numbers separated with a comma, for instance~\n{8,5}.
 \end{exercise}
 
 \Level 0 {Looping until}
@@ -327,34 +412,6 @@ for (int var=low; !some_test ; var++) {
 \end{verbatim}
 \end{block}
 
-%\ifIncludeAnswers\vfill\eject\fi
-
-\begin{figure}[ht]
-  \hbox\bgroup
-  \includegraphics[scale=.4]{ij-by-diagonal}
-  \includegraphics[scale=.4]{ij-by-diagonal-arrow}
-  \egroup
-  \caption{Traversal of $i,j$ range by $i+j=c$}
-  \label{fig:ij-diag}
-\end{figure}
-
-For the following exercise, see figure~\ref{fig:ij-diag}.
-
-\begin{exercise}
-  \label{ex:ij-product}
-  Write a double loop over $0\leq i,j<10$ that prints the first pair
-  where the product of indices satisfies $i\cdot j> N$, where $N$~is a
-  number your read in. A~good test case is $N=40$.
-
-  Can you traverse the $i,j$ indices such that they first enumerate
-  all pairs $i+j=1$, then $i+j=2$, then $i+j=3$ et cetera? Again, you
-  should report the first pair $i,j$ for which $i\cdot j>N$. Hint:
-  write a loop over the sum value $1,2,3,\ldots$, then find~$i,j$.
-
-  You program should print out both pairs, each on a separate line,
-  with the numbers separated with a comma, for instance~\n{8,5}.
-\end{exercise}
-
 Another mechanism to alter the control flow in a loop is the
 \indextermtt{continue} statement. If this is encountered, execution
 skips to the start of the next iteration.
@@ -444,37 +501,6 @@ is an example in which the second syntax is more appropriate.
 \end{exercise}
 
 \Level 0 {Exercises}
-
-\begin{exercise}
-  For each of the following loop headers, how many times is the body
-  executed? (You can assume that the body does not change the loop variable.)
-  \begin{itemize}
-  \item 
-\begin{verbatim}
-for (int i=0; i<0; i++)
-\end{verbatim}
-  \item 
-\begin{verbatim}
-for (int i=0; i<=0; i++)
-\end{verbatim}
-  \item 
-\begin{verbatim}
-for (int i=0; i<=0; ++i)
-\end{verbatim}
-  \item 
-\begin{verbatim}
-for (int i=0; i<0; i--)
-\end{verbatim}
-  \item 
-\begin{verbatim}
-for (int i=0; i<=0; i--)
-\end{verbatim}
-  \item 
-\begin{verbatim}
-for (int i=0; i>-1; i--)
-\end{verbatim}
-  \end{itemize}
-\end{exercise}
 
 \begin{exercise}
   \label{ex:pythagoras}

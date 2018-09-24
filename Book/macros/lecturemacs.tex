@@ -16,6 +16,7 @@
 \newcommand\indextermdef[1]{\emph{#1}}
 \newcommand\indextermsub[2]{\emph{#1 #2}}
 \newcommand\indextermbus[2]{\emph{#1 #2}}
+\newcommand{\indextermsubdef}[2]{\emph{#1 #2}}
 \newcommand\indextermbusdef[2]{\emph{#1 #2}}
 \def\indextermtt{\bgroup \catcode`\_=12 \ttfamily \let\next=}
 \let\indextermfort\indextermtt
@@ -65,6 +66,13 @@
           \arabic{excounter}}
         \input #1
         \stepcounter{excounter}
+}}
+\newcounter{revcounter}
+\newcommand\reviewslide
+    [1]{\frame{\frametitle{Review quiz
+          \arabic{revcounter}}
+        \input #1
+        \stepcounter{revcounter}
 }}
 \newcommand\projectslide
     [1]{\frame{\frametitle{Project Exercise

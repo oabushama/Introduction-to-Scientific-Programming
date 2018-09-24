@@ -62,6 +62,7 @@ again allowing compiler optimizations.
 
 \begin{block}{Reference: change argument}
 \label{sl:refarg-change}
+A reference makes the function parameter a synonym of the argument.
 \begin{verbatim}
 void f( int &i ) { i += 1; };
 int main() {
@@ -72,15 +73,22 @@ int main() {
 
 \begin{block}{Reference: save on copying}
 \label{sl:refarg-nocopy}
+\begin{multicols}{2}
 \begin{verbatim}
 class BigDude {
-private:
+public:
    vector<double> array(5000000);
 }
+
+void f(BigDude d) {
+  cout << d.array[0];
+};
+
 int main() {
    BigDude big;
    f(big); // whole thing is copied
 \end{verbatim}
+\columnbreak
 Instead write:
 \begin{verbatim}
 void f( BigDude &thing ) { .... };
@@ -89,6 +97,8 @@ Prevent changes:
 \begin{verbatim}
 void f( const BigDude &thing ) { .... };
 \end{verbatim}
+\hbox{}\vfill\hbox{}
+\end{multicols}
 \end{block}
 
 \Level 0 {Reference to class members}
