@@ -1,0 +1,86 @@
+% -*- latex -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% This TeX file is part of the course
+%%%% Introduction to Scientific Programming in C++/Fortran2003
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%%
+%%%% lambda.tex : closures
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The C++11 mechanism of \indextermbus{lambda}{expression}s makes
+dynamic definition of functions possible.
+
+\begin{block}{Lambda expressions}
+  \label{sl:lambda-syntax}
+\begin{verbatim}
+[capture] ( inputs ) -> outtype { definition };
+\end{verbatim}
+Example:
+\verbatimsnippet{lambdaexp}
+Store lambda in a variable:
+\verbatimsnippet{lambdavar}
+\end{block}
+
+A non-trivial use of lambdas uses the \indexterm{capture} to fix one argument of a
+function.
+Let's say we want a function that computes exponentials for some fixed
+exponent value. We take the 
+\indextermtt{cmath} function
+\begin{verbatim}
+pow( x,exponent );
+\end{verbatim}
+and fix the exponent:
+%
+\verbatimsnippet{lambdacapt}
+%
+Now \n{powerfunction} is a function of one argument, which computes
+that argument to a fixed power.
+
+\begin{slide}{Capture parameter}
+  \label{sl:lambda-capture}
+  Capture value and reduce number of arguments:
+  %
+  \verbatimsnippet{lambdacapt}
+  %
+  Now \n{powerfunction} is a function of one argument, which computes
+  that argument to a fixed power.
+\end{slide}
+
+Storing a lambda in a class is hard because it has unique
+type. Solution: use \n{std::function}
+
+\begin{block}{Lambda in object}
+  \label{sl:lambda-class}
+  %
+  \verbatimsnippet{lambdaclass}
+\end{block}
+
+\begin{block}{Illustration}
+  \label{sl:lambda-classed}
+  \verbatimsnippet{lambdaclassed}
+\end{block}
+
+\begin{exercise}
+  \label{ex:newtonlambda}
+  Refer to~\ref{sl:newton-root} for background, and note that finding
+  $x$ such that $f(x)=a$ is equivalent to applying Newton to
+  $f(x)-\nobreak a$.
+
+  Implement a class \n{valuefinder} and its \n{double find(double)} method.
+  %
+  \verbatimsnippet{zeroclass}
+  %
+  used as
+  %
+  \verbatimsnippet{newtonroot}
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:morenewtonlambda}
+  Can you write a derived class \n{rootfinder} used as
+  %
+  \verbatimsnippet{newtonlambda1}
+\end{exercise}
+

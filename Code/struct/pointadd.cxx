@@ -19,25 +19,25 @@ struct vector { double x; double y; } ;
 
 //codesnippet structreturn
 struct vector vector_add
-      ( struct vector p1,
-        struct vector p2 ) {
+      ( struct vector v1,
+        struct vector v2 ) {
    struct vector p_add =
-     {p1.x+p2.x,p1.y+p2.y};
+     {v1.x+v2.x,v1.y+v2.y};
    return p_add;
 };
 //codesnippet end
 
 int main() {
 
-  struct vector p1,p2,p3;
+  struct vector v1,v2,v3;
 
-  p1.x = 1.; p1.y = 1.;
-  p2 = {4.,5.};
+  v1.x = 1.; v1.y = 1.;
+  v2 = {4.,5.};
 
 //codesnippet structreturn
-  p3 = vector_add(p1,p2);
+  v3 = vector_add(v1,v2);
   cout << "Added: " <<
-    p3.x << "," << p3.y << endl;
+    v3.x << "," << v3.y << endl;
 //codesnippet end
   
   return 0;

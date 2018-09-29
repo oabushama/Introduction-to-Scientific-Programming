@@ -31,7 +31,7 @@ public:
   void sety( double newy ) {
     vy = newy; };
   //codesnippet end
-  //codesnippet pointprivate
+  //codesnippet pointprivateclose
 }; // end of class definition
 //codesnippet end
 

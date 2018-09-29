@@ -93,6 +93,7 @@ separate interface and implementation of a class.
   \begin{multicols}{2}
     \verbatimsnippet{pointprivate}
     \verbatimsnippet{pointprivateset}
+    \verbatimsnippet{pointprivateclose}
     \verbatimsnippet{pointprivatedefine}
   \end{multicols}
   Usage:
@@ -109,6 +110,12 @@ separate interface and implementation of a class.
   \item Possible to change implementation without rewriting calling code.
   \end{itemize}
 \end{block}
+
+You should not write access functions lightly: you should first think
+about what elements of your class should conceptually be inspectable
+or changeable by the outside world.  Consider for example a class
+where a certain relation holds between members. In that case only
+changes are allowed that maintain that relation.
 
 \begin{block}{Private access gone wrong}
   \label{sl:privatenogood}
@@ -155,35 +162,6 @@ private:
   \verbatimsnippet{initcurlypoint}
 \end{block}
 
-If the data members follow a \indextermtt{public} directive, code
-outside the class can access the data members, both for getting and
-setting their values. This may be convenient for coding, but it's not
-a clean coding style. It's better to make data members
-\indextermtt{private}, and use \indexterm{accessor} functions to get
-and set values.
-
-\begin{block}{Private data}
-  \label{sl:class-private}
-  \verbatimsnippet{pointprivate}
-\end{block}
-
-\Level 1 {Accessor functions}
-
-Remember the lines:
-\begin{verbatim}
-private:
-  double vx,vy;
-\end{verbatim}
-This implies that \n{vx,vy} are not accessible from anything outside
-the object. In order to change them we need functions, which we call
-\index{accessor} functions:
-
-\begin{block}{Accessor for setting private data}
-  \label{sl:class-private-set}
-  Class methods:
-  \verbatimsnippet{pointprivateset}
-\end{block}
-
 \Level 1 {Methods}
 
 With the accessors, you have just seen a first example of a class
@@ -195,13 +173,20 @@ Let's now look at more meaningful methods. For instance, for the
 %
 \snippetwithoutput{pointfunc}{geom}{pointfunc}
 
+\begin{exercise}
+  \label{ex:vectorclass-print}
+  Add a \n{print} function to the \n{Vector} class.
+
+  How many parameters does it need?
+\end{exercise}
+
 By making these functions public, and the data members
 private, you define an \acf{API} for the class:
 \begin{itemize}
 \item You are defining operations for that class; they are the only
   way to access the data of the object.
 \item The methods can use the data of the object, or alter it. All
-  data members, even when declared \n{private}, or global to the methods.
+  data members, even when declared \n{private}, are global to the methods.
 \item  Data members declared \n{private} are not accessible from outside the
   object.
 \end{itemize}
@@ -410,7 +395,9 @@ same accessor for getting and setting?
 Of course you should only do this if you want the internal variable to
 be directly changable!
 
-This is a good time to do the exercises in section~\ref{ex:pointfunc}.
+\begin{exercise}
+  This is a good time to do the exercises in section~\ref{ex:pointfunc}.
+\end{exercise}
 
 \Level 1 {Accessability}
 
@@ -649,15 +636,13 @@ MyClass::object_count = 0;
 
 \Level 0 {Review question}
 
-\begin{exercise}
-  What specifies the capabilities of an object?
-\end{exercise}
+\begin{review}
+  Fill in the missing term
+  \begin{itemize}
+  \item The functionality of a class is determined by its\ldots
+  \item The state of an object is determined by its\ldots
+  \end{itemize}
 
-\begin{exercise}
-  What determines the state of an object?
-\end{exercise}
-
-\begin{exercise}
   How many constructors do you need to specify in an object definition?
   \begin{itemize}
   \item Zero
@@ -665,7 +650,7 @@ MyClass::object_count = 0;
   \item One
   \item One or more
   \end{itemize}
-\end{exercise}
+\end{review}
 
 \begin{exercise}
   Describe various ways to initialize the members of an object.

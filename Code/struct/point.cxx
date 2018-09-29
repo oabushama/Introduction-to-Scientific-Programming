@@ -14,19 +14,19 @@ using std::cout;
 using std::endl;
 
 //codesnippet structdef
-struct vector { double x; double y; } ;
+struct vector { double x; double y; int label; } ;
 //codesnippet end
 
 //codesnippet structuse
 int main() {
 
-  struct vector p1,p2;
+  struct vector v1,v2;
 
-  p1.x = 1.; p1.y = 2.;
-  p2 = {3.,4.};
+  v1.x = 1.; v1.y = 2.; v1.label = 5;
+  v2 = {3.,4.,5};
 
-  p2 = p1;
-  cout << "p2: " << p2.x << "," << p2.y << endl;
+  v2 = v1;
+  cout << "v2: " << v2.x << "," << v2.y << endl;
   //codesnippet end
   
   return 0;

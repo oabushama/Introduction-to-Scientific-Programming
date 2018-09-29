@@ -18,20 +18,20 @@ using std::endl;
 struct vector { double x; double y; } ;
 
 //codesnippet structpassref
-double distance( const struct vector &p1,const struct vector &p2 ) {
-  double d1 = p1.x-p2.x, d2 = p1.y-p2.y;
+double distance( const struct vector &v1,const struct vector &v2 ) {
+  double d1 = v1.x-v2.x, d2 = v1.y-v2.y;
   return sqrt( d1*d1 + d2*d2 );
 }
 //codesnippet end
 
 int main() {
 
-  struct vector p1,p2;
+  struct vector v1,v2;
 
-  p1.x = 1.; p1.y = 1.;
-  p2.x = 4.; p2.y = 5.;
+  v1.x = 1.; v1.y = 1.;
+  v2.x = 4.; v2.y = 5.;
 
-  cout << "Distance: " << distance(p1,p2) << endl;
+  cout << "Distance: " << distance(v1,v2) << endl;
   
   return 0;
 }

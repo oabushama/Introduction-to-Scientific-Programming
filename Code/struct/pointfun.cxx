@@ -19,9 +19,11 @@ struct vector { double x; double y; } ;
 
 //codesnippet structpass
 double distance
-  ( struct vector p1,struct vector p2 )
+  ( struct vector v1,
+    struct vector v2 )
 {
-  double d1 = p1.x-p2.x, d2 = p1.y-p2.y;
+  double
+    d1 = v1.x-v2.x, d2 = v1.y-v2.y;
   return sqrt( d1*d1 + d2*d2 );
 }
 //codesnippet end
@@ -30,12 +32,12 @@ int main() {
 
   cout << "Struct Pass" << endl;
   //codesnippet structpass
-  struct vector p1 = { 1.,1. };
+  struct vector v1 = { 1.,1. };
   cout << "Displacement x,y?";
   double dx,dy; cin >> dx >> dy; cout << endl;
   cout << "dx=" << dx << ", dy=" << dy << endl;
-  struct vector p2 = { p1.x+dx,p1.y+dy };
-  cout << "Distance: " << distance(p1,p2) << endl;
+  struct vector v2 = { v1.x+dx,v1.y+dy };
+  cout << "Distance: " << distance(v1,v2) << endl;
   //codesnippet end
   cout << ".. struct pass" << endl;
 

@@ -49,7 +49,23 @@ The elements of a structure are usually called \indexterm{members}.
 
 \Level 0 {The basics of structures}
 
-\begin{block}{How to use structures}
+A structure behaves like a data type: you declare variables of the
+structure type, and you use them in your program. The new aspect is
+that you first need to define the structure type. This definition can
+be done inside your main program or before it. The latter is
+preferable, for instance if you need to pass the structure to a function.
+
+\begin{verbatim}
+// definition of the struct
+struct AStructName { int num; double val; }
+int main() {
+  // declaration of struct variables
+  AStructName mystruct1,mystruct2;
+  .... code that uses your structures ....
+}
+\end{verbatim}
+
+\begin{slide}{How to use structures}
   \label{sl:structinprog}
   \begin{enumerate}
   \item Declare what is in your structure;
@@ -65,7 +81,14 @@ int main() {
   .... code that uses your structures ....
 }
 \end{verbatim}
-\end{block}
+\end{slide}
+
+There are various ways of setting the members of the structure:
+\begin{itemize}
+\item You can set defaults that hold for any structure of that type;
+\item you can all members at once;
+\item or you can set any member individually.
+\end{itemize}
 
 \begin{block}{Struct initialization}
   \label{sl:structinit}
@@ -78,9 +101,33 @@ int main() {
   \label{sl:struct-use}
   Once you have defined a structure, you can make variables of that
   type. Setting and initializing them takes a new syntax:
+  %
   \snippetwithoutput{structuse}{struct}{point}
+  %
   Period syntax: `apostrophe-s'.
 \end{block}
+
+\begin{exercise}{Quick review}
+  \label{rev:func-def}
+  True or false?
+  \begin{itemize}
+  \item All members of a struct have to have the same type.
+  \item Writing
+\begin{verbatim}
+struct numbered { int n; double x; };
+\end{verbatim}
+creates an object with an integer and a double as members.
+\item With the above definition and \n{struct numbered xn;},
+\begin{verbatim}
+cout << xn << endl;
+\end{verbatim}
+is correct C++.
+\item Same, 
+\begin{verbatim}
+xn.x = xn.n+1;
+\end{verbatim}
+  \end{itemize}
+\end{exercise}
 
 Note: if you use initializations in the \n{struct} definition,
 you can not use the brace-assignment.
@@ -91,6 +138,37 @@ you can not use the brace-assignment.
   %\verbatimsnippet{structpass}
   \snippetwithoutput{structpass}{struct}{pointfun}
 \end{block}
+
+\begin{exercise}
+  \label{ex:vecstruct-angle}
+  \hbox{%
+    \begin{minipage}[t]{.6\hsize}
+      Write a function that, given a vector as defined above, returns the
+      angle with the $x$-axis. (Hint: the \n{atan} function is in \n{cmath})
+    \end{minipage}
+    \includegraphics[scale=.4]{xy-atan}
+    }
+
+  \snippetwithoutput{anglepi4}{struct}{pointangle}
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:vecstruct-flip}
+  Write a \n{void} function that has a \n{struct vector} parameter,
+  and exchanges its coordinates:
+  \[ \begin{pmatrix}2.5\\3.5\end{pmatrix} \rightarrow
+    \begin{pmatrix}3.5\\2.5\end{pmatrix} \]
+  \snippetwithoutput{flip32}{struct}{pointflip}
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:vecstruct-scale}
+  Write a function $y=f(x,a)$ that takes a \n{struct vector} and
+  \n{double} parameter as input, and returns a vector that is the
+  input multiplied by the scalar.
+  \[ \begin{pmatrix}2.5\\3.5\end{pmatrix},3 \rightarrow
+    \begin{pmatrix}7.5\\10.5\end{pmatrix} \]
+\end{exercise}
 
 \begin{exercise}
   \label{ex:primestruct}

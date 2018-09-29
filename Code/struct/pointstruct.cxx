@@ -27,11 +27,11 @@ struct vector : public object {
 int main() {
 
   {
-    struct vector p1;
+    struct vector v1;
 
-    cout << p1.xpp() << endl;
-    cout << p1.xpp() << endl;
-    cout << p1.xpp() << endl;
+    cout << v1.xpp() << endl;
+    cout << v1.xpp() << endl;
+    cout << v1.xpp() << endl;
   }
   
   return 0;

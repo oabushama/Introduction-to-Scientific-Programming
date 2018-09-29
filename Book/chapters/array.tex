@@ -18,9 +18,20 @@ In scientific applications, arrays often correspond to vectors and
 matrices, potentialy of quite large size. (If you know about the
 \acf{FEM}, you know that vectors can have sizes in the millions or beyond.)
 
+In this chapter you will see the C++ \indextermtt{vector} construct,
+which implements the notion of an array of things, whether they be
+numbers, strings, object.
+While C++ can use the C~mechanisms for arrays, for almost all purposes
+it is better to use \n{vector}. In particular, this is a safer way to
+do dynamic allocation. The old
+mechanisms are briefly discussed in section~\ref{sec:staticarray}.
+
+\Level 1 {Initialization}
+
 To define an array you need to declare its size, and you need to give
 it its contents. Those actions don't necessarily have to occur
-together. (And the contents can later change, as with any other variable.)
+together. (And the contents can later change, as with any other
+variable; maybe even the size can change.)
 However, 
 if you know the array size and contents already before you run your
 code, you can create the whole array in one statement. There is more
@@ -142,7 +153,8 @@ Shorthand:
 
 You wouldn't tell it from the above examples, but vectors actually
 form a \indextermttdef{vector} class. The angle bracket notation means
-that we have a class that is parametrized with the type, and you can
+that we have a class that is parametrized with the type (see
+chapter~\ref{ch:template} for the details), and you can
 have vectors of ints, vectors of chars, et cetera. We can now say that
 \n{vector<int>} is a type, pronounced `vector-of-int', and you can
 make new variables of that type.
@@ -177,6 +189,8 @@ where
   arrays where the size is known at compile time.
 \end{remark}
 
+\Level 2 {Vector initialization}
+
 \begin{block}{Vector initialization}
   \label{sl:vector-init}
   You can initialize a vector as a whole:
@@ -196,6 +210,8 @@ vector<float> x(25,3.15);
 \end{verbatim}
 which gives a vector of size~25, with all elements initialized to~3.15.
 \end{block}
+
+\Level 2 {Element access}
 
 \begin{block}{Accessing vector elements}
   \label{sl:vectorsub}
@@ -239,7 +255,7 @@ for ( auto &e : my_vector)
   \snippetwithoutput{vectorcopy}{array}{vectorcopy}
 \end{block}
 
-\Level 1 {Vector methods}
+\Level 2 {Vector methods}
 
 A \n{vector} is an object. Let's take a look at some of the methods
 that are defined for it.
@@ -276,13 +292,6 @@ size of a vector: it has that information internally.
   by the same coefficient~$\alpha$ so that $\sum_i x_i^2=1$. Check the
   correctness of your calculation.
 \end{exercise}
-
-\begin{advanced}
-  The vector class is a template class (see chapter~\ref{ch:template}
-  for details): the type that it uses (int,
-  float) is not predetermined, but you can make a vector object out of
-  whatever type you like.
-\end{advanced}
 
 \begin{slide}{Vector methods}
   \label{sl:vector-method}

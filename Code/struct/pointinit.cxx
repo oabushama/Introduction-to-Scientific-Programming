@@ -22,7 +22,7 @@ int main() {
   // ILLEGAL:
   // x_b = {3.7, 4.8};
   x_b.x = 3.7; x_b.y = 4.8;
-  //end snippet
+  //codesnippet end
   
   return 0;
 }

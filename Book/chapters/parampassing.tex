@@ -1,0 +1,266 @@
+% -*- latex -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% This TeX file is part of the course
+%%%% Introduction to Scientific Programming in C++/Fortran2003
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%%
+%%%% parampassing.tex : section on parameter passing
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+C++~functions resemble mathematical functions: you have seen that a
+function can have an input and an output. In fact, they can have
+multiple inputs, separated by commas, but they have only one output.
+
+We start by studying functions that look like these mathematical
+functions. They involve a \indextermbus{parameter}{passing} mechanism
+called
+\emph{passing by value}\index{parameter!passing by value}.
+%
+Later we will then look at
+\emph{passing by reference}\index{parameter!passing by reference}.
+
+\Level 1 {Pass by value}
+\index{pass by value|see{parameter, passing by value}}
+
+The following style of programming is very much inspired by
+mathematical functions, and is known as \indextermdef{functional
+  programming}\footnote {There is more to functional programming. For
+  instance, strictly speaking your whole program needs to be based on
+  function calling; there is no other code than function definitions
+  and calls.}.
+\begin{itemize}
+\item A function has one result, which is returned through a return
+  statement. The function call then looks like
+\begin{verbatim}
+y = f(x1,x2,x3);
+\end{verbatim}
+\item The definition of the C++ parameter passing mechanism says that
+  input arguments are copied to the function, meaning that they don't
+  change in the calling program:
+  %
+  \snippetwithoutput{passvalue}{func}{passvalue}
+
+  We say that the input argument is
+  \emph{passed by value}\index{parameter!pass by value}: its value is
+  copied into the function.
+  In this example, the function parameter \n{x} acts as a local
+  variable in the function, and it is initialized with a copy of the
+  value of \n{number} in the main program.
+\end{itemize}
+
+Later we will worry about the cost of this copying.
+
+\begin{slide}{Mathematical type function}
+  \label{sl:func-functional}
+  Pretty good design:
+  \begin{itemize}
+  \item pass data into a function,
+  \item return result through \n{return} statement.
+  \item Parameters are copied into the function. (Cost of copying?)
+%  \item Mark parameters as \n{const}, just in case:
+  \item \indexterm{pass by value}
+  \item `functional programming'
+  \end{itemize}
+\end{slide}
+
+\begin{slide}{Pass by value example}
+  \label{sl:func-functional-ex}
+  Note that the function alters its parameter \n{x}:
+  %
+  \snippetwithoutput{passvalue}{func}{passvalue}
+  %
+  but the argument in the main program is not affected.
+\end{slide}
+
+Passing a variable to a routine passes the value; in the routine, the
+variable is local. So, in this example
+the value of the argument is not changed:
+
+\snippetwithoutput{localparm}{func}{localparm}
+
+\begin{exercise}
+If you are doing the prime project (chapter~\ref{ch:prime}) you can
+now do exercise~\ref{ex:prime:func}.
+\end{exercise}
+
+\begin{block}{Background Square roots through Newton}
+  \label{sl:newton-root}
+  Early computers had no hardware for computing a square
+  root. Instead, they used \indexterm{Newton's method}. Suppose you
+  have a value~$y$ and you want want to compute
+  $x\leftarrow\sqrt{y}$. This is equivalent to finding the zero of
+  \[ f(x) = x^2-y \] where $y$~is fixed. To indicate this dependence
+  on~$y$, we will write~$f_y(x)$. Newton's method then finds the zero by
+  evaluating
+  \[ x_{\mathrm{next}}=x-f_y(x)/f_y'(x) \]
+  until the guess is accurate enough, that is, until $f_y(x)\approx0$.
+\end{block}
+
+\begin{exercise}
+  \label{ex:newton-root}
+  \begin{itemize}
+  \item Write functions \n{f(x,y)} and \n{deriv(x,y)}, that compute
+    $f_y(x)$ and $f_y'(x)$ for the definition of $f_y$ above.
+  \item Read a value $y$ and iterate until $|\n{f(x,y)}|<10^{-5}$. Print~$x$.
+  \item Second part: write a function \n{newton_root} that computes~$\sqrt{y}$.
+  \end{itemize}
+\end{exercise}
+
+\Level 1 {Pass by reference}
+\label{sec:pass-by-ref}
+\index{pass by reference|see{parameter, passing by reference}}
+  
+Having only one output is a limitation on functions. Therefore there
+is a mechanism for altering the input parameters and returning
+(possibly multiple) results that way. You do this by not copying
+values into the function parameters, but by turning the function
+parameters into aliases of the variables at the place where the
+function is called.
+
+We need the concept of a \indextermdef{reference}:
+\begin{block}{Reference}
+  \label{sl:cpp-reference}
+  A reference is indicated with an ampersand in its definition, and it
+  acts as an alias of the thing it references.
+  %
+  \snippetwithoutput{refint}{basic}{ref}
+  %
+  (You will not use references often this way.)
+\end{block}
+
+You can make a function parameter into a reference of a variable in
+the main program:
+
+\begin{block}{Parameter passing by reference}
+  \label{sl:pass-by-ref}
+The function parameter \n{n} becomes a reference to the variable \n{i}
+in the main program:
+\begin{verbatim}
+void f(int &n) {
+  n = /* some expression */ ;
+};
+int main() {
+  int i;
+  f(i);
+  // i now has the value that was set in the function
+}
+\end{verbatim}
+\end{block}
+
+Using the ampersand, the parameter is
+\emph{passed by reference}\index{parameter!passing by reference}:
+instead of copying the value, the function receives a \emph{reference}:
+information where the variable is stored in memory.
+
+\begin{remark}
+  The \emph{pass by reference mechanism in C}%
+  \index{parameter!passing by reference! in C}
+  was different and should not be used in~C++. In fact it was not a
+  true pass by reference, but passing an address by value.
+\end{remark}
+
+We also the following terminology for function parameters:
+\begin{itemize}
+\item \emph{input}\index{parameter!input|textbf} parameters: passed by
+  value, so that it only functions as input to the function, and no
+  result is output through this parameter;
+\item \emph{output}\index{parameter!output|textbf} parameters: passed
+  by reference so that they return an `output' value to the program.
+\item \emph{throughput}\index{parameter!throughput|textbf} parameters:
+  these are passed by reference, and they have an initial value when
+  the function is called. In C++, unlike Fortran, there is no real
+  separate syntax for these.
+\end{itemize}
+
+\begin{slide}{Results other than through return}
+  \label{sl:func-err-return}
+  Also good design:
+  \begin{itemize}
+  \item Return no function result,
+  \item or return \indexterm{return status} (0~is success, nonzero various
+    informative statuses), and
+  \item return other information by changing the parameters.
+  \item \emph{pass by reference}
+  \item Parameters are also called `input', `output', `throughput'.
+  \end{itemize}
+\end{slide}
+
+\begin{block}{Pass by reference example 1}
+  \label{sl:pass-reference1}
+  \snippetwithoutput{setbyref}{basic}{setbyref}
+  Compare the difference with leaving out the reference.
+\end{block}
+
+As an example, consider a function that tries to read a value from a
+file. With anything file-related, you always have to worry about the
+case of the file not existing and such. So our function returns:
+\begin{itemize}
+\item a boolean value to indicate whether the read succeeded, and
+\item the actual value if the read succeeded.
+\end{itemize}
+The following is a common idiom, where the success value is returned
+through the \n{return} statement, and the value through a parameter.
+
+\begin{block}{Pass by reference example 2}
+  \label{sl:pass-reference2}
+\begin{verbatim}
+bool can_read_value( int &value ) {
+  int file_status = try_open_file();
+  if (file_status==0) 
+    value = read_value_from_file();
+  return file_status!=0;
+}
+
+int main() {
+  int n;
+  if (!can_read_value(n))
+    // if you can't read the value, set a default
+    n = 10;
+\end{verbatim}
+\end{block}
+
+\begin{exercise}
+  \label{ex:swap}
+  Write a \n{void} function \n{swapij} of two parameters that
+  exchanges the input values:
+\begin{verbatim}
+int i=2,j=3;
+swapij(i,j);
+// now i==3 and j==2
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:div-remain}
+  Write a \n{bool} function that tests divisibility and returns a
+  remainder:
+
+{\small
+\begin{verbatim}
+int number,divisor,remainder;
+// read in the number and divisor
+if ( is_divisible(number,divisor,remainder) )
+  cout << number << " is divisible by " << divisor << endl;
+else
+  cout << number << "/" << divisor <<
+      " has remainder " << remainder << endl;
+\end{verbatim}
+}
+\end{exercise}
+
+\begin{exercise}
+  If you are doing the geometry project, you should now do the exercises
+  in section~\ref{sec:geom-basic}.
+\end{exercise}
+
+\begin{block}{Const parameters}
+  \label{sl:pass-constref}
+  You can prevent local changes to the function parameter:
+
+  \verbatimsnippet{readonlyparm}
+
+  This is mostly to protect you against yourself.
+\end{block}
+

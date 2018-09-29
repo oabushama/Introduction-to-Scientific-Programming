@@ -21,6 +21,7 @@
   % go into vertical mode
   \par
   % make nice two-column layout
+  \iffalse
   \vbox{
     \begin{multicols}{2}
       \def\verbatim@startline{\verbatim@line{\leavevmode\relax}}
@@ -36,7 +37,24 @@
       \par\hbox{}\vfill\hbox{}
     \end{multicols}
   }
+  \fi
+  \hbox{%
+    \begin{minipage}[t]{.6\hsize}
+      \def\verbatim@startline{\verbatim@line{\leavevmode\relax}}
+      \footnotesize\textbf{Code:}
+      \codesnippet{#1}
+    \end{minipage}
+    \begin{minipage}[t]{.3\hsize}
+      { \raggedright \textbf{Output [#2] #3:}\par
+      }
+      \immediate\write18{ cd \codedir /#2 && make #3 && make run_#3 > #3.out }
+      \footnotesize
+      \verbatiminput{\codedir /#2/#3.out}
+    \end{minipage}
+  }
+  %\hbox{}\kern-20pt\hbox{} % 1.5\baselineskip
 }
+
 \newcommand\snippetwithoutput[3]{
   \answerwithoutput{#1}{#2}{#3}
   % record this file as bracketed name
@@ -62,12 +80,12 @@
   \end{multicols}
   }
 }
+
 \newcommand\snippetwitherror[3]{
   \answerwitherror{#1}{#2}{#3}
   % record this file as bracketed name
   \ifInBook \addchaptersource{{#2/#3}} \fi
 }
-
 
 \newcommand{\snippetwithcomment}[2]{
   % go into vertical mode
@@ -84,6 +102,7 @@
   \end{multicols}
   }
 }
+
 \let\answerwithcomment\snippetwithcomment
 
 \makeatother
