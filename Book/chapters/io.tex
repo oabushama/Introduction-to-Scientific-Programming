@@ -200,10 +200,13 @@ defined; the result of this operator is again a stream. Recursively,
 this means you can chain any number of applications of~\verb+<<+
 together.
 
-If you want to output a class that you wrote yourself, you have to
-define how the \n{<<} operator deals with your class.
+\begin{block}{Redefine less-less}
+  \label{sl:lessless-def}
+  If you want to output a class that you wrote yourself, you have to
+  define how the \n{<<} operator deals with your class.
 
-\verbatimsnippet{classostream}
+  \verbatimsnippet{classostream}
+\end{block}
 
 \Level 0 {Binary output}
 

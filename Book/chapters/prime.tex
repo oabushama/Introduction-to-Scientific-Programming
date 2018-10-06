@@ -141,7 +141,7 @@ operate on that structure or on its members.
   \label{ex:prime:sequence}
   Write a class \n{primegenerator} that contains 
   \begin{itemize}
-  \item members  \n{number_of_primes_found} and
+  \item members  \n{how_many_primes_found} and
     \n{last_number_tested},
   \item a method \n{nextprime};
   \item Also write a function \n{isprime} that does not need to be
@@ -165,8 +165,9 @@ data and are therefore independent of each other.
   \label{ex:goldbach:conj}
   The \indexterm{Goldbach conjecture} says that every even number,
   from~4 on, is the sum of two primes $p+q$. Write a program to test this
-  for the even numbers up to 20~million.
+  for the even numbers up to a bound that you read in.
 
+  This is a great exercise for a top-down approach!
   Make an outer loop over the even numbers~$e$. In each iteration,
   make a \n{primegenerator} object to generate $p$ values.
   For each~$p$ test whether~$e-p$ is prime.

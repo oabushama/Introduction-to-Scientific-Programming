@@ -61,7 +61,7 @@ Observations about the above code snippet:
 Next we'll look at a syntax for creating class objects that is new. If
 you create an object, you actually call a function that has the same
 name as the class: the \indexterm{constructor}.
-Above you had a declaration \n{Vector p1} which was not just a
+Above you had a declaration \n{Vector v1} which was not just a
 declaration: it called the so-called \indextermsub{default}{constructor},
 which has no arguments, and does nothing.
 
@@ -119,20 +119,12 @@ changes are allowed that maintain that relation.
 
 \begin{block}{Private access gone wrong}
   \label{sl:privatenogood}
-  We make a class with two members that sum to one.\\
-  You don't want to be able to change just one of them!
-\begin{verbatim}
-class SumIsOne {
-public: 
-  float x,y;
-  SumIsOne( double xx ) { x = xx; y = 1-x; };
-}
-int main() {
-  SumIsOne pointfive(.5);
-  pointfive.y = .6;
-}
-\end{verbatim}
-In general: enforce predicates on the members.
+  We make a class for points on the unit circle\\
+  You don't want to be able to change just one of \n{x,y}!
+  %
+  \verbatimsnippet{unitpointdef}
+  %
+  In general: enforce predicates on the members.
 \end{block}
 
 \Level 1 {Initialization}
@@ -151,15 +143,25 @@ private:
   Each object will have its members initialized to these values.
 \end{block}
 
-\begin{block}{Member initialization}
+\begin{block}{Member initializer lists}
   \label{sl:class-init}
   Other syntax for initialization:
   \verbatimsnippet{classpointinit}
-  Allows for reuse of names:
-  \snippetwithoutput{classpointinitxy}{geom}{pointinitxy}
+\end{block}
 
+\begin{block}{advantages}
+  \label{sl:class-init-why}
+  Allows for reuse of names:
+  %
+  \snippetwithoutput{classpointinitxy}{geom}{pointinitxy}
+  %
+  Also saves on constructer invocation if the member is an object.
+\end{block}
+
+\begin{block}{Initializer lists}
+  \label{sl:class-inlist}
   \emph{Initializer lists}\index{initializer list} can be used as denotations.
-  \verbatimsnippet{initcurlypoint}
+  \verbatimsnippet{initcurlypoint}  
 \end{block}
 
 \Level 1 {Methods}
@@ -287,9 +289,9 @@ define it explicitly:
 pointdefault.cxx: In function 'int main()':
 pointdefault.cxx:32:21: error: no matching function for call to
                 'Vector::Vector()'
-   Vector p1(1.,2.), p2;
+   Vector v1(1.,2.), v2;
 \end{verbatim}
-The problem is with \n{p2}. How is it created? We need to define two constructors:
+The problem is with \n{v2}. How is it created? We need to define two constructors:
 \verbatimsnippet{pointdef1}
 \end{slide}
 
@@ -338,10 +340,21 @@ Use $r,\theta$ for the private variables, do not store $x,y$.
   \end{exercise}
 \end{comment}
 
+\Level 1 {Examples}
+
+\begin{block}{Classes for abstact objects}
+  \label{sl:intstream}
+  Objects can model fairly abstract things:
+  %
+  \snippetwithoutput{integerstream}{object}{stream}
+\end{block}
+
 \begin{exercise}
   If you are doing the prime project (chapter~\ref{ch:prime}),
   now is a good time to do exercise~\ref{ex:prime:sequence}.
 \end{exercise}
+
+\Level 1 {Advanced topics}
 
 \emph{The remainder of this section is advanced material. Make sure
   you have studied section~\ref{sec:class-ref}.}
@@ -491,6 +504,10 @@ Example of the copy constructor in action:
     \vfill\columnbreak
     \verbatimsnippet{classwithcopy}
   \end{multicols}
+\end{slide}
+
+\begin{slide}{Copy constructor in action}
+  \label{sl:class-copy-out}
   \snippetwithoutput{classwithcopyuse}{object}{copyscalar}
 \end{slide}
 
@@ -587,7 +604,7 @@ which gives output
 
 \Level 0 {More topics about classes}
 
-\begin{block}{`this'}
+\begin{block}{`this' pointer to the current object}
   \label{sl:class-this}
   Inside an object, a \indexterm{pointer} to the object is available
   as \indextermtt{this}:
@@ -601,6 +618,9 @@ public:
   };
 };
 \end{verbatim}
+\end{block}
+\begin{block}{`this' use}
+  \label{sl:class-this-fun}
 This is not often needed. Typical use case:
 you need to call a function inside a method that needs the object as argument)
 \begin{verbatim}
@@ -623,7 +643,7 @@ void somemethod() {
 \begin{verbatim}
 class MyClass {
 private:
-  static object_count;
+  static int object_count;
 public:
   MyClass() { object_count++; };
 }

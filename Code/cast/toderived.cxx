@@ -19,12 +19,14 @@ public:
 class Derived : public Base {
 public:
   virtual void print() {
-    cout << "Construct derived!" << endl; };
+    cout << "Construct derived!"
+         << endl; };
 };
 class Erived : public Base {
 public:
   virtual void print() {
-    cout << "Construct erived!" << endl; };
+    cout << "Construct erived!"
+         << endl; };
 };
 //codesnippet end
 
@@ -34,7 +36,7 @@ void f( Base *obj ) {
     dynamic_cast<Derived*>(obj);
   if (der==nullptr)
     cout << "Could not be cast to Derived"
-	 << endl;
+         << endl;
   else
     der->print();
 };
@@ -52,7 +54,7 @@ int main() {
   
   {
     cout << "Polymain" << endl;
-    //codesnippet polymain
+    //codesnippet polycast
     Base *object = new Derived();
     f(object);
     Base *nobject = new Erived();
@@ -63,7 +65,7 @@ int main() {
  
   {
     cout << "Polybane" << endl;
-    //codesnippet polybane
+    //codesnippet polywrong
     Base *object = new Derived();
     g(object);
     Base *nobject = new Erived();

@@ -21,6 +21,10 @@ using std::endl;
 #include <vector>
 using std::vector;
 
+#include <string>
+using std::string;
+using std::to_string;
+
 //codesnippet lambdaclass
 class SelectedInts {
 private:
@@ -34,6 +38,11 @@ public:
       bag.push_back(i);
   };
   int size() { return bag.size(); };
+  std::string string() { std::string s;
+    for ( int i : bag )
+      s += to_string(i)+" ";
+    return s;
+  };
 };
 //codesnippet end
 
@@ -44,20 +53,20 @@ int main() {
   int upperbound = 20;
   for (int i=0; i<upperbound; i++)
     greaterthan5.add(i);
-  cout << "Ints under " << upperbound <<
-    " greater than 5: " << greaterthan5.size() << endl;
+  // cout << "Ints under " << upperbound <<
+  //   " greater than 5: " << greaterthan5.size() << endl;
   
-  int threshold;
-  cout << "Give a threshold: "; cin >> threshold; cout << endl;
+  int divisor;
+  cout << "Give a divisor: "; cin >> divisor; cout << endl;
+  cout << ".. using " << divisor << endl;
   //codesnippet lambdaclassed
-  SelectedInts greaterthan
-    ( [threshold] (int i) -> bool { return i>threshold; } );
-  for (int i=0; i<upperbound; i++)
-    greaterthan.add(i);
-  cout << "Ints under " << upperbound 
-       << " greater than " << threshold << ": "
-       << greaterthan.size() << endl;
+  SelectedInts multiples
+    ( [divisor] (int i) -> bool { return i%divisor==0; } );
+  for (int i=1; i<50; i++)
+    multiples.add(i);
   //codesnippet end
+  cout << "Multiples of " <<divisor << ": " << endl
+       << multiples.string() << endl;
 
   return 0;
 }

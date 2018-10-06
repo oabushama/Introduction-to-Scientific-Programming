@@ -24,8 +24,8 @@ int main() {
   //codesnippet formatleft
   for (int i=1; i<200000000; i*=10)
     cout << "Number: "
-         << left << setfill('.') << setw(6)
-	 << i << endl;
+         << left << setfill('.')
+	 << setw(6) << i << endl;
   //codesnippet end
   cout << endl;
   

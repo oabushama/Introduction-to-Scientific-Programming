@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** pointscale.cxx : Vector class with private data
  ****
@@ -33,10 +33,10 @@ public:
 
 int main() {
 //codesnippet pointdef2
-  Vector p1(1.,2.), p2;
-  cout << "p1 has length " << p1.length() << endl;
-  p2 = p1.scale(2.);
-  cout << "p2 has length " << p2.length() << endl;
+  Vector v1(1.,2.), v2;
+  cout << "v1 has length " << v1.length() << endl;
+  v2 = v1.scale(2.);
+  cout << "v2 has length " << v2.length() << endl;
 //codesnippet end
 
   return 0;

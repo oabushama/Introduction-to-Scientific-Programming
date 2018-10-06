@@ -45,7 +45,7 @@
       \codesnippet{#1}
     \end{minipage}
     \begin{minipage}[t]{.3\hsize}
-      { \raggedright \textbf{Output [#2] #3:}\par
+      { \footnotesize \raggedright \textbf{Output\\\relax [#2] #3:}\par
       }
       \immediate\write18{ cd \codedir /#2 && make #3 && make run_#3 > #3.out }
       \footnotesize

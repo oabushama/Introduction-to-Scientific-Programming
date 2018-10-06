@@ -67,16 +67,32 @@ Write the following methods:
 \begin{itemize}
 \item \n{distance_to_origin} returns a \n{float}.
 \item  \n{printout} uses \n{cout} to display the point.
-\item \n{distance} computes the distance between this point and
-  another: if \n{p,q} are \n{Point} objects,
-\begin{verbatim}
-  p.distance(q)
-\end{verbatim}
-computes the distance.
 \item \n{angle} computes the angle of vector $(x,y)$ with the $x$-axis.
 \end{itemize}
 \end{exercise}
 
+\begin{exercise}
+  \label{ex:geom:pointpoint}
+  Extend the \n{Point} class of the previous exercise with a method:
+  \n{distance} that computes the distance between this point and
+  another: if \n{p,q} are \n{Point} objects,
+\begin{verbatim}
+  p.distance(q) 
+\end{verbatim}
+computes the distance between them.
+
+Hint: remember the `dot' notation for members.
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:geom:pointhalfway}
+  Write a method \n{halfway_point} that, given two \n{Point}
+  objects~\n{p,q}, construct the \n{Point} halfway, that
+  is,~$(p+q)/2$.
+
+  You can write this function directly, or you could write functions
+  \n{Add} and \n{Scale} and combine these.
+\end{exercise}
 
 \begin{exercise}
   Make a default constructor for the point class:

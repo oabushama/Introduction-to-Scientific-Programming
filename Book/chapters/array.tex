@@ -376,7 +376,7 @@ output:
    6,2,4
 \end{verbatim}
   Can you write a function that accepts a vector and returns two
-  vectors with the above functionality.
+  vectors with the above functionality?
 \end{exercise}
 
 \begin{block}{Vector pass by reference}
@@ -448,10 +448,16 @@ class witharray {
 private:
   vector<int> the_array;
 public:
+  witharray( int n )
+    : the_array(vector<int>(n)) {
+  };
+};
+\end{verbatim}
+Better than
+\begin{verbatim}
   witharray( int n ) {
-    thearray = vector<int>(n);
-  }
-}
+    the_array = vector<int>(n);
+  };
 \end{verbatim}
 \end{block}
 
@@ -459,6 +465,7 @@ You could read this as
 \begin{itemize}
 \item \n{vector<int> the_array} declares a int-vector variable, and
 \item \n{thearray = vector<int>(n)} assigns an array to it.
+\item Second form copy, first form only move.
 \end{itemize}
 However, 
 technically, it actually does the following:
@@ -615,6 +622,7 @@ the elements are not contiguous. However, let's continue with it for a moment.
     return elements.at(i*cols+j);
   }
 \end{verbatim}
+(Even more efficient: use cpp macro)
 \end{block}
 
 \begin{exercise}

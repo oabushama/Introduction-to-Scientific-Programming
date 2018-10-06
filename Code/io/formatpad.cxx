@@ -15,7 +15,7 @@ using std::endl;
 #include <iomanip>
 using std::setfill;
 using std::setw;
-//codesnippet formatpad
+//codesnippet end
 
 int main() {
 

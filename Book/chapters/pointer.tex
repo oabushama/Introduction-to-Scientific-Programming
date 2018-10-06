@@ -207,19 +207,12 @@ X.get()->y;
 \snippetwithoutput{pointy}{pointer}{pointy}
 \end{block}
 
-\Level 1 {Pointers to non-objects}
+\Level 1 {Example: linked lists}
 
-In the introduction to this chapter we argued that many of the uses
-for pointers that existed in~C have gone away in C++, and the main one
-left is the case where multiple objects share `ownership' of some
-other object.
+The standard example of pointer manipulation is `linked lists'. This
+is discussed in some detail in section~\ref{sec:linklist}.
 
-You can still make shared pointers to scalar data, for instance to an
-array of scalars. You then get the advantage of the memory management,
-but you do not get the \n{size} function and such that you would have
-if you'd used a \n{vector} object.
-%
-\snippetwithoutput{ptrarray}{pointer}{ptrarray}
+\Level 0 {Advanced topics}
 
 \Level 1 {Shared pointer to `this'}
 
@@ -315,7 +308,44 @@ void f(int*);
 Calling \n{f(ptr)} where the point is \n{NULL}, the first function is
 called, whereas with \n{nullptr} the second is called.
 
-\Level 1 {Example: linked lists}
+\begin{slide}{Null pointer}
+  \label{sl:cpp-nullptr}
+  C++ has the \indextermtt{nullptr}, which is an object of type
+  \n{std::}\indextermtt{nullptr_t}.
 
-The standard example of pointer manipulation is `linked lists'. This
-is discussed in some detail in section~\ref{sec:linklist}.
+\begin{verbatim}
+void f(int);
+void f(int*);
+  f(NULL);    // calls the int version
+  f(nullptr); // calls the ptr version
+\end{verbatim}
+\end{slide}
+
+\Level 1 {Void pointer}
+
+The need for \emph{void pointers}\index{pointer!void!in C++}
+is a lot less in C++ than it was in~C. For
+instance, contexts can often be modeled with captures in closures
+(chapter~\ref{ch:lambda}). If you really need a pointer that does not
+\textit{a~priori} knows what it points to, use \indextermtt{std::any},
+which is usually smart enough to call destructors when needed.
+
+\begin{slide}{Void pointer}
+  \label{sl:void-ptr}
+  Use \n{std::any} instead of void pointers.
+\end{slide}
+
+\Level 1 {Pointers to non-objects}
+
+In the introduction to this chapter we argued that many of the uses
+for pointers that existed in~C have gone away in C++, and the main one
+left is the case where multiple objects share `ownership' of some
+other object.
+
+You can still make shared pointers to scalar data, for instance to an
+array of scalars. You then get the advantage of the memory management,
+but you do not get the \n{size} function and such that you would have
+if you'd used a \n{vector} object.
+%
+\snippetwithoutput{ptrarray}{pointer}{ptrarray}
+
