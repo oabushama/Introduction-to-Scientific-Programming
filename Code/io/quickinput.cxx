@@ -27,8 +27,7 @@ int main() {
   ifstream input_file;
   input_file.open("fox.txt");
   string oneline;
-  while (input_file) {
-    getline(input_file,oneline);
+  while (getline(input_file,oneline)) {
     cout << "Got line: <<" << oneline << ">>" << endl;
   }
   //codesnippet end
