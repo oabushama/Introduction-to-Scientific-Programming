@@ -12,14 +12,22 @@
 \Level 0 {Characters}
 
 \begin{block}{Characters and ints}
-  \label{sl:int-char}
+  \label{sl:chardef}
   \begin{itemize}
   \item Type \indextermttdef{char};
   \item represents `7-bit ASCII': printable and (some) unprintable
     characters.
   \item Single quotes: \n{char c = 'a'}
-  \item Equivalent to (short) integer: \n{'x'-'a'} is distance \n{a--x}
   \end{itemize}
+\end{block}
+
+\begin{block}{Char / int equivalence}
+  \label{sl:int-char}
+  Equivalent to (short) integer:
+  %
+  \snippetwithoutput{intchar}{string}{intchar}
+  %
+  Also: \n{'x'-'a'} is distance \n{a--x}
 \end{block}
 
 \begin{exercise}
@@ -68,7 +76,7 @@ txt += txt3;
 \end{verbatim}
 \end{block}
 
-\begin{block}{String is like vector}
+\begin{block}{String indexing}
   \label{sl:string-vector}
   You can query the \emph{size}\index{string!size}:
 \begin{verbatim}
@@ -79,6 +87,25 @@ or use subscripts:
 cout << "The second character is <<" << 
         txt[1] << ">>" << endl;
 \end{verbatim}
+\end{block}
+
+\begin{block}{Ranging over a string}
+  \label{sl:string-index}
+  Ranging by index:
+  %
+  \snippetwithoutput{stringindex}{string}{stringindex}
+  %
+  New syntax: range-based for
+  %
+  \snippetwithoutput{stringrange}{string}{stringrange}
+\end{block}
+
+\begin{block}{Range with reference}
+  \label{sl:string-index-ref}
+  Range-based for makes a copy of the element\\
+  You can also get a reference:
+  %
+  \snippetwithoutput{stringrangeset}{string}{stringrangeset}
 \end{block}
 
 \begin{block}{Iterating over a string}

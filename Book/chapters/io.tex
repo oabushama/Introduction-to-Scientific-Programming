@@ -241,6 +241,18 @@ together.
   \verbatimsnippet{filein}
 \end{block}
 
+\begin{block}{End of file test}
+  There are several ways of testing for the end of a file
+  \begin{itemize}
+  \item For text files, the \indextermtt{getline} function returns
+    \n{false} if no line can be read.
+  \item The \indextermtt{eof} function can be used after you have done
+    a read.
+  \item It is not a good idea to assume an \n{EOF} character, or
+    \n{Control-D} or \n{Control-Z} at the end of the file.
+  \end{itemize}
+\end{block}
+
 \begin{exercise}
   \label{ex:foxcount}
   Put the following text in a file:
@@ -252,6 +264,15 @@ lazy dog.
   Open the file, read it in, and count how often each letter in the
   alphabet occurs in it
 \end{exercise}
+
+\begin{advanced}
+  You may that that \n{getline} always returns a \n{bool}, but that's
+  not true. If actually returns an \n{ifstream}. However, a conversion operator
+\begin{verbatim}
+explicit operator bool() const;
+\end{verbatim}
+  exists for anything that inherits from \indextermtt{basic_ios}.
+\end{advanced}
 
 \Level 1 {Input streams}
 

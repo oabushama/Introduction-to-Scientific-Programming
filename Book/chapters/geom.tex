@@ -211,14 +211,14 @@ Rectangle(Point bl,float w,float h);
 The logical implementation is to store these quantities.
 Implement methods
 \begin{verbatim}
-float area(); float width(); float height();
+float area(); float rightedge(); float topedge();
 \end{verbatim}
 \item Add a second constructor
 \begin{verbatim}
 Rectangle(Point bl,Point tr);
 \end{verbatim}
-Can you figure out how to use initializer lists for passing the points?
-\item Rewrite your class so that it stores two \n{Point} objects.
+Can you figure out how to use member initializer lists for the constructors?
+\item Write another version of your class so that it stores two \n{Point} objects.
 \end{itemize}
 \end{exercise}
 
