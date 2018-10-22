@@ -99,6 +99,15 @@ Example: find the maximum element and where it occurs.
 \snippetwithoutput{idxmax}{array}{idxmax}
 \end{block}
 
+\begin{block}{Indexing with pre/post increment}
+  \label{sl:prepostindex}
+Array indexing in \n{while} loop and such:
+\begin{verbatim}
+  x = a[i++]; /* is */ x = a[i]; i++;
+  y = b[++i]; /* is */ i++; y = b[i];
+\end{verbatim}
+\end{block}
+
 \begin{exercise}
   \label{ex:array-max}
   Find the element with maximum absolute value in an array. Use:
@@ -126,15 +135,6 @@ absx = abs(x);
   \label{ex:array-sorted}
   Check whether an array is sorted.
 \end{exercise}
-
-\begin{block}{Indexing with pre/post increment}
-  \label{sl:prepostindex}
-Shorthand: 
-\begin{verbatim}
-  x = a[i++]; /* is */ x = a[i]; i++;
-  y = b[++i]; /* is */ i++; y = b[i];
-\end{verbatim}
-\end{block}
 
 \begin{block}{Range over elements by reference}
   \label{sl:array-range-ref}
@@ -213,6 +213,25 @@ which gives a vector of size~25, with all elements initialized to~3.15.
 
 \Level 2 {Element access}
 
+The simplest way to access vector elements is with the square bracket notation:
+\begin{verbatim}
+x[1] = 3.14;
+cout << x[2];
+\end{verbatim}
+This gives very fast access, but there is no \emph{checking} on whether the
+index is within the \emph{array
+  bounds}\index{array!bounds!checking}. Accessing an element outside
+the bounds may abort your code, typically with a
+\indexterm{segmentation fault}, but your code may just as well
+proceed, using invalid data.
+
+There is a safer way to access elements:
+\begin{verbatim}
+x.at(1) = 3.14;
+cout << x.at(2);  
+\end{verbatim}
+This is slightly slower, but it does perform bounds checking for every access.
+
 \begin{block}{Accessing vector elements}
   \label{sl:vectorsub}
   You have already seen the square bracket notation:
@@ -249,48 +268,39 @@ for ( auto &e : my_vector)
 \snippetwithoutput{vectorrangeref}{array}{vectorrangeref}
 \end{block}
 
+\begin{exercise}
+  \label{ex:range-for}
+  Indicate for each of the following vector operations whether you
+  prefer to use an indexed loop or a range-based loop.
+  \begin{itemize}
+  \item Count how many elements of a vector are zero.
+  \item Find the location of the last zero.
+  \end{itemize}
+\end{exercise}
+
 \begin{block}{Vector copy}
   \label{sl:vectorcopy}
   Vectors can be copied just like other datatypes:
+  %
   \snippetwithoutput{vectorcopy}{array}{vectorcopy}
 \end{block}
 
-\Level 2 {Vector methods}
-
-A \n{vector} is an object. Let's take a look at some of the methods
-that are defined for it.
-
-First of all, there is a way of accessing vector elements through the
-\indextermttdef{at} method. It has the big advantage that it does
-\indexterm{bounds checking}.
-\begin{block}{Vector indexing}
-  \label{sl:vector-index}
-  Your choice:  fast but unsafe, or slower but safe
-\begin{verbatim}
-vector<double> x(5);
-x[5] = 1.; // will probably work
-x.at(5) = 1.; // runtime error!
-\end{verbatim}
-\end{block}
-
-Safer, but also slower; see below.
-
-The method \n{size} gives the size of the vector:
-\begin{verbatim}
-vector<char> words(37);
-cout << words.size(); // will print 37
-\end{verbatim}
-The existence of this method means that you don't have to remember the
-size of a vector: it has that information internally.
+\Level 1 {Vector methods}
 
 \begin{exercise}
   \label{ex:vectornormalize}
   Create a \n{vector} $x$ of \n{float} elements, and set them to random
   values.
 
-  Now normalize the vector in $L_2$ norm, that is, scale each element
-  by the same coefficient~$\alpha$ so that $\sum_i x_i^2=1$. Check the
-  correctness of your calculation.
+  Now normalize the vector in $L_2$ norm and check the correctness of
+  your calculation, that is,
+  \begin{enumerate}
+  \item Compute the $L_2$ norm of the vector:
+    \[ \| v\| \equiv \sqrt{\sum_iv_i^2} \]
+  \item Divide each element by that norm;
+  \item The norm of the scaled vector should now by~1. Check this.
+  \end{enumerate}
+  What type of loop are you using?
 \end{exercise}
 
 \begin{slide}{Vector methods}
@@ -302,10 +312,11 @@ size of a vector: it has that information internally.
   \item Get elements, including bound checking, with \n{ar.at(3)}.
   \item Size: \n{ar.size()}.
   \item Other functions: \n{front}, \n{back}.
+  \item \n{vector} is a `templated class'
   \end{itemize}
 \end{slide}
 
-\Level 1 {Vectors are dynamic}
+\Level 0 {Vectors are dynamic}
 \label{sec:stdvector-dynamic}
 
 There is an important difference between vectors and arrays: a vector
@@ -322,20 +333,22 @@ Use the \n{push_back} method to add elements at the end:
   Flexibility comes with a price.
 \end{block}
 
-This is not a good way of creating arrays: if you know the size, it is
-better to reserve the vector at the correct size:
+This is not a good way of creating arrays. If you know the size,
+create a vector with that size. If the size is not precisely known but
+you have a reasonable upper bound, you can 
+reserve the vector at that size:
 \begin{verbatim}
 vector<int> iarray;
 iarray.reserve(100);
-for ( ... )
+while ( ... )
   iarray.push_back( ... );
 \end{verbatim}
 
 Other methods that change the size: \n{insert}, \n{erase}.
 
-\Level 1 {Vectors and functions}
+\Level 0 {Vectors and functions}
 
-\Level 2 {Pass vector to function}
+\Level 1 {Pass vector to function}
 
 \begin{block}{Vector as function argument}
   \label{sl:vector-arg}
@@ -354,7 +367,13 @@ actually copied into the function.
   \snippetwithoutput{vectorpassval}{array}{vectorpassnot}  
 \end{block}
 
-\Level 2 {Vector as function return}
+\begin{exercise}
+  \label{ex:vectornormalize-function}
+  Revisit exercise~\ref{ex:vectornormalize} and introduce a function
+  for computing the $L_2$ norm.
+\end{exercise}
+
+\Level 1 {Vector as function return}
 
 \begin{block}{Vector as function return}
   \label{sl:vector-return}
@@ -375,6 +394,12 @@ output:
    5,5
    6,2,4
 \end{verbatim}
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:splitoddeven-function}
+  Revisit exercise~\ref{ex:splitoddeven}. 
+
   Can you write a function that accepts a vector and returns two
   vectors with the above functionality?
 \end{exercise}
@@ -401,7 +426,7 @@ then sorts it.)
 See section~\ref{sec:crand} for the random fuction.
 \end{exercise}
 
-\Level 1 {Vectors in classes}
+\Level 0 {Vectors in classes}
 
 You may want an object that contains a vector, where the size of the
 vector is passed to the constructor. Since the class definition is an
@@ -498,43 +523,6 @@ However, this dynamic resizing involves memory management, and maybe
 operating system functions. This will probably be
 inefficient. Therefore you should use such dynamic mechanisms only
 when strictly necessary.
-
-\Level 1 {Iterators}
-\label{sec:iterator}
-
-You have seen how you can iterate over a vector
-\begin{itemize}
-\item by a for loop over the indices, and
-\item with a range-based loop over the indices.
-\end{itemize}
-There is a third way, which is actually the basic mechanism underlying
-the range-based looping.
-
-An \indextermdef{iterator} is a pointer to a vector element. Mirroring
-the index-loop convention of
-\begin{verbatim}
-for (int i=0; i<hi; i++)
-  element = vec.at(i);
-\end{verbatim}
-you can iterate:
-\begin{verbatim}
-for (auto elt_ptr=vec.begin(); elt_ptr<vec.end(); ++elt_ptr)
-  element = *elt_ptr;
-\end{verbatim}
-Some remarks:
-\begin{itemize}
-\item This is one of the very few places where you need the asterisk in C++
-  for \indexterm{dereferencing}; section~\ref{sec:cderef}.
-\item As with a normal loop, the \n{end} iterator point just beyond the end
-  of the vector.
-\item You can do \indextermbus{pointer}{arithmetic} on iterators, as
-  you can see in the \verb-++elt_ptr- update part of the loop header.
-\end{itemize}
-Another illustration of pointer arithmetic on iterators is getting the
-last element of a vector:
-%
-\snippetwithoutput{vectorpush}{array}{vectorend}
-\snippetwithoutput{vectorpushiterator}{array}{vectorenditerator}
 
 \Level 1 {Timing}
 
@@ -672,13 +660,52 @@ Range-based indexing works the same as with vectors:
 %
 \snippetwithoutput{rangemax}{array}{rangemax}
 
-\Level 0 {Old-style arrays}
+\Level 0 {Advanced topics}
+
+\Level 1 {Iterators}
+\label{sec:iterator}
+
+You have seen how you can iterate over a vector
+\begin{itemize}
+\item by a for loop over the indices, and
+\item with a range-based loop over the indices.
+\end{itemize}
+There is a third way, which is actually the basic mechanism underlying
+the range-based looping.
+
+An \indextermdef{iterator} is a pointer to a vector element. Mirroring
+the index-loop convention of
+\begin{verbatim}
+for (int i=0; i<hi; i++)
+  element = vec.at(i);
+\end{verbatim}
+you can iterate:
+\begin{verbatim}
+for (auto elt_ptr=vec.begin(); elt_ptr<vec.end(); ++elt_ptr)
+  element = *elt_ptr;
+\end{verbatim}
+Some remarks:
+\begin{itemize}
+\item This is one of the very few places where you need the asterisk in C++
+  for \indexterm{dereferencing}; section~\ref{sec:cderef}.
+\item As with a normal loop, the \n{end} iterator point just beyond the end
+  of the vector.
+\item You can do \indextermbus{pointer}{arithmetic} on iterators, as
+  you can see in the \verb-++elt_ptr- update part of the loop header.
+\end{itemize}
+Another illustration of pointer arithmetic on iterators is getting the
+last element of a vector:
+%
+\snippetwithoutput{vectorpush}{array}{vectorend}
+\snippetwithoutput{vectorpushiterator}{array}{vectorenditerator}
+
+\Level 1 {Old-style arrays}
 
 Static arrays are really an abuse of the equivalence of arrays and
 addresses of the C programming language. This appears for instance in
 parameter passing mechanisms.
 
-\Level 1 {C-style arrays and subprograms}
+\Level 2 {C-style arrays and subprograms}
 
 Arrays can be passed to a subprogram, but the bound is unknown there.
 %
@@ -695,7 +722,7 @@ not strictly true: what happens is that the address of the first
 element of the array is passed. Thus we are really dealing with pass
 by value, but it is the array address that is passed rather than its value.
 
-\Level 1 {Multi-dimensional arrays}
+\Level 2 {Multi-dimensional arrays}
 
 Multi-dimensional arrays can be declared and used with a simple extension of
 the prior syntax:
@@ -714,7 +741,7 @@ dimension can be left unspecified:
 
 \includegraphics[scale=.1]{arrayc}
 
-\Level 1 {Memory layout}
+\Level 2 {Memory layout}
 
 Puzzling aspects of arrays, such as which dimensions need to be
 specified and which not in a function call, can be understood by

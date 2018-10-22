@@ -168,20 +168,12 @@ int main() {
 \end{exercise}
 
 \begin{exercise}
-  Let a \n{Point} class be given:
-\begin{verbatim}
-class Point {
-private: 
-  double x,y;
-public:
-  Point( double px,double py ) { x = px; y = py; };
-  // maybe some more methods
-}
-\end{verbatim}
-How would you design a \n{Set} class so that you could write
+  \label{ex:pointset-add}
+  Let a \n{Point} class be given.
+  How would you design a class \n{PointSet} so that you could write
 \begin{verbatim}
 Point p1,p2,p3;
-Set pointset;
+PointSet pointset;
 pointset.add(p1); pointset.add(p2);
 \end{verbatim}
 %  \verbatimsnippet{setminusset}

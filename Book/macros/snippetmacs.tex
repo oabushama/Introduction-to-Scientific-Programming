@@ -21,23 +21,6 @@
   % go into vertical mode
   \par
   % make nice two-column layout
-  \iffalse
-  \vbox{
-    \begin{multicols}{2}
-      \def\verbatim@startline{\verbatim@line{\leavevmode\relax}}
-      \footnotesize\textbf{Code:}
-      \codesnippet{#1}
-      \par\hbox{}\vfill\columnbreak
-      { \raggedright
-        \textbf{Output [#2] #3:}
-      }
-      \hbox{}
-      \immediate\write18{ cd \codedir /#2 && make #3 && make run_#3 > #3.out }
-      \verbatiminput{\codedir /#2/#3.out}
-      \par\hbox{}\vfill\hbox{}
-    \end{multicols}
-  }
-  \fi
   \hbox{%
     \begin{minipage}[t]{.6\hsize}
       \def\verbatim@startline{\verbatim@line{\leavevmode\relax}}
@@ -47,8 +30,9 @@
     \begin{minipage}[t]{.3\hsize}
       { \footnotesize \raggedright \textbf{Output\\\relax [#2] #3:}\par
       }
-      \immediate\write18{ cd \codedir /#2 && make #3 && make run_#3 > #3.out }
+      \immediate\write18{ cd \codedir /#2 && make run_#3 > #3.out }
       \footnotesize
+      \def\verbatim@startline{\verbatim@line{\leavevmode\relax}}
       \verbatiminput{\codedir /#2/#3.out}
     \end{minipage}
   }
@@ -58,7 +42,11 @@
 \newcommand\snippetwithoutput[3]{
   \answerwithoutput{#1}{#2}{#3}
   % record this file as bracketed name
-  \ifInBook \addchaptersource{{#2/#3}} \fi
+  \ifInBook
+  \nobreak
+  \textsl{For the source of this example, see section~\ref{lst:#2/#3}}\par
+  \addchaptersource{{#2/#3}}
+  \fi
 }
 
 

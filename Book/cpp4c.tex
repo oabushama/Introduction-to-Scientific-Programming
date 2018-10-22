@@ -1,0 +1,80 @@
+% -*- latex -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% This TeX file is part of the course
+%%%% Introduction to Scientific Programming in C++11/Fortran2003
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%%
+%%%% cpp4c.tex : C++ for C programmers
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt]{boek3}
+
+\usepackage{comment,listings,pdflscape,verbatim}
+\makeatletter
+\def\verbatim@startline{\verbatim@line{\leavevmode\kern\unitindent\relax}}
+\makeatother
+
+\usepackage[pdftex,colorlinks]{hyperref}
+\usepackage{amssymb}
+\usepackage[fleqn]{amsmath}
+\usepackage{graphicx,undertilde,arydshln,wrapfig}
+\usepackage{times,makeidx,multirow,multicol}
+\usepackage{dirtree}
+
+\input bookmacs
+
+%%%%
+%%%% Where is this course?
+%%%%
+\includecomment{tacc}
+
+\makeindex
+
+\begin{document}
+
+\title{C++ for C Programmers}
+\author{Victor Eijkhout}
+\date{2018}
+\maketitle
+
+\tableofcontents
+
+\Level 0 {Introduction}
+
+The C++ language is, to first order of approximation, a~superset of
+the C~language. Thus, many C programs are also legal C++
+programs. C++~offers obvious improvement, such as object-oriented
+programing. If you already understand C control structures and
+functions, this booklet will teach you object oriented programming in
+C~syntax.
+
+However, viewing C++ as `C~with classes' does not lead to
+idiomatic C++ programs. There are in fact a number of C~constructs
+that should not be used. For instance, C++~has ways of dealing with
+dynamic memory allocation that are both easier to use, and less
+dangerous in that they take care of de-allocation for you.
+
+Thus, this booklet will also teach what C~mechanisms not to use and
+how to improve your code with their C++ replacements.
+
+\CHAPTER{Input/output}{io}
+\CHAPTER{Arrays}{array}
+\CHAPTER{Strings}{string}
+\CHAPTER{Parameter passing}{parampassing}
+\CHAPTER{References}{address}
+\CHAPTER{Classes and objects}{object}
+\CHAPTER{Pointers}{pointer}
+\CHAPTER{Namespaces}{namespace}
+\CHAPTER{Templates}{template}
+\CHAPTER{Closures}{lambda}
+\CHAPTER{Error handling}{error}
+
+\Level 0 {Index}
+\begin{multicols}{2}
+\printindex
+\end{multicols}
+
+\closeout\chapterlist
+\end{document}

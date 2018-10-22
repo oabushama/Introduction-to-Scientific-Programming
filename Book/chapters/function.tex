@@ -172,9 +172,10 @@ name makes the code more descriptive. This is sometimes called
 
 Sometimes introducing a function can be motivated from a point of
 \indexterm{code reuse}: if the same block of code appears in two
-places in your source, your replace this by one function definition,
-and two (single line) function calls.
-The two occurences of the function code do not have to be identical:
+places in your source (this is known as
+\indextermbus{code}{duplication}), you replace this by one function
+definition, and two (single line) function calls.  The two occurences
+of the function code do not have to be identical:
 
 
 \begin{block}{Code reuse}
@@ -221,7 +222,7 @@ void print_mod(int n,int d) {
   \end{itemize}
 \end{slide}
 
-\begin{exercise}{Quick review}
+\begin{review}
   \label{rev:func-why}
   True or false?
   \begin{itemize}
@@ -229,7 +230,7 @@ void print_mod(int n,int d) {
   \item Using functions makes your code easier to read.
   \item Functions have to be defined before you can use them.
   \end{itemize}
-\end{exercise}
+\end{review}
 
 \Level 0 {Anatomy of a function definition and call}
 
@@ -345,14 +346,15 @@ calling program.
 Functions can not be nested: you can not define a function inside the
 body of another function.
 
-\begin{exercise}{Quick review}
+\begin{review}
   \label{rev:func-param}
   True or false?
   \begin{itemize}
   \item A function can have only one input
-  \item A function can have only one result
+  \item A function can have only one return result
+  \item A void function can not have a \n{return} statement.
   \end{itemize}
-\end{exercise}
+\end{review}
 
 %%%%
 %%%% Parameter passing
@@ -638,4 +640,24 @@ bool f(int);
 \end{verbatim}
 is given, which is true for some negative input value. Write a main program that
 finds the (negative) input with smallest absolute value for which \n{f} is true.
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:cpp-funcloop3}
+  Suppose a function
+\begin{verbatim}
+bool f(int);
+\end{verbatim}
+is given, which computes some property of integers.
+Write a main program that tests if $f(i)$ is true for some $0\leq i<100$.
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:cpp-funcloop4}
+  Suppose a function
+\begin{verbatim}
+bool f(int);
+\end{verbatim}
+is given, which computes some property of integers.
+Write a main program that tests if $f(i)$ is true for all $0\leq i<100$.
 \end{exercise}

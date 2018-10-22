@@ -110,6 +110,31 @@ if ( something ) {
 \end{verbatim}
 \end{slide}
 
+\begin{exercise}
+  \label{ex:if-scope-ab}
+  For what values of $x$ will the left code print~`\n{b}'?\\
+  For what values of $x$ will the right code print~`\n{b}'?
+  \begin{multicols}{2}
+\begin{verbatim}
+float x = /* something */
+if ( x > 1 ) {
+   cout << "a" << endl;
+   if ( x > 2 )
+    cout << "b" << endl;
+}
+\end{verbatim}
+\columnbreak
+\begin{verbatim}
+float x = /* something */
+if ( x > 1 ) {
+   cout << "a" << endl;
+} else if ( x > 2 )
+    cout << "b" << endl;
+}
+\end{verbatim}
+  \end{multicols}
+\end{exercise}
+
 \Level 0 {Operators}
 
 You have already seen arithmetic expressions; now we need to look at

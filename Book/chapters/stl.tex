@@ -102,24 +102,42 @@ You can make a \indextermdef{tuple}: an entity that comprises several
 components, possibly of different type, and which unlike a
 \indextermtt{struct} you do not need to define beforehand.
 
-\begin{lstlisting}
-std::tuple<int,double> id = std:
-id = std::make_tuple<int,double>(3,5.12);
-std::get<0>(id) += 1;
-\end{lstlisting}
+\begin{block}{C++11 style tuples}
+  \label{sl:tuple11}
+  \begin{lstlisting}
+    std::tuple<int,double> id = std:
+    id = std::make_tuple<int,double>(3,5.12);
+    std::get<0>(id) += 1;
+  \end{lstlisting}
+\end{block}
 
 This does not look terribly elegant. Fortunately,
 \emph{C++17}\index{C++!C++17} can use denotations and the \n{auto}
-keyword to make this considerably shorter. A typical idiom would be:
+keyword to make this considerably shorter. Consider the case of a
+function that returns a tuple. You could use \n{auto} to deduce the
+return type:
+%
+\verbatimsnippet{tuplemake}
+%
+but more interestingly, you can use a
+\indextermbus{tuple}{denotation}:
+%
+\verbatimsnippet{tupledenote}
 
-\begin{lstlisting}
-auto f_int_double() {
-  return { 3, 5.12 };
-}
-int main() {
-  auto[index,value] = f_int_double();
-}
-\end{lstlisting}
+\begin{slide}{Function returning tuple}
+  \label{sl:tuplefun}
+  \begin{multicols}{2}
+    \verbatimsnippet{tuplemake}\columnbreak
+    \verbatimsnippet{tupledenote}
+  \end{multicols}
+\end{slide}
+
+\begin{block}{Catching a returned tuple}
+  \label{sl:catch-tuple}
+  The calling code is particularly elegant:
+  %
+  \snippetwithoutput{tupleauto}{stl}{tuple}
+\end{block}
 
 \Level 0 {Random numbers}
 

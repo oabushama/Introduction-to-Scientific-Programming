@@ -32,7 +32,7 @@
 
 \begin{exercise}
   \label{ex:print-ichar}
-  Write a program that accepts an integer $0\cdots26$ and prints the
+  Write a program that accepts an integer $1\cdots26$ and prints the
   so-manieth letter of the alphabet.
 
   Extend your program so that if the input is negative, it prints the
@@ -115,11 +115,23 @@ for ( auto c : some_string)
 \end{verbatim}
 \end{block}
 
+\begin{review}
+  \label{q:string}
+  True or false?
+  \begin{itemize}
+  \item \verb+'0'+ is a valid value for a \n{char} variable
+  \item \verb+"0"+ is a valid value for a \n{char} variable
+  \item \verb+"0"+ is a valid value for a \n{string} variable
+  \item \verb/'a'+'b'/ is a valid value for a \n{char} variable
+  %\item \verb/'a'+'b'/ is a valid value for a \n{string} variable
+  \end{itemize}
+\end{review}
+
 \begin{exercise}
   \label{ex:caesar}
   The oldest method of writing secret messages is the `Caesar
-  cypher'. You would take an integer~$s$ and rotate every character
-  over that many positions:
+  cypher'. You would take an integer~$s$ and rotate every character 
+  of the text over that many positions:
   \[ s\equiv3\colon \hbox{"acdz" $\Rightarrow$ "dfgc"}. \]
   Write a program that accepts an integer and a string, and display
   the original string rotated over that many positions.
@@ -138,8 +150,10 @@ for ( auto c : some_string)
 \begin{exercise}
   \label{ex:printdigits}
   Write a function to print out the digits of a number: \n{156} should
-  print \n{one five six}. Use a vector or array of strings, containing
-  the names of the digits.
+  print \n{one five six}.
+  You need to convert a digit to a string first; can you think of more
+  than one way to do that?
+  % Use a vector or array of strings, containing the names of the digits.
 
   Start by writing a program that reads a single digit and prints its name.
 
@@ -150,7 +164,7 @@ for ( auto c : some_string)
 \begin{exercise}
   \label{ex:printnumber}
   Write a function to convert an integer to a string: the input
-  \n{205} should give \n{two hundred fifteen}, et cetera.
+  \n{215} should give \n{two hundred fifteen}, et cetera.
 \end{exercise}
 
 \begin{exercise}

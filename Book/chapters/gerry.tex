@@ -1,0 +1,180 @@
+%% -*- latex -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% This TeX file is part of the course
+%%%% Introduction to Scientific Programming in C++/Fortran2003
+%%%% copyright 2018 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%%
+%%%% gerry.tex : exercises about redistricting
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In this project you can explore `redistricting', the strategic drawing
+of districts to give a minority population a majority.
+
+\Level 0 {Basic concepts}
+
+We are dealing with the following concepts:
+\begin{itemize}
+\item A state is divided into census districts, which are given. Based
+  on circumstantial factors (income, ethnicity, median age) one can
+  usually make a good guess as to the overall voting in such a
+  district. Next,
+\item there is a predetermined number of congressional districts, that
+  consist of census districts. A~congressional district is not a
+  random collection: the census districts have to be contiguous.
+\end{itemize}
+Within these limits there is considerable freedom: by shifting the
+boundaries of the (congressional) districts it is possible to give a
+population that is in the minority a majority of districts.
+
+As a simplifying assumption for this project we will assume a
+one-dimensional state. This is enough to bring out the essence of the problem:
+\begin{quotation}
+  Consider a state of five voters, and we designate their votes as
+  \n{AAABB}. Assigning them to three (contiguous) districts can be
+  done as \n{AAA|B|B}, which has one `A'~district and two
+  `B'~districts.
+\end{quotation}
+
+\Level 0 {Basic functions}
+
+\Level 1 {Voters}
+
+We dispense with census districts, expressing everything in terms of
+voters instead.
+
+\begin{exercise}
+  Implement a \n{Voter} class. You could for instance let $\pm1$ stand
+  for \n{A/B}, and 0 for undecided.
+  %
+  \snippetwithoutput{voters}{gerry}{voters}
+  \verbatimsnippet{voterneg}
+  \verbatimsnippet{voterwrong}
+\end{exercise}
+
+\Level 1 {Populations}
+
+\begin{exercise}
+  Implement a \n{District} class that models a group of voters.
+  \begin{itemize}
+    \item You probably want to create a district out of a single
+      voter, or a vector of them
+      %
+      \snippetwithoutput{district}{gerry}{district}
+    \item Write methods \n{majority} to give the exact majority or
+      minority, and \n{lean} that evaluates whether the district
+      overall counts as A~part or B~party.
+  \item Write a \n{sub} method to creates subsets.
+  \item For debugging and reporting it may be a good idea to have a method
+\begin{verbatim}
+string print();
+\end{verbatim}
+  \end{itemize}
+\end{exercise}
+
+\begin{exercise}
+  Implement a \n{Population} class that will initially model a whole state.
+  %
+  \snippetwithoutput{populationexample}{gerry}{populationexample}
+
+  In addition to an explicit creation, also write a constructor that
+  specifies how many people and what the majority is:
+  %
+  \verbatimsnippet{randompopulation}
+  %
+  Use a random number generator to achieve precisely the indicated majority.
+\end{exercise}
+
+\Level 1 {Districting}
+
+The next level of complication is to have a set of districts.
+Since we
+will be creating this incrementally, we need some methods for
+extending it.
+
+\begin{exercise}
+  Write a class \n{Districting} that stores a \n{vector} of
+  \n{District} objects. Write \n{size} and \n{lean} methods:
+  %
+  \snippetwithoutput{gerryempty}{gerry}{gerryempty}
+\end{exercise}
+
+\begin{exercise}
+  Write methods to extend a \n{Districting}:
+  %
+  \verbatimsnippet{gerryextend}
+\end{exercise}
+
+\Level 0 {Strategy}
+
+Now we need a method for districting a population:
+\begin{verbatim}
+Districting Population::minority_rules( int ndistricts );
+\end{verbatim}
+Rather than generating all possible partitions of the population, we
+take an incremental approach (this is related to the solution strategy
+called \indextermsub{dynamic}{programming}):
+\begin{itemize}
+\item The basic question is to divide a population optimally over $n$
+  districts;
+\item We do this recursively by first solving a division of a subpopulation over $n-1$
+  districts,
+  \item and extending that with the remaining population as one district.
+\end{itemize}
+Schematically:
+\begin{itemize}
+\item For all $p=0,\ldots n-1$ considering splitting the state into
+  $0,\ldots,p-1$ and $p,\ldots,n-1$.
+\item Use the best districting of the first group, and make the last
+  group into a single district.
+\item Keep the districting that gives the strongest minority rule,
+  over all values of~$p$.
+\end{itemize}
+
+You can now realize the above simple example:
+\begin{verbatim}
+AAABB => AAA|B|B
+\end{verbatim}
+
+\begin{exercise}
+  Implement the above scheme.
+  %
+  \snippetwithoutput{district5}{gerry}{district5}
+
+  Note: the range for $p$ given above is not quite correct: for instance,
+  the initial part of the population needs to be big enough to
+  accomodate $n-1$ voters.
+\end{exercise}
+
+\begin{exercise}
+  Test multiple population sizes; how much majority can you give
+  party~B while still giving party~A a majority.
+\end{exercise}
+
+\Level 1 {Efficiency}
+
+If you think about the algorithm you just implemented, you may notice
+that the districtings of the initial parts get recomputed quite a bit.
+
+\begin{exercise}
+  Improve your implementation by storing and reusing results for the
+  initial sub-populations.
+\end{exercise}
+
+\Level 0 {Extensions}
+
+The project so far has several simplifying assumptions.
+\begin{itemize}
+\item Congressional districts need to be approximately the same
+  size. Can you put a limit on the ratio between sizes? Can the
+  minority still gain a majority?
+\end{itemize}
+
+\begin{exercise}
+  The biggest assumption is of course that we considered a
+  one-dimensional state. With two dimensions you have more degrees of
+  freedom of shaping the districts. Implement a two-dimensional
+  scheme; use a completely square state, where the census districts
+  form a regular grid.
+\end{exercise}

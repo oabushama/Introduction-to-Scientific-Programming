@@ -54,7 +54,7 @@
   \ifx\test\LSR
   \else
     % list the file
-    \textbf{Listing of code/#1}:
+      \Level 1 {Listing of code/#1}\label{lst:#1}
     {\footnotesize \verbatiminput{../code/#1.cxx}}
     {\footnotesize \verbatiminput{../code/#1.F90}}
     \par
@@ -145,7 +145,7 @@
     \begingroup
     \def\ProcessCutFile{}\par
     \def\PrepareCutFile{\immediate\write\CommentStream
-      {\noexpand\begin{frame}[containsverbatim]{\CommentBlockName}\par}}%
+      {\noexpand\begin{frame}[containsverbatim]{\CommentBlockName}\par\nobreak}}%
     \def\FinalizeCutFile{\immediate\write\CommentStream
       {\noexpand\end{frame}}}%
     \edef\tmp{\def\noexpand\CommentCutFile

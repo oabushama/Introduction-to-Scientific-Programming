@@ -148,7 +148,39 @@ idiomatic way of including them in C++ is
 #include <cmath>
 \end{verbatim}
 
-\Level 0 {Global variables}
+\Level 0 {Prototypes for class methods}
+
+\begin{block}{Class prototypes}
+  \label{sl:class-proto}
+  Header file:
+\begin{verbatim}
+class something {
+public:
+  double somedo(vector);
+};
+\end{verbatim}
+
+Implementation file:
+\begin{verbatim}
+double something::somedo(vector v) {
+   .... something with v ....
+};
+\end{verbatim}
+Strangely, data members also go in the header file.
+\end{block}
+
+\Level 0 {Header files and templates}
+
+The use of \emph{templates}\index{templates!and separate compilation}
+often make separate compilation impossible: in order to compile the
+templated definitions the compiler needs to know with what types they
+will be used.
+
+\Level 0 {Namespaces and header files}
+
+Never put \n{using namespace} in a header file.
+
+\Level 0 {Global variables and header files}
 \label{ex:globalvar}
 
 If you have a variable that you want known everywhere, you can make it
@@ -208,34 +240,3 @@ EXTERN int processnumber
 
 This also prevents recursive inclusion of header files.
 
-\Level 0 {Prototypes for class methods}
-
-\begin{block}{Class prototypes}
-  \label{sl:class-proto}
-  Header file:
-\begin{verbatim}
-class something {
-public:
-  double somedo(vector);
-};
-\end{verbatim}
-
-Implementation file:
-\begin{verbatim}
-double something::somedo(vector v) {
-   .... something with v ....
-};
-\end{verbatim}
-Strangely, data members also go in the header file.
-\end{block}
-
-\Level 0 {Header files and templates}
-
-The use of \emph{templates}\index{templates!and separate compilation}
-often make separate compilation impossible: in order to compile the
-templated definitions the compiler needs to know with what types they
-will be used.
-
-\Level 0 {Namespaces and header files}
-
-Never put \n{using namespace} in a header file.
