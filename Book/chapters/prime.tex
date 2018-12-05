@@ -76,12 +76,12 @@ prime.
 
 \begin{exercise}
   \label{ex:prime:func}
-  Write a function \n{is_prime} that has an integer parameter, and returns a boolean
+  Write a function \n{test_if_prime} that has an integer parameter, and returns a boolean
   corresponding to whether the parameter was prime.
 \begin{verbatim}
 int main() {
   bool isprime;
-  isprime = primality_test(13);
+  isprime = test_if_prime(13);
 \end{verbatim}
   Read the number in, and print the value of the boolean.
 
@@ -96,7 +96,7 @@ int main() {
 
 \begin{exercise}
   \label{ex:prime:while}
-  Take your prime number testing function \n{is_prime}, and use it to
+  Take your prime number testing function \n{test_if_prime}, and use it to
   write program that prints multiple primes:
   \begin{itemize}
   \item Read an integer \n{how_many} from the input, indicating how
@@ -186,8 +186,8 @@ The number 10 is 3+7
   Equivalently, every number~$n$ is equidistant from two primes:
   \[ n=\frac{p+q}2\qquad\hbox{or}\qquad q-n = n-p.\]
   In particular this holds for each prime number:
-  \[ \forall_{p\,\mathrm{prime}}\exists_{q\,\mathrm{prime}}\colon
-  \hbox{$r\equiv p+(p-q)$ is prime}. \]
+  \[ \forall_{r\,\mathrm{prime}}\exists_{p,q\,\mathrm{prime}}\colon
+  \hbox{$r=(p+q)/2$ is prime}. \]
 
   Write a program that tests this. You need two prime number
   generators, one for the $p$-sequence and one for the $q$-sequence.
@@ -282,7 +282,7 @@ Now you can implement the Eratosthenes sieve by making a
   \end{itemize}
 \end{exercise}
 
-\Level 1 {Range implementation}
+\Level 0 {Range implementation}
 
 \prerequisite{\ref{sec:range-iter}}
 
@@ -290,5 +290,5 @@ Now you can implement the Eratosthenes sieve by making a
   \label{ex:primerange}
   Make a \n{primes} class that can be ranged:
   %
-  \snippetwithoutput{primerangecall}{primes}{range}
+  \answerwithoutput{primerangecall}{primes}{range}
 \end{exercise}

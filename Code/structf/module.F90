@@ -16,6 +16,7 @@ Module FunctionsAndValues
 
 contains
   subroutine SayHi()
+    implicit none
     print *,"Hi!"
   end subroutine SayHi
   

@@ -169,13 +169,35 @@ int main() {
 
 \begin{exercise}
   \label{ex:pointset-add}
-  Let a \n{Point} class be given.
-  How would you design a class \n{PointSet} so that you could write
+  Let a \n{Point} class be given. 
+  How would you design a class \n{SetOfPoints} (which models a set of
+  points) so that you could write
 \begin{verbatim}
 Point p1,p2,p3;
-PointSet pointset;
+SetOfPoints pointset;
+// add points to the set:
 pointset.add(p1); pointset.add(p2);
 \end{verbatim}
-%  \verbatimsnippet{setminusset}
+ Give the relevant data members and methods of the class.
 \end{exercise}
 
+
+%\CHAPTER{Not-so simple exercises}{morex}
+
+\Level 0 {List access}
+
+\begin{exercise}
+  Explore the efficiency of using an array versus a linked list.
+  \begin{enumerate}
+  \item Compare re-allocating the array versus adding elements to the
+    linked list. Start with a simple case: add elements only at the
+    end, and keep a pointer to the final element in the list.
+  \item Investigate access times: retrieve many (as in: thousands if
+    not more) elements from the array. Do this as follows: allocate an
+    array of indexes, and repeatedly retrieve those list/array
+    elements, for instance adding them together. Does the access time
+    for the array go up if the number of elements gets large?
+  \item Optimize allocation for the list: create an array of list
+    nodes and use those. Does this make a difference in access times?
+  \end{enumerate}
+\end{exercise}

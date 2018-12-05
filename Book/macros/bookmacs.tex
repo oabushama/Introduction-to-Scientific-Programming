@@ -37,9 +37,9 @@
 }
 \newcommand\listchaptersources{
   \expandafter\ChapterSourceHeader\the\chaptersourcelist\LSR
-  %\tracingmacros=2 \tracingonline=1
-  %\texttt{\the\chaptersourcelist}\par
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
   \expandafter\ListSourcesRecursively\the\chaptersourcelist\LSR
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
 }
 \def\LSR{\LSR}
 \def\ChapterSourceHeader#1\LSR{
@@ -145,7 +145,8 @@
     \begingroup
     \def\ProcessCutFile{}\par
     \def\PrepareCutFile{\immediate\write\CommentStream
-      {\noexpand\begin{frame}[containsverbatim]{\CommentBlockName}\par\nobreak}}%
+      {\noexpand\begin{frame}[containsverbatim]{\CommentBlockName}
+        \noexpand\par\noexpand\nobreak}}%
     \def\FinalizeCutFile{\immediate\write\CommentStream
       {\noexpand\end{frame}}}%
     \edef\tmp{\def\noexpand\CommentCutFile

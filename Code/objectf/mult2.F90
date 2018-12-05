@@ -1,3 +1,13 @@
+!****************************************************************
+!***
+!*** This file belongs with the course
+!*** Introduction to Scientific Programming in C++/Fortran2003
+!*** copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+!***
+!*** mult2.F90 : incorrect OO program
+!***
+!****************************************************************
+
 Module multmod
   
   type Scalar

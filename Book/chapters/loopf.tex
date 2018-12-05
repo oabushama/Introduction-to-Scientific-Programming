@@ -17,8 +17,9 @@ basic loop, and both use the \indextermfort{do} keyword. The simplest loop has
 \item a loop variable, which needs to be declared;
 \item a lower bound and upper bound.
 \end{itemize}
+We'll see more types of loops below.
 
-\begin{block}{Do loops}
+\begin{block}{Indexed Do loops}
   \label{sl:doloop}
 \begin{verbatim}
 integer :: i
@@ -47,7 +48,7 @@ end do
 \end{verbatim}
 \end{block}
 
-You can label loops, which improves readability, but so also below.
+You can label loops, which improves readability, but see also below.
 \begin{verbatim}
 outer: do i=1,10
     inner: do j=1,10
@@ -63,7 +64,7 @@ label, you need to mention it on the \n{end do} line.
 
 \Level 0 {Interruptions of the control flow}
 
-For interminate looping, you can use the \n{while} test,
+For indeterminate looping, you can use the \n{while} test,
 or leave out the loop parameter altogether.
 In that case you need the \indextermtt{exit} statement to stop the iteration.
 
@@ -101,7 +102,10 @@ end do outer
 \Level 0 {Implied do-loops}
 \label{sec:f-impdo}
 
-There are do loops that you can write in a single line. This is useful
+There are do loops that you can write in a single line by an
+expression and a loop header. In effect, such an
+\indextermsub{implied}{do loop} becomes the sum of the indexed
+expressions. This is useful
 for I/O. For instance, iterate a simple expression:
 
 \begin{block}{Implied do loops}

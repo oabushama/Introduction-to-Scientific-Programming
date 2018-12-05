@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% arrayf.tex : arrays in Fortran
 %%%%
@@ -20,11 +20,21 @@ The preferred way for specifying an array size is:
 
 \begin{block}{Fortran dimension}
   \label{sl:farray-dimension}
+Preferred way of creating arrays through \indextermfort{dimension}
+keyword:
 \begin{verbatim}
 real(8), dimension(100) :: x,y
+\end{verbatim}
+One-dimensional arrays of size~100.
+
+Older mechanism works too:
+\begin{verbatim}
 integer :: i(10,20)
 \end{verbatim}
-  Static, obey scope.
+Two-dimensional array of size~$10\times 20$.
+
+These arrays are statically defined, and only live inside their
+program unit.
 \end{block}
 
 Such an array, with size explicitly indicated, is called a
@@ -67,7 +77,7 @@ including the use of
   \verbatimsnippet{farrayinit}
 \end{block}
 
-\Level 1 {Sections and slices}
+\Level 1 {Array sections}
 
 Fortran is more sophisticated than C++ in how it can handle arrays as
 a whole. For starters, you can assign one array to another:
@@ -78,11 +88,10 @@ x = y
 \end{verbatim}
 
 This obviously requires the arrays to have the same size.
-You can assign subarrays, or \emph{array slices}\index{index!slice},
-as long as they have the same shape. You use colon-syntax to indicate
-ranges:
+You can assign subarrays, or \emph{array sections}\index{index!section},
+as long as they have the same shape. This uses a colon syntax.
 
-\begin{block}{Array sections}
+\begin{slide}{Array sections example}
   \label{sl:farray-section}
   Use the colon notation to indicate ranges:
 \begin{verbatim}
@@ -91,10 +100,10 @@ real(4),dimension(5) :: x
 x(1:4) = y
 x(2:5) = x(1:4)
 \end{verbatim}
-\end{block}
+\end{slide}
 
-\begin{block}{Array slicing}
-  \label{sl:farray-slices}
+\begin{block}{Array sections}
+  \label{sl:farray-sections}
   \begin{itemize}
   \item {\tt :} %\n{:}
     to get all indices,
@@ -111,6 +120,13 @@ x(2:5) = x(1:4)
   \label{sl:farray-sectionassign}
   \snippetwithoutput{fsectionassign}{arrayf}{sectionassign}
 \end{block}
+
+\begin{exercise}
+  \label{ex:sect-vs-loop}
+  Code out the above array assignment with an explicit,
+  indexed loop. Do you get the same output? Why? What conclusion do
+  you draw about internal mechanisms used in array sections?
+\end{exercise}
 
 You can even use a stride:
 
@@ -173,8 +189,8 @@ array(i,j) = 5./2
 For multi-dimensional arrays, you need to indicate a range in all
 dimensions.
 
-\begin{block}{Array slicing in multi-D}
-  \label{sl:farray-sliced}
+\begin{block}{Array sections in multi-D}
+  \label{sl:farray-sectiond}
 \begin{verbatim}
 real(8),dimension(10) :: a,b
 a(1:9) = b(2:10)
@@ -264,6 +280,7 @@ Subprogram needs to know the shape of an array, not the actual bounds:
 \begin{block}{Pass array to subroutine}
   \label{sl:farray-pass1d}
   \verbatimsnippet{fpass1d}
+  (note: the function is in a module)
 \end{block}
 
 The array inside the subroutine is known as a
@@ -389,6 +406,8 @@ i = MAXLOC( array [, mask ] )
 \Level 1 {Restricting with \tt{where}}
 
 \indextermfort{where}
+\begin{block}{operate where}
+  \label{sl:farray-where}
 \begin{verbatim}
 where ( A<0 ) B = 0
 \end{verbatim}
@@ -401,6 +420,7 @@ ELSEWHERE
   sequence of array statements
 END WHERE
 \end{verbatim}
+\end{block}
 
 \Level 1 {Global condition tests}
 
@@ -445,14 +465,19 @@ if ( Any( Abs(A-B)>
 
 In addition to ordinary do-loops, Fortran has mechanisms that save you
 typing, or can be more efficient in some circumstances.
-\begin{itemize}
-\item Slicing: if your loop assigns to an array from another array,
-  you can use slice notation:
+
+\Level 2 {Slicing}
+
+If your loop assigns to an array from another array,
+  you can use section notation:
 \begin{verbatim}
 a(:) = b(:)
 c(1:n) = d(2:n+1)
 \end{verbatim}
-\item The \indextermtt{forall} keyword also indicates an array assignment:
+
+\Level 2 {`forall' keyword}
+
+The \indextermtt{forall} keyword also indicates an array assignment:
 \begin{verbatim}
 forall (i=1:n)
   a(i) = b(i)
@@ -465,7 +490,13 @@ to be part of the left-hand side of every assignment.
 This mechanism is prone to misunderstanding and therefore now
 deprecated.
 It is not a parallel loop! For that, the following mechanism is preferred.
-\item The \indexterm{do concurrent} is a true do-loop. With the
+
+\Level 2 {Do concurrent}
+
+\begin{block}{Do concurrent}
+  \label{sl:farray-concurrent}
+
+  The \indexterm{do concurrent} is a true do-loop. With the
   \n{concurrent} keyword the user specifies that the
   iterations of a loop are independent, and can therefore possibly be
   done in parallel:
@@ -475,7 +506,7 @@ do concurrent (i=1:n)
   c(i) = d(i+1)
 end do
 \end{verbatim}
-\end{itemize}
+\end{block}
 
 \Level 1 {Loops without dependencies}
 
@@ -491,7 +522,7 @@ Recursive    0   2   4   6   8  10  12  14  16  18
 \verbatimsnippet{blockslice}
 \begin{verbatim}
 Original     1   2   3   4   5   6   7   8   9  10
-Sliced       0   2   4   6   8  10  12  14  16  18
+Section      0   2   4   6   8  10  12  14  16  18
 \end{verbatim}
 
 \verbatimsnippet{blockforall}
@@ -536,7 +567,7 @@ The slicing version of this:
 %
 \begin{verbatim}
 Original   1   2   3   4   5   6   7   8   9  10
-Sliced     1   2   4   6   8  10  12  14  16  18
+Section    1   2   4   6   8  10  12  14  16  18
 \end{verbatim}
 %
 acts as if the right-hand side is saved in a temporary array, and
@@ -567,7 +598,7 @@ sees fit.
 \Level 0 {Review questions}
 
 \begin{exercise}
-  \label{ex:farray-assign-slice}
+  \label{ex:farray-assign-section}
   Let the following declarations be given, and assume that all arrays
   are properly initialized:
 \begin{verbatim}

@@ -18,9 +18,9 @@ int main() {
   //codesnippet printfpoint
   int i;
   printf("address of i: %ld\n",
-	 (long)(&i));
+         (long)(&i));
   printf(" same in hex: %lx\n",
-	 (long)(&i));
+         (long)(&i));
   //codesnippet end
 
   return 0;

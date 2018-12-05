@@ -271,7 +271,8 @@ for ( auto &e : my_vector)
 \begin{exercise}
   \label{ex:range-for}
   Indicate for each of the following vector operations whether you
-  prefer to use an indexed loop or a range-based loop.
+  prefer to use an indexed loop or a range-based loop. Give a short
+  motivation.
   \begin{itemize}
   \item Count how many elements of a vector are zero.
   \item Find the location of the last zero.
@@ -306,9 +307,9 @@ for ( auto &e : my_vector)
 \begin{slide}{Vector methods}
   \label{sl:vector-method}
   \begin{itemize}
-  \item Get elements with \n{ar[3]} (zero-based indexing).\\
-    (for C programmers: this is not dereferencing, this uses an
-    operator method)
+  \item Get elements with \n{ar[3]} (zero-based indexing).
+    %% (for C programmers: this is not dereferencing, this uses an
+    %% operator method)
   \item Get elements, including bound checking, with \n{ar.at(3)}.
   \item Size: \n{ar.size()}.
   \item Other functions: \n{front}, \n{back}.
@@ -775,6 +776,15 @@ We can now also understand how arrays are passed to functions:
 \Level 0 {Exercises}
 
 \begin{exercise}
+  Given a vector of integers, write two loops;
+  \begin{enumerate}
+  \item One that sums all even elements, and
+  \item one that sums all elements with even indices.
+  \end{enumerate}
+  Use the right type of loop.
+\end{exercise}
+
+\begin{exercise}
   Program \indexterm{bubble sort}: go through the array comparing
   successive pairs of elements, and swapping them if the second is
   smaller than the first. After you have gone through the array, the
@@ -787,6 +797,7 @@ We can now also understand how arrays are passed to functions:
   \label{sl:pascal-def}
   \small
   Pascal's triangle contains binomial coefficients:
+{\scriptsize
 \begin{verbatim}
 Row    1:                     1
 Row    2:                   1   1
@@ -799,6 +810,7 @@ Row    8:       1   7  21  35  35  21   7   1
 Row    9:     1   8  28  56  70  56  28   8   1
 Row   10:   1   9  36  84 126 126  84  36   9   1
 \end{verbatim}
+}
 where \[ p_{rc} = \begin{pmatrix} r\\c \end{pmatrix} = \frac{r!}{c!(r-c)! }. \]
 The coefficients can easily be computed from the recurrence
 \[ p_{rc} = 
@@ -837,10 +849,14 @@ The coefficients can easily be computed from the recurrence
   \item
     The object needs to have an array internally. The easiest solution
     is to make an array of size $n\times n$.
-
-    Bonus: when you have that code working, optimize your code to use
-    precisely enough space for the coefficients.
   \end{itemize}
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:pascal-ey}
+  Extend the Pascal exercise:\\
+  Optimize your code to use
+  precisely enough space for the coefficients.
 \end{exercise}
 
 \begin{exercise}

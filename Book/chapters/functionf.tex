@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% functionf.tex : functions and such in Fortran
 %%%%
@@ -72,6 +72,10 @@ end subroutine foo
 \end{enumerate}
 The \n{return} statement is optional in the first case.
 
+\begin{exercise}
+  Rewrite the above function \n{foo} without a \n{return} statement.
+\end{exercise}
+
 A subroutine is invoked with a \indextermtt{call} statement:
 \begin{verbatim}
 call foo()
@@ -96,6 +100,13 @@ end subroutine foo
 \end{verbatim}
 \end{itemize}
 \end{slide}
+
+\begin{block}{Fortran nomenclature}
+  \label{sl:fortran-dummy}
+  The term \indextermsub{dummy}{argument} is what Fortran calls there
+  parameters in the subprogram definition. The arguments in the
+  subprogram call are the \indextermsub{actual}{argument}s.
+\end{block}
 
 \begin{block}{Recursion}
   \label{sl:funcf:recursion}
@@ -198,7 +209,7 @@ main program:
 
 \begin{block}{Subprogram arguments}
   \label{sl:farguments}
- Arguments are defined in subprogram body:
+ Arguments are declared in subprogram body:
 \begin{verbatim}
 subroutine f(x,y,i)
   implicit none

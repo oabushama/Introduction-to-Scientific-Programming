@@ -154,12 +154,8 @@ So you could pass an array like this:
 \begin{block}{Array and pointer equivalence}
   \label{sl:array-pointer}
   Array and memory locations are largely the same:
-\begin{verbatim}
-double array[5];
-double *addr_of_second = &(array[1]);
-array = (11,22,33,44,55);
-cout << *addr_of_second;
-\end{verbatim}
+  %
+  \snippetwithoutput{arrayaddr}{pointer}{arrayaddr}
 \end{block}
 
 \begin{block}{Dynamic allocation}

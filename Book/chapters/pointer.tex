@@ -69,7 +69,7 @@ have a pointer~\n{X} to such an object, you write \n{X->y}.
 So what is the type of this latter~\n{X} and how did you create it?
 
 \begin{block}{Creating a shared pointer}
-  \label{sl:make_shared}
+  \label{sl:make-shared}
   Allocation and pointer in one:
 \begin{verbatim}
 shared_ptr<Obj> X =
@@ -113,14 +113,58 @@ array->at(2) = 3.15;
 \end{verbatim}
 \end{slide}
 
+\begin{block}{Linked lists}
+  \label{sl:linkedlistimpl}
+  The prototypical example use of pointers is in linked lists. Let a
+  class \n{Node} be given:
+  %
+  \begin{multicols}{2}
+    \verbatimsnippet{simplenodeimpl}
+    \columnbreak
+    \verbatimsnippet{linkprintrecursive}
+    \vfill\hbox{}
+  \end{multicols}
+\end{block}
+
+\begin{block}{List usage}
+\label{sl:linkedlistuse}
+  Example use:
+  %
+  \answerwithoutput{linksimple1}{tree}{simple}
+\end{block}
+
+\begin{block}{Linked lists and recursion}
+  \label{sl:linkedlistrecursive}
+  Many operations on linked lists can be done recursively:
+  %
+  \verbatimsnippet{linklengthrecursive}
+\end{block}
+
 \begin{exercise}
-  If you are doing the prime numbers project (chapter~\ref{ch:prime})
-  you can now do exercise~\ref{sec:streamsieve}.
+  \label{ex:linkedlist1}
+  Write a recursive \n{append} method that appends a node to the end
+  of a list:
+  %
+  \answerwithoutput{linkappend}{tree}{append}
 \end{exercise}
 
 \begin{exercise}
-  The prototypical example use of pointers is in linked lists. You can
-  now do the exercises in section~\ref{sec:linklist}.
+  \label{ex:linkedlist2}
+  Write a recursive \n{insert} method that inserts a node in a list, such that
+  the list stays sorted:
+  %
+  \answerwithoutput{linkinsert}{tree}{insert}
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:linkedlist3}
+  For a more sophisticated approach to linked lists, do the exercises
+  in section~\ref{sec:linklist}.
+\end{exercise}
+
+\begin{exercise}
+  If you are doing the prime numbers project (chapter~\ref{ch:prime})
+  you can now do exercise~\ref{sec:streamsieve}.
 \end{exercise}
 
 \Level 1 {Smart pointers versus address pointers}
@@ -213,6 +257,17 @@ The standard example of pointer manipulation is `linked lists'. This
 is discussed in some detail in section~\ref{sec:linklist}.
 
 \Level 0 {Advanced topics}
+
+\Level 1 {Unique pointers}
+
+Shared pointers are fairly easy to program, and they come with lots of
+advantages, such as the automatic memory management. However, they
+have more overhead than strictly necessary because they have a
+\indexterm{reference count} mechanism to support the memory
+management. Therefore, there exists a \indextermsub{unique}{pointer},
+\indextermtt{unique_ptr}, for cases where an object will only ever be
+`owned' by one pointer. In that case, you can use a C-style
+\indextermsub{bare}{pointer} for non-owning references.
 
 \Level 1 {Shared pointer to `this'}
 

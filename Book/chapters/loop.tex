@@ -9,9 +9,6 @@
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\Level 0 {Basic `for' statement}
-\label{sec:for}
-
 There are many cases where you want to repeat an operation or series
 of operations:
 \begin{itemize}
@@ -21,15 +18,16 @@ of operations:
 \item Inspect or change every element of a database table.
 \end{itemize}
 
-\begin{remark}
-  The first two cases actually need to be performed in
-  sequence, while the last one corresponds more to a mathematical
-  `forall' quantor. This difference can be exploited when you learn
-  \indextermsub{parallel}{programming}. Fortran has a
-  \indextermbus{do}{concurrent} loop construct for this.
-\end{remark}
+The first two cases actually need to be performed in sequence, while
+the last one corresponds more to a mathematical `forall' quantor. You
+will later learn two different syntaxes for this in the context of arrays.
+This
+difference can also be exploited when you learn
+\indextermsub{parallel}{programming}. Fortran has a
+\indextermbus{do}{concurrent} loop construct for this.
 
-What you need is known as a~\indextermdef{loop}: a~number of
+The C++ construct for such repetitions
+is known as a~\indextermdef{loop}: a~number of
 statements that get repeated. The two types of loop statement in C++ are:
 \begin{itemize}
 \item the \indextermsub{for}{loop} which is typically associated with
@@ -38,8 +36,14 @@ statements that get repeated. The two types of loop statement in C++ are:
 \item the \indextermsub{while}{loop}, where the statements are
   repeated indefinitely until some condition is satisfied.
 \end{itemize}
+However, the difference between the two is not clear-cut: in many
+cases you can use either.
+
 We will now first consider the \n{for} loop; the \n{while} loop comes in
 section~\ref{sec:loopuntil}.
+
+\Level 0 {The `for' loop}
+\label{sec:for}
 
 In the most common case, a for loop has a
 \indextermbus{loop}{counter}, ranging from some lower to some upper
@@ -59,7 +63,7 @@ Each execution of the loop body is called an
 \index{loop!iteration}%
 .
 
-\begin{slide}{Repeat statement}
+\begin{slide}{`For' statement}
   \label{sl:for}
   Sometimes you need to repeat a statement a number of times. That's
   where the \indextermdef{loop} comes in. A~loop has a counter, called

@@ -26,13 +26,13 @@ We will use a simple model where a person can be:
 \item susceptible: they are healthy, but can be infected;
 \item recovered: they have been sick, but no longer carry the disease,
   and can not be infected for a second time;
-\item inocculated: they are healthy, do not carry the disease, and can
+\item vaccinated: they are healthy, do not carry the disease, and can
   not be infected.
 \end{itemize}
 In more complicated models a person could be infectious during only
 part of their illness, or there could be secondary infections with
 other diseases, et cetera. We keep it simple here:
-any sick person is infectious.
+any sick person is can infect others while they are sick.
 
 In the exercises below we will gradually develop a somewhat realistic
 model of how the disease spreads from an infectious person. We always
@@ -85,15 +85,13 @@ On day 19, Joe is recovered
   Write a \n{Person} class with methods:
   \begin{itemize}
   \item \n{status_string()} : returns a description of the
-    person's state;
+    person's state as a \n{string};
   \item \n{update()} : update the person's status to the next day;
   \item \n{infect(n)} : infect a person, with the disease to run for
     $n$ days;
-  \item \n{is_stable()} : report whether the person has been sick and
-    is recovered.
+  \item \n{is_stable()} : return a \n{bool} indicating whether the
+    person has been sick and is recovered.
   \end{itemize}
-  The main program should execute these statements in a loop:
-  \verbatimsnippet{infect0}
 \end{exercise}
 
 Your main program could for instance look like:
@@ -102,9 +100,9 @@ Your main program could for instance look like:
 Here is a suggestion how you can model 
 disease status. Use a single integer with the following interpretation:
 \begin{itemize}
-\item healthy but not inoculated, value~$0$,
+\item healthy but not vaccinated, value~$0$,
 \item recovered, value~$-1$,
-\item inocculated, value~$-2$,
+\item vaccinated, value~$-2$,
 \item and sick, with $n$ days to go before recovery,  modeled by value~$n$.
 \end{itemize}
 The \n{Person::update} method then updates this integer.
@@ -192,7 +190,9 @@ gives us more or less the \indexterm{SIR model};
 \url{https://en.wikipedia.org/wiki/Epidemic_model}.
 
 Set the number of people that a person comes into contact with, per
-day, to~6 or so. You have already programmed the probability that a
+day, to~6 or so. (You can also let this be an upper bound for a random
+value, but that
+does not essentially change the simulation.) You have already programmed the probability that a
 person who comes in contact with an infected person gets sick themselves.
 Again start the simulation with a single infected person.
 
@@ -247,7 +247,7 @@ even Excell) to plot your data, but that is not required.
 \endinput
 
 \begin{exercise}
-  You can make the model more realistic by letting innoculation be
+  You can make the model more realistic by letting vaccination be
   only partly effective. For instance, 50\% of people got the flu
   vaccine, but it was only 40\% effective; 90\%~of people have the
   measles vaccine, and it is about 97\%

@@ -10,16 +10,22 @@
 
 Program size
 
-  !!codesnippet ftype
+  !!codesnippet ftypedef
   type point
      real :: x,y
   end type point
+  !!codesnippet end
 
+  !!codesnippet ftypeuse
   type(point) :: p1,p2
   p1 = point(2.5, 3.7)
 
   p2 = p1
   print *,p2%x,p2%y
+  !!codesnippet end
+  
+  !!codesnippet ftypecall
+  print *,"Length:",length(p2)
   !!codesnippet end
   
 contains

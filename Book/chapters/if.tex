@@ -240,10 +240,20 @@ values, there is the \indextermtt{switch} statement.
   statement:
   %
   \snippetwithoutput{switchstatement}{basic}{switch}
-  %
-  Cases have to be single integer.
 \end{block}
 
+\begin{exercise}
+  \label{ex:switch-range}
+  Suppose the variable \n{n} is a nonnegative integer. Write a
+  \n{switch} statement that has the same effect as:
+\begin{verbatim}
+if (n<5)
+  cout << "Small" << endl;
+else
+  cout << "Not small" << endl;
+\end{verbatim}
+
+\end{exercise}
 \Level 0 {Scopes}
 
 The true and false branch of a conditional can consist of a single

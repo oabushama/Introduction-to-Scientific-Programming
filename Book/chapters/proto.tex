@@ -25,12 +25,15 @@ Such a minimal specification of a function is known as function
 int tester(float);
 \end{verbatim}
 
-A first use of prototypes is \indexterm{forward declaration}:
+\begin{block}{Prototypes and forward declarations}
+  \label{sl:forward-proto}
+  A first use of prototypes is \indexterm{forward declaration}:
 \begin{verbatim}
 int f(int);
 int g(int i) { return f(i); }
 int f(int i) { return g(i); }
 \end{verbatim}
+\end{block}
 
 Prototypes are useful if you spread your program over multiple
 files. You would put your functions in one file
@@ -43,7 +46,10 @@ In this example a function \n{tester}
 is defined in a different file from the main program, so we need to
 tell \n{main} what the function looks like in order for the main
 program to be compilable:
-\begin{multicols}{2}  
+
+\begin{block}{Prototypes for separate compilation}
+  \label{sl:separate-proto}
+  \begin{multicols}{2}  
 \begin{verbatim}
 // file: def.cxx
 int tester(float x) {
@@ -60,7 +66,9 @@ int main() {
   return 0;
 }
 \end{verbatim}
-\end{multicols}
+  \end{multicols}
+\end{block}
+
 (However, you would not do things like this in practice. See the next
 section about header files.)
 
@@ -69,6 +77,9 @@ section about header files.)
 
 Even better than writing the prototype every time you need the
 function is to have a \indexterm{header file}:
+
+\begin{block}{Prototypes and header files}
+  \label{sl:proto-header}
 \begin{verbatim}
 // file: def.h
 int tester(float);
@@ -94,6 +105,7 @@ int main() {
 }
 \end{verbatim}
 \end{multicols}
+\end{block}
 
 Having a header file is an important safety measure:
 \begin{itemize}
@@ -168,6 +180,22 @@ double something::somedo(vector v) {
 \end{verbatim}
 Strangely, data members also go in the header file.
 \end{block}
+
+\begin{review}
+  \label{rev:proto-c-cpp}
+  For each of the following answer: is this a valid function
+  definition or function prototype. Are any of them a constructor?
+  \begin{itemize}
+  \item \verb+int foo();+
+  \item \verb+int foo() {};+
+  \item \verb+int foo(int) {};+
+  \item \verb+int foo(int bar) {};+
+  \item \verb+int foo(int) { return 0; };+
+  \item \verb+int foo(int bar) { return 0; };+
+  \item \verb+foo();+
+  \item \verb+foo() {};+
+  \end{itemize}
+\end{review}
 
 \Level 0 {Header files and templates}
 

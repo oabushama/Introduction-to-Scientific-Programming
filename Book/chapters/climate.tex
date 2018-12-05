@@ -60,10 +60,16 @@ We assume that mr Shah was really saying that climate has a
 `stationary distribution', meaning that highs and lows have a
 probability distribution that is independent of time.
 This means that in $n$ data points, each point has a chance
-of~$1/n$ to be a record high. It also means that, as a function
+of~$1/n$ to be a record high. Since over $n+1$ years each year has a
+chance of $1/(n+1)$, the $n+1$st year has a chance $1/(n+1)$ of being a
+record.
+
+We conclude that, as a function
 of~$n$, the chance of a record high (or low, but let's stick with
 highs) goes down as~$1/n$, and that the gap between successive highs
-is approximately a linear function of the year.
+is approximately a linear function of the year\footnote {Technically,
+  we are dealing with a uniform distribution of temperatures, which
+  makes the maxima and minima have a beta-distribution.}.
 
 This is something we can test.
 

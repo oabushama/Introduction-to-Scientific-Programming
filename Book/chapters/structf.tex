@@ -3,21 +3,32 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% structf.tex : types Fortran
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{block}{Structures: \noexpand\texttt{type}}
+Fortran's way of bundling up data, and naming that bundle is a
+\indextermfort{type}.
+
+\begin{slide}{Structures: \noexpand\texttt{type}}
   \label{sl:ftype}
   The Fortran name for structures is \indextermtt{type} or
   \indextermsub{derived}{type}.
-\end{block}
+\end{slide}
+
+Now you need to
+\begin{itemize}
+\item Define the type to describe what's in it;
+\item Declare variables of that type; and
+\item use those variables, but setting the type members or using their
+  values.
+\end{itemize}
 
 \begin{block}{Type definition}
   \label{sl:ftype-def}
-  \n{Type name} / \n{End Type} block.
+  \n{Type name} / \n{End Type} block.\\
   Variable declarations inside the block
 \begin{verbatim}
 type mytype
@@ -30,14 +41,14 @@ end type mytype
 
 \begin{block}{Creating a type structure}
   \label{sl:ftype-set}
-  Declare a typed object in the main program:
+  Declare a type object in the main program:
 \begin{verbatim}
-Type(mytype) :: typed_object,object2
+Type(mytype) :: object1,object2
 \end{verbatim}
  Initialize with type name:
 \begin{verbatim}
-typed_object = mytype( 1, 'my_name', 3.7 )
-object2 = typed_object
+object1 = mytype( 1, 'my_name', 3.7 )
+object2 = object1
 \end{verbatim}
 \end{block}
 
@@ -52,9 +63,15 @@ type_object%member = ....
 
 \begin{block}{Example}
   \label{sl:ftype-ex}
-\verbatimsnippet{ftype}
+  \begin{multicols}{2}
+    \verbatimsnippet{ftypedef}
+    \columnbreak
+    \verbatimsnippet{ftypeuse}
+  \end{multicols}
+  Type definitions can go in the main program
 \end{block}
 
+You can have arrays of types:
 \begin{verbatim}
 type(my_struct) :: data
 type(my_struct),dimension(1) :: data_array
@@ -62,5 +79,17 @@ type(my_struct),dimension(1) :: data_array
 
 \begin{block}{Types as subprogram argument}
   \label{sl:ftype-pass}
-  \verbatimsnippet{ftypepass}  
+  \begin{multicols}{2}
+    \verbatimsnippet{ftypepass}
+    \columnbreak
+    \verbatimsnippet{ftypecall}
+  \end{multicols}
+
 \end{block}
+
+\begin{exercise}
+  \label{ex:ftype-rect}
+  Define a type \n{Point} that contains real numbers~\n{x,y}.\\
+  Define a type \n{Rectangle} that contains two \n{Point}s.\\
+  Write a function \n{area} that has one argument, a \n{Rectangle}.
+\end{exercise}

@@ -67,10 +67,21 @@ int main() {
        << InfNorm(y,ny) << endl;
 \end{verbatim}
   \end{multicols}
-  Code becomes shorter, easier to maintain.\\
-  (Don't worry about array stuff in this example)\\
-  Introduces application terminology.
+  (Don't worry about array stuff in this example)
 \end{block}
+
+Using a function can shorten your code, since it replaces two similar
+code blocks with one function definition and two calls.
+In this example, the code with loops is in fact longer, but there are
+still reasons for using functions.
+\begin{itemize}
+\item By removing \indexterm{code duplication} you have removed a
+  likely source of future errors: if you later edit one occurrence of
+  the code block, you're likely to forget the other.
+\item By introducting a function name you have introduced
+  \indexterm{abstraction}: your program now uses terms related to your
+  problem, and not only \n{for} and \n{int} and such.
+\end{itemize}
 
 \Level 0 {Function definition and call}
 
@@ -638,7 +649,7 @@ finds the smallest positive input value for which \n{f} is true.
 \begin{verbatim}
 bool f(int);
 \end{verbatim}
-is given, which is true for some negative input value. Write a main program that
+is given, which is true for some negative input value. Write a code fragment that
 finds the (negative) input with smallest absolute value for which \n{f} is true.
 \end{exercise}
 
@@ -649,7 +660,8 @@ finds the (negative) input with smallest absolute value for which \n{f} is true.
 bool f(int);
 \end{verbatim}
 is given, which computes some property of integers.
-Write a main program that tests if $f(i)$ is true for some $0\leq i<100$.
+Write a code fragment that tests if $f(i)$ is true for some $0\leq
+i<100$, and if so, prints a message.
 \end{exercise}
 
 \begin{exercise}
@@ -659,5 +671,6 @@ Write a main program that tests if $f(i)$ is true for some $0\leq i<100$.
 bool f(int);
 \end{verbatim}
 is given, which computes some property of integers.
-Write a main program that tests if $f(i)$ is true for all $0\leq i<100$.
+Write a main program that tests if $f(i)$ is true for all $0\leq
+i<100$, and if so, prints a message.
 \end{exercise}

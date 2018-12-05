@@ -23,11 +23,10 @@ int main() {
 
   //codesnippet infect0
   Person joe;
-  //codesnippet end
+
   int step = 1;
   for ( ; ; step++) {
 
-    //codesnippet infect0
     joe.update();
     float bad_luck = (float) rand()/(float)RAND_MAX;
     if (bad_luck>.95)
@@ -37,9 +36,8 @@ int main() {
          << joe.status_string() << endl;
     if (joe.is_stable())
       break;
-    //codesnippet end
-
   }
+  //codesnippet end
 
   cout << "Patient recovered in step " << step << endl;
 

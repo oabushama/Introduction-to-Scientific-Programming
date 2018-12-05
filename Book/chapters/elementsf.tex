@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% elementsf.tex : basic language elements of Fortran
 %%%%
@@ -28,13 +28,35 @@ we will in places point out explicitly differences with~C++.
 For secondary reading, this is a good course on modern Fortran:
 \url{http://www.pcc.qub.ac.uk/tec/courses/f77tof90/stu-notes/f90studentMIF_1.html}
 
+\Level 0 {Source format}
+
+Fortran started in the era when programs were stored on
+\indexterm{punch cards}. Those had 80 columns, so a line of Fortran
+source code could not have more than 80 characters. Also, the first 6
+characters had special meaning. This is referred to as \emph{fixed
+  format}\index{source!format!fixed}. However, starting with
+\indextermbus{Fortran}{90} it became possible to have \emph{free
+  format}\index{source!format!free}, which allowed longer lines
+without special meaning for the initial columns.
+
+There are further differences between the two formats (notably
+continuation lines) but we will only discuss free format in this course.
+
+Many compilers have a convention for indicating the source format by
+the file name extension:
+\begin{itemize}
+\item \n{f} and \n{f90} are the extensions for old-style fixed format;
+  and
+\item \n{F} and \n{F90} are the extensions for new free format.
+\end{itemize}
+The postfix \n{90} indicates that the \indextermbus{C}{preprocessor}
+is applied to the file.
+For this course we will use the \indextermtt{F90} extension.
+
 \Level 0 {Compiling Fortran}
 
 For Fortran programs, the compiler is \indextermtt{gfortran} for the
 GNU compiler, and \indextermtt{ifort} for Intel.
-Fortran programs can have a number of extensions, but some of them
-have special meaning to the compiler, by convention. In this book we
-adopt the \indextermtt{F90} extension.
 
 The minimal Fortran program is:
 %
@@ -57,7 +79,7 @@ Both keywords such as \n{Begin} or \n{Program} can just as well be written as
 A program optionally has a \indextermfort{stop} statement, which can
 return a message to the \ac{OS}.
 %
-\snippetwithoutput{stop}{basicf}{stopf}
+\snippetwithoutput{stopf}{basicf}{stop}
 
 \Level 0 {Main program}
 
@@ -120,11 +142,6 @@ x = very &
   long &
   expression
 \end{verbatim}
-(This is different between
-\emph{free format}\index{Fortran!source format!free}
-and \emph{fixed format}\index{Fortran!source format!fixed},
-where it's the lines after the
-first that are marked a continuation, but we don't teach that here.)
 \end{itemize}
 
 \begin{slide}{Statements}
@@ -230,7 +247,8 @@ where
 \begin{block}{Data types}
   \begin{itemize}
   \item Numeric: \indextermfort{Integer}, \indextermfort{Real},
-    \indextermfort{Complex}. Further specifications for numerical precision.
+    \indextermfort{Complex}. Further specifications for numerical
+    precision are discussed in section~\ref{sec:fprecision}.
   \item Logical: \indextermfort{Logical}.
   \item Character: \indextermfort{Character}. Strings are realized as
     arrays of characters; chapter~\ref{ch:stringf}.
@@ -260,10 +278,7 @@ implicit none
   in every program unit.
 \end{slide}
 
-You can query how many bytes a data type takes with
-\indextermttdef{kind}.
-
-You can set this in the declaration:
+You can the number of bytes for numerical types in the declaration:
 %
 \verbatimsnippet{fstorage}
 
@@ -273,26 +288,8 @@ You can set this in the declaration:
   \verbatimsnippet{fstorage}
 \end{slide}
 
-\begin{block}{Numerical precision}
-  \label{sl:fprecision48}
-  Number of bytes determines numerical precision:
-  \begin{itemize}
-  \item Computations in 4-byte have relative error $\approx 10^{-6}$
-  \item Computations in 8-byte have relative error $\approx 10^{-15}$
-  \end{itemize}
-  Also different exponent range: max $10^{50}$ and $10^{300}$ respectively.
-\end{block}
-
-\begin{block}{Storage size}
-  F08: \indextermtt{storage_size} reports number of bits.
-
-  F95: \indextermtt{bit_size} works on integers only.
-
-  \indextermtt{c_sizeof} reports number of bytes, requires
-  \indextermtt{iso_c_binding} module.
-\end{block}
-
 \Level 1 {Precision}
+\label{sec:fprecision}
 
 In Fortran you can actually ask for a type with specified precision.
 \begin{itemize}
@@ -318,7 +315,27 @@ y = 6.022e-23
 \end{verbatim}
 \end{block}
 
-how is that converted to double? This can introduce random junk bits.
+You can query how many bytes a data type takes with
+\indextermttdef{kind}.
+
+\begin{block}{Numerical precision}
+  \label{sl:fprecision48}
+  Number of bytes determines numerical precision:
+  \begin{itemize}
+  \item Computations in 4-byte have relative error $\approx 10^{-6}$
+  \item Computations in 8-byte have relative error $\approx 10^{-15}$
+  \end{itemize}
+  Also different exponent range: max $10^{50}$ and $10^{300}$ respectively.
+\end{block}
+
+\begin{block}{Storage size}
+  F08: \indextermtt{storage_size} reports number of bits.
+
+  F95: \indextermtt{bit_size} works on integers only.
+
+  \indextermtt{c_sizeof} reports number of bytes, requires
+  \indextermtt{iso_c_binding} module.
+\end{block}
 
 Force a constant to be \n{real(8)}:
 \begin{block}{Double precision constants}
@@ -413,9 +430,14 @@ PRINT *,n
 \url{http://userweb.eng.gla.ac.uk/peter.smart/com/com/f77-conv.htm}
 \end{block}
 
-
 \begin{block}{Complex}
   Complex numbers exist
+\end{block}
+
+\begin{block}{Strings}
+  Strings are delimited by single or double quotes.
+
+  For more, see chapter~\ref{ch:stringf}.
 \end{block}
 
 \Level 0 {Review questions}

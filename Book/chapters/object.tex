@@ -412,9 +412,9 @@ be directly changable!
   This is a good time to do the exercises in section~\ref{ex:pointfunc}.
 \end{exercise}
 
-\Level 1 {Accessability}
+\Level 2 {Accessability}
 
-\begin{slide}{Access levels}
+\begin{block}{Access levels}
   \label{sl:private-etc}
   Methods and data can be 
   \begin{itemize}
@@ -424,12 +424,12 @@ be directly changable!
   \item protected, because they should be usable in derived classes (see
     section~\ref{sec:derive-method}).
   \end{itemize}
-\end{slide}
+\end{block}
 
 You can have multiple methods with the same name, as long as they can
 be distinguished by their argument types. This is known as \indexterm{overloading}.
 
-\Level 1 {Operator overloading}
+\Level 2 {Operator overloading}
 \label{sec:operatordef}
 
 Instead of writing 
@@ -469,7 +469,7 @@ and square brackets.
   Write a \n{Fraction} class, and define the arithmetic operators on it.
 \end{exercise}
 
-\Level 1 {Copy constructor}
+\Level 2 {Copy constructor}
 
 Just like the default constructor which is defined if you don't define
 an explicit constructor, there is an implicitly defined
@@ -519,7 +519,7 @@ Example of the copy constructor in action:
   \snippetwithoutput{classwithcopyvectoruse}{object}{copyvector}
 \end{block}
 
-\Level 1 {Destructor}
+\Level 2 {Destructor}
 \label{sec:destructor}
 
 Just there is a constructor routine to create an object, there is a
@@ -602,7 +602,7 @@ which gives output
 \input inheritance
 %\SetBaseLevel 0
 
-\Level 0 {More topics about classes}
+\Level 2 {`this' pointer}
 
 \begin{block}{`this' pointer to the current object}
   \label{sl:class-this}
@@ -635,7 +635,7 @@ void somemethod() {
 \end{verbatim}
 \end{block}
 
-\Level 1 {Static members}
+\Level 2 {Static members}
 
 \begin{block}{Static class members}
   \label{sl:static-member}
@@ -656,22 +656,24 @@ MyClass::object_count = 0;
 
 \Level 0 {Review question}
 
-\begin{review}
+\begin{exercise}
+  \label{ex:class-review1}
   Fill in the missing term
   \begin{itemize}
   \item The functionality of a class is determined by its\ldots
   \item The state of an object is determined by its\ldots
   \end{itemize}
 
-  How many constructors do you need to specify in an object definition?
+  How many constructors do you need to specify in a class definition?
   \begin{itemize}
   \item Zero
   \item Zero or more
   \item One
   \item One or more
   \end{itemize}
-\end{review}
+\end{exercise}
 
 \begin{exercise}
+  \label{ex:class-review2}
   Describe various ways to initialize the members of an object.
 \end{exercise}

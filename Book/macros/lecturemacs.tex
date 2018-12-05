@@ -56,16 +56,16 @@
 %%%%
 \newcounter{excounter}
 \newcommand\exerciseslide
-    [1]{\frame{\frametitle{Exercise
-          \arabic{excounter}}
+    [1]{\frame{
+        \refstepcounter{excounter}
+        \frametitle{Exercise \arabic{excounter}}
         \input #1
-        \stepcounter{excounter}
 }}
 \newcommand\optexerciseslide
-    [1]{\frame{\frametitle{Optional exercise
-          \arabic{excounter}}
-        \input #1
-        \stepcounter{excounter}
+    [1]{\frame{
+        \refstepcounter{excounter}
+        \frametitle{Optional exercise \arabic{excounter}}
+        \input #1        
 }}
 \newcounter{revcounter}
 \newcommand\reviewslide

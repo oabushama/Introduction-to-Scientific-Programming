@@ -58,6 +58,9 @@ real,target :: x
 point_at_real => x
 \end{verbatim}
 \item Now using \n{point_at_real} is the same as using~\n{x}.
+\begin{verbatim}
+print *,point_at_real ! will print the value of x
+\end{verbatim}
   \end{itemize}
 \end{block}
 
@@ -79,7 +82,7 @@ it behaves as if you were using the value of what it points at.
 
 \begin{block}{Pointer example}
   \label{sl:fpoint-ex}
-  \verbatimsnippet{pointatreal}
+  \snippetwithoutput{pointatreal}{pointerf}{realp}
   %
   \begin{enumerate}
   \item The pointer points at~\n{x}, so the value of \n{x} is printed.
@@ -121,7 +124,7 @@ right-hand side to be the target of the left-hand side.
   Write a routine that accepts an array and a pointer, and on return
   has that pointer pointing at the largest array element:
   %
-  \verbatimsnippet{arraypointmain}
+  \answerwithoutput{arraypointmain}{pointerf}{arpointf}
 \end{exercise}
 
 \begin{block}{Pointer status}
@@ -132,23 +135,26 @@ right-hand side to be the target of the left-hand side.
   \end{itemize}  
 \end{block}
 
-\begin{block}{Dynammic allocation}
+\begin{block}{Dynamic allocation}
   \label{sl:fpoint-dynamic}
   Associate unnamed memory:
 \begin{verbatim}
 Integer,Pointer,Dimension(:) :: array_point
 Allocate( array_point(100) )
 \end{verbatim}  
+This is automatically deallocated when control leaves the scope.
 \end{block}
 
 \Level 0 {Pointers and arrays}
 
-You can set a pointer to an array:
+You can set a pointer to an array element or a whole array.
 \begin{verbatim}
 real(8),dimension(10),target :: array
+real(8),pointer              :: element_ptr
 real(8),pointer,dimension(:) :: array_ptr
 
-array_ptr => array
+element_ptr => array(2)
+array_ptr   => array
 \end{verbatim}
 More surprising, you can set pointers to array slices:
 \begin{verbatim}
@@ -162,6 +168,8 @@ automatically to strided indexing.
 
 \Level 0 {Example: linked lists}
 \index{list!linked!in Fortran|(}
+
+For pictures of linked lists, see section~\ref{sec:linklist}.
 
 \begin{block}{Linked list}
   \label{sl:flink1}
