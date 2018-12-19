@@ -2,13 +2,14 @@
 !***
 !*** This file belongs with the course
 !*** Introduction to Scientific Programming in C++/Fortran2003
-!*** copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+!*** copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 !***
 !*** type.F90 : fortran types, definition, use, parameter passing
 !***
 !****************************************************************
 
 Program size
+  implicit none
 
   !!codesnippet ftypedef
   type point

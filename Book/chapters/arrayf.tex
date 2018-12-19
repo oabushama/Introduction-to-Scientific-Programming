@@ -248,15 +248,12 @@ size(y,2)
 
 \begin{slide}{Query functions}
   \label{sl:farray-query}
-    \begin{itemize}
-    \item Bounds: \n{lbound}, \n{ubound}
-    \item \n{size}
-\begin{verbatim}
-integer :: x(8), y(5,4)
-size(x)
-size(y,2)
-\end{verbatim}
-    \end{itemize}
+  \begin{itemize}
+  \item Bounds: \n{lbound}, \n{ubound}
+  \item \n{size}
+  \item Can be used per dimension, or overall giving array of bounds/sizes.
+  \end{itemize}
+  \snippetwithoutput{farrayquery}{arrayf}{query}
 \end{slide}
 
 \Level 1 {Reshaping}
@@ -277,10 +274,17 @@ Example:
 
 Subprogram needs to know the shape of an array, not the actual bounds:
 
-\begin{block}{Pass array to subroutine}
-  \label{sl:farray-pass1d}
-  \verbatimsnippet{fpass1d}
-  (note: the function is in a module)
+\begin{block}{Pass array: calling site}
+  \label{sl:farray-pass1d-main}
+  Passing array as one symbol:
+  \verbatimsnippet{fpass1dmain}
+\end{block}
+
+\begin{block}{Pass array: subprogram}
+  \label{sl:farray-pass1d-subr}
+  Note declaration as \n{dimension(:)}\\
+  actual size is queried
+  \verbatimsnippet{fpass1dsubr}
 \end{block}
 
 The array inside the subroutine is known as a
@@ -405,8 +409,10 @@ i = MAXLOC( array [, mask ] )
 
 \Level 1 {Restricting with \tt{where}}
 
-\indextermfort{where}
-\begin{block}{operate where}
+If an array operation should not apply to all elements, you can
+specify the ones it applies to with a \indextermfort{where} statement.
+
+\begin{block}{Operate where}
   \label{sl:farray-where}
 \begin{verbatim}
 where ( A<0 ) B = 0
@@ -506,6 +512,7 @@ do concurrent (i=1:n)
   c(i) = d(i+1)
 end do
 \end{verbatim}
+(Do not use \n{for all})
 \end{block}
 
 \Level 1 {Loops without dependencies}

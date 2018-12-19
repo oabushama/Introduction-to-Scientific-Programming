@@ -70,7 +70,7 @@ print *,"Hello world!"
 to the empty program, and compile and run it.
 \end{exercise}
 
-Fortran ignores \emph{case}\index{Fortran!case ignores}!
+Fortran ignores \emph{case}\index{Fortran!case ignores}.
 Both keywords such as \n{Begin} or \n{Program} can just as well be written as
 \n{bEGIN} or \n{PrOgRaM}.
 %% \footnote{Fortran also ignores spaces. Please
@@ -204,16 +204,19 @@ it, Fortran wants its variables declared near the top of the program
 or subprogram:
 \begin{verbatim}
 Program YourProgram
+  implicit none
   ! variable declaration
   ! executable code
 End Program YourProgram
 \end{verbatim}
 A variable declaration looks like:
 \begin{verbatim}
-type, attributes :: name1, name2, ....
+type [ , attributes ] :: name1 [ , name2, .... ]
 \end{verbatim}
 where
 \begin{itemize}
+\item we use the common grammar shorthand that \n{[ something ]}
+  stands for an optional `something';
 \item \textit{type} is most commonly \n{integer}, \n{real(4)}, \n{real(8)},
   \n{logical}. See below; section~\ref{sec:ftype}.
 \item \textit{attributes} can be \n{dimension}, \n{allocatable},
@@ -271,11 +274,16 @@ immediately after any program or subprogram header.
   \label{sl:fimplicit}
   Fortran does not need variable declarations:\\
   type are determined by name.\\
-  This is very dangerous. Use:
-\begin{verbatim}
-implicit none
-\end{verbatim}
+  This is very dangerous. Use \n{implicit none}
   in every program unit.
+\begin{verbatim}
+Program myprogram
+  implicit none
+  integer :: i
+  real :: x
+  ! more stuff
+End Program myprogram
+\end{verbatim}
 \end{slide}
 
 You can the number of bytes for numerical types in the declaration:
@@ -305,11 +313,12 @@ In Fortran you can actually ask for a type with specified precision.
 
 Likewise, you can specify the precision of a constant.
 Writing \n{3.14} will usually be a single precision
-real. The question is then, if you write
-\begin{block}{Single precision constants}
+real. 
+
+\begin{block}{Precision conversion}
   \label{sl:fsingle}
 \begin{verbatim}
-real(8) :: x
+real(8) :: x,y
 x = 3.14
 y = 6.022e-23
 \end{verbatim}
@@ -339,6 +348,11 @@ You can query how many bytes a data type takes with
 
 Force a constant to be \n{real(8)}:
 \begin{block}{Double precision constants}
+\begin{verbatim}
+real(8) :: x,y
+x = 3.14d0
+y = 6.022e-23
+\end{verbatim}
   \label{sl:fdouble}
   \begin{itemize}
   \item Use a compiler flag such as \n{-r8} to force all reals to be 8-byte.
@@ -366,6 +380,7 @@ real(4) :: x = 1.5
 That this is done at compile time, leading to a common error:
 \begin{verbatim}
 subroutine foo()
+  implicit none
   integer :: i=2
   print *,i
   i = 3
@@ -378,7 +393,7 @@ the previous value of \n{3} is remembered.
 \Level 0 {Input/Output, or I/O as we say}
 \label{sec:fio}
 
-\begin{block}{I/O routines}
+\begin{block}{Simple I/O}
   \label{sl:frw}
   \begin{itemize}
   \item Input: 
@@ -392,6 +407,7 @@ PRINT *,n
   \end{itemize}
   There is also \n{WRITE}.
 
+  The `star' indicates that default formatting is used.\\
   Other syntax for read/write with files and formats.
 \end{block}
 

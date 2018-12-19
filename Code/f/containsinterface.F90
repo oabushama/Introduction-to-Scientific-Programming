@@ -2,13 +2,14 @@
 !***
 !*** This file belongs with the course
 !*** Introduction to Scientific Programming in C++/Fortran2003
-!*** copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+!*** copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 !***
 !*** storage.cxx : measure bit storage of floating types
 !***
 !****************************************************************
 
 Program size
+  implicit none
 
   interface twice
      integer function twice(i)

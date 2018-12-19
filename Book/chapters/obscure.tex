@@ -494,14 +494,10 @@ to:
 
 \begin{slide}{Pointer to base class}
   \label{sl:dyn-base-ptr}
-  \begin{multicols}{2}
-    Class and derived:
-    \verbatimsnippet{polybase}
-    \vfill\columnbreak
-    Pass base pointer:
-    \verbatimsnippet{polymain}
-    \vfill\hbox{}
-  \end{multicols}
+
+  Class and derived:
+  %
+  \verbatimsnippet{polybase}
 \end{slide}
 
 If we have a pointer to a derived object, stored in a pointer to a
@@ -520,6 +516,7 @@ On the other hand, a \indextermtt{static_cast} would not do the job:
   %
   \snippetwithoutput{polycast}{cast}{deriveright}
 \end{slide}
+
 \begin{slide}{Cast to derived class, the wrong way}
   \label{sl:dyn-cast-wrong}
   Do not use this function \n{g}:

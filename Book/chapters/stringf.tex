@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% stringf.tex : string handling in Fortran
 %%%%
@@ -11,18 +11,28 @@
 
 \Level 0 {String denotations}
 
-\snippetwithoutput{fquotes}{stringf}{quote}
+A string can be enclosed in single or double quotes. That makes it
+easier to have the other type in the string.
+
+\verbatimsnippet{fquotes}
+%\snippetwithoutput{fquotes}{stringf}{quote}
 
 \Level 0 {Characters}
 
 \Level 0 {Strings}
 
+The \indextermfort{len} function gives the length of the string as
+it was allocated, not how much non-blank content you put in it.
+
+\snippetwithoutput{fstrlen}{stringf}{strlen}
+
+To get the more intuitive length of a string, that is, the location of
+the last non-blank character, you need to \indextermfort{trim} the string.
+
 Intrinsic functions: \n{LEN(string)}, \n{INDEX(substring,string)},
 \n{CHAR(int)}, \n{ICHAR(char)}, \n{TRIM(string)}
 
 \snippetwithoutput{fconcat}{stringf}{concat}
-
-\snippetwithoutput{fstrlen}{stringf}{strlen}
 
 \Level 0 {Strings versus character arrays}
 

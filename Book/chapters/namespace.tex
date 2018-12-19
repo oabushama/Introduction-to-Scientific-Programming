@@ -122,10 +122,20 @@ namespace of the same name:
 
 \Level 0 {Best practices}
 
-The problem with
+In this course we advocated
+pulling in functions explicitly:
 \begin{verbatim}
+#include <iostream>
+using std::cout;
+\end{verbatim}
+
+It is also possible to use
+\begin{verbatim}
+#include <iostream>
 using namespace std;
 \end{verbatim}
+
+The problem with this
 is that it may pull in unwanted functions. For instance:
 
 \begin{block}{Why not `using namespace std'?}
@@ -139,17 +149,8 @@ is that it may pull in unwanted functions. For instance:
   \end{multicols}
 \end{block}
 
-It is a good idea to pull in functions explicitly:
-\begin{verbatim}
-#include <iostream>
-using std::cout;
-\end{verbatim}
-
-In particular, one should never use the indiscriminate
-\begin{verbatim}
-using namespace std;
-\end{verbatim}
-in a header file. Anyone using the header would have no idea what
+Even if you use \n{using namespace}, you only do this in a source
+file, not in a header file. Anyone using the header would have no idea what
 functions are suddenly defined.
 
 \begin{slide}{Big namespace no-no}

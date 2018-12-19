@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% loopf.tex : looping constructs in Fortran
 %%%%
@@ -72,7 +72,7 @@ In that case you need the \indextermtt{exit} statement to stop the iteration.
   \label{sl:loopexit}
 \begin{verbatim}
 do
-  x = randomvalue()
+  call random_number(x)
   if (x>.9) exit
   print *,"Nine out of ten exes agree"
 end do
@@ -124,6 +124,18 @@ print *,( (i*j,i=1,20), j=1,20 )
 \end{block}
 
 This construct is especially useful for printing arrays.
+
+\begin{exercise}
+  \label{ex:impl-triangle}
+  Use the implied do-loop mechanism to print a triangle:
+\begin{verbatim}
+  1
+  2 2
+  3 3 3
+  4 4 4 4
+\end{verbatim}
+  up to a number that is input.
+\end{exercise}
 
 \Level 0 {Review questions}
 

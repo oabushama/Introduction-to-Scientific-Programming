@@ -72,6 +72,61 @@ int main() {
 (However, you would not do things like this in practice. See the next
 section about header files.)
 
+\Level 1 {Separate compilation}
+\index{object file|see{file, object}}
+
+Breaking your code in multiple files and using
+\indextermsub{separate}{compilation} has several advantages.
+\begin{enumerate}
+\item If your code gets large, compiling only the necessary files cuts
+  down on compilation time.
+\item Your functions may be useful in other projects, by yourself or
+  others, so you can reuse the code without cutting and pasting it
+  between projects.
+\item It makes it easier to search through a file without being
+  distracted by unrelated bits of code.
+\end{enumerate}
+
+\begin{block}{Compiling and linking}
+  \label{sl:compile-link}
+  Your regular compile line
+\begin{verbatim}
+icpc -o yourprogram yourfile.cc
+\end{verbatim}
+  actually does two things: compilation, and linking. You can do those
+  separately:
+  \begin{enumerate}
+  \item First you compile
+\begin{verbatim}
+icpc -c yourfile.cc
+\end{verbatim}
+  which gives you a file \n{yourfile.o}, a so-called
+  \indextermsub{object}{file}; and
+  \item Then you use the compiler as \indexterm{linker} to give you
+    the \indextermsub{executable}{file}:
+\begin{verbatim}
+icpc -o yourprogram yourfile.o
+\end{verbatim}
+  \end{enumerate}
+\end{block}
+
+In this particular example you may wonder what the big deal is.
+That will become clear if you have multiple source files: now you
+invoke the compile line for each source, and you link them only once.
+
+\begin{block}{Dealing with multiple files}
+  \label{sl:link-multiple}
+  Compile each file separately, then link:
+\begin{verbatim}
+icpc -c mainfile.cc
+icpc -c functionfile.cc
+icpc -o yourprogram mainfile.o functionfile.o
+\end{verbatim}  
+\end{block}
+
+At this point, you should learn about the \indexterm{Make} tool for
+managing your programming project.
+
 \Level 1 {Header files}
 \label{sec:hfile}
 

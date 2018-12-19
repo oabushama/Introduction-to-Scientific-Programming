@@ -18,6 +18,7 @@
 % code location wrt book
 \def\codedir{../code}
 \newcommand{\answerwithoutput}[3]{
+  \message{Code snippet <#1> in directory <#2> running program <#3>}
   % go into vertical mode
   \par
   % make nice two-column layout
@@ -30,7 +31,10 @@
     \begin{minipage}[t]{.3\hsize}
       { \footnotesize \raggedright \textbf{Output\\\relax [#2] #3:}\par
       }
-      \immediate\write18{ cd \codedir /#2 && make run_#3 > #3.out }
+      \immediate\write18{
+        cd \codedir /#2
+        && make run_#3 > #3.out 2>&1
+      }
       \footnotesize
       \def\verbatim@startline{\verbatim@line{\leavevmode\relax}}
       \verbatiminput{\codedir /#2/#3.out}

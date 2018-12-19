@@ -131,8 +131,10 @@ temporarily remove code from compilation:
 
 \Level 1 {Check for macros}
 
-The \n{#ifdef} test tests for a macro being defined. Conversely,
-\n{#ifndef} tests for a macro not being defined. For instance,
+The \n{#ifdef}\index{#ifdef@{\texttt{\#ifdef}}}
+test tests for a macro being defined. Conversely,
+\n{#ifndef}\index{#ifndef@{\texttt{\#ifndef}}}
+tests for a macro not being defined. For instance,
 \begin{verbatim}
 #ifndef N
 #define N 100
@@ -149,3 +151,34 @@ of header files; see section~\ref{ex:globalvar}.
 
 \index{preprocessor!conditionals|)}
 
+\Level 1 {Including a file only once}
+
+It is easy to wind up including a file such as \n{iostream} more than
+once, if it is included in multiple other header files. This adds to
+your compilation time, or may lead to subtle problems. A~header file
+may even circularly include itself. To prevent this, header files
+often have a structure%
+\index{#ifndef@{\texttt{\#ifndef}}}
+\begin{verbatim}
+// this is foo.h
+#ifndef FOO_H
+#define FOO_H
+
+// the things that you want to include
+
+#endif
+\end{verbatim}
+Now the file will effectively be included only once: the second time
+it is included its content is skipped.
+
+Many compilers support the pragma
+\n{once}\index{#pragma once@{\texttt{\#pragma once}}}%
+\index{once@{\texttt{once}}|see{\texttt{\#pragma once}}}
+(which, however, is not a language standard) that has the same
+effect:
+\begin{verbatim}
+// this is foo.h
+#pragma once
+
+// the things you want to include only once
+\end{verbatim}

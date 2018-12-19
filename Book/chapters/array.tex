@@ -397,14 +397,6 @@ output:
 \end{verbatim}
 \end{exercise}
 
-\begin{exercise}
-  \label{ex:splitoddeven-function}
-  Revisit exercise~\ref{ex:splitoddeven}. 
-
-  Can you write a function that accepts a vector and returns two
-  vectors with the above functionality?
-\end{exercise}
-
 \begin{block}{Vector pass by reference}
   \label{sl:vector-arg-ref}
   If you want to alter the vector, you have to pass by reference:
@@ -425,6 +417,14 @@ sort(values);
 then sorts it.)
 
 See section~\ref{sec:crand} for the random fuction.
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:splitoddeven-function}
+  Revisit exercise~\ref{ex:splitoddeven}. 
+
+  Can you write a function that accepts a vector and returns two
+  vectors with the above functionality?
 \end{exercise}
 
 \Level 0 {Vectors in classes}
@@ -796,7 +796,7 @@ We can now also understand how arrays are passed to functions:
 \begin{block}{Pascal's triangle}
   \label{sl:pascal-def}
   \small
-  Pascal's triangle contains binomial coefficients:
+  \indexterm{Pascal's triangle} contains binomial coefficients:
 {\scriptsize
 \begin{verbatim}
 Row    1:                     1

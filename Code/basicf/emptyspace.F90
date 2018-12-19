@@ -10,6 +10,7 @@
 
 !!codesnippet emptyspacef
 Program SomeProgram
+  implicit none
   integer :: i j
   ij = 2
   print *,i j

@@ -140,12 +140,23 @@ for ( auto c : some_string)
 
 \begin{exercise}
   \label{ex:caesar}
-  The oldest method of writing secret messages is the `Caesar
-  cypher'. You would take an integer~$s$ and rotate every character 
+  The oldest method of writing secret messages is the
+  \indexterm{Caesar cypher}. You would take an integer~$s$ and rotate every character 
   of the text over that many positions:
   \[ s\equiv3\colon \hbox{"acdz" $\Rightarrow$ "dfgc"}. \]
   Write a program that accepts an integer and a string, and display
   the original string rotated over that many positions.
+\end{exercise}
+\begin{exercise}
+  \label{ex:caesar-decrypt}
+  (this continues exercise~\ref{ex:caesar})\\
+  If you find a message encrypted with the Caesar cipher, can you
+  decrypt it? Take your inspiration from the
+  \indextermsub{Sherlock}{Holmes} story `The Adventure of the Dancing
+  Men', where he uses the fact that `e' is the most common letter.
+
+  Can you implement a more general letter permutation cipher, and
+  break it with the `dancing men' approach?
 \end{exercise}
 
 \begin{block}{More vector methods}

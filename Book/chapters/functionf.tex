@@ -28,7 +28,7 @@ End Program foo
 \end{block}
 
 That is, subprograms are placed after the main program statements,
-separated by a \indextermfort{contains} clause.
+separated by a \indextermfort{Contains} clause.
 
 In general, these are the  placements of subprograms:
 \begin{itemize}
@@ -45,13 +45,20 @@ Fortran has two types of subprograms:
 \item Subroutines, which are somewhat like \n{void} functions in C++:
   they can be used to structure the code, and they can only return
   information to the calling environment through their parameters.
-\item Functions, which are like C++ functions with a return type.
+\item Functions, which are like C++ functions with a return value.
 \end{itemize}
 
 Both types have the same structure, which is roughly the same as of
 the main program:
 \begin{verbatim}
 subroutine foo( <parameters> )
+<variable declarations>
+<executable statements>
+end subroutine foo
+\end{verbatim}
+and
+\begin{verbatim}
+returntype function foo( <parameters> )
 <variable declarations>
 <executable statements>
 end subroutine foo
@@ -71,9 +78,11 @@ end subroutine foo
 \end{verbatim}
 \end{enumerate}
 The \n{return} statement is optional in the first case.
+The \n{return} statement is different from C++ in that it does not
+indicate the return result of a function.
 
 \begin{exercise}
-  Rewrite the above function \n{foo} without a \n{return} statement.
+  Rewrite the above subroutine \n{foo} without a \n{return} statement.
 \end{exercise}
 
 A subroutine is invoked with a \indextermtt{call} statement:
@@ -94,6 +103,7 @@ end subroutine foo
 \begin{itemize}
 \item Looks much like a main program
 \item Ends at the end, or when \n{return} is reached
+\item Note: \n{return} does not return anything
 \item Activated with 
 \begin{verbatim}
   call foo()
@@ -101,25 +111,23 @@ end subroutine foo
 \end{itemize}
 \end{slide}
 
-\begin{block}{Fortran nomenclature}
-  \label{sl:fortran-dummy}
-  The term \indextermsub{dummy}{argument} is what Fortran calls there
-  parameters in the subprogram definition. The arguments in the
-  subprogram call are the \indextermsub{actual}{argument}s.
+\begin{block}{Subroutine with argument}
+  \label{sl:fsubr-arg}
+  \snippetwithoutput{fprintone}{funcf}{printone}
+\end{block}
+
+\begin{block}{Subroutine can change argument}
+  \label{sl:fsubr-inout}
+  \snippetwithoutput{faddone}{funcf}{addone}
 \end{block}
 
 \begin{block}{Recursion}
   \label{sl:funcf:recursion}
   Declare function as \indextermfort{Recursive}~\n{Function}
-\begin{verbatim}
-Recursive Function factorial(n) Result(fact)
-  if (n==0) then
-    fact = 1
-  else
-    fact = n * factorial(n-1)
-  end if
-End Function Factorial
-\end{verbatim}
+  %
+  \snippetwithoutput{frecursf}{funcf}{fact}
+  %
+  Note the \indextermfort{result} clause. This prevents ambiguity.
 \end{block}
 
 \Level 1 {Return results}
@@ -234,6 +242,13 @@ call f(x,y,5)
   \end{itemize}
 \end{block}
 
+\begin{block}{Fortran nomenclature}
+  \label{sl:fortran-dummy}
+  The term \indextermsub{dummy}{argument} is what Fortran calls the
+  parameters in the subprogram definition. The arguments in the
+  subprogram call are the \indextermsub{actual}{argument}s.
+\end{block}
+
 \begin{block}{Intent checking}
   \label{sl:fintent}
   Compiler checks your intent against your implementation. This code
@@ -263,8 +278,14 @@ do i=1,1000
 \end{verbatim}
 \n{y2} is same as \n{y1} because \n{x} not changed
 \end{multicols}
-
 \end{block}
+
+\begin{exercise}
+  \label{ex:ffunc-sin-cos}
+  Write a subroutine \n{trig} that takes a number~$\alpha$ as input
+  and passes $\sin\alpha$ and $\cos\alpha$ back to the calling
+  environment.
+\end{exercise}
 
 \Level 1 {Types of procedures}
 
@@ -341,125 +362,4 @@ end interface f
 where \n{f1},\n{f2} are functions that can be distinguished by their
 argument types. The generic function~\n{f} then becomes either \n{f1}
 or \n{f2} depending on what type of argument it is called with.
-
-\Level 0 {Modules}
-\label{sec:modulef}
-
-A module is a container for definitions of subprograms and types, and
-for data such as constants and variables. A~module is not a 
-structure or object: there is only one instance.
-
-What do you use a module for?
-\begin{itemize}
-\item Type definitions: it is legal to have the same type definition
-  in multiple program units, but this is not a good idea. 
-  Write the definition just once in a module and make it available
-  that way.
-\item Function definitions: this makes the functions available in multiple
-  sources files of the same program, or in multiple programs.
-\item Define constants: for physics simulations, put all constants in
-  one module and use that, rather than spelling out the constants each
-  time.
-\item Global variables: put variables in a module if they do not fit
-  an obvious scope.
-  \begin{f77note}
-  Modules are much cleaner than common blocks. Do not use those.
-  \end{f77note}
-\end{itemize}
-%
-\begin{block}{Module definition}
-  \label{sl:modulef}
-\verbatimsnippet{modulef}
-\end{block}
-
-
-Any routines come after the \n{contains}\index{contains!in modules}
-
-A module is made available with the \indextermtt{use} keyword, which
-needs to go before the \n{implicit none}.
-%
-\begin{block}{Module use}
-  \label{sl:moduleuse}
-  \verbatimsnippet{moduleuse}
-  Also possible:
-\begin{verbatim}
-Use mymodule, Only: func1,func2
-Use mymodule, func1 => new_name1
-\end{verbatim}
-\end{block}
-
-By default, all the contents of a module is usable by a subprogram
-that uses it. However, a keyword \indextermtt{private} make module
-contents available only inside the module.
-You can make the default behaviour explicit by using the
-\indextermtt{public} keyword. Both \n{public,private} can be used as
-attributes on definitions in the module.
-There is a keyword \indextermtt{protected} for data members that
-are public, but can not be altered by code outside the module.
-
-If you compile a module, you will find a \n{.mod} file in your
-directory. (This is little like a~\n{.h} file in~C++.)
-If this file is not present, you can not \n{use} the module in another
-program unit, so you need to compile the file containing the module
-first.
-
-\begin{exercise}
-  \label{ex:fpointmod}
-  Write a module \n{PointMod} that defines a type \n{Point} and a
-  function \n{distance} to make this code work:
-  %
-  \verbatimsnippet{pointmainex}
-  %
-  Put the program and module in two separate files and compile thusly:
-\begin{verbatim}
-ifort -g -c pointmod.F90
-ifort -g -c pointmain.F90
-ifort -g  -o pointmain pointmod.o pointmain.o 
-\end{verbatim}
-\end{exercise}
-
-\Level 1 {Polymorphism}
-
-\begin{verbatim}
-module somemodule
-
-INTERFACE swap
-MODULE PROCEDURE swapreal, swapint, swaplog, swappoint
-END INTERFACE
-
-  contains
-  subroutine swapreal
-  ...
-  end subroutine swapreal
-  subroutine swapint
-  ...
-  end subroutine swapint
-\end{verbatim}
-
-\Level 1 {Operator overloading}
-
-\begin{verbatim}
-MODULE operator_overloading
-IMPLICIT NONE
-...
-INTERFACE OPERATOR (+)
-MODULE PROCEDURE concat
-END INTERFACE
-\end{verbatim}
-
-including the assignment operator:
-
-\begin{verbatim}
-INTERFACE ASSIGNMENT (=) 
-subroutine_interface_body
-END INTERFACE
-\end{verbatim}
-
-This mechanism can also be used for dot-operators:
-
-\begin{verbatim}
-INTERFACE OPERATOR (.DIST.)
-MODULE PROCEDURE calcdist
-END INTERFACE
-\end{verbatim}
 
