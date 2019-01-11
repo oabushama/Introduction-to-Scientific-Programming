@@ -234,11 +234,11 @@ call f(x,y,5)
 \begin{block}{Parameter passing}
   \label{sl:fpassing}
   \begin{itemize}
-  \item Everything is passed by reference.
+  \item Everything is passed by reference.\\
+    Don't worry about large objects being copied.
+  \item Optional intent declarations:
   \item Use \n{in}, \n{out}, \n{inout} qualifiers to clarify semantics
     to compiler.
-  \item Terminology: Fortran talks about `dummy' and `actual'
-    arguments. Dummy: in the definition; actual: in the calling program.
   \end{itemize}
 \end{block}
 
@@ -259,6 +259,9 @@ call f(x,y,5)
 
 \begin{block}{Why intent checking?}
 \label{sl:intentwhy}
+Self-protection: if you state the intended behaviour of a routine, the
+compiler can detect programming mistakes.
+
 Allow compiler optimizations:
 
 \begin{multicols}{2}
@@ -278,6 +281,7 @@ do i=1,1000
 \end{verbatim}
 \n{y2} is same as \n{y1} because \n{x} not changed
 \end{multicols}
+(May need further specifications, so this is not the prime justification.)
 \end{block}
 
 \begin{exercise}

@@ -374,6 +374,7 @@ void f(int*);
   f(NULL);    // calls the int version
   f(nullptr); // calls the ptr version
 \end{verbatim}
+Note: dereferencing is undefined behaviour; does not throw an exception.
 \end{slide}
 
 \Level 1 {Void pointer}
@@ -402,5 +403,6 @@ array of scalars. You then get the advantage of the memory management,
 but you do not get the \n{size} function and such that you would have
 if you'd used a \n{vector} object.
 %
-\snippetwithoutput{ptrarray}{pointer}{ptrarray}
-
+%%%% VLE fix this!
+%%%%\snippetwithoutput{ptrarray}{pointer}{ptrarray}
+%%%%

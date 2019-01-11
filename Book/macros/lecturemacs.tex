@@ -3,11 +3,15 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% macros for lecture slides
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newif\ifInBook \InBookfalse
+% redefine code location wrt lectures
+\def\codedir{../../code}
 
 %%%%
 %%%% Indexing, disabled.
@@ -26,14 +30,6 @@
 \def\n#{\bgroup \catcode`\_=12 \catcode`\>=12 \catcode`\<=12
   \catcode`\&=12 \catcode`\^=12 \catcode`\~=12 \def\\{\char`\\}\relax
   \tt \let\next=}
-
-%%%%
-%%%% Snippets
-%%%%
-\newif\ifInBook \InBookfalse
-\input snippetmacs
-% redefine code location wrt lectures
-\def\codedir{../../code}
 
 \makeatletter
 \renewcommand{\verbatim@font}{\ttfamily\footnotesize}

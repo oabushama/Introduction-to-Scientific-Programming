@@ -63,15 +63,7 @@ The statement
 \begin{verbatim}
 print *,item1,item2,item3
 \end{verbatim}
-will print the items on one line.
-
-\begin{block}{Implicit do loops}
-  \label{sl:print-implicit-loop}
-  Parametrized printing with an \indextermsub{implicit}{do loop}:
-\begin{verbatim}
-print *,( i*i,i=1,n)
-\end{verbatim}
-\end{block}
+will print the items on one line, as far as the line length allows.
 
 \begin{slide}{Simple print}
   \label{sl:fio-print}
@@ -79,9 +71,17 @@ print *,( i*i,i=1,n)
 \begin{verbatim}
 print *,"The result is",result
 print *,item1,item2,item3
-print *,( i*i,i=1,n)  
 \end{verbatim}
 \end{slide}
+
+\begin{block}{Implicit do loops}
+  \label{sl:print-implicit-loop}
+  Parametrized printing with an \indextermsub{implicit}{do loop}:
+\begin{verbatim}
+print *,( i*i,i=1,n)
+\end{verbatim}
+All values will be printed on the same line.
+\end{block}
 
 \Level 1 {Printing arrays}
 

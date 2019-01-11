@@ -552,17 +552,20 @@ Distinguished by type or number of input arguments: can not differ only in retur
 \Level 0 {Library functions}
 
 \Level 1 {Random function}
-\label{sed:crand}
+\label{sec:crand}
 
-There is an easy (but not terribly great) \indextermbusdef{random number}{generator} that
-works the same as in~C:
-
+There is an easy (but not terribly great)
+\indextermbus{random number}{generator}
+that works the same as in~C (for a better
+generator, see section~\ref{sec:stl:random}):
+%
 \begin{verbatim}
 #include <random>
 using std::rand;
 float random_fraction =
     (float)rand()/(float)RAND_MAX;
 \end{verbatim}
+%
 The function \indextermtt{rand} yields an integer --~a different one
 every time you call it~-- in the range from zero to
 \indextermtt{RAND_MAX}.

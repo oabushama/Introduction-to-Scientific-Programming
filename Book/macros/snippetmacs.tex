@@ -3,20 +3,48 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% macros for verbatisnippets
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{verbatim}
-
 \def\verbatimsnippet#1{\verbatiminput{#1}}
-\def\codesnippet#1{\verbatiminput{snippets.code/#1}}
+
+\usepackage{listings,xcolor}
+\ifInBook
+\lstdefinestyle{reviewcode}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\unitindent,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{red!60!black},
+  stringstyle=\bfseries\color{green},
+  identifierstyle=\slshape\color{black},
+  columns=fullflexible,
+  keepspaces=true,
+}
+\else
+\lstdefinestyle{reviewcode}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{red!60!black},
+  stringstyle=\bfseries\color{brown!30!black!70},
+  identifierstyle=\slshape\color{black},
+  columns=fullflexible,
+  keepspaces=true,
+}
+\fi
+\def\codesnippet#1{\lstinputlisting{snippets.code/#1}}
 
 \makeatletter
-% code location wrt book
-\def\codedir{../code}
 \newcommand{\answerwithoutput}[3]{
   \message{Code snippet <#1> in directory <#2> running program <#3>}
   % go into vertical mode

@@ -11,7 +11,7 @@
 
 \documentclass[11pt]{boek3}
 
-\usepackage{comment,listings,pdflscape,verbatim}
+\usepackage{comment,pdflscape,verbatim}
 \makeatletter
 \def\verbatim@startline{\verbatim@line{\leavevmode\kern\unitindent\relax}}
 \makeatother
@@ -24,6 +24,7 @@
 \usepackage{dirtree}
 
 \input bookmacs
+\input snippetmacs
 
 %%%%
 %%%% Where is this course?
@@ -49,7 +50,7 @@
 
 \part{C++}
 \label{part:cpp}
-\lstset{language=C++}
+\lstset{language=C++,style=reviewcode}
 
 \CHAPTER{Basic elements of C++}{elements}
 \CHAPTER{Conditionals}{if}

@@ -9,6 +9,10 @@
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\newif\ifInBook \InBooktrue
+% code location wrt book
+\def\codedir{../code}
+
 %%%%
 %%%% Chapters (why are we doing this?)
 %%%%
@@ -105,12 +109,6 @@
 \newcommand\heading[1]{\paragraph*{\textbf{#1}}}
 
 %%%%
-%%%% Snippets
-%%%%
-\newif\ifInBook \InBooktrue
-\input snippetmacs
-
-%%%%
 %%%% Text and slide blocks
 %%%%
 
@@ -180,20 +178,6 @@
   \catcode`\^^I=13 \def^^I{\leavevmode\hspace{40pt}}
   \noindent\fbox{#1}
   \verbatiminput{#1}\endgroup}
-}
-\lstdefinestyle{reviewcode}{
-  belowcaptionskip=1\baselineskip,
-  breaklines=true,
-  frame=L,
-  xleftmargin=\unitindent,
-  showstringspaces=false,
-  basicstyle=\footnotesize\ttfamily,
-  keywordstyle=\bfseries\color{blue},
-  commentstyle=\color{red!60!black},
-  identifierstyle=\slshape\color{black},
-  stringstyle=\color{green!60!black},
-  columns=fullflexible,
-  keepspaces=true,
 }
 
 \newcommand\inv{^{-1}}\newcommand\invt{^{-t}}

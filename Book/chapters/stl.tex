@@ -140,7 +140,57 @@ but more interestingly, you can use a
   \snippetwithoutput{tupleauto}{stl}{tuple}
 \end{block}
 
+\Level 0 {Limits}
+
+There used to be a header file \indextermtt{limits.h} that contained
+macros such as \indextermtt{MAX_INT}. While this is still available,
+the \ac{STL} offers a better solution.
+
+\begin{block}{Templated functions for limits}
+  \label{sl:stl-limits}
+  Use header file \indextermtt{limits}:
+\begin{verbatim}
+#include <limits>
+using std::numeric_limits;
+
+cout << numeric_limits<long>::max();
+\end{verbatim}
+\end{block}
+
+\begin{exercise}
+  \label{ex:big-factorial}
+  Write a program to discover what the maximal~$n$ is so that~$n!$,
+  that is, $n$-factorial, can be represented in an \n{int}, \n{long},
+  or \n{long long}. Can you write this as a templated function?
+\end{exercise}
+
 \Level 0 {Random numbers}
+\label{sec:stl:random}
+
+In C++11 there is a new
+\indextermbus{random number}{generator}
+that is more general and more flexible than the C~version (section~\ref{sec:crand}).
+\begin{itemize}
+\item There are several generators that give uniformly distributed
+  numbers;
+\item then there are distributions that translate this to non-uniform
+  or discrete distributions.
+\end{itemize}
+
+\begin{block}{Random number example}
+  \label{sl:stl:rand16}
+\begin{verbatim}
+// set the default generator
+std::default_random_engine generator;
+
+// distribution: ints 1..6
+std::uniform_int_distribution<int> distribution(1,6);
+
+// apply distribution to generator:
+int dice_roll = distribution(generator);
+  // generates number in the range 1..6 
+\end{verbatim}
+\end{block}
 
 \Level 0 {Time}
 

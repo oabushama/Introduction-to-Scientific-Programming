@@ -61,13 +61,24 @@ Error reporting:
 \item Exception
 \end{itemize}
 
-Assertions:
+\Level 0 {Assertions}
+
+\begin{block}{Use assertions during development}
+  \label{sl:cpp-assert}
 \begin{verbatim}
 #include <cassert>
 ...
-assert( bool )
+assert( bool expression )
 \end{verbatim}
-assertions are omitted with optimization
+Assertions are disabled by
+\begin{verbatim}
+#define NDEBUG
+\end{verbatim}
+before the include.
+
+You can pass this as compiler flag:\\
+\n{icpc -DNDEBUG yourprog.cxx}
+\end{block}
 
 Function return values
 
@@ -210,6 +221,7 @@ void funk() throw();
 \begin{verbatim}
 void f() noexcept { ... };
 \end{verbatim}
+\item There is no exception thrown when dereferencing a \n{nullptr}.
   \end{itemize}
 \end{block}
 

@@ -272,8 +272,8 @@ immediately after any program or subprogram header.
 
 \begin{slide}{Implicit typing}
   \label{sl:fimplicit}
-  Fortran does not need variable declarations:\\
-  type are determined by name.\\
+  Fortran does not need variable declarations (like python):\\
+  variables have a type that is determined by name.\\
   This is very dangerous. Use \n{implicit none}
   in every program unit.
 \begin{verbatim}
@@ -315,13 +315,9 @@ Likewise, you can specify the precision of a constant.
 Writing \n{3.14} will usually be a single precision
 real. 
 
-\begin{block}{Precision conversion}
-  \label{sl:fsingle}
-\begin{verbatim}
-real(8) :: x,y
-x = 3.14
-y = 6.022e-23
-\end{verbatim}
+\begin{block}{Single/double precision constants}
+  \label{sl:fsingledouble}
+  \snippetwithoutput{f0const}{basicf}{e0}
 \end{block}
 
 You can query how many bytes a data type takes with
@@ -334,7 +330,7 @@ You can query how many bytes a data type takes with
   \item Computations in 4-byte have relative error $\approx 10^{-6}$
   \item Computations in 8-byte have relative error $\approx 10^{-15}$
   \end{itemize}
-  Also different exponent range: max $10^{50}$ and $10^{300}$ respectively.
+  Also different exponent range: max $10^{\pm 50}$ and $10^{\pm 300}$ respectively.
 \end{block}
 
 \begin{block}{Storage size}
@@ -348,12 +344,12 @@ You can query how many bytes a data type takes with
 
 Force a constant to be \n{real(8)}:
 \begin{block}{Double precision constants}
+  \label{sl:fdouble}
 \begin{verbatim}
 real(8) :: x,y
 x = 3.14d0
 y = 6.022e-23
 \end{verbatim}
-  \label{sl:fdouble}
   \begin{itemize}
   \item Use a compiler flag such as \n{-r8} to force all reals to be 8-byte.
   \item Write \n{3.14d0}
@@ -418,7 +414,7 @@ PRINT *,n
   \label{sl:farith}
   \begin{itemize}
   \item Pretty much as in C++
-  \item Exception: \n{r**2} for power.
+  \item Exception: \n{r**a} for power $r^a$.
   \item Modulus is a function: \n{MOD(7,3)}.
   \end{itemize}
 \end{block}
