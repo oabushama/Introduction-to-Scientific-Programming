@@ -16,12 +16,12 @@ using std::endl;
 //examplesnippet exceptdestruct
 class SomeObject {
 public:
-  SomeObject() { cout <<
-    "calling the constructor" 
-    << endl; };
-  ~SomeObject() { cout <<
-    "calling the destructor" 
-    << endl; };
+  SomeObject() {
+    cout << "calling the constructor" 
+         << endl; };
+  ~SomeObject() {
+    cout <<  "calling the destructor" 
+         << endl; };
 };
 //examplesnippet end
 

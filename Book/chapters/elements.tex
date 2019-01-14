@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% elements.tex : basic language elements
 %%%%
@@ -180,15 +180,15 @@ book.
     executed.
   \item Some statements are definitions, of data or of possible actions.
   \item Comments are `Note to self', short:
-\begin{verbatim}
+\begin{lstlisting}
 cout << "Hello world" << endl; // say hi!
-\end{verbatim}
+\end{lstlisting}
 and arbitrary:
-\begin{verbatim}
+\begin{lstlisting}
 cout << /* we are now going
            to say hello
          */ "Hello!" << /* with newline: */ endl;
-\end{verbatim}
+\end{lstlisting}
   \end{itemize}
 \end{block}
 
@@ -280,7 +280,7 @@ Think of a variable as a labeled placed in memory.
 
 \begin{block}{Typical variable lifetime}
   \label{sl:varlife}
-\begin{verbatim}
+\begin{lstlisting}
 int i,j; // declaration
 i = 5; // set a value
 i = 6; // set a new value
@@ -288,7 +288,7 @@ j = i+1; // use the value of i
 i = 8; // change the value of i
        // but this doesn't affect j:
        // it is still 7.
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \Level 1 {Variable declarations}
@@ -320,12 +320,12 @@ variable may contain random memory contents.
   type. Here is a simple
   \indextermbusdef{variable}{declaration}, which establishes the name
   and the type:
-\begin{verbatim}
+\begin{lstlisting}
 int n;
 float x;
 int n1,n2;
 double re_part,im_part;
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{block}{Where do declarations go?}
@@ -369,9 +369,9 @@ double re_part,im_part;
 \label{sec:ctypes}
 
 Setting a variable
-\begin{verbatim}
+\begin{lstlisting}
 i = 5;
-\end{verbatim}
+\end{lstlisting}
 means storing a value in the memory location. It is
 not the same as defining a mathematical equality
 \[ \hbox{let $i=5$}. \]
@@ -381,11 +381,11 @@ not the same as defining a mathematical equality
   Once you have declared a variable, you need to establish a value. This is done in an
   \indextermdef{assignment} statement. After the above declarations, the
   following are legitimate assignments:
-\begin{verbatim}
+\begin{lstlisting}
 n = 3;
 x = 1.5;
 n1 = 7; n2 = n1 * 3;
-\end{verbatim}
+\end{lstlisting}
 Variable of the left-hand side gets value of the right-hand side.
 
 You see that you can assign both a simple value or an
@@ -396,12 +396,12 @@ You see that you can assign both a simple value or an
   \label{sl:assign2}
   A variable can be given a value more than once. The following
   sequence of statements is a legitimate part of a program:
-\begin{verbatim}
+\begin{lstlisting}
 int n;
 n = 3;
 n = 2*n + 5;
 n = 3*n + 7;
-\end{verbatim}
+\end{lstlisting}
 These are not math equations: variable on the lhs gets the value of
 the rhs.
 \end{block}
@@ -409,15 +409,15 @@ the rhs.
 \begin{block}{Special forms}
   \label{sl:special-assign}
   Update:
-\begin{verbatim}
+\begin{lstlisting}
   x = x+2; y = y/3;
   // can be written as
   x += 2; y /= 3;
-\end{verbatim}
+\end{lstlisting}
 Integer add/subtract one:
-\begin{verbatim}
+\begin{lstlisting}
   i++; j--;  /* same as: */ i=i+1; j=j-1;
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{exercise}
@@ -438,11 +438,11 @@ Integer add/subtract one:
   You can also give a variable a value a in
   \indextermbus{variable}{initialization}. Confusingly, there are
   several ways of doing that. Here's two:
-\begin{verbatim}
+\begin{lstlisting}
 int n = 0;
 double x = 5.3, y = 6.7;
 double pi{3.14};
-\end{verbatim}
+\end{lstlisting}
   Do not use uninitialized variables! Doing so is legal, but there is
   no guarantee about the initial value. Do not count on it being zero\ldots
 \end{block}
@@ -455,7 +455,7 @@ double pi{3.14};
 
 \begin{exercise}{Quick review}
   \label{q:initvar}
-\begin{verbatim}
+\begin{lstlisting}
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -465,7 +465,7 @@ int main() {
   cout << j << endl;
   return 0;
 }
-\end{verbatim}
+\end{lstlisting}
 What happens?
 \begin{enumerate}
 \item Compiler error
@@ -479,14 +479,14 @@ What happens?
   \label{sl:intvals}
   Integers are normally  written in decimal, and stored in 32 bits.
   If you need something else:
-\begin{verbatim}
+\begin{lstlisting}
 int d = 42;
 int o = 052; // start with zero
 int x = 0x2a;
 int X = 0X2A;
 int b = 0b101010; // C++14
 long ell = 42L;
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \Level 1 {Floating point variables}
@@ -515,9 +515,9 @@ In a computer, integers are stored very differently from
   \item Long double: \n{1.22l} or \n{1.22L}.
   \end{itemize}
   This prevents numerical accidents: 
-\begin{verbatim}
+\begin{lstlisting}
   double x = 3.;
-\end{verbatim}
+\end{lstlisting}
   converts float to double, maybe introducing random bits.
 \end{block}
 
@@ -539,9 +539,9 @@ In a computer, integers are stored very differently from
   and it will either be rounded to \n{5.15} or truncated to \n{5.14}.
 
   Define 
-\begin{verbatim}
+\begin{lstlisting}
 float one = 1.;
-\end{verbatim}
+\end{lstlisting}
   and see what the smallest value \n{float eps} is that you can add to
   one so that the result is not one.
 \end{exercise}
@@ -592,10 +592,10 @@ values, to make it recognizable as such.
   So far you have seen integer and real variables. There are also
   \indextermsub{boolean}{values} which represent truth values. There are
   only two values: \indextermtt{true} and \indextermtt{false}.
-\begin{verbatim}
+\begin{lstlisting}
 bool found{false};
 found = true;
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \Level 1 {Strings}
@@ -610,14 +610,14 @@ want to use strings:
   \label{sl:quick-string}
   \begin{itemize}
   \item Add the following at the top of your file:
-\begin{verbatim}
+\begin{lstlisting}
 #include <string>
 using std::string;
-\end{verbatim}
+\end{lstlisting}
 \item Declare string variables as
-\begin{verbatim}
+\begin{lstlisting}
 string name;
-\end{verbatim}
+\end{lstlisting}
 \item And you can now \n{cin} and \n{cout} them.
   \end{itemize}
 \end{block}
@@ -641,24 +641,24 @@ but it is also possible to base the computation on user input.
 \begin{block}{Terminal output}
   \label{sl:cout}
 You have already seen \indextermtt{cout}:
-\begin{verbatim}
+\begin{lstlisting}
 float x = 5;
 cout << "Here is the root: " << sqrt(x) << endl;
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{block}{Terminal input}
   \label{sl:cin}
   There is also a \indexterm{cin}, which serves to take user input and
   put it in a numerical variable.
-\begin{verbatim}
+\begin{lstlisting}
 // add at the top of your program:
 using std::cin;
 
 // then in your main:
 int i;
 cin >> i;
-\end{verbatim}
+\end{lstlisting}
 There is also \n{getline}, which is more general.
 \end{block}
 
@@ -695,11 +695,11 @@ them to.
 \begin{block}{Math library calls}
   \label{sl:cmath}
   Math function in \indextermtt{cmath}:
-\begin{verbatim}
+\begin{lstlisting}
 #include <cmath>
 .....
 x = pow(3,.5);
-\end{verbatim}
+\end{lstlisting}
 For squaring, usually better to write \n{x*x} than \n{pow(x,2)}.
 \end{block}
 
@@ -713,9 +713,9 @@ For squaring, usually better to write \n{x*x} than \n{pow(x,2)}.
   \item Use parentheses to group \n{25.1*(37+42/3.)}
   \item Careful with types.
   \item There is no `power' operator: library functions. Needs a line
-\begin{verbatim}
+\begin{lstlisting}
 #include <cmath>
-\end{verbatim}
+\end{lstlisting}
   \item Modulus: \n{\char`\%}
   \end{itemize}
 \end{slide}
@@ -732,17 +732,17 @@ operators defined on them.
   \item Testing: \n{== != < > <= >=}
   \item Not, and, or:   \n{! && ||}
   \item Shortcut operators:
-\begin{verbatim}
+\begin{lstlisting}
   if ( x>=0 && sqrt(x)<5 ) {}
-\end{verbatim}
+\end{lstlisting}
   \end{itemize}
 \end{block}
 
 Logical expressions in C++ are evaluated using
 \indextermsub{shortcut}{operators}: you can write
-\begin{verbatim}
+\begin{lstlisting}
 x>=0 && sqrt(x)<2
-\end{verbatim}
+\end{lstlisting}
 If \n{x}~is negative, the second part will never be evaluated because
 the `and' conjunction can already be concluded to be false.
 Similarly, `or' conjunctions will only be evaluated until the first
@@ -761,17 +761,17 @@ operators that you can apply to, for instance, all the bits in an integer.
 
 Since a variable has one type, and will always be of that type,
 you may wonder what happens with
-\begin{verbatim}
+\begin{lstlisting}
 float x = 1.5;
 int i;
 i = x;
-\end{verbatim}
+\end{lstlisting}
 or 
-\begin{verbatim}
+\begin{lstlisting}
 int i = 6;
 float x;
 x = i;
-\end{verbatim}
+\end{lstlisting}
 
 \begin{itemize}
 \item Assigning a floating point value to an integer truncates the
@@ -796,10 +796,10 @@ x = i;
 
 The rules for type conversion in expressions are not entirely
 logical. Consider
-\begin{verbatim}
+\begin{lstlisting}
 float x; int i=5,j=2;
 x = i/j;
-\end{verbatim}
+\end{lstlisting}
 This will give~\n{2} and not~\n{2.5}, because \n{i/j} is an integer
 expression and is therefore completely evaluated as such, giving~\n{2}
 after truncation. The fact
@@ -808,9 +808,9 @@ cause it to be evaluated as a computation on floats.
 
 You can force the expression to be computed in floating point numbers
 by writing
-\begin{verbatim}
+\begin{lstlisting}
 x = (1.*i)/j;
-\end{verbatim}
+\end{lstlisting}
 or any other mechanism that forces a conversion, without changing the
 result.  Another mechanism is the \indexterm{cast}; this will be
 discussed in section~\ref{sec:cast}.
@@ -818,20 +818,20 @@ discussed in section~\ref{sec:cast}.
 \begin{slide}{Conversion and casting}
   \label{sl:convert-cast}
   Real to integer: round down:
-\begin{verbatim}
+\begin{lstlisting}
   double x,y; x = .... ; y = .... ;
   int i; i =  x+y:
-\end{verbatim}
+\end{lstlisting}
 Dangerous:
-\begin{verbatim}
+\begin{lstlisting}
   int i,j; i = ... ; j = ... ; 
   double x ; x = 1+i/j;
-\end{verbatim}
+\end{lstlisting}
 The fraction is executed as integer division.\\
 For floating point result do:
-\begin{verbatim}
+\begin{lstlisting}
 (double)i/j /* or */ (1.*i)/j
-\end{verbatim}
+\end{lstlisting}
 \end{slide}
 
 \begin{exercise}
@@ -880,33 +880,33 @@ For floating point result do:
 \Level 0 {Library functions}
 
 Some functions, such as \indexterm{abs} can be included through \indextermtt{cmath}:
-\begin{verbatim}
+\begin{lstlisting}
 #include <cmath>
 using std::abs;
-\end{verbatim}
+\end{lstlisting}
 Others, such as \indexterm{max}, are in the less common \indextermtt{algorithm}:
-\begin{verbatim}
+\begin{lstlisting}
 #include <algorithm>
 using std::max;
-\end{verbatim}
+\end{lstlisting}
 
 \Level 0 {Review questions}
 
 \begin{exercise}
   \label{ex:cpp-mod}
 What is the output of:
-\begin{verbatim}
+\begin{lstlisting}
 int m=32, n=17;
 cout << n%m << endl;
-\end{verbatim}
+\end{lstlisting}
 \end{exercise}
 
 \begin{exercise}
   \label{ex:cpp-cube}
   Given
-\begin{verbatim}
+\begin{lstlisting}
 int n;
-\end{verbatim}
+\end{lstlisting}
 write code that
 uses elementary mathematical operators to compute n-cubed: $n^3$.
 Do you get the correct result for all~$n$? Explain.

@@ -10,7 +10,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{verbatim}
-\def\verbatimsnippet#1{\verbatiminput{#1}}
+\def\verbatimsnippet#1{
+  \IfFileExists{#1}{\lstinputlisting{#1}}{}
+}
 
 \usepackage{listings,xcolor}
 \ifInBook
@@ -23,7 +25,7 @@
   basicstyle=\footnotesize\ttfamily,
   keywordstyle=\bfseries\color{blue},
   commentstyle=\color{red!60!black},
-  stringstyle=\bfseries\color{green},
+  stringstyle=\bfseries\color{gray!50!black},
   identifierstyle=\slshape\color{black},
   columns=fullflexible,
   keepspaces=true,
@@ -36,12 +38,19 @@
   basicstyle=\footnotesize\ttfamily,
   keywordstyle=\bfseries\color{blue},
   commentstyle=\color{red!60!black},
-  stringstyle=\bfseries\color{brown!30!black!70},
+  stringstyle=\bfseries\color{gray!50!black},
   identifierstyle=\slshape\color{black},
   columns=fullflexible,
   keepspaces=true,
 }
 \fi
+\lstset{
+  emph={std,using,cin,cout,endl,dec,hex,setw,
+    nullptr,string,vector},
+  emphstyle={\bfseries\color{brown}},
+  emph={[2]abs,NULL,pow,rand,RAND_MAX,srand,sqrt,time,},
+  emphstyle={[2]\bfseries\slshape\color{brown}},
+}
 \def\codesnippet#1{\lstinputlisting{snippets.code/#1}}
 
 \makeatletter

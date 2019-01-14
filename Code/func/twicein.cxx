@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** twicein.cxx : simple function illustration
  ****
@@ -22,8 +22,8 @@ int double_this(int n) {
 int main() {
   //examplesnippet twicein
   int number = 3;
-  cout << "Twice three is: " << 
-    double_this(number) << endl;
+  cout << "Twice three is: "
+       << double_this(number) << endl;
   //examplesnippet end
   return 0;
 }

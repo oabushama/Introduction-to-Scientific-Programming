@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% array.tex : basic language elements
 %%%%
@@ -69,12 +69,12 @@ collection of elements, and the loop functions like a mathematical
   \label{sl:array-range}
   You can write a \indextermsub{range-based}{for} loop, which
   considers the elements as a collection.
-\begin{verbatim}
+\begin{lstlisting}
 for ( float e : array )
   // statement about element with value e
 for ( auto e : array )
   // same, with type deduced by compiler
-\end{verbatim}
+\end{lstlisting}
 
 \snippetwithoutput{dynamicmax}{array}{dynamicmax}
 \end{block}
@@ -90,10 +90,10 @@ traditional \n{for} loop with loop variable.
   \label{sl:index-range}
   You can write an \indextermsub{indexed}{for} loop, which uses an
   index variable that ranges from the first to the last element.
-\begin{verbatim}
+\begin{lstlisting}
 for (int i= /* from first to last index */ )
   // statement about index i
-\end{verbatim}
+\end{lstlisting}
 Example: find the maximum element and where it occurs.
 %
 \snippetwithoutput{idxmax}{array}{idxmax}
@@ -102,26 +102,26 @@ Example: find the maximum element and where it occurs.
 \begin{block}{Indexing with pre/post increment}
   \label{sl:prepostindex}
 Array indexing in \n{while} loop and such:
-\begin{verbatim}
+\begin{lstlisting}
   x = a[i++]; /* is */ x = a[i]; i++;
   y = b[++i]; /* is */ i++; y = b[i];
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{exercise}
   \label{ex:array-max}
   Find the element with maximum absolute value in an array. Use:
-\begin{verbatim}
+\begin{lstlisting}
 vector<int> numbers = {1,-4,2,-6,5};
-\end{verbatim}
+\end{lstlisting}
 Which mechanism do you use for traversing the array?
 
 Hint:
-\begin{verbatim}
+\begin{lstlisting}
 #include <cmath>
 ..
 absx = abs(x);
-\end{verbatim}
+\end{lstlisting}
 \end{exercise}
 
 \begin{exercise}
@@ -165,13 +165,13 @@ one go. Let's decouple these actions.
 \begin{block}{Vector definition}
   \label{sl:vector-def}
   Definition, mostly without initialization.
-\begin{verbatim}
+\begin{lstlisting}
 #include <vector>
 using std::vector;
 
 vector<type> name;
 vector<type> name(size);
-\end{verbatim}
+\end{lstlisting}
 where
 \begin{itemize}
 \item \n{vector} is a keyword,
@@ -194,10 +194,10 @@ where
 \begin{block}{Vector initialization}
   \label{sl:vector-init}
   You can initialize a vector as a whole:
-\begin{verbatim}
+\begin{lstlisting}
 vector<int> odd_array{1,3,5,7,9};
 vector<int> even_array = {0,2,4,6,8};
-\end{verbatim}
+\end{lstlisting}
 (This syntax requires compilation with the \n{-std=c++11}\index{C++11}
 option.)
 \end{block}
@@ -205,19 +205,19 @@ option.)
 \begin{block}{Vector initialization'}
   \label{sl:vector-initconst}
   There is a syntax for initializing a vector with a constant:
-\begin{verbatim}
+\begin{lstlisting}
 vector<float> x(25,3.15);
-\end{verbatim}
+\end{lstlisting}
 which gives a vector of size~25, with all elements initialized to~3.15.
 \end{block}
 
 \Level 2 {Element access}
 
 The simplest way to access vector elements is with the square bracket notation:
-\begin{verbatim}
+\begin{lstlisting}
 x[1] = 3.14;
 cout << x[2];
-\end{verbatim}
+\end{lstlisting}
 This gives very fast access, but there is no \emph{checking} on whether the
 index is within the \emph{array
   bounds}\index{array!bounds!checking}. Accessing an element outside
@@ -226,34 +226,34 @@ the bounds may abort your code, typically with a
 proceed, using invalid data.
 
 There is a safer way to access elements:
-\begin{verbatim}
+\begin{lstlisting}
 x.at(1) = 3.14;
 cout << x.at(2);  
-\end{verbatim}
+\end{lstlisting}
 This is slightly slower, but it does perform bounds checking for every access.
 
 \begin{block}{Accessing vector elements}
   \label{sl:vectorsub}
   You have already seen the square bracket notation:
-\begin{verbatim}
+\begin{lstlisting}
 vector<double> x(5, 0.1 );
 x[1] = 3.14;
 cout << x[2];
-\end{verbatim}
+\end{lstlisting}
 Alteratively:
-\begin{verbatim}
+\begin{lstlisting}
 x.at(1) = 3.14;
 cout << x.at(2);
-\end{verbatim}
+\end{lstlisting}
 Safer, slower.
 \end{block}
 
 \begin{block}{Ranging over a vector}
   \label{sl:vector-range}
-\begin{verbatim}
+\begin{lstlisting}
 for ( auto e : my_vector)
   cout << e;
-\end{verbatim}
+\end{lstlisting}
 Note that \n{e} is a copy of the vector element:
 \snippetwithoutput{vectorrangecopy}{array}{vectorrangecopy}
 \end{block}
@@ -261,10 +261,10 @@ Note that \n{e} is a copy of the vector element:
 \begin{block}{Ranging over a vector by reference}
   \label{sl:vector-range-ref}
 To set array elements, make \n{e} a reference:
-\begin{verbatim}
+\begin{lstlisting}
 for ( auto &e : my_vector)
   e = ....
-\end{verbatim}
+\end{lstlisting}
 \snippetwithoutput{vectorrangeref}{array}{vectorrangeref}
 \end{block}
 
@@ -338,12 +338,12 @@ This is not a good way of creating arrays. If you know the size,
 create a vector with that size. If the size is not precisely known but
 you have a reasonable upper bound, you can 
 reserve the vector at that size:
-\begin{verbatim}
+\begin{lstlisting}
 vector<int> iarray;
 iarray.reserve(100);
 while ( ... )
   iarray.push_back( ... );
-\end{verbatim}
+\end{lstlisting}
 
 Other methods that change the size: \n{insert}, \n{erase}.
 
@@ -354,11 +354,11 @@ Other methods that change the size: \n{insert}, \n{erase}.
 \begin{block}{Vector as function argument}
   \label{sl:vector-arg}
   You can pass a vector to a function:
-\begin{verbatim}
+\begin{lstlisting}
 void print0( vector<double> v ) {
   cout << v[0] << endl;
 };
-\end{verbatim}
+\end{lstlisting}
 Vectors, like any argument, are passed by value, so the vector is
 actually copied into the function.
 \end{block}
@@ -388,13 +388,13 @@ actually copied into the function.
   Write code to take a vector of integers, and construct two
   vectors, one containing all the odd inputs, and one containing all
   the even inputs. So:
-\begin{verbatim}
+\begin{lstlisting}
 input:
    5,6,2,4,5
 output:
    5,5
    6,2,4
-\end{verbatim}
+\end{lstlisting}
 \end{exercise}
 
 \begin{block}{Vector pass by reference}
@@ -408,11 +408,11 @@ output:
   \label{ex:vec-rand-sort}
   Write functions \n{random_vector} and \n{sort} to make the following
   main program work:
-\begin{verbatim}
+\begin{lstlisting}
 int length = 10;
 vector<float> values = random_vector(length);
 sort(values);
-\end{verbatim}
+\end{lstlisting}
   (This creates a vector of random values of a specified length, and
 then sorts it.)
 
@@ -434,7 +434,7 @@ vector is passed to the constructor. Since the class definition is an
 abstract definition of all the object, clearly you can not have the
 array size there.
 
-\begin{verbatim}
+\begin{lstlisting}
 class witharray {
 private:
   vector<int> the_array( ???? );
@@ -443,13 +443,13 @@ public:
     thearray( ???? n ???? );
   }
 }
-\end{verbatim}
+\end{lstlisting}
 
 \begin{slide}{Can you make a class around a vector?}
   \label{sl:class-with-vector}
   Vector needs to be created with the object, so you can not have the
   size in the class definition
-\begin{verbatim}
+\begin{lstlisting}
 class witharray {
 private:
   vector<int> the_array( ???? );
@@ -458,7 +458,7 @@ public:
     thearray( ???? n ???? );
   }
 }
-\end{verbatim}
+\end{lstlisting}
 \end{slide}
 
 The solution is to specify a vector without size in the class
@@ -469,7 +469,7 @@ over the vector member of the object.
 \begin{block}{Create and assign}
   \label{sl:class-has-vector}
   The following mechanism works:
-\begin{verbatim}
+\begin{lstlisting}
 class witharray {
 private:
   vector<int> the_array;
@@ -478,13 +478,13 @@ public:
     : the_array(vector<int>(n)) {
   };
 };
-\end{verbatim}
+\end{lstlisting}
 Better than
-\begin{verbatim}
+\begin{lstlisting}
   witharray( int n ) {
     the_array = vector<int>(n);
   };
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 You could read this as
@@ -509,15 +509,15 @@ It is tempting to use \n{push_back} to create a vector dynamically.
 
 \begin{block}{Dynamic size extending}
   \label{sl:vector-extend}
-\begin{verbatim}
+\begin{lstlisting}
 vector<int> iarray;
-\end{verbatim}
+\end{lstlisting}
 creates a vector of size zero. You can then
-\begin{verbatim}
+\begin{lstlisting}
 iarray.push_back(5);
 iarray.push_back(32);
 iarray.push_back(4);
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 However, this dynamic resizing involves memory management, and maybe
@@ -551,21 +551,21 @@ timing cost.
 Timings are partly predictable, partly surprising:
 \begin{block}{Timing}
   \label{sl:vector-extend-time}
-\begin{verbatim}
+\begin{lstlisting}
   Flexible time: 2.445
   Static at time: 1.177
   Static assign time: 0.334
   Static assign time to new: 0.467
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 The increased time for \n{new} is a mystery.
 
 So do you use \n{at} for safety or \n{[]} for speed? Well, you could
 use \n{at} during development of the code, and insert
-\begin{verbatim}
+\begin{lstlisting}
 #define at(x) operator[](x)
-\end{verbatim}
+\end{lstlisting}
 for production.
 
 \Level 0 {Wrapping a vector in an object}
@@ -586,10 +586,10 @@ Unfortunately this means you may have to recreate some methods:
 \begin{block}{Multi-dimensional vectors}
   \label{sl:multi-vector}
   Multi-dimensional is harder with vectors:
-\begin{verbatim}
+\begin{lstlisting}
 vector<float> row(20);
 vector<vector<float>> rows(10,row);
-\end{verbatim}
+\end{lstlisting}
 Vector of vectors.
 \end{block}
 
@@ -604,13 +604,13 @@ the elements are not contiguous. However, let's continue with it for a moment.
 \begin{block}{Matrix class'}
   \label{sl:matrix-class-cont}
   Better idea:
-\begin{verbatim}
+\begin{lstlisting}
   elements = vector<double>(rows*cols);
   ...
   void get(int i,int j) {
     return elements.at(i*cols+j);
   }
-\end{verbatim}
+\end{lstlisting}
 (Even more efficient: use cpp macro)
 \end{block}
 
@@ -634,9 +634,9 @@ many libraries and codes store a matrix traditionally.
 The syntax for \n{set} and \n{get} can be improved.
 \begin{exercise}
   Write a method \n{element} of type \n{double&}, so that you can write
-\begin{verbatim}
+\begin{lstlisting}
 A.element(2,3) = 7.24;
-\end{verbatim}
+\end{lstlisting}
 \end{exercise}
 
 \Level 0 {Static arrays}
@@ -676,15 +676,15 @@ the range-based looping.
 
 An \indextermdef{iterator} is a pointer to a vector element. Mirroring
 the index-loop convention of
-\begin{verbatim}
+\begin{lstlisting}
 for (int i=0; i<hi; i++)
   element = vec.at(i);
-\end{verbatim}
+\end{lstlisting}
 you can iterate:
-\begin{verbatim}
+\begin{lstlisting}
 for (auto elt_ptr=vec.begin(); elt_ptr<vec.end(); ++elt_ptr)
   element = *elt_ptr;
-\end{verbatim}
+\end{lstlisting}
 Some remarks:
 \begin{itemize}
 \item This is one of the very few places where you need the asterisk in C++
@@ -727,13 +727,13 @@ by value, but it is the array address that is passed rather than its value.
 
 Multi-dimensional arrays can be declared and used with a simple extension of
 the prior syntax:
-\begin{verbatim}
+\begin{lstlisting}
 float matrix[15][25];
 
 for (int i=0; i<15; i++)
   for (int j=0; j<25; j++)
     // something with matrix[i][j]
-\end{verbatim}
+\end{lstlisting}
 
 Passing a multi-dimensional array to a function, only the first
 dimension can be left unspecified:

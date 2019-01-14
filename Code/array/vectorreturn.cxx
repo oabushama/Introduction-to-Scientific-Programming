@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2016/7 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2016-9 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** vectorreturn.cxx : return vector from function
  ****
@@ -27,7 +27,8 @@ vector<int> make_vector(int n) {
 int main() {
 
   //codesnippet vectorreturn
-  vector<int> x1 = make_vector(10); // "auto" also possible!
+  vector<int> x1 = make_vector(10);
+  // "auto" also possible!
   cout << "x1 size: " << x1.size() << endl;
   cout << "zero element check: " << x1[0] << endl;
   //codesnippet end

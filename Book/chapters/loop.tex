@@ -48,12 +48,12 @@ section~\ref{sec:loopuntil}.
 In the most common case, a for loop has a
 \indextermbus{loop}{counter}, ranging from some lower to some upper
 bound. An example showing the syntax for this simple case is:
-\begin{verbatim}
+\begin{lstlisting}
 for (int var=low; var<upper; var++) {
   // statements involving the loop variable:
   cout << "The square of " << var << " is " << var*var << endl;
 }
-\end{verbatim}
+\end{lstlisting}
 The \n{for} line is called the \indextermbus{loop}{header}, and the
 statements between curly brackets the \indextermbus{loop}{body}.
 Each execution of the loop body is called an
@@ -71,25 +71,25 @@ Each execution of the loop body is called an
   to an upper bound.
 
   Here is the syntax in the simplest case:
-\begin{verbatim}
+\begin{lstlisting}
 for (int var=low; var<upper; var++) {
   // statements involving var
   cout << "The square of " << var << " is " << var*var << endl;
 }
-\end{verbatim}
+\end{lstlisting}
 \begin{cnote}
 Use compiler flag \n{-std=c99}.
 \end{cnote}
 \end{slide}
 
 If you want to perform $N$ iterations you can write
-\begin{verbatim}
+\begin{lstlisting}
 for (int iter=0; iter<N; iter++)
-\end{verbatim}
+\end{lstlisting}
 or
-\begin{verbatim}
+\begin{lstlisting}
 for (int iter=1; iter<=N; iter++)
-\end{verbatim}
+\end{lstlisting}
 The former is slightly more idiomatic to~C++.
 
 The loop header has three components, all of which are optional.
@@ -136,65 +136,65 @@ This is how a loop is executed.
   executed? (You can assume that the body does not change the loop variable.)
   \begin{itemize}
   \item 
-\begin{verbatim}
+\begin{lstlisting}
 for (int i=0; i<7; i++)
-\end{verbatim}
+\end{lstlisting}
   \item 
-\begin{verbatim}
+\begin{lstlisting}
 for (int i=0; i<=7; i++)
-\end{verbatim}
+\end{lstlisting}
   \item 
-\begin{verbatim}
+\begin{lstlisting}
 for (int i=0; i<0; i++)
-\end{verbatim}
+\end{lstlisting}
   \item What is the last iteration executed? \n{1,2,3}?
-\begin{verbatim}
+\begin{lstlisting}
 for (int i=1; i<=2; i=i+2)
-\end{verbatim}
+\end{lstlisting}
   \item What is the last iteration executed? \n{2,4,5}?
-\begin{verbatim}
+\begin{lstlisting}
 for (int i=1; i<=5; i*=2)
-\end{verbatim}
+\end{lstlisting}
   \item 
-\begin{verbatim}
+\begin{lstlisting}
 for (int i=0; i<0; i--)
-\end{verbatim}
+\end{lstlisting}
   \item 
-\begin{verbatim}
+\begin{lstlisting}
 for (int i=5; i>=0; i--)
-\end{verbatim}
+\end{lstlisting}
   \item 
-\begin{verbatim}
+\begin{lstlisting}
 for (int i=5; i>0; i--)
-\end{verbatim}
+\end{lstlisting}
   \end{itemize}
 \end{review}
 
 Some variations on the simple case.
 \begin{itemize}
 \item It is preferable to declare the loop variable in the loop header:
-\begin{verbatim}
+\begin{lstlisting}
 for (int var=low; var<upper; var++) {
-\end{verbatim}
+\end{lstlisting}
 The variable only has
 meaning inside the loop so it should only be defined there.
 
 However, it can also be defined outside the loop:
-\begin{verbatim}
+\begin{lstlisting}
 int var;
 for (var=low; var<upper; var++) {
-\end{verbatim}
+\end{lstlisting}
 You will see an example where this makes sense below.
 \item The stopping test can be omitted
-\begin{verbatim}
+\begin{lstlisting}
 for (int var=low; ; var++) { ... }
-\end{verbatim}
+\end{lstlisting}
 if the loops ends in some other way. You'll see this later.
 \item The stopping test doesn't need to be an upper bound. Here is an
   example of a loop that counts down to a lower bound.
-\begin{verbatim}
+\begin{lstlisting}
 for (int var=high; var>=low; var--) { ... }
-\end{verbatim}
+\end{lstlisting}
 \item Here are a couple of popular increments:
   \begin{itemize}
   \item \n{i++} for a loop that counts forward;
@@ -209,17 +209,17 @@ for (int var=high; var>=low; var--) { ... }
   (Historical note: at some point Fortran was post-test, so one
   iteration was always performed.)
 \item The loop body can be a single statement:
-\begin{verbatim}
+\begin{lstlisting}
 if (x<0)
   x = -x;
-\end{verbatim}
+\end{lstlisting}
 or a block:
-\begin{verbatim}
+\begin{lstlisting}
 if (x<0) {
   cout << "Error" << endl;
   x = -x;
 }
-\end{verbatim}
+\end{lstlisting}
 \end{itemize}
 
 \begin{slide}{Loop syntax}
@@ -232,10 +232,10 @@ if (x<0) {
   \item Any and all of initialization, test, increment can be empty:\\
     \n{for(;;) {...}}
   \item (The loop variable can be defined outside the loop:
-\begin{verbatim}
+\begin{lstlisting}
 int var;
 for (var=low; var<upper; var++) {
-\end{verbatim}
+\end{lstlisting}
 but it's cleaner to make it local.)
 \item Loop body is a single statement or a block.
   \end{itemize}
@@ -244,11 +244,11 @@ but it's cleaner to make it local.)
 Quite often, the loop body will contain another loop. For instance,
 you may want to iterate over all elements in a matrix. Both loops will
 have their own unique loop variable.
-\begin{verbatim}
+\begin{lstlisting}
 for (int i=0; i<m; i++)
   for (int j=0; j<n; j++)
     ...
-\end{verbatim}
+\end{lstlisting}
 This is called \indextermbus{loop}{nest}; 
 the \n{i}-loop is called the \indextermsub{outer}{loop} and the
 \n{j}-loop the \indextermsub{inner}{loop}.
@@ -256,11 +256,11 @@ the \n{i}-loop is called the \indextermsub{outer}{loop} and the
 \begin{slide}{Nested loops}
   \label{sl:for-nest}
   Traversing a matrix:
-\begin{verbatim}
+\begin{lstlisting}
 for (int i=0; i<m; i++)
   for (int j=0; j<n; j++)
     ...
-\end{verbatim}
+\end{lstlisting}
 This is called `loop nest', with\\
 \n{i}: outer loop\\
 \n{j}: inner loop.
@@ -336,9 +336,9 @@ coding such cases.
 
 First of all, the stopping test in the `for' loop is optional, so you
 can write an indefinite loop as:
-\begin{verbatim}
+\begin{lstlisting}
 for (int var=low; ; var=var+1) { ... }
-\end{verbatim}
+\end{lstlisting}
 
 \begin{slide}{Indefinite looping}
   \label{sl:for-inf}
@@ -348,42 +348,42 @@ for (int var=low; ; var=var+1) { ... }
 
   First of all, you can use a `for' loop and leave the upperbound
   unspecified:
-\begin{verbatim}
+\begin{lstlisting}
 for (int var=low; ; var=var+1) { ... }
-\end{verbatim}
+\end{lstlisting}
 \end{slide}
 
 How do you end such a loop? For that you use the
 \indextermtt{break} statement. If the execution encounters this
 statement, it will continue with the first statement after the loop.
 
-\begin{verbatim}
+\begin{lstlisting}
 for (int var=low; ; var=var+1) {
   // statements;
   if (some_test) break;
   // more statements;
 }
-\end{verbatim}
+\end{lstlisting}
 
 \begin{slide}{Break out of a loop}
   \label{sl:for-break}
   This loop would run forever, so you need a different way to end
   it. For this, use the \indextermttdef{break} statement:
-\begin{verbatim}
+\begin{lstlisting}
 for (int var=low; ; var=var+1) {
   statement;
   if (some_test) break;
   statement;
 }
-\end{verbatim}
+\end{lstlisting}
 \end{slide}
 
 \begin{exercise}
   All three parts of a loop header are optional. What would be the
   meaning of
-\begin{verbatim}
+\begin{lstlisting}
 for (;;) { /* some code */ }
-\end{verbatim}
+\end{lstlisting}
 ?
 \end{exercise}
 
@@ -391,7 +391,7 @@ for (;;) { /* some code */ }
   \label{sl:for-break-var}
   A loop with a break is one case where you want the loop variable to
   be global:
-\begin{verbatim}
+\begin{lstlisting}
 int var;
 ... code that sets var ...
 for ( ; var<upper; var++) {
@@ -400,20 +400,20 @@ for ( ; var<upper; var++) {
   ... more statements ...
 }
 ... code that uses the breaking value of var ...
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{block}{Test in the loop header}
   \label{sl:looptest}
   If the test comes at the start or end of an iteration, you can move it
   to the loop header:
-\begin{verbatim}
+\begin{lstlisting}
 bool some_test{false};
 for (int var=low; !some_test ; var++) {
   ... some code ...
   some_test = ... some condition ...
 }
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 Another mechanism to alter the control flow in a loop is the
@@ -422,7 +422,7 @@ skips to the start of the next iteration.
 
 \begin{block}{Skip iteration}
   \label{sl:for-cont}
-\begin{verbatim}
+\begin{lstlisting}
 for (int var=low; var<N; var++) {
   statement;
   if (some_test) {
@@ -430,16 +430,16 @@ for (int var=low; var<N; var++) {
     statement;
   }
 }
-\end{verbatim}
+\end{lstlisting}
 Alternative:
-\begin{verbatim}
+\begin{lstlisting}
 for (int var=low; var<N; var++) {
   statement;
   if (!some_test) continue;
   statement;
   statement;
 }
-\end{verbatim}
+\end{lstlisting}
 The only difference is in layout.
 \end{block}
 
@@ -449,17 +449,17 @@ The only difference is in layout.
   \indextermttdef{while} loop, which repeats until a condition is met.
 
   Syntax:
-\begin{verbatim}
+\begin{lstlisting}
 while ( condition ) {
   statements;
 }
-\end{verbatim}
+\end{lstlisting}
 or
-\begin{verbatim}
+\begin{lstlisting}
 do {
   statements;
 } while ( condition );
-\end{verbatim}
+\end{lstlisting}
 The while loop does not have a counter or an update statement; if you
 need those, you have to create them yourself.
 \end{block}

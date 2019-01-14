@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2016-8 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2016-9 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** point.cxx : struct for cartesian vector
  ****
@@ -14,7 +14,9 @@ using std::cout;
 using std::endl;
 
 //codesnippet structdef
-struct vector { double x; double y; int label; } ;
+struct vector {
+  double x; double y; int label;
+};
 //codesnippet end
 
 //codesnippet structuse
@@ -26,7 +28,9 @@ int main() {
   v2 = {3.,4.,5};
 
   v2 = v1;
-  cout << "v2: " << v2.x << "," << v2.y << endl;
+  cout << "v2: "
+       << v2.x << "," << v2.y
+       << endl;
   //codesnippet end
   
   return 0;

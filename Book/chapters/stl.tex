@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% stl.tex : about the standard template library
 %%%%
@@ -163,6 +163,19 @@ cout << numeric_limits<long>::max();
   that is, $n$-factorial, can be represented in an \n{int}, \n{long},
   or \n{long long}. Can you write this as a templated function?
 \end{exercise}
+
+\begin{block}{Detection of Inf and NaN}
+  The functions \indextermtt{isinf} and \indextermtt{isnan} are
+  defined for the floating point types (\n{float}, \n{double}, \n{long
+    double}), returning a \n{bool}.
+\begin{verbatim}
+#include <math.h>
+isnan(-1.0/0.0);   // false
+isnan(sqrt(-1.0)); // true
+isinf(-1.0/0.0);   // true
+isinf(sqrt(-1.0)); // false
+\end{verbatim}
+\end{block}
 
 \Level 0 {Random numbers}
 \label{sec:stl:random}

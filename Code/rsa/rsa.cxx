@@ -47,7 +47,7 @@ auto encrypt(string msg,long long n,long long d) {
 	cout << "encryption overflows at power " << id << endl;
 	throw(1);
       }
-      nd *= c;
+      nd = (nd%n) * c ; // nd *= c;
     }
     encrypted.push_back( nd%n );
   }
@@ -77,9 +77,12 @@ int main() {
     cout << "encryption failed" << endl;
     return 1;
   }
+
   cout << "encrypted:";
   for ( auto c : crypt ) cout << " " << c;
   cout << endl;
 
+  // the key is bignum,d so we can use that
+  
   return 0;
 }

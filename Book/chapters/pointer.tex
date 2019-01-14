@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% pointer.tex : about pointers
 %%%%
@@ -402,7 +402,12 @@ You can still make shared pointers to scalar data, for instance to an
 array of scalars. You then get the advantage of the memory management,
 but you do not get the \n{size} function and such that you would have
 if you'd used a \n{vector} object.
+
+Here is an example of a pointer to a solitary double:
 %
-%%%% VLE fix this!
-%%%%\snippetwithoutput{ptrarray}{pointer}{ptrarray}
-%%%%
+\snippetwithoutput{ptrdouble}{pointer}{ptrdouble}
+%
+It is possible to initialize that double:
+%
+\snippetwithoutput{ptrdoubleinit}{pointer}{ptrdoubleinit}
+

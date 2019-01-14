@@ -9,6 +9,7 @@
  ****************************************************************/
 
 #include <iostream>
+using std::cin;
 using std::cout;
 using std::endl;
 
@@ -20,13 +21,9 @@ int main() {
 
   //codesnippet ptrarray
   auto array = make_shared<double>(50);
-  shared_ptr<double> other;
-  array.get()[2] = 3.;
-  // the following two are ILLEGAL:
-  // array->at(2) = 4.;
-  // array.get().at(2) = 4.;
-  other = array;
-  cout << other.get()[2] << endl;
+  // shared_ptr<double> other;
+  // other = array;
+  // cout << other.get()[2] << endl;
   //codesnippet end
 
   return 0;

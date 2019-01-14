@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++11/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% if.tex : conditionals
 %%%%
@@ -22,27 +22,27 @@ testing and choosing an action accordingly is called a
 Here are some forms a conditional can take.
 
 Single statement
-\begin{verbatim}
+\begin{lstlisting}
 if (x<0)
   x = -x;
-\end{verbatim}
+\end{lstlisting}
 Single statement and alternative:
-\begin{verbatim}
+\begin{lstlisting}
 if (x>=0)
   x = 1;
 else
   x = -1;
-\end{verbatim}
+\end{lstlisting}
 Multiple statements:
-\begin{verbatim}
+\begin{lstlisting}
 if (x<0) {
   x = 2*x; y = y/2;
 } else {
   x = 3*x; y = y/3;
 }
-\end{verbatim}
+\end{lstlisting}
 Chaining conditionals (where the dots stand for omitted code):
-\begin{verbatim}
+\begin{lstlisting}
 if (x>0) {
   ....
 } else if (x<0) {
@@ -50,9 +50,9 @@ if (x>0) {
 } else {
   ....
 }
-\end{verbatim}
+\end{lstlisting}
 Nested conditionals:
-\begin{verbatim}
+\begin{lstlisting}
 if (x>0) {
   if (y>0) {
     ....
@@ -62,7 +62,7 @@ if (x>0) {
 } else {
   ....
 }
-\end{verbatim}
+\end{lstlisting}
 \begin{itemize}
 \item
   In that last example the outer curly brackets are optional. But it's
@@ -75,13 +75,13 @@ if (x>0) {
   \label{sl:ifthenelse}
   A \indextermdef{conditional} is a test: `if something is true, then do
   this, otherwise maybe do something else'. The C++ syntax is
-\begin{verbatim}
+\begin{lstlisting}
 if ( something ) {
   do something;
 } else {
   do otherwise;
 }
-\end{verbatim}
+\end{lstlisting}
 \begin{itemize}
 \item The `else' part is optional
 \item You can leave out braces in case of single statement.
@@ -91,15 +91,15 @@ if ( something ) {
 \begin{slide}{Complicated conditionals}
   \label{sl:elseif}
   Chain:
-\begin{verbatim}
+\begin{lstlisting}
 if ( something ) {
   ...
 } else if ( something else ) {
   ...
 }
-\end{verbatim}
+\end{lstlisting}
 Nest:
-\begin{verbatim}
+\begin{lstlisting}
 if ( something ) {
   if ( something else ) {
     ...
@@ -107,7 +107,7 @@ if ( something ) {
     ...
   }
 }
-\end{verbatim}
+\end{lstlisting}
 \end{slide}
 
 \begin{exercise}
@@ -115,23 +115,23 @@ if ( something ) {
   For what values of $x$ will the left code print~`\n{b}'?\\
   For what values of $x$ will the right code print~`\n{b}'?
   \begin{multicols}{2}
-\begin{verbatim}
+\begin{lstlisting}
 float x = /* something */
 if ( x > 1 ) {
    cout << "a" << endl;
    if ( x > 2 )
     cout << "b" << endl;
 }
-\end{verbatim}
+\end{lstlisting}
 \columnbreak
-\begin{verbatim}
+\begin{lstlisting}
 float x = /* something */
 if ( x > 1 ) {
    cout << "a" << endl;
-} else if ( x > 2 )
+} else if ( x > 2 ) {
     cout << "b" << endl;
 }
-\end{verbatim}
+\end{lstlisting}
   \end{multicols}
 \end{exercise}
 
@@ -183,12 +183,12 @@ quantity :: number | variable
   \label{ex:oddeven}
   Read in an integer. If it is even, print `even', otherwise print
   'odd':
-\begin{verbatim}
+\begin{lstlisting}
 if ( /* your test here */ ) 
   cout << "even" << endl;
 else
   cout << "odd" << endl;
-\end{verbatim}
+\end{lstlisting}
 Can you rewrite your test so that the output lines are switched?
 \end{exercise}
 
@@ -206,27 +206,27 @@ Can you rewrite your test so that the output lines are switched?
   \begin{itemize}
   \item The tests \n{if (i>0)} and \n{if (0<i)} are equivalent.
   \item The test
-\begin{verbatim}
+\begin{lstlisting}
 if (i<0 && i>1) 
   cout << "foo"
-\end{verbatim}
+\end{lstlisting}
 prints \n{foo} if
     $i<0$ and also if $i>1$.
   \item The test 
-\begin{verbatim}
+\begin{lstlisting}
 if (0<i<1)
   cout << "foo"
-\end{verbatim}
+\end{lstlisting}
 prints \n{foo} if $i$ is
     between zero and one.
   \end{itemize}
   Any comments on the following?
-\begin{verbatim}
+\begin{lstlisting}
 bool x;
 // ... code with x ...
 if ( x == true )
   // do something
-\end{verbatim}
+\end{lstlisting}
 \end{review}
 
 \Level 0 {Switch statement}
@@ -246,12 +246,12 @@ values, there is the \indextermtt{switch} statement.
   \label{ex:switch-range}
   Suppose the variable \n{n} is a nonnegative integer. Write a
   \n{switch} statement that has the same effect as:
-\begin{verbatim}
+\begin{lstlisting}
 if (n<5)
   cout << "Small" << endl;
 else
   cout << "Not small" << endl;
-\end{verbatim}
+\end{lstlisting}
 
 \end{exercise}
 \Level 0 {Scopes}
@@ -263,23 +263,23 @@ statement, or of a block in curly brackets. Such a block creates a
 %
 where you can define local variables.
 
-\begin{verbatim}
+\begin{lstlisting}
 if ( something ) {
   int i; 
   .... do something with i
 }
 // the variable `i' has gone away.
-\end{verbatim}
+\end{lstlisting}
 
 \begin{slide}{Local variables in conditionals}
   \label{sl:if-scope}
   The curly brackets in a conditional allow you to define local variables:
-\begin{verbatim}
+\begin{lstlisting}
 if ( something ) {
   int i; 
   .... do something with i
 }
 // the variable `i' has gone away.
-\end{verbatim}
+\end{lstlisting}
 \end{slide}
 

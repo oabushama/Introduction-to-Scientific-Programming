@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% object.tex : we get down to OOP!
 %%%%
@@ -132,14 +132,14 @@ changes are allowed that maintain that relation.
 \begin{block}{Member default values}
   \label{sl:class-defval}
   Class members can have default values, just like ordinary variables:
-\begin{verbatim}
+\begin{lstlisting}
 class Point {
 private:
   float x=3., y=.14;
 private:
   // et cetera
 }
-\end{verbatim}
+\end{lstlisting}
   Each object will have its members initialized to these values.
 \end{block}
 
@@ -215,7 +215,7 @@ For instance, you may want to scale a vector by some amount:
 \begin{block}{Direct alteration of internals}
   \label{sl:obj-return-ref}
   Return a reference to a private member:
-\begin{verbatim}
+\begin{lstlisting}
 class Vector {
 private:
   double vx,vy;
@@ -226,14 +226,14 @@ int main() {
   Vector v;
   v.x() = 3.1;
 }
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{block}{Reference to internals}
   \label{sl:obj-return-const-ref}
   Returning a reference saves you on copying.\\
   Prevent unwanted changes by using a `const reference'.
-\begin{verbatim}
+\begin{lstlisting}
 class Grid {
 private:
   vector<Point> thepoints;
@@ -246,7 +246,7 @@ int main() {
   cout << grid.points()[0];
   // grid.points()[0] = whatever ILLEGAL
 }
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 The methods you have seen so far only returned elementary
@@ -271,9 +271,9 @@ not. The following code looks plausible:
 %
 but it will give an error message during compilation. The reason is
 that 
-\begin{verbatim}
+\begin{lstlisting}
 Vector p;
-\end{verbatim}
+\end{lstlisting}
 calls the default constructor. Now that you have defined your own
 constructor, the default constructor no longer exists. So you need to
 define it explicitly:
@@ -285,12 +285,12 @@ define it explicitly:
 \small
   \verbatimsnippet{pointdef2}
   gives (g++; different for intel):
-\begin{verbatim}
+\begin{lstlisting}
 pointdefault.cxx: In function 'int main()':
 pointdefault.cxx:32:21: error: no matching function for call to
                 'Vector::Vector()'
    Vector v1(1.,2.), v2;
-\end{verbatim}
+\end{lstlisting}
 The problem is with \n{v2}. How is it created? We need to define two constructors:
 \verbatimsnippet{pointdef1}
 \end{slide}
@@ -302,7 +302,7 @@ functions.
 
 \begin{block}{Use accessor functions!}
   \label{sl:repr-independent}
-\begin{verbatim}
+\begin{lstlisting}
 class PositiveNumber { /* ... */ }
 class Point {
 private:
@@ -315,7 +315,7 @@ public:
   float get_r() { /* ... */ };
   float get_theta() { /* ... */ };
 };
-\end{verbatim}
+\end{lstlisting}
   Functionality is independent of implementation.
 \end{block}
 
@@ -323,7 +323,7 @@ public:
   \begin{exercise}
     \label{ex:geom:twoconstruct}
     Write a \n{Point} class that has two constructors:
-\begin{verbatim}
+\begin{lstlisting}
 class Point {
 private:
   // data members
@@ -335,7 +335,7 @@ public:
   float get_r() { /* ... */ };
   float get_theta() { /* ... */ };
 };
-\end{verbatim}
+\end{lstlisting}
 Use $r,\theta$ for the private variables, do not store $x,y$.
   \end{exercise}
 \end{comment}
@@ -369,7 +369,7 @@ to control outside access to it.
 \end{itemize}
 
 Accessor functions:
-\begin{verbatim}
+\begin{lstlisting}
 class thing {
 private:
  float x;
@@ -377,16 +377,16 @@ public:
  float get_x() { return x; };
  void set_x(float v) { x = v; }
 };
-\end{verbatim}
+\end{lstlisting}
 This has advantages:
 \begin{itemize}
 \item You can print out any time you get/set the value; great for
   debugging:
-\begin{verbatim}
+\begin{lstlisting}
 void set_x(float v) {
   cout << "setting: " << v << endl;
   x = v; }
-\end{verbatim}
+\end{lstlisting}
 \item You can catch specific values: if \n{x} is always supposed to be
   positive, print an error (throw an exception) if nonpositive.
 \end{itemize}
@@ -433,23 +433,23 @@ be distinguished by their argument types. This is known as \indexterm{overloadin
 \label{sec:operatordef}
 
 Instead of writing 
-\begin{verbatim}
+\begin{lstlisting}
 myobject.plus(anotherobject)
-\end{verbatim}
+\end{lstlisting}
 you can actually redefine the \n{+} operator so that
-\begin{verbatim}
+\begin{lstlisting}
 myobject + anotherobject
-\end{verbatim}
+\end{lstlisting}
 is legal.
 
 The syntax for this is
 \begin{block}{Operator overloading}
   \label{sl:object-operator}
-\begin{verbatim}
+\begin{lstlisting}
 <returntype> operator<op>( <argument> ) { <definition> }
-\end{verbatim}
+\end{lstlisting}
 For instance:
-\begin{verbatim}
+\begin{lstlisting}
 class Point {
 private:
   float x,y;
@@ -458,7 +458,7 @@ public:
     return Point(factor*x,factor*y);
   };
 };
-\end{verbatim}
+\end{lstlisting}
 Can even redefine equals and parentheses.
 \end{block}
 
@@ -475,10 +475,10 @@ Just like the default constructor which is defined if you don't define
 an explicit constructor, there is an implicitly defined
 \indextermsub{copy}{constructor}. This constructor is invoked whenever
 you do an obvious copy:
-\begin{verbatim}
+\begin{lstlisting}
 my_object x,y; // regular or default constructor
 x = y;         // copy constructor
-\end{verbatim}
+\end{lstlisting}
 Usually the copy constructor that is implicitly defined does the right
 thing: it copies all data members. (If you want to define your own copy
 constructor, you need to know its prototype. We will not go into that.)
@@ -546,9 +546,9 @@ Example:
   \item Every class \n{myclass} has a \emph{destructor} \n{~myclass}
     defined by default.
   \item The default destructor does nothing:
-\begin{verbatim}
+\begin{lstlisting}
 ~myclass() {};
-\end{verbatim}
+\end{lstlisting}
 \item A destructor is called when the object goes out of scope.\\
   Great way to prevent memory leaks: dynamic data can be released
   in the destructor. Also: closing files.
@@ -565,7 +565,7 @@ Example:
 \begin{exercise}
   \label{ex:destruct-trace}
   Write a class
-\begin{verbatim}
+\begin{lstlisting}
 class HasInt {
 private:
   int mydata;
@@ -573,14 +573,14 @@ public:
   HasInt(int v) { /* initialize */ };
   ...
 }
-\end{verbatim}
+\end{lstlisting}
 used as
-\begin{verbatim}
+\begin{lstlisting}
 { HasInt v(5);
   v.set(6);
   v.set(-2);
 }
-\end{verbatim}
+\end{lstlisting}
 which gives output
 \begin{verbatim}
 **** creating object with 5 ****
@@ -608,7 +608,7 @@ which gives output
   \label{sl:class-this}
   Inside an object, a \indexterm{pointer} to the object is available
   as \indextermtt{this}:
-\begin{verbatim}
+\begin{lstlisting}
 class Myclass {
 private:
   int myint;
@@ -617,13 +617,13 @@ public:
     this->myint = myint;
   };
 };
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 \begin{block}{`this' use}
   \label{sl:class-this-fun}
 This is not often needed. Typical use case:
 you need to call a function inside a method that needs the object as argument)
-\begin{verbatim}
+\begin{lstlisting}
 class someclass;
 void somefunction(const someclass &c) {
   /* ... */ }
@@ -632,7 +632,7 @@ class someclass {
 void somemethod() {
   somefunction(*this);
 };
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \Level 2 {Static members}
@@ -640,18 +640,18 @@ void somemethod() {
 \begin{block}{Static class members}
   \label{sl:static-member}
   A static member acts like shared between all objects.
-\begin{verbatim}
+\begin{lstlisting}
 class MyClass {
 private:
   static int object_count;
 public:
   MyClass() { object_count++; };
 }
-\end{verbatim}
+\end{lstlisting}
 Initialization has to be done elsewhere:
-\begin{verbatim}
+\begin{lstlisting}
 MyClass::object_count = 0;
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \Level 0 {Review question}

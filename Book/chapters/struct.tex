@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% struct.tex : about structures
 %%%%
@@ -29,9 +29,9 @@ contains other datatypes; these can be elementary, or other structs.
 The elements of a structure are also called
 \emph{members}\index{member!of struct}.
 You can give them an initial value:
-\begin{verbatim}
+\begin{lstlisting}
 struct vector { double x=0.; double y=0.; } ;
-\end{verbatim}
+\end{lstlisting}
   
 \begin{slide}{Bundling information}
   \label{sl:struct-why}
@@ -55,7 +55,7 @@ that you first need to define the structure type. This definition can
 be done inside your main program or before it. The latter is
 preferable, for instance if you need to pass the structure to a function.
 
-\begin{verbatim}
+\begin{lstlisting}
 // definition of the struct
 struct AStructName { int num; double val; }
 int main() {
@@ -63,7 +63,7 @@ int main() {
   AStructName mystruct1,mystruct2;
   .... code that uses your structures ....
 }
-\end{verbatim}
+\end{lstlisting}
 
 \begin{slide}{How to use structures}
   \label{sl:structinprog}
@@ -72,7 +72,7 @@ int main() {
   \item Make some structures;
   \item Use them.
   \end{enumerate}
-\begin{verbatim}
+\begin{lstlisting}
 // definition of the struct
 struct AStructName { int num; double val; }
 int main() {
@@ -80,7 +80,7 @@ int main() {
   AStructName mystruct1,mystruct2;
   .... code that uses your structures ....
 }
-\end{verbatim}
+\end{lstlisting}
 \end{slide}
 
 There are various ways of setting the members of the structure:
@@ -113,19 +113,19 @@ There are various ways of setting the members of the structure:
   \begin{itemize}
   \item All members of a struct have to have the same type.
   \item Writing
-\begin{verbatim}
+\begin{lstlisting}
 struct numbered { int n; double x; };
-\end{verbatim}
+\end{lstlisting}
 creates an object with an integer and a double as members.
 \item With the above definition and \n{struct numbered xn;},
-\begin{verbatim}
+\begin{lstlisting}
 cout << xn << endl;
-\end{verbatim}
+\end{lstlisting}
 is correct C++.
 \item Same, 
-\begin{verbatim}
+\begin{lstlisting}
 xn.x = xn.n+1;
-\end{verbatim}
+\end{lstlisting}
   \end{itemize}
 \end{exercise}
 

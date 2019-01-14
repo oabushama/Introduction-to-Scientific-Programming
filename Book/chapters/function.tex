@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% function.tex : functions
 %%%%
@@ -40,7 +40,7 @@ Example: multiple norm calculations:
   \begin{multicols}{2}
     \small
     Repeated code:
-\begin{verbatim}
+\begin{lstlisting}
 float s = 0;
 for (int i=0; i<nx; i++)
   s += abs(x[i]);
@@ -49,10 +49,10 @@ s = 0;
 for (int i=0; i<ny; i++)
   s += abs(y[i]);
 cout << "Inf norm y: " << s << endl;
-\end{verbatim}
+\end{lstlisting}
 \vfill\columnbreak
 becomes:
-\begin{verbatim}
+\begin{lstlisting}
 int InfNorm( vector<float> a ) {
   float s = 0;
   for (int i=0; i<n.size(); i++)
@@ -65,7 +65,7 @@ int main() {
        << InfNorm(x,nx) << endl;
   cout << "Inf norm y: " 
        << InfNorm(y,ny) << endl;
-\end{verbatim}
+\end{lstlisting}
   \end{multicols}
   (Don't worry about array stuff in this example)
 \end{block}
@@ -97,7 +97,7 @@ There are two sides to a function:
 \begin{block}{Function definition and call}
   \label{sl:def-call}
   \begin{multicols}{2}
-\begin{verbatim}
+\begin{lstlisting}
 for (int i=0; i<N; i++) {
   cout << i;
   if (i%2==0)
@@ -106,9 +106,9 @@ for (int i=0; i<N; i++) {
     cout << " is odd";
   cout << endl;
 }
-\end{verbatim}
+\end{lstlisting}
 \columnbreak
-\begin{verbatim}
+\begin{lstlisting}
 void report_evenness(int n) {
   cout << n;
   if (n%2==0)
@@ -123,7 +123,7 @@ int main() {
   for (int i=0; i<N; i++)
     report_evenness(i);
 }
-\end{verbatim}
+\end{lstlisting}
   \end{multicols}
 Code becomes more readable (though not necessarily shorter): introduce
 application terminology.
@@ -151,7 +151,7 @@ The \indextermbus{function}{call} consists of
 In the previous example, the function had an input, and performed some
 screen output. To have a function that takes part in the computation
 of your program, you would write something like:
-\begin{verbatim}
+\begin{lstlisting}
 int my_computation(int i) {
    return i+3;
 }
@@ -159,7 +159,7 @@ int my_computation(int i) {
 // in the main:
 int result;
 result = my_computation(5);
-\end{verbatim}
+\end{lstlisting}
 
 Functions are defined before the main program, and used in that program:
 Here is a program with a function that doubles its input:
@@ -191,20 +191,20 @@ of the function code do not have to be identical:
 
 \begin{block}{Code reuse}
   \label{sl:reuse}
-\begin{verbatim}
+\begin{lstlisting}
 double x,y, v,w;
 y = ...... computation from x .....
 w = ...... same computation, but from v .....
-\end{verbatim}
+\end{lstlisting}
 can be replaced by
-\begin{verbatim}
+\begin{lstlisting}
 double computation(double in) {
   return .... computation from `in' ....
 }
 
 y = computation(x);
 w = computation(v);
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 A final argument for using functions is code maintainability:
@@ -215,12 +215,12 @@ A final argument for using functions is code maintainability:
   once, you have to remember to change the other occurrence(s) too.
 \item Localization: any variables that only serve the calculation in
   the function now have a limited \indexterm{scope}.
-\begin{verbatim}
+\begin{lstlisting}
 void print_mod(int n,int d) {
   int m = n%d;
   cout << "The modulus of " << n << " and " << d 
        << " is " << m << endl;
-\end{verbatim}
+\end{lstlisting}
 \end{itemize}
 
 \begin{slide}{Why functions?}
@@ -295,7 +295,7 @@ The function can then be used in the main program, or in another function:
 
 \begin{block}{Functions without input, without return result}
   \label{sl:func-ex1}
-\begin{verbatim}
+\begin{lstlisting}
 void print_header() {
   cout << "****************" << endl;
   cout << "* Output       *" << endl;
@@ -307,12 +307,12 @@ int main() {
   // code that prints results ....
   return 0;
 }
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{block}{Functions with input}
   \label{sl:func-ex2}
-\begin{verbatim}
+\begin{lstlisting}
 void print_result(int day,float value) {
   cout << "****************" << endl;
   cout << "* Output       *" << endl;
@@ -324,27 +324,27 @@ int main() {
   print_result(25,3.456);
   return 0;
 }
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{block}{Functions with return result}
   \label{sl:func-return}
-\begin{verbatim}
+\begin{lstlisting}
 #include <cmath>
 double pi() {
   return 4*atan(1.0);
 }
-\end{verbatim}
+\end{lstlisting}
 The \n{atan} is a \indextermsub{standard}{function}
 \end{block}
 
 \begin{block}{Functions with input and output}
   \label{sl:func-param-return}
-\begin{verbatim}
+\begin{lstlisting}
 float squared(float x) {
   return x*x;
 }
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 A function body defines a
@@ -385,21 +385,21 @@ the sequence of factorials $n\mapsto f_n\equiv n!$ can be defined as
 Instead of using a subscript, we write an argument in parentheses
 \[ F(n) = n \times F(n-1) \qquad \hbox{if $n>0$, otherwise~$1$} \]
 and now it looks like a C++ function:
-\begin{verbatim}
+\begin{lstlisting}
 int factorial(int n)
-\end{verbatim}
+\end{lstlisting}
 is the function header of a factorial function. So what would the
 function body be? We need a \n{return} statement, and what we return
 should be $n \times F(n-1)$:
-\begin{verbatim}
+\begin{lstlisting}
 int factorial(int n) {
   return n*factorial(n-1);
 } // almost correct, but not quite
-\end{verbatim}
+\end{lstlisting}
 So what happens if you write
-\begin{verbatim}
+\begin{lstlisting}
 int f3; f3 = factorial(3);
-\end{verbatim}
+\end{lstlisting}
 Well,
 \begin{itemize}
 \item The expression \n{factorial(3)} calls the \n{factorial}
@@ -414,14 +414,14 @@ Well,
 \item \ldots~which returns~\ldots
 \item Uh oh. We forgot to include the case where \n{n} is zero. Let's
   fix that:
-\begin{verbatim}
+\begin{lstlisting}
 int factorial(int n) {
   if (n==0)
     return 1;
   else
     return n*factorial(n-1);
 }
-\end{verbatim}
+\end{lstlisting}
 \item Now \n{factorial(0)} is~1, so \n{factorial(1)} is
   \n{1*factorial(0)}, which is~1,\ldots
 \item \ldots~so \n{factorial(2)} is~2, and \n{factorial(3)} is~6.
@@ -432,14 +432,14 @@ int factorial(int n) {
   A functions is allowed to call itself, making it a \indextermsubdef{recursive}{function}.
   For example, you can define factorial as
   \[ F(n) = n \times F(n-1) \qquad \hbox{if $n>1$, otherwise~$1$} \]
-\begin{verbatim}
+\begin{lstlisting}
 int factorial( int n ) {
   if (n==1)
     return 1;
   else
     return n*factorial(n-1);
 }
-\end{verbatim}
+\end{lstlisting}
 \end{slide}
 
 \begin{exercise}
@@ -483,7 +483,7 @@ So far you have seen only very simple recursive functions. Consider
 the function
 \[ \forall_{n>1}\colon g_n = (n-1)\cdot g(n-1),\qquad g(1)=1 \]
 and its implementation:
-\begin{verbatim}
+\begin{lstlisting}
 int multifact( int n ) {
   if (n==1)
     return 1;
@@ -492,16 +492,16 @@ int multifact( int n ) {
     return oneless*multifact(oneless);
   }
 }
-\end{verbatim}
+\end{lstlisting}
 Now the function has a local variable. Suppose we compute~$g(3)$. That
 involves
-\begin{verbatim}
+\begin{lstlisting}
 int oneless = 2;
-\end{verbatim}
+\end{lstlisting}
 and then the computation of~$g_2$. But that computation involved 
-\begin{verbatim}
+\begin{lstlisting}
 int oneless = 1;
-\end{verbatim}
+\end{lstlisting}
 Do we still get the right result for~$g_3$? Is it going to compute
 $g_3=2\cdot g_2$ or $g_3=1\cdot g_2$?
 
@@ -523,14 +523,14 @@ it may lead to \indextermbus{stack}{overflow}.
 \begin{block}{Default arguments}
   \label{sl:def-arg}
   Functions can have \indextermsub{default}{argument}(s):
-\begin{verbatim}
+\begin{lstlisting}
 double distance( double x, double y=0. ) {
   return sqrt( (x-y)*(x-y) );
 }
   ...
   d = distance(x); // distance to origin
   d = distance(x,y); // distance between two points
-\end{verbatim}
+\end{lstlisting}
 Any default argument(s) should come last in the parameter list.
 \end{block}
 
@@ -540,12 +540,12 @@ Any default argument(s) should come last in the parameter list.
 \begin{block}{Polymorphic functions}
   \label{sl:func-poly}
   You can have multiple functions with the same name:
-\begin{verbatim}
+\begin{lstlisting}
 double sum(double a,double b) {
   return a+b; }
 double sum(double a,double b,double c) {
   return a+b+c; }
-\end{verbatim}
+\end{lstlisting}
 Distinguished by type or number of input arguments: can not differ only in return type.
 \end{block}
 
@@ -559,12 +559,12 @@ There is an easy (but not terribly great)
 that works the same as in~C (for a better
 generator, see section~\ref{sec:stl:random}):
 %
-\begin{verbatim}
+\begin{lstlisting}
 #include <random>
 using std::rand;
 float random_fraction =
     (float)rand()/(float)RAND_MAX;
-\end{verbatim}
+\end{lstlisting}
 %
 The function \indextermtt{rand} yields an integer --~a different one
 every time you call it~-- in the range from zero to
@@ -577,9 +577,9 @@ random numbers. That is great for debugging your program but not if
 you were hoping to do some statistical analysis. Therefore you can set
 the \indextermbus{random number}{seed} from which the random sequence
 starts by the \indextermtt{srand} function. Example:
-\begin{verbatim}
+\begin{lstlisting}
 srand(time(NULL));
-\end{verbatim}
+\end{lstlisting}
 seeds the random number generator from the current time.
 
 \Level 0 {Review questions}
@@ -588,7 +588,7 @@ seeds the random number generator from the current time.
   What is the output of the following programs (assuming the usual headers):
 
   \begin{multicols}{2}
-\begin{verbatim}
+\begin{lstlisting}
 int add1(int i) {
   return i+1;
 }
@@ -597,9 +597,9 @@ int main() {
   i = add1(i);
   cout << i << endl;
 }
-\end{verbatim}
+\end{lstlisting}
 \columnbreak
-\begin{verbatim}
+\begin{lstlisting}
 void add1(int i) {
   i = i+1;
 }
@@ -608,11 +608,11 @@ int main() {
   add1(i);
   cout << i << endl;
 }
-\end{verbatim}
+\end{lstlisting}
   \end{multicols}
 
   \begin{multicols}{2}
-\begin{verbatim}
+\begin{lstlisting}
 void add1(int &i) {
   i = i+1;
 }
@@ -621,9 +621,9 @@ int main() {
   add1(i);
   cout << i << endl;
 }
-\end{verbatim}
+\end{lstlisting}
 \columnbreak
-\begin{verbatim}
+\begin{lstlisting}
 int add1(int &i) {
   return i+1;
 }
@@ -632,16 +632,16 @@ int main() {
   i = add1(i);
   cout << i << endl;
 }
-\end{verbatim}
+\end{lstlisting}
   \end{multicols}
 \end{exercise}
 
 \begin{exercise}
   \label{ex:cpp-funcloop1}
   Suppose a function
-\begin{verbatim}
+\begin{lstlisting}
 bool f(int);
-\end{verbatim}
+\end{lstlisting}
 is given, which is true for some positive input value. Write a main program that
 finds the smallest positive input value for which \n{f} is true.
 \end{exercise}
@@ -649,9 +649,9 @@ finds the smallest positive input value for which \n{f} is true.
 \begin{exercise}
   \label{ex:cpp-funcloop2}
   Suppose a function
-\begin{verbatim}
+\begin{lstlisting}
 bool f(int);
-\end{verbatim}
+\end{lstlisting}
 is given, which is true for some negative input value. Write a code fragment that
 finds the (negative) input with smallest absolute value for which \n{f} is true.
 \end{exercise}
@@ -659,9 +659,9 @@ finds the (negative) input with smallest absolute value for which \n{f} is true.
 \begin{exercise}
   \label{ex:cpp-funcloop3}
   Suppose a function
-\begin{verbatim}
+\begin{lstlisting}
 bool f(int);
-\end{verbatim}
+\end{lstlisting}
 is given, which computes some property of integers.
 Write a code fragment that tests if $f(i)$ is true for some $0\leq
 i<100$, and if so, prints a message.
@@ -670,9 +670,9 @@ i<100$, and if so, prints a message.
 \begin{exercise}
   \label{ex:cpp-funcloop4}
   Suppose a function
-\begin{verbatim}
+\begin{lstlisting}
 bool f(int);
-\end{verbatim}
+\end{lstlisting}
 is given, which computes some property of integers.
 Write a main program that tests if $f(i)$ is true for all $0\leq
 i<100$, and if so, prints a message.

@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% bookmacs.tex : macros for typsetting the source of the textbook
 %%%%
@@ -58,9 +58,12 @@
   \ifx\test\LSR
   \else
     % list the file
-      \Level 1 {Listing of code/#1}\label{lst:#1}
-    {\footnotesize \verbatiminput{../code/#1.cxx}}
-    {\footnotesize \verbatiminput{../code/#1.F90}}
+      \IfFileExists{../code/#1.\ISPcodeext}
+                   {\Level 1 {Listing of code/#1}\label{lst:#1}
+                     {\footnotesize
+                       \lstinputlisting{../code/#1.\ISPcodeext}} % verbatiminput
+                   }
+                   {}
     \par
     % continue
     \expandafter\ListSourcesRecursively
@@ -127,8 +130,8 @@
     \begingroup
     \def\ProcessCutFile{}\par
     \def\PrepareCutFile{\immediate\write\CommentStream
-      {\noexpand\begin{frame}[containsverbatim]{\CommentBlockName}%
-        \noexpand\nobreak\noexpand\smallskip}}%
+      {\noexpand\smallskip\noexpand\begin{frame}[containsverbatim]{\CommentBlockName}}}%
+      %  \noexpand\nobreak}}%
     \def\FinalizeCutFile{\immediate\write\CommentStream
       {\noexpand\end{frame}}}%
     \edef\tmp{\def\noexpand\CommentCutFile

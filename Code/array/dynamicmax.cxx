@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
  ***
  **** dynamicmax.cxx : static array length examples
  ****
@@ -24,7 +24,8 @@ int main() {
   for (auto v : numbers)
     if (v>tmp_max)
       tmp_max = v;
-  cout << "Max: " << tmp_max << " (should be 6)" << endl;
+  cout << "Max: " << tmp_max
+       << " (should be 6)" << endl;
   //examplesnippet end
     
   return 0;

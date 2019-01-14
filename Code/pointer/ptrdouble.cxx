@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** ptrdouble.cxx : shared pointers to scalar
  ****
@@ -18,13 +18,28 @@ using std::make_shared;
 
 int main() {
 
-  //codesnippet ptrdouble
-  auto array = shared_ptr<double>( new double );
-  shared_ptr<double> other;
-  array.get() = 2.;
-  other = array;
-  cout << other.get() << endl;
-  //codesnippet end
+  cout << "Double" << endl;
+  {
+    //codesnippet ptrdouble
+    // shared pointer to allocated double
+    auto array = shared_ptr<double>( new double );
+    double *ptr = array.get();
+    array.get()[0] = 2.;
+    cout << ptr[0] << endl;
+    //codesnippet end
+  }
+  cout << "double" << endl;
+  cout << "Init" << endl;
+  {
+    //codesnippet ptrdoubleinit
+    // shared pointer to initialized double
+    auto array = make_shared<double>(50);
+    double *ptr = array.get();
+    cout << ptr[0] << endl;
+    //codesnippet end
+  }
+  cout << "init" << endl;
+  
 
   return 0;
 }
