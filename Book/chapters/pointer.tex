@@ -46,13 +46,13 @@ Legitimate needs:
   \item If \n{x} is object with member~\n{y}:\\ \n{x.y}
   \item If \n{xx} is pointer to object with member~\n{y}:\\ \n{xx->y}
   \item In class methods \n{this} is a pointer to the object, so:
-\begin{verbatim}
+\begin{lstlisting}
 class x {
   int y;
   x(int v) {
     this->y = v; }
 }
-\end{verbatim}
+\end{lstlisting}
 \item Arrow notation works with old-style pointers and new
   shared/unique pointers.
   \end{itemize}
@@ -71,7 +71,7 @@ So what is the type of this latter~\n{X} and how did you create it?
 \begin{block}{Creating a shared pointer}
   \label{sl:make-shared}
   Allocation and pointer in one:
-\begin{verbatim}
+\begin{lstlisting}
 shared_ptr<Obj> X =
     make_shared<Obj>( /* constructor args */ );
   // or:
@@ -80,15 +80,15 @@ auto X = make_shared<Obj>( /* args */ );
 auto X = shared_ptr<Obj>( new Obj(/* args */) );
 
 X->method_or_member;
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 This requires at the top of your file:
-\begin{verbatim}
+\begin{lstlisting}
 #include <memory>
 using std::shared_ptr;
 using std::make_shared;
-\end{verbatim}
+\end{lstlisting}
 
 \begin{block}{Simple example}
   \label{sl:shared-ptr}
@@ -100,7 +100,7 @@ using std::make_shared;
 \begin{slide}{Shared pointers for arrays}
 This offers a safer version of \n{new}. But you should use a
 \n{vector} anyway:
-\begin{verbatim}
+\begin{lstlisting}
 shared_ptr<myobject> obj_ptr
     = make_shared<myobject>(x);
     // = shared_ptr<myobject>( new myobject(x) );
@@ -110,7 +110,7 @@ cout << obj_ptr->member << endl;
 auto array = shared_ptr<double>( new double[100] );
 // ILLEGAL: array[1] = 2.14;
 array->at(2) = 3.15;
-\end{verbatim}
+\end{lstlisting}
 \end{slide}
 
 \begin{block}{Linked lists}
@@ -190,7 +190,7 @@ The big problem with C-style pointers is the chance of a
 \indexterm{memory leak}. If a pointer to a block of memory goes out of
 scope, the block is not returned to the \ac{OS}, but it is no longer
 accessible.
-\begin{verbatim}
+\begin{lstlisting}
 // the variable `array' doesn't exist
 {
   // attach memory to `array':
@@ -199,7 +199,7 @@ accessible.
 }
 // the variable `array' does not exist anymore
 // but the memory is still reserved.
-\end{verbatim}
+\end{lstlisting}
 Shared and unique
 pointers do not have this problem: if they go out of scope, or are
 overwritten, the destructor on the object is called, thereby releasing
@@ -240,13 +240,13 @@ you the pointed object, but a traditional pointer.
 
 \begin{block}{Getting the underlying pointer}
   \label{sl:pointer-get}
-\begin{verbatim}
+\begin{lstlisting}
 X->y;
 // is the same as
 X.get()->y;
 // is the same as
 ( *X.get() ).y;
-\end{verbatim}
+\end{lstlisting}
 
 \snippetwithoutput{pointy}{pointer}{pointy}
 \end{block}
@@ -281,7 +281,7 @@ pointer to the new head of the list.
 
 \begin{slide}{Linked list code}
   \label{sl:share-ptr-node}  
-\begin{verbatim}
+\begin{lstlisting}
 node *node::prepend_or_append(node *other) {
   if (other->value>this->value) {
     this->tail = other;
@@ -291,58 +291,58 @@ node *node::prepend_or_append(node *other) {
     return other;
   }
 };
-\end{verbatim}
+\end{lstlisting}
 Can we do this with shared pointers?
 \end{slide}
 
 Your code would start something
 like this, handling the case where the new node is appended to the current:
-\begin{verbatim}
+\begin{lstlisting}
 shared_pointer<node> node:append
     ( shared_ptr<node> other ) {
   if (other->value>this->value) {
     this->tail = other;
-\end{verbatim}
+\end{lstlisting}
 But now you need to return this node, as a shared pointer. But
 \n{this} is a \n{node*}, not a \n{shared_ptr<node>}.
 
 \begin{slide}{A problem with shared pointers}
   \label{sl:share-ptr-node-sh}
-\begin{verbatim}
+\begin{lstlisting}
 shared_pointer<node> node:prepend_or_append
     ( shared_ptr<node> other ) {
   if (other->value>this->value) {
     this->tail = other;
-\end{verbatim}
+\end{lstlisting}
 So far so good. However, \n{this} is a \n{node*}, not a
 \n{shared_ptr<node>}, so
-\begin{verbatim}
+\begin{lstlisting}
     return this;
-\end{verbatim}
+\end{lstlisting}
 returns the wrong type.
 \end{slide}
 
 The solution here is that you can return
-\begin{verbatim}
+\begin{lstlisting}
     return this->shared_from_this();
-\end{verbatim}
+\end{lstlisting}
 if you have defined your node class to inherit from what probably
 looks like magic:
-\begin{verbatim}
+\begin{lstlisting}
 class node : public enable_shared_from_this<node>
-\end{verbatim}
+\end{lstlisting}
 
 \begin{slide}{Solution: shared from this}
   \label{sl:share-ptr-node-from}
   It is possible to have a `shared pointer to this' if you
   define your node class with (warning, major magic alert):
-\begin{verbatim}
+\begin{lstlisting}
 class node : public enable_shared_from_this<node> {
-\end{verbatim}
+\end{lstlisting}
 This allows you to write:
-\begin{verbatim}
+\begin{lstlisting}
     return this->shared_from_this();
-\end{verbatim}
+\end{lstlisting}
 \end{slide}
 
 \Level 1 {Null pointer}
@@ -356,10 +356,10 @@ C++ has the \indextermtt{nullptr}, which is an object of type
 
 There are some scenarios where this is useful, for instance, with
 polymorphic functions:
-\begin{verbatim}
+\begin{lstlisting}
 void f(int);
 void f(int*);
-\end{verbatim}
+\end{lstlisting}
 Calling \n{f(ptr)} where the point is \n{NULL}, the first function is
 called, whereas with \n{nullptr} the second is called.
 
@@ -368,12 +368,12 @@ called, whereas with \n{nullptr} the second is called.
   C++ has the \indextermtt{nullptr}, which is an object of type
   \n{std::}\indextermtt{nullptr_t}.
 
-\begin{verbatim}
+\begin{lstlisting}
 void f(int);
 void f(int*);
   f(NULL);    // calls the int version
   f(nullptr); // calls the ptr version
-\end{verbatim}
+\end{lstlisting}
 Note: dereferencing is undefined behaviour; does not throw an exception.
 \end{slide}
 

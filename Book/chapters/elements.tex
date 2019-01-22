@@ -160,6 +160,40 @@ then Unix will reason: `\n{myprogram.cxx} is the output, so if that
 file already exists (which, yes, it does) let's just empty it before
 we do anything else'. And you have just lost your program.
 
+\Level 1 {C++ is a moving target}
+
+The C++ language has gone through a number of standards.
+\begin{itemize}
+\item \emph{C++98}\index{C++!C++98} is used in many codes, and many
+  textbooks and internet tutorials have been written about
+  it. However, it contains many mechanisms and constructs that have
+  been replaced by more elegant variants. Where these exist, the older
+  variants should not be used unless there is an overwhelming need.
+\item \emph{C++11}\index{C++!C++11} is a major overhaul of the
+  standard, introducing many simplifications and additions. 
+\item \emph{C++14}\index{C++!C++14} is a minor refinement of C++11.
+  This book is completely based on this standard. There may be
+  occasional remarks about features that are new to C++11, but many
+  times they go  unremarked.
+\item \emph{C++17}\index{C++!C++17} adds yet more goodness to
+  C++. This book will use 17-specific features only sporadically.
+\end{itemize}
+
+\begin{block}{C++ versions}
+  \label{sl:cpp-version}
+  \begin{itemize}
+  \item
+    The compiler by default uses \n{C++98}. 
+  \item This course explains \n{C++14}. You need tell your compiler
+    about this.
+  \item On \n{isp.tacc.utexas.edu} `icpc' uses this by default.
+  \item On your own machine you need to do
+    \[ gcc -std=c++14 [other options] \]
+    or
+    \[ alias gcc='gcc -std=c++14' \]
+  \end{itemize}
+\end{block}
+
 \Level 0 {Statements}
 \label{sec:statements}
 
