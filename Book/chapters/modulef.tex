@@ -1,0 +1,172 @@
+% -*- latex -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% This TeX file is part of the course
+%%%% Introduction to Scientific Programming in C++/Fortran2003
+%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%%
+%%%% modulef.tex : fortran modules
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Fortran has a clean mechanism for importing data, functions, types
+that are defined in another file.
+
+\begin{block}{Module definition}
+  \label{sl:fmod-def}
+  Modules look like a program, but without executable code:
+  %
+  \verbatimsnippet{pointmod}
+\end{block}
+
+\begin{block}{Module use}
+  \label{sl:fmod-use}
+  Module imported through \indextermfort{use} statement;\\
+  comes before \n{implicit none}
+  %
+  \verbatimsnippet{pointmodprog}
+\end{block}
+
+\begin{exercise}
+  \label{ex:fmod-rect}
+  Take exercise~\ref{ex:ftype-rect} and put all type definitions and
+  all functions in a module.
+\end{exercise}
+
+\Level 0 {Modules for program modularization}
+
+Modules are Fortran's mechanism for supporting
+\indextermsub{separate}{compilation}: you can put yuor module in one
+file, your main program in another, and compile them separately.
+
+\begin{block}{Separate compilation of modules}
+  \label{sl:fcompile-mods}
+  Suppose program is split over \n{theprogram.F90} and \n{themodule.F90}.
+  \begin{itemize}
+  \item \n{icpc -c themodule.F90}; this gives
+  \item an \indextermsub{object}{file} that will be linked later, and
+  \item a \n{.mod} file (with the name of the module, not of the
+    file);
+  \item \n{icpc -c theprogram.F90} will read the \n{.mod} file; and finally
+  \item \n{icpc -o myprogram theprogram.o themodule.o} uses the
+    compiler as \indexterm{linker} to form the executable.
+  \end{itemize}
+  The module needs to be compiled before the program.
+\end{block}
+
+\Level 0 {Modules}
+\label{sec:modulef}
+
+A module is a container for definitions of subprograms and types, and
+for data such as constants and variables. A~module is not a 
+structure or object: there is only one instance.
+
+What do you use a module for?
+\begin{itemize}
+\item Type definitions: it is legal to have the same type definition
+  in multiple program units, but this is not a good idea. 
+  Write the definition just once in a module and make it available
+  that way.
+\item Function definitions: this makes the functions available in multiple
+  sources files of the same program, or in multiple programs.
+\item Define constants: for physics simulations, put all constants in
+  one module and use that, rather than spelling out the constants each
+  time.
+\item Global variables: put variables in a module if they do not fit
+  an obvious scope.
+  \begin{f77note}
+  Modules are much cleaner than common blocks. Do not use those.
+  \end{f77note}
+\end{itemize}
+%
+
+Any routines come after the \n{contains}\index{contains!in modules}
+
+A module is made available with the \indextermtt{use} keyword, which
+needs to go before the \n{implicit none}.
+%
+\begin{block}{Module use}
+  \label{sl:moduleuse}
+  \verbatimsnippet{moduleuse}
+  Also possible:
+\begin{verbatim}
+Use mymodule, Only: func1,func2
+Use mymodule, func1 => new_name1
+\end{verbatim}
+\end{block}
+
+By default, all the contents of a module is usable by a subprogram
+that uses it. However, a keyword \indextermtt{private} make module
+contents available only inside the module.
+You can make the default behaviour explicit by using the
+\indextermtt{public} keyword. Both \n{public,private} can be used as
+attributes on definitions in the module.
+There is a keyword \indextermtt{protected} for data members that
+are public, but can not be altered by code outside the module.
+
+If you compile a module, you will find a \n{.mod} file in your
+directory. (This is little like a~\n{.h} file in~C++.)
+If this file is not present, you can not \n{use} the module in another
+program unit, so you need to compile the file containing the module
+first.
+
+\begin{exercise}
+  \label{ex:fpointmod}
+  Write a module \n{PointMod} that defines a type \n{Point} and a
+  function \n{distance} to make this code work:
+  %
+  \verbatimsnippet{pointmainex}
+  %
+  Put the program and module in two separate files and compile thusly:
+\begin{verbatim}
+ifort -g -c pointmod.F90
+ifort -g -c pointmain.F90
+ifort -g  -o pointmain pointmod.o pointmain.o 
+\end{verbatim}
+\end{exercise}
+
+\Level 1 {Polymorphism}
+
+\begin{verbatim}
+module somemodule
+
+INTERFACE swap
+MODULE PROCEDURE swapreal, swapint, swaplog, swappoint
+END INTERFACE
+
+  contains
+  subroutine swapreal
+  ...
+  end subroutine swapreal
+  subroutine swapint
+  ...
+  end subroutine swapint
+\end{verbatim}
+
+\Level 1 {Operator overloading}
+
+\begin{verbatim}
+MODULE operator_overloading
+IMPLICIT NONE
+...
+INTERFACE OPERATOR (+)
+MODULE PROCEDURE concat
+END INTERFACE
+\end{verbatim}
+
+including the assignment operator:
+
+\begin{verbatim}
+INTERFACE ASSIGNMENT (=) 
+subroutine_interface_body
+END INTERFACE
+\end{verbatim}
+
+This mechanism can also be used for dot-operators:
+
+\begin{verbatim}
+INTERFACE OPERATOR (.DIST.)
+MODULE PROCEDURE calcdist
+END INTERFACE
+\end{verbatim}
+
