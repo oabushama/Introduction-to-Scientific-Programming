@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% modulef.tex : fortran modules
 %%%%
@@ -89,10 +89,10 @@ needs to go before the \n{implicit none}.
   \label{sl:moduleuse}
   \verbatimsnippet{moduleuse}
   Also possible:
-\begin{verbatim}
+\begin{lstlisting}
 Use mymodule, Only: func1,func2
 Use mymodule, func1 => new_name1
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 By default, all the contents of a module is usable by a subprogram
@@ -118,16 +118,16 @@ first.
   \verbatimsnippet{pointmainex}
   %
   Put the program and module in two separate files and compile thusly:
-\begin{verbatim}
+\begin{lstlisting}
 ifort -g -c pointmod.F90
 ifort -g -c pointmain.F90
 ifort -g  -o pointmain pointmod.o pointmain.o 
-\end{verbatim}
+\end{lstlisting}
 \end{exercise}
 
 \Level 1 {Polymorphism}
 
-\begin{verbatim}
+\begin{lstlisting}
 module somemodule
 
 INTERFACE swap
@@ -141,32 +141,32 @@ END INTERFACE
   subroutine swapint
   ...
   end subroutine swapint
-\end{verbatim}
+\end{lstlisting}
 
 \Level 1 {Operator overloading}
 
-\begin{verbatim}
+\begin{lstlisting}
 MODULE operator_overloading
 IMPLICIT NONE
 ...
 INTERFACE OPERATOR (+)
 MODULE PROCEDURE concat
 END INTERFACE
-\end{verbatim}
+\end{lstlisting}
 
 including the assignment operator:
 
-\begin{verbatim}
+\begin{lstlisting}
 INTERFACE ASSIGNMENT (=) 
 subroutine_interface_body
 END INTERFACE
-\end{verbatim}
+\end{lstlisting}
 
 This mechanism can also be used for dot-operators:
 
-\begin{verbatim}
+\begin{lstlisting}
 INTERFACE OPERATOR (.DIST.)
 MODULE PROCEDURE calcdist
 END INTERFACE
-\end{verbatim}
+\end{lstlisting}
 

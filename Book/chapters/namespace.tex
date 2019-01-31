@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% namespace.tex : about namespaces
 %%%%
@@ -14,24 +14,24 @@
 
 In section~\ref{sec:stdvector} you saw that the C++ library comes with
 a \indexterm{vector} class, that implements dynamic arrays. You say
-\begin{verbatim}
+\begin{lstlisting}
 std::vector<int> bunch_of_ints;
-\end{verbatim}
+\end{lstlisting}
 and you have an object that can store a bunch of ints. And if you use
 such vectors often, you can save yourself some typing by having
-\begin{verbatim}
+\begin{lstlisting}
 using namespace std;
-\end{verbatim}
+\end{lstlisting}
 somewhere high up in your file, and write
-\begin{verbatim}
+\begin{lstlisting}
 vector<int> bunch_of_ints;
-\end{verbatim}
+\end{lstlisting}
 in the rest of the file.
 
 More safe:
-\begin{verbatim}
+\begin{lstlisting}
 using std::vector;
-\end{verbatim}
+\end{lstlisting}
 
 But what if you are writing a geometry package, which includes a
 vector class? Is there confusion with the \ac{STL} vector class?
@@ -42,30 +42,30 @@ classes, functions, variables.
 \begin{slide}{You have already seen namespaces}
   \label{sl:vec-namespace}
   Safest:
-\begin{verbatim}
+\begin{lstlisting}
 #include <vector>
 int main() {
   std::vector<stuff> foo;
 }
-\end{verbatim}
+\end{lstlisting}
 \begin{multicols}{2}
   Drastic:
-\begin{verbatim}
+\begin{lstlisting}
 #include <vector>
 using namespace std;
 int main() {
   vector<stuff> foo;
 }
-\end{verbatim}
+\end{lstlisting}
 \vfill\columnbreak
 Prudent:
-\begin{verbatim}
+\begin{lstlisting}
 #include <vector>
 using std::vector;
 int main() {
   vector<stuff> foo;
 }
-\end{verbatim}
+\end{lstlisting}
 \end{multicols}
 \end{slide}
 
@@ -75,31 +75,31 @@ You have already seen namespaces in action when you wrote
 \begin{block}{Defining a namespace}
   \label{sl:namespace-def}
   You can make your own namespace by writing
-\begin{verbatim}
+\begin{lstlisting}
 namespace a_namespace {
   // definitions
   class an_object { 
   };
 |
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 so that you can write
 \begin{block}{Namespace usage}
   \label{sl:namespace-use}
-\begin{verbatim}
+\begin{lstlisting}
 a_namespace::an_object myobject();
-\end{verbatim}
+\end{lstlisting}
 or
-\begin{verbatim}
+\begin{lstlisting}
 using namespace a_namespace;
 an_object myobject();
-\end{verbatim}
+\end{lstlisting}
 or
-\begin{verbatim}
+\begin{lstlisting}
 using a_namespace::an_object;
 an_object myobject();
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \Level 1 {Namespace header files}
@@ -124,16 +124,16 @@ namespace of the same name:
 
 In this course we advocated
 pulling in functions explicitly:
-\begin{verbatim}
+\begin{lstlisting}
 #include <iostream>
 using std::cout;
-\end{verbatim}
+\end{lstlisting}
 
 It is also possible to use
-\begin{verbatim}
+\begin{lstlisting}
 #include <iostream>
 using namespace std;
-\end{verbatim}
+\end{lstlisting}
 
 The problem with this
 is that it may pull in unwanted functions. For instance:

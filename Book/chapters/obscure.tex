@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% obscure.tex : other stuff
 %%%%
@@ -27,9 +27,9 @@ will catch it if you mistakenly try to change it.
 
 A more sophisticated use of const is the
 \indextermbus{const}{reference}:
-\begin{verbatim}
+\begin{lstlisting}
 void f( const int &i ) { .... }
-\end{verbatim}
+\end{lstlisting}
 This may look strange. After all, references, and the
 pass-by-reference mechanism, were introduced in
 section~\ref{sec:passing} to return changed values to the calling
@@ -46,24 +46,24 @@ environment.
 Marking a vector argument as const allows
 \indextermbus{compiler}{optimization}. Assume the function~\n{f} as
 above, used like this:
-\begin{verbatim}
+\begin{lstlisting}
 std::vector<double> v(n);
 for ( .... ) {
   f(v);
   y = v[0];
   ... y ... // code that uses y
 }
-\end{verbatim}
+\end{lstlisting}
 Since the function call does not alter the vector, \n{y}~is invariant
 in the loop iterations, and the compiler changes this code internally to
-\begin{verbatim}
+\begin{lstlisting}
 std::vector<double> v(n);
 int saved_y = v[0];
 for ( .... ) {
   f(v);
   ... saved_y ... // code that uses y
 }
-\end{verbatim}
+\end{lstlisting}
 
 Consider a class that has methods that return an internal member by
 reference, once as const reference and once not:
@@ -87,7 +87,7 @@ and passing by const reference does not:
 We can distinguish two types of methods: those that alter internal
 data members of the object, and those that don't. The ones that don't
 can be marked \indextermtt{const}:
-\begin{verbatim}
+\begin{lstlisting}
 class Things {
 private:
   int i;
@@ -95,12 +95,12 @@ public:
   int get() const { return i; }
   int inc() { return i++; }
 }
-\end{verbatim}
+\end{lstlisting}
 While this is in no way required, it can be helpful in two ways:
 \begin{itemize}
 \item It will catch mismatches between the prototype and definition of
   the method. For instance,
-\begin{verbatim}
+\begin{lstlisting}
 class Things {
 private:
   int var;
@@ -109,11 +109,11 @@ public:
     var += c; // typo: should be `ivar'
   }
 }
-\end{verbatim}
+\end{lstlisting}
 Here, the use of \n{var} was a typo, should have been \n{ivar}. Since
 the method is marked \n{const}, the compiler will generate an error.
 \item It allows the compiler to optimize your code. For instance:
-\begin{verbatim}
+\begin{lstlisting}
 class Things {
 public:
   int f() const { /* ... */ };
@@ -125,7 +125,7 @@ int x,y,z;
 x = t.f();
 y = t.g();
 z = t.f();
-\end{verbatim}
+\end{lstlisting}
 Since the methods did not alter the object, the compiler can conclude
 that \n{x,z} are the same, and skip the calculation for~\n{z}.
 \end{itemize}
@@ -138,34 +138,34 @@ we put it here for now.
 \Level 1 {Declarations}
 
 Sometimes the type of a variable is obvious:
-\begin{verbatim}
+\begin{lstlisting}
 std::vector< std::shared_ptr< myclass >>*
   myvar = new std::vector< std::shared_ptr< myclass >>
                 ( 20, new myclass(1.3) );
-\end{verbatim}
+\end{lstlisting}
 (Pointer to vector of 20 shared pointers to \n{myclass}, initialized
 with unique instances.)  You can write this as:
-\begin{verbatim}
+\begin{lstlisting}
 auto myvar =
   new std::vector< std::shared_ptr< myclass >>
             ( 20, new myclass(1.3) );
-\end{verbatim}
+\end{lstlisting}
 
 \begin{slide}{Type deduction}
   \label{sl:auto-deduct}
 In:
-\begin{verbatim}
+\begin{lstlisting}
 std::vector< std::shared_ptr< myclass >>*
   myvar = new std::vector< std::shared_ptr< myclass >>
                 ( 20, new myclass(1.3) );
-\end{verbatim}
+\end{lstlisting}
 the compiler can figure it out:
-\begin{verbatim}
+\begin{lstlisting}
 auto myvar =
   new std::vector< std::shared_ptr< myclass >>
             ( 20, new myclass(1.3) );
 auto result = someobject.somemethod();
-\end{verbatim}
+\end{lstlisting}
 \end{slide}
 
 \begin{block}{Type deduction in functions}:
@@ -206,7 +206,7 @@ auto result = someobject.somemethod();
     \label{sl:auto-plus-const}
     Keywords like \n{const} and the reference character~\n{\&} can be
     added:
-\begin{verbatim}
+\begin{lstlisting}
 // class member
   some_object my_object;
 // class method:
@@ -215,7 +215,7 @@ auto result = someobject.somemethod();
 auto object_copy  = thing.get_some_object();
 auto &object_mutable  = thing.get_some_object();
 const auto &object_immutable  = thing.get_some_object();
-\end{verbatim}
+\end{lstlisting}
   \end{block}
 \end{comment}
 
@@ -223,7 +223,7 @@ const auto &object_immutable  = thing.get_some_object();
 
 \begin{block}{Auto iterators}
   \label{sl:auto-iterator}
-\begin{verbatim}
+\begin{lstlisting}
 vector<int> myvector(20);
 for ( auto copy_of_int : myvector )
   s += copy_of_int;
@@ -235,7 +235,7 @@ for ( auto &ref_to_int : myvector )
 for ( std::iterator it=myvector.begin() ;
       it!=myvector.end() ; ++it )
   s += *it ; // note the deref
-\end{verbatim}
+\end{lstlisting}
 Can be used with anything that is iteratable\\
 (vector, map, your own classes!)
 \end{block}
@@ -244,13 +244,13 @@ Can be used with anything that is iteratable\\
 \label{sec:range-iter}
 
 You know that you can iterate over \n{vector} objects:
-\begin{verbatim}
+\begin{lstlisting}
 vector<int> myvector(20);
 for ( auto copy_of_int : myvector )
   s += copy_of_int;
 for ( auto &ref_to_int : myvector )
   ref_to_int = s;
-\end{verbatim}
+\end{lstlisting}
 (Many other \ac{STL} classes are iteratable like this.)
 
 This is not magic: it is possible to iterate over any class:
@@ -260,33 +260,33 @@ a \emph{class} is
 The class needs to have:
 \begin{itemize}
 \item a method \indextermtt{begin} with prototype
-\begin{verbatim}
+\begin{lstlisting}
 iteratableClass iteratableClass::begin()
-\end{verbatim}
+\end{lstlisting}
 That gives an
   object in the initial state, which we will call the `iterator object'; likewise
 \item a method \indextermtt{end}
-\begin{verbatim}
+\begin{lstlisting}
 iteratableClass iteratableClass::end()} 
-\end{verbatim}
+\end{lstlisting}
 that gives an 
   object in the final state; furthermore you need
 \item an increment operator
-\begin{verbatim}
+\begin{lstlisting}
 void iteratableClass::operator++()
-\end{verbatim}
+\end{lstlisting}
 that
   advances the iterator object to the next state;
 \item a test
-\begin{verbatim}
+\begin{lstlisting}
 bool iteratableClass::operator!=(const iteratableClass&)
-\end{verbatim}
+\end{lstlisting}
 to determine
   whether the iteration can continue; finally
 \item a dereference operator 
-\begin{verbatim}
+\begin{lstlisting}
 iteratableClass::operator*()
-\end{verbatim}
+\end{lstlisting}
 that takes the
   iterator object and returns its state.
 \end{itemize}
@@ -397,17 +397,17 @@ treat this thing as such-and-such a type, no matter how it was
 defined.
 
 In C, there was only one casting mechanism:
-\begin{verbatim}
+\begin{lstlisting}
 sometype x;
 othertype y = (othertype)x;
-\end{verbatim}
+\end{lstlisting}
 This mechanism is still available as the
 \indextermtt{reinterpret_cast}, which does `take this byte and pretend
 it is the following type':
-\begin{verbatim}
+\begin{lstlisting}
 sometype x;
 auto y = reinterpret_cast<othertype>(x);
-\end{verbatim}
+\end{lstlisting}
 
 The inheritance mechanism necessitates another casting mechanism.
 An object from a derived class contains in it all the information of
@@ -416,11 +416,11 @@ class, the bigger object, and cast it to a pointer to the base object.
 The other way is harder.
 
 Consider:
-\begin{verbatim}
+\begin{lstlisting}
 class Base {};
 class Derived : public Base {};
 Base *dobject = new Derived;
-\end{verbatim}
+\end{lstlisting}
 Can we now cast dobject to a pointer-to-derived ?
 \begin{itemize}
 \item \indextermtt{static_cast} assumes that you know what you are
@@ -544,13 +544,13 @@ PETSc~\cite{petsc-efficient,petsc-home-page} library. Normally when
 you call a library routine, you have no further access to what happens
 inside that routine. However, PETSc has the functionality for you to
 specify a monitor so that you can print out internal quantities.
-\begin{verbatim}
+\begin{lstlisting}
 int KSPSetMonitor(KSP ksp,
   int (*monitor)(KSP,int,PetscReal,void*),
   void *context,
   // one parameter omitted
   );
-\end{verbatim}
+\end{lstlisting}
 Here you can declare your own monitor routine that will be called
 internally: the library makes a \indexterm{call-back} to your code.
 Since the library can not predict whether your monitor routine may
@@ -559,11 +559,11 @@ need further information in order to function, there is the
 
 This mechanism is no longer needed in C++ where you would use a
 \indexterm{lambda} (section~\ref{sec:lambda}):
-\begin{verbatim}
+\begin{lstlisting}
 KSPSetMonitor( ksp,
   [mycontext] (KSP k,int ,PetscReal r) -> int {
     my_monitor_function(k,r,mycontext); } );
-\end{verbatim}
+\end{lstlisting}
 
 
 \Level 0 {lvalue vs rvalue}
@@ -571,7 +571,7 @@ KSPSetMonitor( ksp,
 
 The terms `lvalue' and `rvalue' sometimes appear in compiler error
 messages.
-\begin{verbatim}
+\begin{lstlisting}
 int foo() {return 2;}
 
 int main()
@@ -584,7 +584,7 @@ int main()
 # gives:
 test.c: In function 'main':
 test.c:8:5: error: lvalue required as left operand of assignment
-\end{verbatim}
+\end{lstlisting}
 
 See the `lvalue' and `left operand'? To first order of approximation
 you're forgiven for thinking that an \indextermdef{lvalue} is something
@@ -602,14 +602,14 @@ location in memory, so it can be assigned to. On the other hand,
 therefore not at a specific memory location, and thus not an lvalue.
 
 Less trivial examples:
-\begin{verbatim}
+\begin{lstlisting}
 int foo() { x = 1; return x; }
 int main() {
   foo() = 2;
 }
-\end{verbatim}
+\end{lstlisting}
 is not legal because \n{foo} does not return an lvalue. However,
-\begin{verbatim}
+\begin{lstlisting}
 class foo {
 private:
   int x;
@@ -619,48 +619,48 @@ public:
 int main() {
   foo x;
   x.xfoo() = 2;
-\end{verbatim}
+\end{lstlisting}
 is legal because the function \n{xfoo} returns a reference to the
 non-temporary variable \n{x} of the \n{foo} object.
 
 Not every lvalue can be assigned to: in
-\begin{verbatim}
+\begin{lstlisting}
 const int a = 2;
-\end{verbatim}
+\end{lstlisting}
 the variable \n{a} is an lvalue, but can not appear on the left hand
 side of an assignment.
 
 \Level 1 {Conversion}
 
 Most lvalues can quickly be converted to rvalues:
-\begin{verbatim}
+\begin{lstlisting}
 int a = 1;
 int b = a+1;
-\end{verbatim}
+\end{lstlisting}
 Here \n{a} first functions as lvalue, but becomes an rvalue in the
 second line.
 
 The ampersand operator takes an lvalue and gives an rvalue:
-\begin{verbatim}
+\begin{lstlisting}
 int i;
 int *a = &i;
 &i = 5; // wrong
-\end{verbatim}
+\end{lstlisting}
 
 \Level 1 {References}
 
 The ampersand operator yields a reference. It needs to be assigned
 from an lvalue, so
-\begin{verbatim}
+\begin{lstlisting}
 std::string &s = std::string(); // wrong
-\end{verbatim}
+\end{lstlisting}
 is illegal. The type of \n{s} is an `lvalue reference' and it can not
 be assigned from an rvalue.
 
 On the other hand
-\begin{verbatim}
+\begin{lstlisting}
 const std::string &s = std::string();
-\end{verbatim}
+\end{lstlisting}
 works, since \n{s} can not be modified any further.
 
 \Level 1 {Rvalue references}
@@ -671,33 +671,33 @@ intended to minimize the amount of data copying through
 \indexterm{move semantics}.
 
 Consider a copy assignment operator
-\begin{verbatim}
+\begin{lstlisting}
 BigThing& operator=( const BigThing &other ) {
   BigThing tmp(other); // standard copy
   std::swap( /* tmp data into my data */ );
   return *this;
 };
-\end{verbatim}
+\end{lstlisting}
 This calls a copy constructor and a destructor on \n{tmp}. (The use of
 a temporary makes this safe under exceptions. The \indextermtt{swap}
 method never throws an exception, so there is no danger of half-copied
 memory.)
 
 However, if you assign
-\begin{verbatim}
+\begin{lstlisting}
 thing = BigThing(stuff);
-\end{verbatim}
+\end{lstlisting}
 Now a constructor and destructor is called for the temporary rvalue object on
 the right-hand side.
 
 Using a syntax that is new in \indexterm{C++}, we create an
 \indextermbus{rvalue}{reference}:
-\begin{verbatim}
+\begin{lstlisting}
 BigThing& operator=( BigThing &&other ) {
   swap( /* other into me */ );
   return *this;
 }
-\end{verbatim}
+\end{lstlisting}
 
 \Level 0 {Move semantics}
 

@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% prime.tex : exercises for prime number finding
 %%%%
@@ -34,14 +34,14 @@ the earlier chapters.
 \begin{exercise}
   \label{ex:prime:divtest}
   Read two numbers and print a message like
-\begin{verbatim}
+\begin{lstlisting}
 3 is a divisor of 9
-\end{verbatim}
+\end{lstlisting}
   if the first is an exact
   divisor of the second, and another message
-\begin{verbatim}
+\begin{lstlisting}
 4 is not a divisor of 9
-\end{verbatim}
+\end{lstlisting}
 if it is not.
 \end{exercise}
 
@@ -56,13 +56,13 @@ if it is not.
   divisor of that number. 
 
   Print a final message
-\begin{verbatim}
+\begin{lstlisting}
 Your number is prime
-\end{verbatim}
+\end{lstlisting}
 or
-\begin{verbatim}
+\begin{lstlisting}
 Your number is not prime: it is divisible by ....
-\end{verbatim}
+\end{lstlisting}
 where you report just one found factor.
 \end{exercise}
 
@@ -83,11 +83,11 @@ prime.
   \label{ex:prime:func}
   Write a function \n{test_if_prime} that has an integer parameter, and returns a boolean
   corresponding to whether the parameter was prime.
-\begin{verbatim}
+\begin{lstlisting}
 int main() {
   bool isprime;
   isprime = test_if_prime(13);
-\end{verbatim}
+\end{lstlisting}
   Read the number in, and print the value of the boolean.
 
   Does your function have one or two \n{return} statements?
@@ -160,9 +160,9 @@ operate on that structure or on its members.
 
 In the previous exercise you defined the \n{primegenerator} class, and
 you made one object of that class:
-\begin{verbatim}
+\begin{lstlisting}
 primegenerator sequence;
-\end{verbatim}
+\end{lstlisting}
 But you can make multiple generators, that all have their own internal
 data and are therefore independent of each other.
 
@@ -256,9 +256,9 @@ out values from it.
 
 \begin{exercise}
   Write a class \n{filtered_stream} with a constructor
-\begin{verbatim}
+\begin{lstlisting}
 filtered_stream(int filter,shared_ptr<stream> input);
-\end{verbatim}
+\end{lstlisting}
   that
   \begin{enumerate}
   \item Implements \n{next}, giving filtered values,

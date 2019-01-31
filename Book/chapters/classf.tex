@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% classf.tex : object oriented programming in Fortran
 %%%%
@@ -65,7 +65,7 @@ New syntax for specifying methods.
   \footnotesize
   
   \begin{multicols}{2}
-\begin{verbatim}
+\begin{lstlisting}
 Module PointClass
   Type,public :: Point
      real(8) :: x,y
@@ -75,9 +75,9 @@ Module PointClass
 contains
   ! ....
 End Module PointClass
-\end{verbatim}
+\end{lstlisting}
 \columnbreak
-\begin{verbatim}
+\begin{lstlisting}
 Program PointTest
   use PointClass
   implicit none
@@ -89,42 +89,42 @@ Program PointTest
   print *,"Distance:",p1%distance(p2)
 
 End Program PointTest
-\end{verbatim}
+\end{lstlisting}
   \end{multicols}  
 \end{block}
 
 \begin{exercise}
   \label{ex:fclass-point-distance}
   Take the point example program and add a distance function:
-\begin{verbatim}
+\begin{lstlisting}
   Type(Point) :: p1,p2
   
   ! initialize
   dist = p1%distance(p2)
-\end{verbatim}
+\end{lstlisting}
 \end{exercise}
 
 \begin{exercise}
   \label{ex:fclass-translate}
   Write a method \n{add} for the \n{Point} type:
-\begin{verbatim}
+\begin{lstlisting}
   Type(Point) :: p1,p2,sum
   ! initialize
   sum = p1%add(p2)
-\end{verbatim}
+\end{lstlisting}
   What is the return type of the function \n{add}?
 \end{exercise}
 
 \begin{block}{More OOP}
   \label{sl:oopf}
 Inheritance:
-\begin{verbatim}
+\begin{lstlisting}
 type,extends(baseclas) :: derived_class
-\end{verbatim}
+\end{lstlisting}
 Pure virtual:
-\begin{verbatim}
+\begin{lstlisting}
 type,abstract
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \endinput

@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% elementsf.tex : basic language elements of Fortran
 %%%%
@@ -64,9 +64,9 @@ The minimal Fortran program is:
 
 \begin{exercise}
   Add the line
-\begin{verbatim}
+\begin{lstlisting}
 print *,"Hello world!"
-\end{verbatim}
+\end{lstlisting}
 to the empty program, and compile and run it.
 \end{exercise}
 
@@ -99,24 +99,24 @@ Unlike C++, Fortran can not mix variable declarations and executable
 statements, so both the main program and any subprograms have roughly
 a
 structure:
-\begin{verbatim}
+\begin{lstlisting}
 Program foo
   < declarations >
   < statements >
 End Program foo
-\end{verbatim}
+\end{lstlisting}
 (The \indexterm{emacs} editor will supply the block type and name if
 you supply the `end' and hit the TAB or RETURN key; see
 section~\ref{sec:editor-mode}.)
 
 \begin{slide}{Program structure}
   \label{sl:programf}
-\begin{verbatim}
+\begin{lstlisting}
 Program foo
   < declarations >
   < statements >
 End Program foo
-\end{verbatim}
+\end{lstlisting}
 \end{slide}
 
 \Level 1 {Statements}
@@ -126,42 +126,42 @@ principle.
 \begin{itemize}
 \item As long as a statement fits on one line, you don't have to
   terminate it explicitly with something like a semicolon:
-\begin{verbatim}
+\begin{lstlisting}
 x = 1
 y = 2
-\end{verbatim}
+\end{lstlisting}
 \item If you want to put two statements on one line, you have to
   terminate the first one:
-\begin{verbatim}
+\begin{lstlisting}
 x = 1; y = 2
-\end{verbatim}
+\end{lstlisting}
 \item If a statement spans more than one line, all but the first line
   need to have an explicit \indexterm{continuation character}, the ampersand:
-\begin{verbatim}
+\begin{lstlisting}
 x = very &
   long &
   expression
-\end{verbatim}
+\end{lstlisting}
 \end{itemize}
 
 \begin{slide}{Statements}
   \label{sl:fstatement}
   \begin{itemize}
   \item One line, one statement
-\begin{verbatim}
+\begin{lstlisting}
 x = 1
 y = 2
-\end{verbatim}
+\end{lstlisting}
 \item semicolon to separate multiple statements per line
-\begin{verbatim}
+\begin{lstlisting}
 x = 1; y = 2
-\end{verbatim}
+\end{lstlisting}
 \item Continuation of a line
-\begin{verbatim}
+\begin{lstlisting}
 x = very &
   long &
   expression
-\end{verbatim}
+\end{lstlisting}
   \end{itemize}
 \end{slide}
 
@@ -170,30 +170,30 @@ x = very &
 Fortran knows only single-line
 \emph{comments}\index{Fortran!comments},
 indicated by an exclamation point:
-\begin{verbatim}
+\begin{lstlisting}
 x = 1 ! set x to one
-\end{verbatim}
+\end{lstlisting}
 Everything from the exclamation point onwards is ignored.
 
 Maybe not entirely obvious: you can have a comment after a
 continuation character:
-\begin{verbatim}
+\begin{lstlisting}
 x = f(a) & ! term1 
   + g(b)   ! term2
-\end{verbatim}
+\end{lstlisting}
 
 \begin{slide}{Comments}
   \label{sl:fcomment}
   \begin{itemize}
   \item Ignore to end of line
-\begin{verbatim}
+\begin{lstlisting}
 x = 1 ! set x to one
-\end{verbatim}
+\end{lstlisting}
 \item comment after continuation
-\begin{verbatim}
+\begin{lstlisting}
 x = f(a) & ! term1 
   + g(b)   ! term2
-\end{verbatim}
+\end{lstlisting}
   \end{itemize}
 \end{slide}
 
@@ -202,17 +202,17 @@ x = f(a) & ! term1
 Unlike in C++, where you can declare a variable right before you need
 it, Fortran wants its variables declared near the top of the program
 or subprogram:
-\begin{verbatim}
+\begin{lstlisting}
 Program YourProgram
   implicit none
   ! variable declaration
   ! executable code
 End Program YourProgram
-\end{verbatim}
+\end{lstlisting}
 A variable declaration looks like:
-\begin{verbatim}
+\begin{lstlisting}
 type [ , attributes ] :: name1 [ , name2, .... ]
-\end{verbatim}
+\end{lstlisting}
 where
 \begin{itemize}
 \item we use the common grammar shorthand that \n{[ something ]}
@@ -230,13 +230,13 @@ where
   \begin{itemize}
   \item Variable declarations at the top of the problem
   \item Variables are implicitly defined. Dangerous, so use:
-\begin{verbatim}
+\begin{lstlisting}
 implicit none
-\end{verbatim}
+\end{lstlisting}
 \item declaration
-\begin{verbatim}
+\begin{lstlisting}
 type, attributes :: name1, name2, ....
-\end{verbatim}
+\end{lstlisting}
 where
 \begin{itemize}
 \item \textit{type} is most commonly \n{integer}, \n{real(4)}, \n{real(8)},
@@ -265,9 +265,9 @@ Fortran has a somewhat unusual treatment of data types: if you don't
 specify what data type a variable is, Fortran will deduce it from some
 default or user rules. This is a very dangerous practice, so we
 advocate putting a line
-\begin{verbatim}
+\begin{lstlisting}
 implicit none
-\end{verbatim}
+\end{lstlisting}
 immediately after any program or subprogram header.
 
 \begin{slide}{Implicit typing}
@@ -276,14 +276,14 @@ immediately after any program or subprogram header.
   variables have a type that is determined by name.\\
   This is very dangerous. Use \n{implicit none}
   in every program unit.
-\begin{verbatim}
+\begin{lstlisting}
 Program myprogram
   implicit none
   integer :: i
   real :: x
   ! more stuff
 End Program myprogram
-\end{verbatim}
+\end{lstlisting}
 \end{slide}
 
 You can the number of bytes for numerical types in the declaration:
@@ -345,11 +345,11 @@ You can query how many bytes a data type takes with
 Force a constant to be \n{real(8)}:
 \begin{block}{Double precision constants}
   \label{sl:fdouble}
-\begin{verbatim}
+\begin{lstlisting}
 real(8) :: x,y
 x = 3.14d0
 y = 6.022e-23
-\end{verbatim}
+\end{lstlisting}
   \begin{itemize}
   \item Use a compiler flag such as \n{-r8} to force all reals to be 8-byte.
   \item Write \n{3.14d0}
@@ -368,20 +368,20 @@ y = 6.022e-23
 \Level 1 {Initialization}
 
 Variables can be initialized in their declaration:
-\begin{verbatim}
+\begin{lstlisting}
 integer :: i=2
 real(4) :: x = 1.5
-\end{verbatim}
+\end{lstlisting}
 
 That this is done at compile time, leading to a common error:
-\begin{verbatim}
+\begin{lstlisting}
 subroutine foo()
   implicit none
   integer :: i=2
   print *,i
   i = 3
 end subroutine foo
-\end{verbatim}
+\end{lstlisting}
 On the first subroutine call \n{i} is printed with its initialized
 value, but on the second call this initialization is not repeated, and
 the previous value of \n{3} is remembered.
@@ -393,13 +393,13 @@ the previous value of \n{3} is remembered.
   \label{sl:frw}
   \begin{itemize}
   \item Input: 
-\begin{verbatim}
+\begin{lstlisting}
 READ *,n
-\end{verbatim}
+\end{lstlisting}
 \item Output:
-\begin{verbatim}
+\begin{lstlisting}
 PRINT *,n
-\end{verbatim}
+\end{lstlisting}
   \end{itemize}
   There is also \n{WRITE}.
 
@@ -469,10 +469,10 @@ PRINT *,n
 \begin{exercise}
   \label{ex:f-elt-rev1}
   In declarations
-\begin{verbatim}
+\begin{lstlisting}
 real(4) :: x
 real(8) :: y
-\end{verbatim}
+\end{lstlisting}
 what do the \n{4} and \n{8} stand for?
 
 What is the practical implication of using the one or the other?

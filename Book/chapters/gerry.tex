@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2018 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2018-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% gerry.tex : exercises about redistricting
 %%%%
@@ -88,13 +88,13 @@ affiliation. We assume two parties, and leave an option for being undecided.
       minority, and \n{lean} that evaluates whether the district
       overall counts as A~part or B~party.
     \item Write a \n{sub} method to creates subsets.
-\begin{verbatim}
+\begin{lstlisting}
 District District::sub(int first,int last);
-\end{verbatim}
+\end{lstlisting}
   \item For debugging and reporting it may be a good idea to have a method
-\begin{verbatim}
+\begin{lstlisting}
 string District::print();
-\end{verbatim}
+\end{lstlisting}
   \end{itemize}
   \answerwithoutput{district}{gerry}{district}
 \end{exercise}
@@ -135,9 +135,9 @@ extending it.
 \Level 0 {Strategy}
 
 Now we need a method for districting a population:
-\begin{verbatim}
+\begin{lstlisting}
 Districting Population::minority_rules( int ndistricts );
-\end{verbatim}
+\end{lstlisting}
 Rather than generating all possible partitions of the population, we
 take an incremental approach (this is related to the solution strategy
 called \indextermsub{dynamic}{programming}):

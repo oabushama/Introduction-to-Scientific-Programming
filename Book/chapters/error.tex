@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% error.tex : on error handling
 %%%%
@@ -24,25 +24,25 @@ Here are some sources of runtime errors
 \begin{description}
 \item[Array indexing] Using an index outside the array bounds may give
   a runtime error:
-\begin{verbatim}
+\begin{lstlisting}
 vector<float> a(10);
 for (int i=0; i<=10; i++)
   a.at(i) = x; // runtime error
-\end{verbatim}
+\end{lstlisting}
 or undefined behaviour:
-\begin{verbatim}
+\begin{lstlisting}
 vector<float> a(10);
 for (int i=0; i<=10; i++)
   a[i] = x;
-\end{verbatim}
+\end{lstlisting}
 See further section~\ref{sec:stdvector}.
 \item[Null pointers] Using an uninitialized pointer is likely to crash
   your program:
-\begin{verbatim}
+\begin{lstlisting}
 Object *x;
 if (false) x = new Object;
 x->method();
-\end{verbatim}
+\end{lstlisting}
 \item[Numerical errors] such as division by zero will not crash your
   program, so catching them takes some care.
 \end{description}
@@ -65,15 +65,15 @@ Error reporting:
 
 \begin{block}{Use assertions during development}
   \label{sl:cpp-assert}
-\begin{verbatim}
+\begin{lstlisting}
 #include <cassert>
 ...
 assert( bool expression )
-\end{verbatim}
+\end{lstlisting}
 Assertions are disabled by
-\begin{verbatim}
+\begin{lstlisting}
 #define NDEBUG
-\end{verbatim}
+\end{lstlisting}
 before the include.
 
 You can pass this as compiler flag:\\
@@ -89,12 +89,12 @@ Function return values
   \emph{Throwing} an \emph{exception}%
   \index{exception!throwing} is one way of signalling an error or
   unexpected behaviour:
-\begin{verbatim}
+\begin{lstlisting}
 void do_something() {
   if ( oops )
     throw(5);
 }
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{block}{Catching an exception}
@@ -102,13 +102,13 @@ void do_something() {
   It now becomes possible to detect this unexpected behaviour by
   \emph{catching}\index{exception!catch}
   the exception:
-\begin{verbatim}
+\begin{lstlisting}
 try {
   do_something();
 } catch (int i) {
   cout << "doing something failed: error=" << i << endl;
 }
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 You can throw integers to indicate an error code, a string with an
@@ -116,7 +116,7 @@ actual error message. You could even make an error class:
 
 \begin{block}{Exception classes}
   \label{sl:exception-class}
-\begin{verbatim}
+\begin{lstlisting}
 class MyError {
 public :
   int error_no; string error_msg;
@@ -132,7 +132,7 @@ try {
   cout << "My error with code=" << m.error_no
     << " msg=" << m.error_msg << endl;
 }
-\end{verbatim}
+\end{lstlisting}
 You can use exception inheritance!
 \end{block}
 
@@ -140,7 +140,7 @@ You can use exception inheritance!
   \label{sl:exception-catches}
   You can multiple \n{catch} statements to catch different types of
   errors:
-\begin{verbatim}
+\begin{lstlisting}
 try {
   // something
 } catch ( int i ) {
@@ -148,19 +148,19 @@ try {
 } catch ( std::string c ) {
   // handle string exception
 }
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{block}{Catch any exception}
   \label{sl:exception-catchall}
   Catch exceptions without specifying the type:
-\begin{verbatim}
+\begin{lstlisting}
 try {
   // something
 } catch ( ... ) { // literally: three dots
   cout << "Something went wrong!" << endl;
 }
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{exercise}
@@ -178,10 +178,10 @@ try {
   \item Alter your program to test the output of the \n{sqrt} call,
     rather than its input.
     Use the function \indextermtt{isnan}
-\begin{verbatim}
+\begin{lstlisting}
 #include <cfenv>
 using std::isnan;  
-\end{verbatim}
+\end{lstlisting}
     and again throw an exception.
   \end{itemize}
 \end{exercise}
@@ -190,24 +190,24 @@ using std::isnan;
   \label{sl:except-construct}
   A \indexterm{function try block} will catch exceptions,
     including in initializer lists of constructors.
-\begin{verbatim}
+\begin{lstlisting}
 f::f( int i ) 
   try : fbase(i) {
     // constructor body
   }
   catch (...) { // handle exception
   }
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{block}{More about exceptions}
   \label{sl:exception-more}
   \begin{itemize}
   \item Functions can define what exceptions they throw: 
-\begin{verbatim}
+\begin{lstlisting}
 void func() throw( MyError, std::string );
 void funk() throw();
-\end{verbatim}
+\end{lstlisting}
 \item Predefined exceptions: \indextermtt{bad_alloc},
   \indextermtt{bad_exception}, etc.
 \item An exception handler can throw an exception; to rethrow the same
@@ -218,9 +218,9 @@ void funk() throw();
   main. You can replace the handler for that. See the
   \indextermtt{exception} header file.
 \item Keyword \indextermtt{noexcept}:
-\begin{verbatim}
+\begin{lstlisting}
 void f() noexcept { ... };
-\end{verbatim}
+\end{lstlisting}
 \item There is no exception thrown when dereferencing a \n{nullptr}.
   \end{itemize}
 \end{block}

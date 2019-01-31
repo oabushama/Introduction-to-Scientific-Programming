@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% iff.tex : conditionals in Fortran
 %%%%
@@ -17,22 +17,22 @@ The Fortran conditional statement uses the \indextermfort{if} keyword:
 \begin{block}{Conditionals}
   \label{sl:fconditional}
 Single line conditional:
-\begin{verbatim}
+\begin{lstlisting}
 if ( test ) statement
-\end{verbatim}
+\end{lstlisting}
 The full if-statement is:
-\begin{verbatim}
+\begin{lstlisting}
 if ( something ) then
   do something
 else
   do otherwise
 end if
-\end{verbatim}
+\end{lstlisting}
 The `else' part is optional; you can nest conditionals.
 \end{block}
 
 You can label conditionals, which is good for readability but adds no functionality:
-\begin{verbatim}
+\begin{lstlisting}
 checkx: if ( ... some test on x ... ) then
 checky:   if ( ... some test on y ... ) then
                ... code ...
@@ -40,7 +40,7 @@ checky:   if ( ... some test on y ... ) then
         else checkx
              ... code ...
         end if checkx   
-\end{verbatim}
+\end{lstlisting}
 
 \Level 0 {Operators}
 

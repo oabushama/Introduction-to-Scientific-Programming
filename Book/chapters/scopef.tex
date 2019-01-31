@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% scope.tex : functions and such in Fortran
 %%%%
@@ -22,7 +22,7 @@ program or subprogram.
 Variables declared in a subprogram have similar scope rules as in~C++:
 \begin{itemize}
 \item Their visibility is controlled by their textual scope:
-\begin{verbatim}
+\begin{lstlisting}
 Subroutine Foo()
   integer :: i
   ! `i' can now be used
@@ -32,10 +32,10 @@ End Subroutine Foo
 Subroutine Bar() ! no parameters
   ! The `i' of Foo is unknown here
 End Subroutine Bar
-\end{verbatim}
+\end{lstlisting}
 \item Their dynamic scope is the lifetime of the program unit in which
   they are declared:
-\begin{verbatim}
+\begin{lstlisting}
 Subroutine Foo()
   call Bar()
   call Bar()
@@ -44,7 +44,7 @@ Subroutine Bar()
   Integer :: i
   ! `i' is created every time Bar is called
 End Subroutine Bar
-\end{verbatim}
+\end{lstlisting}
 \end{itemize}
 
 \Level 2 {Variables in a module}

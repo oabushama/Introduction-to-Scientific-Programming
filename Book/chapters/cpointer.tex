@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% pointer.tex : about pointers
 %%%%
@@ -41,9 +41,9 @@ its range is actually greater than of the \n{int} type.
 \begin{block}{Memory addresses}
   \label{sl:ampersand}
   If you have an
-\begin{verbatim}
+\begin{lstlisting}
 int i;
-\end{verbatim}
+\end{lstlisting}
 then \n{&i} is the address of~\n{i}.
 
 An address is a (long) integer, denoting a memory address. Usually it
@@ -69,17 +69,17 @@ type and affixing a star to it.
   formally: `pointer-to-int'.
 
   You can create variables of this type:
-\begin{verbatim}
+\begin{lstlisting}
 int i;
 int* addr = &i;
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 Now if you have have a pointer that refers to an int:
-\begin{verbatim}
+\begin{lstlisting}
 int i;
 int *iaddr = &i;
-\end{verbatim}
+\end{lstlisting}
 you can use (for instance print) that pointer, which gives you the
 address of the variable. If you want the value of the variable that
 the pointer points to, you need to \indexterm{dereference} it.
@@ -161,10 +161,10 @@ So you could pass an array like this:
 \begin{block}{Dynamic allocation}
   \label{sl:newstar}
   \n{new} gives a something-star:
-\begin{verbatim}
+\begin{lstlisting}
 double *x;
 x = new double[27];
-\end{verbatim}
+\end{lstlisting}
 (Actually, C uses \indextermttdef{malloc}, but that looks similar.)
 \end{block}
 
@@ -173,12 +173,12 @@ x = new double[27];
 \begin{block}{Pointer arithmetic}
   \indextermbus{pointer}{arithmetic} uses the size of the objects it
   points at:
-\begin{verbatim}
+\begin{lstlisting}
 double *addr_of_element = array;
 cout << *addr_of_element;
 addr_of_element = addr_of_element+1;
 cout << *addr_of_element;
-\end{verbatim}
+\end{lstlisting}
 Increment add size of the array element, 4~or~8 bytes, not~one!
 \end{block}
 
@@ -192,17 +192,17 @@ Increment add size of the array element, 4~or~8 bytes, not~one!
 \begin{block}{Multi-dimensional arrays}
   \label{sl:static-multi}
 After
-\begin{verbatim}
+\begin{lstlisting}
 double x[10][20];
-\end{verbatim}
+\end{lstlisting}
 a row \n{x[3]} is a \n{double*}, so is \n{x} a \n{double**}?
 
 Was it created as:
-\begin{verbatim}
+\begin{lstlisting}
 double **x = new double*[10];
 for (int i=0; i<10; i++)
   x[i] = new double[20];
-\end{verbatim}
+\end{lstlisting}
 No: multi-d arrays are contiguous.
 \end{block}
 
@@ -212,7 +212,7 @@ No: multi-d arrays are contiguous.
 \begin{block}{C++ pass by reference}
   \label{sl:cpp-pass-ref}
   C++ style functions that alter their arguments:
-\begin{verbatim}
+\begin{lstlisting}
 void inc(int &i) { i += 1; }
 int main() {
   int i=1;
@@ -220,14 +220,14 @@ int main() {
   cout << i << endl;
   return 0;
 }
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{block}{C-style pass by reference}
   \label{sl:c-pass-ref}
   In C you can not pass-by-reference like this. Instead, you pass the
   address of the variable~\n{i} by value:
-\begin{verbatim}
+\begin{lstlisting}
 void inc(int *i) { *i += 1; }
 int main() {
   int i=1;
@@ -235,7 +235,7 @@ int main() {
   cout << i << endl;
   return 0;
 }
-\end{verbatim}
+\end{lstlisting}
 Now the function gets an argument that is a memory address: \n{i}~is
 an int-star. It then increases \n{*i}, which is an int variable, by one.
 \end{block}
@@ -243,7 +243,7 @@ an int-star. It then increases \n{*i}, which is an int variable, by one.
 \begin{exercise}
   \label{ex:c-star-swap}
   Write another version of the \n{swap} function:
-\begin{verbatim}
+\begin{lstlisting}
 void swapij( /* something with i and j */ {
   /* your code */
 }
@@ -254,7 +254,7 @@ int main() {
   cout << "check that j is 1: " << i << endl;
   return 0;
 }
-\end{verbatim}
+\end{lstlisting}
 Hint: write C++ code, then insert stars where needed.
 \end{exercise}
 
@@ -265,14 +265,14 @@ are local to a scope:
 
 \begin{block}{Problem with static arrays}
   \label{sl:no-static-alloc}
-\begin{verbatim}
+\begin{lstlisting}
 if ( something ) {
   double ar[25];
 } else {
   double ar[26];
 }
 ar[0] = // there is no array!
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 The array \n{ar} is created depending on if the condition is true, but
@@ -283,20 +283,20 @@ storage that transcends its scope:
 
 \begin{block}{Declaration and allocation}
   \label{sl:c-array-new}
-\begin{verbatim}
+\begin{lstlisting}
 double *array;
 if (something) {
   array = new double[25];
 } else {
   array = new double[26];
 }
-\end{verbatim}
+\end{lstlisting}
 (Size in doubles, not in bytes as in C)
 \end{block}
 
 \begin{block}{Memory leak1}
   \label{sl:leak1}
-\begin{verbatim}
+\begin{lstlisting}
 void func() {
   double *array = new double[large_number];
   // code that uses array
@@ -304,7 +304,7 @@ void func() {
 int main() {
   func();
 };
-\end{verbatim}
+\end{lstlisting}
 \begin{itemize}
 \item
   The function allocates memory
@@ -316,12 +316,12 @@ int main() {
 
 \begin{block}{Memory leaks}
   \label{sl:leak2}
-\begin{verbatim}
+\begin{lstlisting}
 for (int i=0; i<large_num; i++) {
   double *array = new double[1000];
   // code that uses array
 }
-\end{verbatim}
+\end{lstlisting}
   Every iteration reserves memory, which is never released:
   another \indextermbus{memory}{leak}.
 
@@ -332,9 +332,9 @@ for (int i=0; i<large_num; i++) {
   \label{sl:c-array-del}
   Memory allocated with \n{new} does not disappear when you leave a
   scope. Therefore you have to delete the memory explicitly:
-\begin{verbatim}
+\begin{lstlisting}
 delete(array);
-\end{verbatim}
+\end{lstlisting}
 The C++ \n{vector} does not have this problem, because it obeys scope rules.
 \end{block}
 
@@ -357,13 +357,13 @@ expressed in bytes. Use the function \indextermtt{sizeof} to translate
 from types to bytes:
 
 \begin{block}{Allocation in C}
-\begin{verbatim}
+\begin{lstlisting}
 int n;
 double *array;
 array = malloc( n*sizeof(double) );
 if (!array)
   // allocation failed!
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \Level 2 {Allocation in a function}
@@ -374,7 +374,7 @@ can be used to allocate data in a function and
 return it from the function.
 
 \begin{block}{Allocation in a function}
-\begin{verbatim}
+\begin{lstlisting}
 void make_array( double **a, int n ) {
   *a = new double[n];
 }
@@ -382,7 +382,7 @@ int main() {
   double *array;
   make_array(&array,17);
 }
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 Note that this requires a `double-star' or `star-star' argument:
@@ -432,11 +432,11 @@ there is memory that you have reserved, but you have lost the ability
 to access it.
 
 In this example:
-\begin{verbatim}
+\begin{lstlisting}
 double *array = new double[100];
 // ...
 array = new double[105];
-\end{verbatim}
+\end{lstlisting}
 memory is allocated twice. The memory that was allocated first is
 never release, because in the intervening code another pointer to it
 may have been set. However, if that doesn't happen, the memory is both

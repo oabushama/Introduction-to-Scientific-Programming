@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% iof.tex : input and output in Fortran
 %%%%
@@ -50,9 +50,9 @@ formatting specified.
 \Level 0 {Print to terminal}
 
 The simplest command for outputing data is \indextermtt{print}.
-\begin{verbatim}
+\begin{lstlisting}
 print *,"The result is",result
-\end{verbatim}
+\end{lstlisting}
 In its easiest form, you use the star to indicate that you don't care
 about formatting; after the comma you can then have any number of
 comma-separated strings and variables.
@@ -60,26 +60,26 @@ comma-separated strings and variables.
 \Level 1 {Print on one line}
 
 The statement
-\begin{verbatim}
+\begin{lstlisting}
 print *,item1,item2,item3
-\end{verbatim}
+\end{lstlisting}
 will print the items on one line, as far as the line length allows.
 
 \begin{slide}{Simple print}
   \label{sl:fio-print}
   All on one line:
-\begin{verbatim}
+\begin{lstlisting}
 print *,"The result is",result
 print *,item1,item2,item3
-\end{verbatim}
+\end{lstlisting}
 \end{slide}
 
 \begin{block}{Implicit do loops}
   \label{sl:print-implicit-loop}
   Parametrized printing with an \indextermsub{implicit}{do loop}:
-\begin{verbatim}
+\begin{lstlisting}
 print *,( i*i,i=1,n)
-\end{verbatim}
+\end{lstlisting}
 All values will be printed on the same line.
 \end{block}
 
@@ -91,18 +91,18 @@ multi-dimensional.
 
 You can also control the printing of an array by using an
 \indextermsub{implicit}{do loop}:
-\begin{verbatim}
+\begin{lstlisting}
 print *,( A(i),i=1,n)
-\end{verbatim}
+\end{lstlisting}
 
 \begin{slide}{Array printing}
   \label{sl:fprint-array}
   \begin{itemize}
   \item \n{print *,A} prints whole array, column-major
   \item Implicit do loops:
-\begin{verbatim}
+\begin{lstlisting}
 print *,( A(i,i),i=1,n)
-\end{verbatim}
+\end{lstlisting}
   Can also be nested.
   \end{itemize}
 \end{slide}
@@ -113,9 +113,9 @@ The default formatting uses quite a few positions for what can be
 small numbers. To indicate explicitly the formatting, for instance
 limiting the number of positions used for a number, or the whole and
 fractional part of a real number, you can use a format string.
-\begin{verbatim}
+\begin{lstlisting}
 print '(a6,3f5.3)',"Result",x,y,z
-\end{verbatim}
+\end{lstlisting}
 The format specifier is inside single quotes and parentheses, and
 consists of comma-separated specifications for a single item:
 \begin{itemize}
@@ -128,9 +128,9 @@ consists of comma-separated specifications for a single item:
   and $n$~digits in the fractional part.
 \item `\n{e}$m.n$' Exponent representation.
 \item Strings can go into the format:
-\begin{verbatim}
+\begin{lstlisting}
 print '("Result:",3f5.3)',x,y,z
-\end{verbatim}
+\end{lstlisting}
 \item `\n{x}' for a space, `\n{/}'~for newline
 \end{itemize}
 Putting a number in front of a single specifier indicates that it is
@@ -143,10 +143,10 @@ string of asterisks is printed:
 
 If you find yourself using the same format a number of times, you can
 give it a \indexterm{label}:
-\begin{verbatim}
+\begin{lstlisting}
   print 10,"result:",x,y,z
 10 format('(a6,3f5.3)')
-\end{verbatim}
+\end{lstlisting}
 
 \url{https://www.obliquity.com/computer/fortran/format.html}
 
@@ -157,16 +157,16 @@ give it a \indexterm{label}:
     Fine control of input/output.
   \item
     Direct use in print statement:  
-\begin{verbatim}
+\begin{lstlisting}
 print '(a6,3f5.3)',"Result",x,y,z
 print '("Result:",3f5.3)',x,y,z
-\end{verbatim}
+\end{lstlisting}
 \item Format statement:
   \end{itemize}
-\begin{verbatim}
+\begin{lstlisting}
   print 10,"result:",x,y,z
 10 format('(a6,3f5.3)')
-\end{verbatim}
+\end{lstlisting}
 \end{slide}
 
 \begin{slide}{Format specifiers}
@@ -181,19 +181,19 @@ print '("Result:",3f5.3)',x,y,z
     and $n$~digits in the fractional part.
   \item `\n{e}$m.n$' Exponent representation.
   \item Strings can go into the format:
-\begin{verbatim}
+\begin{lstlisting}
 print '("Result:",3f5.3)',x,y,z
-\end{verbatim}
+\end{lstlisting}
 \item `\n{x}' for a space, `\n{/}'~for newline
   \end{itemize}
 \end{slide}
 
 \begin{block}{Format repetitions}
   \label{sl:fformat-rep}
-\begin{verbatim}
+\begin{lstlisting}
 print '( 3i4 )', i1,i2,i3
 print '( 3(i2,":",f7.4) )', i1,r1,i2,r2,i3,r2
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{block}{Repeats and line breaks}
@@ -211,7 +211,7 @@ print '( 3(i2,":",f7.4) )', i1,r1,i2,r2,i3,r2
 \begin{exercise}
   \label{ex:f99}
   Use formatted I/O to print the number $0\cdots99$ as follows:
-\begin{verbatim}
+\begin{lstlisting}
  0  1  2  3  4  5  6  7  8  9
 10 11 12 13 14 15 16 17 18 19
 20 21 22 23 24 25 26 27 28 29
@@ -222,42 +222,42 @@ print '( 3(i2,":",f7.4) )', i1,r1,i2,r2,i3,r2
 70 71 72 73 74 75 76 77 78 79
 80 81 82 83 84 85 86 87 88 89
 90 91 92 93 94 95 96 97 98 99
-\end{verbatim}
+\end{lstlisting}
 \end{exercise}
 
 \Level 0 {File and stream I/O}
 
 If you want to send output anywhere else than the terminal screen, you
 need the \indextermfort{write} statement, which looks like:
-\begin{verbatim}
+\begin{lstlisting}
 write (unit,format) data
-\end{verbatim}
+\end{lstlisting}
 where \n{format} and \n{data} are as described above. The new element
 is the \indexterm{unit}, which is a numerical indication of an output
 device, such as a file.
 
 \Level 1 {Units}
 
-\begin{verbatim}
+\begin{lstlisting}
 Open(11)
-\end{verbatim}
+\end{lstlisting}
 will result in a file with a name typically \n{fort11}.
-\begin{verbatim}
+\begin{lstlisting}
 Open(11,FILE="filename")
-\end{verbatim}
+\end{lstlisting}
 Many other options for error handling, new vs old file, etc.
 
 After this:
-\begin{verbatim}
+\begin{lstlisting}
 Write (11,fmt) data
-\end{verbatim}
+\end{lstlisting}
 Again options for errors and such.
 
 \Level 1 {Other write options}
 
-\begin{verbatim}
+\begin{lstlisting}
 write(unit,fmt,ADVANCE="no") data
-\end{verbatim}
+\end{lstlisting}
 will not issue a newline.
 
 \indextermfort{open} \indextermfort{Close}
@@ -279,8 +279,8 @@ program, it is best to use \indextermsub{binary}{output} or
 
 \begin{block}{Unformatted output}
   Indicated by lack of format specification:
-\begin{verbatim}
+\begin{lstlisting}
 write (*) data
-\end{verbatim}
+\end{lstlisting}
   Note: may not be portable between machines.
 \end{block}

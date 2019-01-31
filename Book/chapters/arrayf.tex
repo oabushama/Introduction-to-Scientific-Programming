@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% arrayf.tex : arrays in Fortran
 %%%%
@@ -22,15 +22,15 @@ The preferred way for specifying an array size is:
   \label{sl:farray-dimension}
 Preferred way of creating arrays through \indextermfort{dimension}
 keyword:
-\begin{verbatim}
+\begin{lstlisting}
 real(8), dimension(100) :: x,y
-\end{verbatim}
+\end{lstlisting}
 One-dimensional arrays of size~100.
 
 Older mechanism works too:
-\begin{verbatim}
+\begin{lstlisting}
 integer :: i(10,20)
-\end{verbatim}
+\end{lstlisting}
 Two-dimensional array of size~$10\times 20$.
 
 These arrays are statically defined, and only live inside their
@@ -45,22 +45,22 @@ dynamic arrays.)
 Array indexing in Fortran is 1-based:
 \begin{block}{1-based Indexing}
   \label{sl:farray-base1}
-\begin{verbatim}
+\begin{lstlisting}
 integer,parameter :: N=8
 real(4),dimension(N) :: x
 do i=1,N
   ... x(i) ...
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 Unlike C++, Fortran can specify the lower bound explicitly:
 \begin{block}{Lower bound}
   \label{sl:farray-lower}
-\begin{verbatim}
+\begin{lstlisting}
 real,dimension(-1:7) :: x
 do i=-1,7
   ... x(i) ...
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 Such arrays, as in~C++, obey the scope: they disappear at the end of
@@ -82,10 +82,10 @@ including the use of
 Fortran is more sophisticated than C++ in how it can handle arrays as
 a whole. For starters, you can assign one array to another:
 
-\begin{verbatim}
+\begin{lstlisting}
 real*8, dimension(10) :: x,y
 x = y
-\end{verbatim}
+\end{lstlisting}
 
 This obviously requires the arrays to have the same size.
 You can assign subarrays, or \emph{array sections}\index{index!section},
@@ -94,12 +94,12 @@ as long as they have the same shape. This uses a colon syntax.
 \begin{slide}{Array sections example}
   \label{sl:farray-section}
   Use the colon notation to indicate ranges:
-\begin{verbatim}
+\begin{lstlisting}
 real(4),dimension(4) :: y
 real(4),dimension(5) :: x
 x(1:4) = y
 x(2:5) = x(1:4)
-\end{verbatim}
+\end{lstlisting}
 \end{slide}
 
 \begin{block}{Array sections}
@@ -153,11 +153,11 @@ You can even use a stride:
 
 \begin{block}{Index arrays}
   \label{sl:farray-indexarray}
-\begin{verbatim}
+\begin{lstlisting}
 integer,dimension(4) :: i = [2,4,6,8]
 real(4),dimension(10) :: x
 print *,x(i)
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \Level 0 {Multi-dimensional}
@@ -170,10 +170,10 @@ we will talk about the first and second dimension of the array.
 A rank-two array, or matrix, is defined like this:
 \begin{block}{Multi-dimension arrays}
   \label{sl:farray-2d}
-\begin{verbatim}
+\begin{lstlisting}
 real(8),dimension(20,30) :: array
 array(i,j) = 5./2
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{block}{Array layout}
@@ -191,16 +191,16 @@ dimensions.
 
 \begin{block}{Array sections in multi-D}
   \label{sl:farray-sectiond}
-\begin{verbatim}
+\begin{lstlisting}
 real(8),dimension(10) :: a,b
 a(1:9) = b(2:10)
-\end{verbatim}
+\end{lstlisting}
 or
-\begin{verbatim}
+\begin{lstlisting}
 logical,dimension(25,3) :: a
 logical,dimension(25)   :: b
 a(:,2) = b
-\end{verbatim}
+\end{lstlisting}
 You can also use strides.
 \end{block}
 
@@ -220,16 +220,16 @@ We have the following properties of an array:
 \begin{itemize}
 \item The bounds are the lower and upper bound in each dimension.
   For instance, after
-\begin{verbatim}
+\begin{lstlisting}
 integer,dimension(-1:1,-2:2) :: symm
-\end{verbatim}
+\end{lstlisting}
 the array \n{symm} has a lower bound of~\n{-1} in the first dimension
 and \n{-2} in the second. The functions \indextermttdef{Lbound} and
 \indextermttdef{Ubound} give these bounds as array or scalar:
-\begin{verbatim}
+\begin{lstlisting}
 array_of_lower = Lbound(symm)
 upper_in_dim_2 = Ubound(symm,2)
-\end{verbatim}
+\end{lstlisting}
 
 \snippetwithoutput{fsection2}{arrayf}{fsection2}
 
@@ -239,11 +239,11 @@ upper_in_dim_2 = Ubound(symm,2)
 
 \item The \indextermttdef{size} is the number of elements, either for
   the whole array, or for a specified dimension.
-\begin{verbatim}
+\begin{lstlisting}
 integer :: x(8), y(5,4)
 size(x)
 size(y,2)
-\end{verbatim}
+\end{lstlisting}
 \end{itemize}
 
 \begin{slide}{Query functions}
@@ -259,16 +259,16 @@ size(y,2)
 \Level 1 {Reshaping}
 
 \indextermfort{RESHAPE}
-\begin{verbatim}
+\begin{lstlisting}
   array = RESHAPE( list,shape )
-\end{verbatim}
+\end{lstlisting}
 Example:
 \verbatimsnippet{shape44}
 
 \indextermfort{SPREAD}
-\begin{verbatim}
+\begin{lstlisting}
   array = SPREAD( old,dim,copies )
-\end{verbatim}
+\end{lstlisting}
 
 \Level 0 {Arrays to subroutines}
 
@@ -310,36 +310,36 @@ the size later, presumably in terms of run-time program parameters.
 
 \begin{block}{Array allocation}
   \label{sl:farray-alloc}
-\begin{verbatim}
+\begin{lstlisting}
 real(8), dimension(:), allocatable :: x,y
 
 n = 100
 allocate(x(n), y(n))
-\end{verbatim}
+\end{lstlisting}
 You can \indextermtt{deallocate} the array when you don't need the
 space anymore.
 \end{block}
 
 If you are in danger of running out of memory, it can be a good idea
 to add a \n{stat=ierror} clause to the \n{allocate} statement:
-\begin{verbatim}
+\begin{lstlisting}
 integer :: ierr
 allocate( x(n), stat=ierr )
 if ( ierr/=0 ) ! report error
-\end{verbatim}
+\end{lstlisting}
 
 Has an array been allocated:
-\begin{verbatim}
+\begin{lstlisting}
 Allocated( x ) ! returns logical
-\end{verbatim}
+\end{lstlisting}
 
 Allocatable arrays are automatically deallocated when they go out of
 scope. This prevents the \indextermbus{memory}{leak} problems of~C++.
 
 Explicit deallocate:
-\begin{verbatim}
+\begin{lstlisting}
 deallocate(x)
-\end{verbatim}
+\end{lstlisting}
 
 \Level 0 {Array output}
 
@@ -350,10 +350,10 @@ Use implicit do-loops; section~\ref{sec:f-impdo}.
 \Level 1 {Arithmetic operations}
 
 Between arrays of the same shape:
-\begin{verbatim}
+\begin{lstlisting}
 A = B+C
 D = D*E
-\end{verbatim}
+\end{lstlisting}
 (where the multiplication is by element).
 
 \Level 1 {Intrinsic functions}
@@ -368,9 +368,9 @@ The following intrinsic functions are avaible for arrays:
   \item \indextermtt{Product} return the product of all elements.
   \item \indextermfort{MaxLoc} returns the index of the maximum
     element.
-\begin{verbatim}
+\begin{lstlisting}
 i = MAXLOC( array [, mask ] )
-\end{verbatim}
+\end{lstlisting}
   \item \indextermtt{MinLoc} returns the index of the minimum element.
   \item \indextermtt{MatMul} returns the matrix product of two matrices.
   \item \indextermtt{Dot_Product} returns the dot product of two
@@ -414,31 +414,31 @@ specify the ones it applies to with a \indextermfort{where} statement.
 
 \begin{block}{Operate where}
   \label{sl:farray-where}
-\begin{verbatim}
+\begin{lstlisting}
 where ( A<0 ) B = 0
-\end{verbatim}
+\end{lstlisting}
 
 Full form:
-\begin{verbatim}
+\begin{lstlisting}
 WHERE ( logical argument )
   sequence of array statements
 ELSEWHERE
   sequence of array statements
 END WHERE
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \Level 1 {Global condition tests}
 
 Reduction of a test on all array elements:
 \indextermfort{all}
-\begin{verbatim}
+\begin{lstlisting}
 REAL(8),dimension(N,N) :: A
 LOGICAL :: positive,positive_row(N),positive_col(N)
 positive = ALL( A>0)
 positive_row = ALL( A>0,1 )
 positive_col = ALL( A>0,2 )
-\end{verbatim}
+\end{lstlisting}
 
 \begin{exercise}
   Use array statements (that is, no loops) to fill a two-dimensional
@@ -461,9 +461,9 @@ positive_col = ALL( A>0,2 )
 
 Similar to \n{all}, there is a function~\indextermfort{any} that tests
 if any array element satisfies the test.
-\begin{verbatim}
+\begin{lstlisting}
 if ( Any( Abs(A-B)>
-\end{verbatim}
+\end{lstlisting}
 
 \Level 0 {Array operations}
 
@@ -476,20 +476,20 @@ typing, or can be more efficient in some circumstances.
 
 If your loop assigns to an array from another array,
   you can use section notation:
-\begin{verbatim}
+\begin{lstlisting}
 a(:) = b(:)
 c(1:n) = d(2:n+1)
-\end{verbatim}
+\end{lstlisting}
 
 \Level 2 {`forall' keyword}
 
 The \indextermtt{forall} keyword also indicates an array assignment:
-\begin{verbatim}
+\begin{lstlisting}
 forall (i=1:n)
   a(i) = b(i)
   c(i) = d(i+1)
 end forall
-\end{verbatim}
+\end{lstlisting}
 You can tell that this is for arrays only, because the loop index has
 to be part of the left-hand side of every assignment.
 
@@ -506,12 +506,12 @@ It is not a parallel loop! For that, the following mechanism is preferred.
   \n{concurrent} keyword the user specifies that the
   iterations of a loop are independent, and can therefore possibly be
   done in parallel:
-\begin{verbatim}
+\begin{lstlisting}
 do concurrent (i=1:n)
   a(i) = b(i)
   c(i) = d(i+1)
 end do
-\end{verbatim}
+\end{lstlisting}
 (Do not use \n{for all})
 \end{block}
 
@@ -521,28 +521,28 @@ Here are some illustrations of simple array copying with the above
 mechanisms.
 
 \verbatimsnippet{blockrecur}
-\begin{verbatim}
+\begin{lstlisting}
 Original     1   2   3   4   5   6   7   8   9  10
 Recursive    0   2   4   6   8  10  12  14  16  18
-\end{verbatim}
+\end{lstlisting}
 
 \verbatimsnippet{blockslice}
-\begin{verbatim}
+\begin{lstlisting}
 Original     1   2   3   4   5   6   7   8   9  10
 Section      0   2   4   6   8  10  12  14  16  18
-\end{verbatim}
+\end{lstlisting}
 
 \verbatimsnippet{blockforall}
-\begin{verbatim}
+\begin{lstlisting}
 Original     1   2   3   4   5   6   7   8   9  10
 Forall       0   2   4   6   8  10  12  14  16  18
-\end{verbatim}
+\end{lstlisting}
 
 \verbatimsnippet{blockconc}
-\begin{verbatim}
+\begin{lstlisting}
 Original     1   2   3   4   5   6   7   8   9  10
 Concurrent   0   2   4   6   8  10  12  14  16  18
-\end{verbatim}
+\end{lstlisting}
 
 \begin{exercise}
   Create arrays \n{A,C} of length~\n{2N}, and \n{B}~of length~\n{N}.
@@ -563,19 +563,19 @@ Here are the above four constructs, but applied to a loop with a dependence.
 %
 \verbatimsnippet{slicerecur}
 %
-\begin{verbatim}
+\begin{lstlisting}
 Original   1   2   3   4   5   6   7   8   9  10
 Recursiv   1   2   4   8  16  32  64 128 256 512
-\end{verbatim}
+\end{lstlisting}
 
 The slicing version of this:
 %
 \verbatimsnippet{sliceslice}
 %
-\begin{verbatim}
+\begin{lstlisting}
 Original   1   2   3   4   5   6   7   8   9  10
 Section    1   2   4   6   8  10  12  14  16  18
-\end{verbatim}
+\end{lstlisting}
 %
 acts as if the right-hand side is saved in a temporary array, and
 subsequently assigned to the left-hand side.
@@ -584,20 +584,20 @@ Using `forall' is equivalent to slicing:
 %
 \verbatimsnippet{sliceforall}
 %
-\begin{verbatim}
+\begin{lstlisting}
 Original     1   2   3   4   5   6   7   8   9  10
 Forall       1   2   4   6   8  10  12  14  16  18
-\end{verbatim}
+\end{lstlisting}
 
 On the other hand, `do concurrent' does not use temporaries, so it is
 more like the sequential version:
 %
 \verbatimsnippet{sliceconc}
 %
-\begin{verbatim}
+\begin{lstlisting}
 Original     1   2   3   4   5   6   7   8   9  10
 Concurrent   1   2   4   8  16  32  64 128 256 512
-\end{verbatim}
+\end{lstlisting}
 Note that the result does not have to be equal to the sequential
 execution: the compiler is free to rearrange the iterations any way it
 sees fit.
@@ -608,11 +608,11 @@ sees fit.
   \label{ex:farray-assign-section}
   Let the following declarations be given, and assume that all arrays
   are properly initialized:
-\begin{verbatim}
+\begin{lstlisting}
 real                   :: x
 real, dimension(10)    :: a, b
 real, dimension(10,10) :: c, d
-\end{verbatim}
+\end{lstlisting}
 
 Comment on the following lines: are they legal, if so what do they do?
 \begin{enumerate}

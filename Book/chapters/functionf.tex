@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% functionf.tex : functions and such in Fortran
 %%%%
@@ -17,14 +17,14 @@ file, this is the recommended structure:
 
 \begin{block}{Subprograms in contains clause}
   \label{sl:contains}
-\begin{verbatim}
+\begin{lstlisting}
 Program foo
   < declarations>
   < executable statements >
   Contains
     < subprogram definitions >
 End Program foo
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 That is, subprograms are placed after the main program statements,
@@ -50,32 +50,32 @@ Fortran has two types of subprograms:
 
 Both types have the same structure, which is roughly the same as of
 the main program:
-\begin{verbatim}
+\begin{lstlisting}
 subroutine foo( <parameters> )
 <variable declarations>
 <executable statements>
 end subroutine foo
-\end{verbatim}
+\end{lstlisting}
 and
-\begin{verbatim}
+\begin{lstlisting}
 returntype function foo( <parameters> )
 <variable declarations>
 <executable statements>
 end subroutine foo
-\end{verbatim}
+\end{lstlisting}
 
 Exit from a procedure can happen two ways:
 \begin{enumerate}
 \item the flow of control reaches the end of the procedure body, or
 \item execution is finished by an explicit \indextermtt{return}
   statement.
-\begin{verbatim}
+\begin{lstlisting}
 subroutine foo()
   print *,"foo"
   if (something) return
   print *,"bar"
 end subroutine foo
-\end{verbatim}
+\end{lstlisting}
 \end{enumerate}
 The \n{return} statement is optional in the first case.
 The \n{return} statement is different from C++ in that it does not
@@ -86,28 +86,28 @@ indicate the return result of a function.
 \end{exercise}
 
 A subroutine is invoked with a \indextermtt{call} statement:
-\begin{verbatim}
+\begin{lstlisting}
 call foo()
-\end{verbatim}
+\end{lstlisting}
 
 \begin{slide}{Subroutines}
   \label{sl:subroutine}
-\begin{verbatim}
+\begin{lstlisting}
 subroutine foo()
   implicit none
   print *,"foo"
   if (something) return
   print *,"bar"
 end subroutine foo
-\end{verbatim}
+\end{lstlisting}
 \begin{itemize}
 \item Looks much like a main program
 \item Ends at the end, or when \n{return} is reached
 \item Note: \n{return} does not return anything
 \item Activated with 
-\begin{verbatim}
+\begin{lstlisting}
   call foo()
-\end{verbatim}
+\end{lstlisting}
 \end{itemize}
 \end{slide}
 
@@ -134,7 +134,7 @@ end subroutine foo
 
 While a \n{subroutine} can only return information through its parameters,
 a~\indexterm{function} procedure returns an explicit result:
-\begin{verbatim}
+\begin{lstlisting}
 logical function test(x)
   implicit none
   real :: x
@@ -142,7 +142,7 @@ logical function test(x)
   test = some_test_on(x)
   return ! optional, see above
 end function test
-\end{verbatim}
+\end{lstlisting}
 You see that the result is not returned in the \n{return} statement,
 but rather through assignment to the function name. The \n{return}
 statement, as before, is optional and only indicates where the flow of
@@ -168,9 +168,9 @@ result to its calling program, much like a non-void function in~C++
 
 A function is not invoked with \n{call}, but rather through being used
 in an expression:
-\begin{verbatim}
+\begin{lstlisting}
 if (test(3.0) .and. something_else) ...
-\end{verbatim}
+\end{lstlisting}
 You now have the following cases to make the function known in the
 main program:
 \begin{itemize}
@@ -218,7 +218,7 @@ main program:
 \begin{block}{Subprogram arguments}
   \label{sl:farguments}
  Arguments are declared in subprogram body:
-\begin{verbatim}
+\begin{lstlisting}
 subroutine f(x,y,i)
   implicit none
   integer,intent(in) :: i
@@ -228,7 +228,7 @@ subroutine f(x,y,i)
 end subroutine f
 ! and in the main program
 call f(x,y,5)
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{block}{Parameter passing}
@@ -265,20 +265,20 @@ compiler can detect programming mistakes.
 Allow compiler optimizations:
 
 \begin{multicols}{2}
-\begin{verbatim}
+\begin{lstlisting}
 x = f()
 call ArgOut(x)
 print *,x
-\end{verbatim}
+\end{lstlisting}
 Call to \n{f} removed
 \vfill\columnbreak
-\begin{verbatim}
+\begin{lstlisting}
 do i=1,1000
   x = ! something
   y1 = .... x ....
   call ArgIn(x)
   y2 = ! same expression as y1
-\end{verbatim}
+\end{lstlisting}
 \n{y2} is same as \n{y1} because \n{x} not changed
 \end{multicols}
 (May need further specifications, so this is not the prime justification.)
@@ -357,12 +357,12 @@ It is required if the function takes function arguments.
 
 The \indextermtt{interface} block can be used to define a generic
 function:
-\begin{verbatim}
+\begin{lstlisting}
 interface f
 function f1( ..... )
 function f2( ..... )
 end interface f
-\end{verbatim}
+\end{lstlisting}
 where \n{f1},\n{f2} are functions that can be distinguished by their
 argument types. The generic function~\n{f} then becomes either \n{f1}
 or \n{f2} depending on what type of argument it is called with.

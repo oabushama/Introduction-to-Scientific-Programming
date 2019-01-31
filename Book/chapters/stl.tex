@@ -24,10 +24,10 @@ You have already seen
 \end{itemize}
 
 Using a template class typically involves
-\begin{verbatim}
+\begin{lstlisting}
 #include <something>
 using std::function;
-\end{verbatim}
+\end{lstlisting}
 see section~\ref{sec:usename}.
 
 \Level 0 {Complex numbers}
@@ -35,13 +35,13 @@ see section~\ref{sec:usename}.
 
 \emph{Complex numbers}\index{complex numbers|textbf} use templating to
 set their precision.
-\begin{verbatim}
+\begin{lstlisting}
 #include <complex>
 complex<float> f;
 f.re = 1.; f.im = 2.;
 
 complex<double> d(1.,3.);
-\end{verbatim}
+\end{lstlisting}
 Math operator like \n{+,*} are defined, as are math functions.
 
 \Level 0 {Containers}
@@ -61,28 +61,28 @@ the age of a person, given their name. This is sometimes called
 formally known as an \indextermsub{associative}{array}.
 
 In C++ this is implemented through a \indextermttdef{map}:
-\begin{verbatim}
+\begin{lstlisting}
 #include <map>
 using std::map;
 map<string,int> age;
-\end{verbatim}
+\end{lstlisting}
 is set of
 pairs where the first item (which is used for indexing) is of type
 \n{string}, and the second item (which is found) is of type \n{int}.
 
 A map is made by inserting the elements one-by-one:
-\begin{verbatim}
+\begin{lstlisting}
 #include <map>
 using std::make_pair;
 age.insert(make_pair("Alice",29));
 age["Bob"] = 32;
-\end{verbatim}
+\end{lstlisting}
 
 You can range over a map:
-\begin{verbatim}
+\begin{lstlisting}
 for ( auto person : age )
   cout << person.first << " has age " << person.second << endl;
-\end{verbatim}
+\end{lstlisting}
 
 \Level 1 {Iterators}
 
@@ -149,12 +149,12 @@ the \ac{STL} offers a better solution.
 \begin{block}{Templated functions for limits}
   \label{sl:stl-limits}
   Use header file \indextermtt{limits}:
-\begin{verbatim}
+\begin{lstlisting}
 #include <limits>
 using std::numeric_limits;
 
 cout << numeric_limits<long>::max();
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{exercise}
@@ -168,13 +168,13 @@ cout << numeric_limits<long>::max();
   The functions \indextermtt{isinf} and \indextermtt{isnan} are
   defined for the floating point types (\n{float}, \n{double}, \n{long
     double}), returning a \n{bool}.
-\begin{verbatim}
+\begin{lstlisting}
 #include <math.h>
 isnan(-1.0/0.0);   // false
 isnan(sqrt(-1.0)); // true
 isinf(-1.0/0.0);   // true
 isinf(sqrt(-1.0)); // false
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \Level 0 {Random numbers}
@@ -192,7 +192,7 @@ that is more general and more flexible than the C~version (section~\ref{sec:cran
 
 \begin{block}{Random number example}
   \label{sl:stl:rand16}
-\begin{verbatim}
+\begin{lstlisting}
 // set the default generator
 std::default_random_engine generator;
 
@@ -202,7 +202,7 @@ std::uniform_int_distribution<int> distribution(1,6);
 // apply distribution to generator:
 int dice_roll = distribution(generator);
   // generates number in the range 1..6 
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \Level 0 {Time}

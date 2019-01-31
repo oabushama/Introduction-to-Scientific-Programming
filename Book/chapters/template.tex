@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% template.tex : on templates
 %%%%
@@ -19,10 +19,10 @@ for that.
   \label{sl:template-gen}
   If you have multiple routines that do `the same' for multiple types,
   you want the type name to be a variable. Syntax:
-\begin{verbatim}
+\begin{lstlisting}
 template <typename yourtypevariable>
 // ... stuff with yourtypevariable ...
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 Historically \n{typename} was \n{class} but that's confusing.
@@ -32,15 +32,15 @@ Historically \n{typename} was \n{class} but that's confusing.
 \begin{block}{Example: function}
   \label{sl:template-fun}
   Definition:
-\begin{verbatim}
+\begin{lstlisting}
 template<typename T>
 void function(T var) { cout << var << end; }
-\end{verbatim}
+\end{lstlisting}
 Usage:
-\begin{verbatim}
+\begin{lstlisting}
 int i; function(i);
 double x; function(x);
-\end{verbatim}
+\end{lstlisting}
 and the code will behave as if you had defined \n{function} twice,
 once for \n{int} and once for \n{double}.
 \end{block}
@@ -54,8 +54,8 @@ once for \n{int} and once for \n{double}.
   Write a templated function \n{epsilon} so that the following code
   prints out the values of the machine precision for the \n{float} and
   \n{double} type respectively:
-%
-\snippetwithoutput{epsprint}{template}{eps}
+  %
+  \answerwithoutput{epsprint}{template}{eps}
 \end{exercise}
 
 \Level 0 {Templated classes}
@@ -67,7 +67,7 @@ You have in fact seen this mechanism in action:
   \label{sl:template-vector}
   the \ac{STL} contains
   in effect
-\begin{verbatim}
+\begin{lstlisting}
 template<typename T>
 class vector {
 private:
@@ -77,19 +77,19 @@ public:
   int size() { /* return size of data */ };
   // much more
 }
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \Level 0 {Specific implementation}
 
-\begin{verbatim}
+\begin{lstlisting}
 template <typename T>
 void f(T);
 template <> 
 void f(char c) { /* code with c */ };
 template <>
 void f(double d) { /* code with d */ };
-\end{verbatim}
+\end{lstlisting}
 
 \Level 0 {Templating over non-types}
 

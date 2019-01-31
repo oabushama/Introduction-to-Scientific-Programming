@@ -63,18 +63,18 @@ again allowing compiler optimizations.
 \begin{block}{Reference: change argument}
 \label{sl:refarg-change}
 A reference makes the function parameter a synonym of the argument.
-\begin{verbatim}
+\begin{lstlisting}
 void f( int &i ) { i += 1; };
 int main() {
   int i = 2;
   f(i); // makes it 3
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{block}{Reference: save on copying}
 \label{sl:refarg-nocopy}
 \begin{multicols}{2}
-\begin{verbatim}
+\begin{lstlisting}
 class BigDude {
 public:
    vector<double> array(5000000);
@@ -87,16 +87,16 @@ void f(BigDude d) {
 int main() {
    BigDude big;
    f(big); // whole thing is copied
-\end{verbatim}
+\end{lstlisting}
 \columnbreak
 Instead write:
-\begin{verbatim}
+\begin{lstlisting}
 void f( BigDude &thing ) { .... };
-\end{verbatim}
+\end{lstlisting}
 Prevent changes:
-\begin{verbatim}
+\begin{lstlisting}
 void f( const BigDude &thing ) { .... };
-\end{verbatim}
+\end{lstlisting}
 \hbox{}\vfill\hbox{}
 \end{multicols}
 \end{block}
@@ -105,7 +105,7 @@ void f( const BigDude &thing ) { .... };
 \label{sec:class-ref}
 
 Here is the naive way of returning a class member:
-\begin{verbatim}
+\begin{lstlisting}
 class Object {
 private:
   SomeType thing;
@@ -113,14 +113,14 @@ public:
   SomeType get_thing() {
     return thing; };
 };
-\end{verbatim}
+\end{lstlisting}
 The problem here is that the return statement makes a copy of
 \n{thing}, which can be expensive. Instead, it is better to return the
 member by \emph{reference}\index{reference!to class member}:
-\begin{verbatim}
+\begin{lstlisting}
   SomeType &get_thing() { 
     return thing; };
-\end{verbatim}
+\end{lstlisting}
 The problem with this solution is that the calling program can now
 alter the private member. To prevent that, use a
 \emph{const reference}\index{reference!const!to class member}:
@@ -169,9 +169,9 @@ for the class:
 %
 Note that \n{return array[i]} will return a copy of the array element,
 so it is not possible to write
-\begin{verbatim}
+\begin{lstlisting}
 myobject[5] = 6;
-\end{verbatim}
+\end{lstlisting}
 For this we need to return a reference to the array element:
 %
 \verbatimsnippet{refindexref}

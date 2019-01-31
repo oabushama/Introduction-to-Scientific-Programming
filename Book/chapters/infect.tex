@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% infect.tex : exercises for infectious disease simulation
 %%%%
@@ -133,13 +133,13 @@ Disease ran its course by step 6
   Program a population without infection.
   \begin{itemize}
   \item Write the \n{Population} class. The constructor takes the number of people:
-\begin{verbatim}
+\begin{lstlisting}
 Population population(npeople);  
-\end{verbatim}
+\end{lstlisting}
   \item Write a method that infects a random person:
-\begin{verbatim}
+\begin{lstlisting}
 population.random_infection();
-\end{verbatim}
+\end{lstlisting}
   \item Write a method \n{count_infected} that counts how many people are infected.
   \item Write an \n{update} method that updates all persons in the population.
   \item Loop the \n{update} method until no people are infected: the
@@ -165,9 +165,9 @@ We start with a very simple model of infection.
   disease transmission upon contact. Incorporate this into the
   program: in each step the direct neighbours of an infected person
   can now get sick themselves.
-\begin{verbatim}
+\begin{lstlisting}
 population.set_probability_of_transfer(probability);  
-\end{verbatim}
+\end{lstlisting}
   Run a number of simulations with population sizes and contagion
   probabilities. Are there cases where people escape getting sick?
 \end{exercise}

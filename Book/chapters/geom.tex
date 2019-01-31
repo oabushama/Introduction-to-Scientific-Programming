@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% geom.tex : exercises about geometry objects
 %%%%
@@ -40,12 +40,12 @@ These exercises mostly use the material of section~\ref{ch:object}.
   \end{pmatrix}
   \]
   Your code should look like:
-\begin{verbatim}
+\begin{lstlisting}
 double x,y,alpha;
 // set x,y to some point
 rotate(x,y,alpha);
 // now x,y are rotated over alpha
-\end{verbatim}
+\end{lstlisting}
 \end{exercise}
 
 \Level 0 {Point class}
@@ -60,9 +60,9 @@ defined on coordinates.
 \begin{exercise}
   \label{ex:geom:point}
   Make class \n{Point} with a constructor
-\begin{verbatim}
+\begin{lstlisting}
 Point( float xcoordinate, float ycoordinate );
-\end{verbatim}
+\end{lstlisting}
 Write the following methods:
 \begin{itemize}
 \item \n{distance_to_origin} returns a \n{float}.
@@ -76,9 +76,9 @@ Write the following methods:
   Extend the \n{Point} class of the previous exercise with a method:
   \n{distance} that computes the distance between this point and
   another: if \n{p,q} are \n{Point} objects,
-\begin{verbatim}
-  p.distance(q) 
-\end{verbatim}
+\begin{lstlisting}
+p.distance(q) 
+\end{lstlisting}
 computes the distance between them.
 
 Hint: remember the `dot' notation for members.
@@ -96,13 +96,13 @@ Hint: remember the `dot' notation for members.
 
 \begin{exercise}
   Make a default constructor for the point class:
-\begin{verbatim}
+\begin{lstlisting}
 Point() { /* default code */ }
-\end{verbatim}
+\end{lstlisting}
   which you can use as:
-\begin{verbatim}
+\begin{lstlisting}
 Point p;
-\end{verbatim}
+\end{lstlisting}
 but which gives an indication that it is undefined:
 %
 \answerwithoutput{pointnan}{geom}{linearnan}
@@ -114,9 +114,9 @@ Hint: see section~\ref{sec:naninf}.
   \label{ex:pointrotate-class}
   Revisit exercise~\ref{ex:pointrotate} using the \n{Point}
   class. Your code should now look like:
-\begin{verbatim}
+\begin{lstlisting}
 newpoint = point.rotate(alpha);
-\end{verbatim}
+\end{lstlisting}
 \end{exercise}
 
 \begin{exercise}
@@ -135,33 +135,33 @@ newpoint = point.rotate(alpha);
 \begin{exercise}
   \label{ex:geom:line}
   Make a class \n{LinearFunction} with a constructor:
-\begin{verbatim}
+\begin{lstlisting}
 LinearFunction( Point input_p1,Point input_p2 );
-\end{verbatim}
+\end{lstlisting}
   and a function
-\begin{verbatim}
+\begin{lstlisting}
 float evaluate_at( float x );
-\end{verbatim}
+\end{lstlisting}
   which you can use as:
-\begin{verbatim}
+\begin{lstlisting}
 LinearFunction line(p1,p2);
 cout << "Value at 4.0: " << line.evaluate_at(4.0) << endl;
-\end{verbatim}
+\end{lstlisting}
 \end{exercise}
 
 \begin{exercise}
   \label{ex:geom:line2}
   Make a class \n{LinearFunction} with two constructors:
-\begin{verbatim}
+\begin{lstlisting}
 LinearFunction( Point input_p2 );
 LinearFunction( Point input_p1,Point input_p2 );
-\end{verbatim}
+\end{lstlisting}
 where the first stands for a line through the origin.\\
 Implement again the \n{evaluate} function so that
-\begin{verbatim}
+\begin{lstlisting}
 LinearFunction line(p1,p2);
 cout << "Value at 4.0: " << line.evaluate_at(4.0) << endl;
-\end{verbatim}
+\end{lstlisting}
 \end{exercise}
 
 \begin{exercise}
@@ -169,13 +169,13 @@ cout << "Value at 4.0: " << line.evaluate_at(4.0) << endl;
   Revisit exercises \ref{ex:pointrotate}
   and~\ref{ex:pointrotate-class}, introducing a \n{Matrix} class. Your
   code can now look like
-\begin{verbatim}
+\begin{lstlisting}
 newpoint = point.apply(rotation_matrix);
-\end{verbatim}
+\end{lstlisting}
   or
-\begin{verbatim}
+\begin{lstlisting}
 newpoint = rotation_matrix.apply(point);
-\end{verbatim}
+\end{lstlisting}
   Can you argue in favour of either one?
 \end{exercise}
 
@@ -190,13 +190,13 @@ then you need only two points.
 \begin{block}{Axi-parallel rectangle class}
   \label{ex:geom:rect}
   Intended API:
-\begin{verbatim}
+\begin{lstlisting}
 float Rectangle::area();
-\end{verbatim}
+\end{lstlisting}
 It would be convenient to store width and height; for 
-\begin{verbatim}
+\begin{lstlisting}
 bool Rectangle::contains(Point);  
-\end{verbatim}
+\end{lstlisting}
 it would be convenient to store bottomleft/topright points.
 \end{block}
 
@@ -205,18 +205,18 @@ it would be convenient to store bottomleft/topright points.
   \begin{itemize}
   \item
     Make a class \n{Rectangle} (sides parallel to axes) with a constructor:
-\begin{verbatim}
+\begin{lstlisting}
 Rectangle(Point bl,float w,float h);
-\end{verbatim}
+\end{lstlisting}
 The logical implementation is to store these quantities.
 Implement methods
-\begin{verbatim}
+\begin{lstlisting}
 float area(); float rightedge(); float topedge();
-\end{verbatim}
+\end{lstlisting}
 \item Add a second constructor
-\begin{verbatim}
+\begin{lstlisting}
 Rectangle(Point bl,Point tr);
-\end{verbatim}
+\end{lstlisting}
 Can you figure out how to use member initializer lists for the constructors?
 \item Write another version of your class so that it stores two \n{Point} objects.
 \end{itemize}
@@ -264,9 +264,9 @@ convenient to sometimes have an array of all four corners.
 \begin{exercise}
   \label{ex:geom:corners}
   Add a method
-\begin{verbatim}
+\begin{lstlisting}
 const vector<Point> &corners()
-\end{verbatim}
+\end{lstlisting}
 to the \n{Rectangle} class. The result is an array of all four
 corners, not in any order. Show by a compiler error that the array can
 not be altered.

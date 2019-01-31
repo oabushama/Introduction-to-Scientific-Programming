@@ -114,8 +114,8 @@ Compile and run again.
   \begin{itemize}
   \item \n{program.cxx} or \n{program.cc} are typical extensions for
     C++ sources.
-  \item \n{program.cpp} is sometimes used, but your instructor does
-    not like that.
+  \item \n{program.cpp} is also used.\\
+    (Possible confusion with `C~PreProcessor'.)
   \item \n{program} without extension usually indicates an \indexterm{executable}.
   \end{itemize}
 \end{block}
@@ -188,9 +188,13 @@ The C++ language has gone through a number of standards.
     about this.
   \item On \n{isp.tacc.utexas.edu} `icpc' uses this by default.
   \item On your own machine you need to do
-    \[ gcc -std=c++14 [other options] \]
-    or
-    \[ alias gcc='gcc -std=c++14' \]
+\begin{verbatim}
+  gcc -std=c++14 [other options]
+\end{verbatim}
+or
+\begin{verbatim}
+  alias gcc='gcc -std=c++14'
+\end{verbatim}
   \end{itemize}
 \end{block}
 
@@ -390,14 +394,17 @@ double re_part,im_part;
   \item We call a variable of type
     \n{int,float,double} a \indextermsub{numerical}{variable}.
   \item \emph{Complex numbers}\index{complex numbers} will be
-    discussed later; section~\ref{sec:stl-complex}.
+    discussed later.
   \item 
-    For characters: \n{char}. Strings are complicated.
+    For characters: \n{char}. Strings are complicated; see later.
   \item Truth values: \n{bool}
   \item 
     You can make your own types. Later.
   \end{itemize}
 \end{block}
+
+For complex numbers see section~\ref{sec:stl-complex}.
+For strings see chapter~\ref{ch:string}.
 
 \Level 1 {Assignments}
 \label{sec:ctypes}
@@ -659,7 +666,7 @@ string name;
 \begin{exercise}
   \label{ex:ask-for-name}
   Write a program that asks for the user's first name, and prints
-  something like \n{Hello, Victor!} in response.
+  something like \n{Hello, Susan!} in response.
 
   What happens if you enter first and last name?
 \end{exercise}

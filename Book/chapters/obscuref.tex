@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% obscure.tex : other stuff
 %%%%
@@ -18,7 +18,7 @@ Timing is done with the \indextermfort{system_clock} routine.
   second it has: its \indextermbus{timer}{resolution}.
 \end{itemize}
 
-\begin{verbatim}
+\begin{lstlisting}
   integer :: clockrate,clock_start,clock_end
   call system_clock(count_rate=clockrate)
   print *,"Ticks per second:",clockrate
@@ -27,4 +27,4 @@ Timing is done with the \indextermfort{system_clock} routine.
   ! code
   call system_clock(clock_end)
   print *,"Time:",(clock_end-clock_start)/REAL(clockrate)
-\end{verbatim}
+\end{lstlisting}
