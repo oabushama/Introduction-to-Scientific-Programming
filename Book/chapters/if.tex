@@ -94,14 +94,14 @@ if ( something ) {
 \begin{lstlisting}
 if ( something ) {
   ...
-} else if ( something else ) {
+} else if ( something other ) {
   ...
 }
 \end{lstlisting}
 Nest:
 \begin{lstlisting}
 if ( something ) {
-  if ( something else ) {
+  if ( something other ) {
     ...
   } else {
     ...
@@ -148,6 +148,7 @@ important exception.
 \begin{verbatim}
 logical_expression :: 
   comparison_expression
+  | NOT comparison_expression
   | logical_expression CONJUNCTION comparison_expression
 comparison_expression :: 
   numerical_expression COMPARE numerical_expression
@@ -204,7 +205,7 @@ Can you rewrite your test so that the output lines are switched?
   \label{q:if}
   True or false?
   \begin{itemize}
-  \item The tests \n{if (i>0)} and \n{if (0<i)} are equivalent.
+  \item The tests \lstinline$if (i>0)$ and \lstinline$if (0<i)$ are equivalent.
   \item The test
 \begin{lstlisting}
 if (i<0 && i>1) 
@@ -281,5 +282,8 @@ if ( something ) {
 }
 // the variable `i' has gone away.
 \end{lstlisting}
+Good practice: only define variable where needed.
+
+Braces induce a \indexterm{scope}.
 \end{slide}
 

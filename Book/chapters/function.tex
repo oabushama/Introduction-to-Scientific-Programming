@@ -42,18 +42,18 @@ Example: multiple norm calculations:
     Repeated code:
 \begin{lstlisting}
 float s = 0;
-for (int i=0; i<nx; i++)
+for (int i=0; i<x.size(); i++)
   s += abs(x[i]);
-cout << "Inf norm x: " << s << endl;
+cout << "One norm x: " << s << endl;
 s = 0;
-for (int i=0; i<ny; i++)
+for (int i=0; i<y.size(); i++)
   s += abs(y[i]);
-cout << "Inf norm y: " << s << endl;
+cout << "One norm y: " << s << endl;
 \end{lstlisting}
 \vfill\columnbreak
 becomes:
 \begin{lstlisting}
-int InfNorm( vector<float> a ) {
+int OneNorm( vector<float> a ) {
   float s = 0;
   for (int i=0; i<n.size(); i++)
     s += abs(a[i]);
@@ -61,10 +61,10 @@ int InfNorm( vector<float> a ) {
 }
 int main() {
   ... // stuff
-  cout << "Inf norm x: "
-       << InfNorm(x,nx) << endl;
-  cout << "Inf norm y: " 
-       << InfNorm(y,ny) << endl;
+  cout << "One norm x: "
+       << OneNorm(x) << endl;
+  cout << "One norm y: " 
+       << OneNorm(y) << endl;
 \end{lstlisting}
   \end{multicols}
   (Don't worry about array stuff in this example)
@@ -164,7 +164,7 @@ result = my_computation(5);
 Functions are defined before the main program, and used in that program:
 Here is a program with a function that doubles its input:
 
-\begin{block}{Program with function}
+\begin{block}{Function definition and call}
   \label{sl:fun-example}
   \snippetwithoutput{twicein}{func}{twicein}
 \end{block}
@@ -191,12 +191,13 @@ of the function code do not have to be identical:
 
 \begin{block}{Code reuse}
   \label{sl:reuse}
+Suppose you do the same computation twice:
 \begin{lstlisting}
 double x,y, v,w;
 y = ...... computation from x .....
 w = ...... same computation, but from v .....
 \end{lstlisting}
-can be replaced by
+With a fuction this can be replaced by:
 \begin{lstlisting}
 double computation(double in) {
   return .... computation from `in' ....
@@ -275,7 +276,7 @@ Formally, a~function consists of:
     These act like variable declarations.
   \item Body: any length. This is a scope.
   \item Return statement: usually at the end, but can be anywhere; the
-    computed result.
+    computed result. Not necessary for a \n{void} function.
   \end{itemize}
 \end{slide}
 

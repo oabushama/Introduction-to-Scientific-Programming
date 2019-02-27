@@ -12,7 +12,8 @@ Program Complex
   implicit none
 
   !!codesnippet fcomplex
-  Complex :: fourtyfivedegrees = (1.,1.), &
+  Complex :: &
+       fourtyfivedegrees = (1.,1.), &
        other
   print *,fourtyfivedegrees
   other = 2*fourtyfivedegrees

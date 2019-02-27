@@ -191,6 +191,25 @@ where
 
 \Level 2 {Vector initialization}
 
+There are several ways of initializing a vector. Note that if you
+don't initialize you can not rely on the elements being zero or so:
+the memory for the vector has been reserved, but there is no guarantee
+on what is in it.
+
+First of all, you can easily set a vector to a constant:
+
+\begin{block}{Vector constant initialization}
+  \label{sl:vector-initconst}
+  There is a syntax for initializing a vector with a constant:
+\begin{lstlisting}
+vector<float> x(25,3.15);
+\end{lstlisting}
+which gives a vector of size~25, with all elements initialized to~3.15.
+\end{block}
+
+If your vector is short enough, you can set all elements explicitly with an
+\indexterm{initializer list}:
+
 \begin{block}{Vector initialization}
   \label{sl:vector-init}
   You can initialize a vector as a whole:
@@ -198,17 +217,6 @@ where
 vector<int> odd_array{1,3,5,7,9};
 vector<int> even_array = {0,2,4,6,8};
 \end{lstlisting}
-\end{block}
-
-The above syntax for initialization was introduced in \emph{C++11}\index{C++!C++11}.
-
-\begin{block}{Vector initialization'}
-  \label{sl:vector-initconst}
-  There is a syntax for initializing a vector with a constant:
-\begin{lstlisting}
-vector<float> x(25,3.15);
-\end{lstlisting}
-which gives a vector of size~25, with all elements initialized to~3.15.
 \end{block}
 
 \Level 2 {Element access}
@@ -278,6 +286,14 @@ for ( auto &e : my_vector)
   \item Find the location of the last zero.
   \end{itemize}
 \end{exercise}
+
+So-called \emph{initializer lists}\index{initializer list}
+can also be used as a list denotation:
+
+\begin{block}{Range over vector denotation}
+  \label{sl:range-denote}
+  \snippetwithoutput{rangedenote}{array}{rangedenote}  
+\end{block}
 
 \begin{block}{Vector copy}
   \label{sl:vectorcopy}

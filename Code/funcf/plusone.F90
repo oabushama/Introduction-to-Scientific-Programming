@@ -2,7 +2,7 @@
 !***
 !*** This file belongs with the course
 !*** Introduction to Scientific Programming in C++/Fortran2003
-!*** copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+!*** copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 !***
 !*** plusone.F90 : function with return type
 !***
@@ -17,8 +17,8 @@ program plussing
 contains
   integer function plusone(invalue)
     implicit none
-    integer,intent(in) :: invalue
-    plusone = invalue+1
+    integer :: invalue
+    plusone = invalue+1 ! note!
   end function plusone
 end program plussing
 !!codesnippet end

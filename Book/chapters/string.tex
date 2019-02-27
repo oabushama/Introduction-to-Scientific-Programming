@@ -56,15 +56,15 @@ using std::string;
 \begin{block}{String creation}
   \label{sl:string-create}
   A \indexterm{string} variable contains a string of characters.
-\begin{verbatim}
+\begin{lstlisting}
 string txt;
-\end{verbatim}
+\end{lstlisting}
 You can initialize the string variable or assign it dynamically:
-\begin{verbatim}
+\begin{lstlisting}
 string txt{"this is text"};
 string moretxt("this is also text");
 txt = "and now it is another text";
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 Normally, quotes indicate the start and end of a string. So what if
@@ -81,23 +81,23 @@ you want a string with quotes in it?
 \begin{block}{Concatenation}
   \label{sl:string-plus}
   Strings can be \emph{concatenated}\index{string!concatenation}:
-\begin{verbatim}
+\begin{lstlisting}
 txt = txt1+txt2;
 txt += txt3;
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{block}{String indexing}
   \label{sl:string-vector}
   You can query the \emph{size}\index{string!size}:
-\begin{verbatim}
+\begin{lstlisting}
 int txtlen = txt.size();
-\end{verbatim}
+\end{lstlisting}
 or use subscripts:
-\begin{verbatim}
+\begin{lstlisting}
 cout << "The second character is <<" << 
         txt[1] << ">>" << endl;
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{block}{Ranging over a string}
@@ -120,10 +120,10 @@ cout << "The second character is <<" <<
 \end{block}
 
 \begin{block}{Iterating over a string}
-\begin{verbatim}
+\begin{lstlisting}
 for ( auto c : some_string)
   // do something with the character 'c'
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{review}

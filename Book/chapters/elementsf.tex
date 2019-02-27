@@ -194,6 +194,7 @@ x = 1 ! set x to one
 x = f(a) & ! term1 
   + g(b)   ! term2
 \end{lstlisting}
+  \item No multi-line comments.
   \end{itemize}
 \end{slide}
 
@@ -228,12 +229,9 @@ where
 \begin{slide}{Variable declarations}
   \label{sl:fvars}
   \begin{itemize}
-  \item Variable declarations at the top of the problem
-  \item Variables are implicitly defined. Dangerous, so use:
-\begin{lstlisting}
-implicit none
-\end{lstlisting}
-\item declaration
+  \item Variable declarations at the top of the program unit,\\
+    before any executable statements.
+  \item declaration
 \begin{lstlisting}
 type, attributes :: name1, name2, ....
 \end{lstlisting}
@@ -248,6 +246,7 @@ where
 \end{slide}
 
 \begin{block}{Data types}
+  \label{sl:ftypes}
   \begin{itemize}
   \item Numeric: \indextermfort{Integer}, \indextermfort{Real},
     \indextermfort{Complex}. Further specifications for numerical
@@ -262,8 +261,8 @@ where
 \label{sec:ftype}
 
 Fortran has a somewhat unusual treatment of data types: if you don't
-specify what data type a variable is, Fortran will deduce it from some
-default or user rules. This is a very dangerous practice, so we
+specify what data type a variable is, Fortran will deduce it from
+a~default or user rules. This is a very dangerous practice, so we
 advocate putting a line
 \begin{lstlisting}
 implicit none
@@ -423,11 +422,11 @@ PRINT *,n
   \label{sl:fbool}
   \begin{itemize}
   \item 
-    Long form
-    \n{.and. .not. .or.}
-    \n{.lt. .eq. .ge.}
+    Long form:\\
+    \n{.and. .not. .or.}\\
+    \n{.lt. .le. .eq. .ne. .ge. .gt.}\\
     \n{.true. .false.}
-  \item Short form:
+  \item Short form:\\
     \verb+< <= == /= > >=+
   \end{itemize}
 \end{block}
@@ -476,6 +475,17 @@ real(8) :: y
 what do the \n{4} and \n{8} stand for?
 
 What is the practical implication of using the one or the other?
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:read-writet3np1}
+  Write a program that :
+  \begin{itemize}
+  \item displays the message \n{Type a number},
+  \item accepts an integer number from you (use~\n{Read}),
+  \item makes another variable that is three times that integer plus one,
+  \item and then prints out the second variable.
+  \end{itemize}
 \end{exercise}
 
 \begin{exercise}

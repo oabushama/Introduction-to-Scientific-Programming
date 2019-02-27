@@ -154,6 +154,8 @@ result to its calling program, much like a non-void function in~C++
 \begin{block}{Function definition and usage}
   \label{sl:ffunction-def}
   \begin{itemize}
+  \item \lstinline$subroutine$ vs \lstinline$function$:\\
+    compare \lstinline$void$ functions vs non-void in~C++.
   \item Return type, keyword \n{function}, name, parameters
   \item Function body has statements
   \item Result is returned by assigning to the function name
@@ -229,6 +231,7 @@ end subroutine f
 ! and in the main program
 call f(x,y,5)
 \end{lstlisting}
+declaring the `intent' is optional, but highly advisable.
 \end{block}
 
 \begin{block}{Parameter passing}
@@ -236,8 +239,8 @@ call f(x,y,5)
   \begin{itemize}
   \item Everything is passed by reference.\\
     Don't worry about large objects being copied.
-  \item Optional intent declarations:
-  \item Use \n{in}, \n{out}, \n{inout} qualifiers to clarify semantics
+  \item Optional intent declarations:\\
+    Use \n{in}, \n{out}, \n{inout} qualifiers to clarify semantics
     to compiler.
   \end{itemize}
 \end{block}

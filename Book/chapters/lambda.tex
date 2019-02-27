@@ -84,3 +84,16 @@ type. Solution: use \n{std::function}
   \verbatimsnippet{newtonlambda1}
 \end{exercise}
 
+Normally, captured variables are copied by value. You can capture them
+by reference by prefixing an ampersand to them
+\begin{lstlisting}
+auto maybeinc =
+  [&count] (int i) mutable {
+      if (f(i)) count++; }
+\end{lstlisting}
+The lambda expression also needs to be marked
+\n{mutable}\index{lambda!make mutable}
+because by default it is a
+\n{const}\index{lamda!const by default}.
+
+\snippetwithoutput{counteach}{stl}{counteach}

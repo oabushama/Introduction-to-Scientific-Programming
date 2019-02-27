@@ -85,12 +85,64 @@ for ( auto person : age )
 \end{lstlisting}
 
 \Level 1 {Iterators}
+\label{sec:iterator}
 
 The container class has a subclass \indextermdef{iterator} that can be
 used to iterate through all elements of a container. This was
 discussed in section~\ref{sec:iterator}.
 
-\Level 0 {Tuples}
+However, an \indextermtt{iterator} can be used outside of strictly iterating.
+\begin{block}{Iterators outside a loop}
+  \label{sl:vec-iterator}
+  First, you can use them by themselves:
+  %
+  \snippetwithoutput{veciterator}{stl}{iter}
+  %
+  (Note: the \n{auto} actually stands for \n{vector::iterator})
+\end{block}
+
+Vector methods such as \indextermtt{erase} and \indextermtt{insert} use
+these iterators:
+\begin{block}{Iterators in vector methods}
+  \label{sl:vec-erase}
+  Methods \n{erase} and \n{insert} indicate their range with begin/end
+  iterators
+  %
+  \snippetwithoutput{vecerase}{stl}{erase}
+  %
+  Note: end is exclusive.
+\end{block}
+
+Numerical \emph{reductions}\index{reduction} can be applied using iterators:
+\begin{block}{Reduction operation}
+  \label{sl:vec-accumulate}
+  Default is sum reduction:
+  %
+  \snippetwithoutput{vecaccumulate}{stl}{accumulate}
+  %
+\end{block}
+
+\begin{block}{Reduction with supplied operator}
+  \label{sl:vec-multiplies}
+  Supply multiply operator:
+  %
+  \snippetwithoutput{vecproduct}{stl}{product}  
+\end{block}
+
+\Level 0 {Union-like stuff: tuples, optionals, variants}
+
+There are cases where you need a value that is one type or another,
+for instance, a number if a computation succeeded, and an error
+indicator if not.
+
+The simplest solution is to have a function that returns both a bool
+and a number:
+%
+\verbatimsnippet{rootorerror}
+
+We will now consider some more idiomatically C++17 solutions to this.
+
+\Level 1 {Tuples}
 \label{sec:tuple}
 
 Remember how in section~\ref{sec:pass-by-ref} we said that if you
@@ -140,7 +192,35 @@ but more interestingly, you can use a
   \snippetwithoutput{tupleauto}{stl}{tuple}
 \end{block}
 
+The solution to the above `a~number or an error' now becomes:
+%
+\verbatimsnippet{rootandvalid}
+
+\Level 1 {Optional}
+
+\begin{block}{Optional results}
+  \label{sl:optional-root}
+  The most elegant solution to `a~number or an error' is to have a
+  single quantity that you can query whether it's valid.
+  %
+  \verbatimsnippet{mayberootptr}
+\end{block}
+
+\Level 0 {Algorithms}
+
+Many simple algorithms on arrays, testing `there is' or `for all', no
+longer have to be coded out in~C++. It is enough to specify the
+iteratable object and the test. Actually, you have to specify a start
+and end iterator, rather than the object. For things like
+\n{std::vector}:
+%
+\snippetwithoutput{printeach}{stl}{printeach}
+
+See section~\ref{sec:iterator} for iterators, and
+section~\ref{sec:lambda} for the use of lambda expressions.
+
 \Level 0 {Limits}
+\label{sec:limits}
 
 There used to be a header file \indextermtt{limits.h} that contained
 macros such as \indextermtt{MAX_INT}. While this is still available,
@@ -163,6 +243,14 @@ cout << numeric_limits<long>::max();
   that is, $n$-factorial, can be represented in an \n{int}, \n{long},
   or \n{long long}. Can you write this as a templated function?
 \end{exercise}
+
+Operations such as dividing by zero lead to floating point numbers
+that do not have a valid value. For efficiency of computation, the
+processor will compute with these as if they are any other floating
+point number.
+
+There are tests for detecting whether a number is \indextermtt{Inf} or
+\indextermtt{NaN}. However, using these may slow a computation down.
 
 \begin{block}{Detection of Inf and NaN}
   The functions \indextermtt{isinf} and \indextermtt{isnan} are

@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% parampassing.tex : section on parameter passing
 %%%%
@@ -33,9 +33,9 @@ mathematical functions, and is known as \indextermdef{functional
 \begin{itemize}
 \item A function has one result, which is returned through a return
   statement. The function call then looks like
-\begin{verbatim}
+\begin{lstlisting}
 y = f(x1,x2,x3);
-\end{verbatim}
+\end{lstlisting}
 \item The definition of the C++ parameter passing mechanism says that
   input arguments are copied to the function, meaning that they don't
   change in the calling program:
@@ -90,7 +90,7 @@ now do exercise~\ref{ex:prime:func}.
   Early computers had no hardware for computing a square
   root. Instead, they used \indexterm{Newton's method}. Suppose you
   have a value~$y$ and you want want to compute
-  $x\leftarrow\sqrt{y}$. This is equivalent to finding the zero of
+  $x=\sqrt{y}$. This is equivalent to finding the zero of
   \[ f(x) = x^2-y \] where $y$~is fixed. To indicate this dependence
   on~$y$, we will write~$f_y(x)$. Newton's method then finds the zero by
   evaluating
@@ -137,7 +137,7 @@ the main program:
   \label{sl:pass-by-ref}
 The function parameter \n{n} becomes a reference to the variable \n{i}
 in the main program:
-\begin{verbatim}
+\begin{lstlisting}
 void f(int &n) {
   n = /* some expression */ ;
 };
@@ -146,7 +146,7 @@ int main() {
   f(i);
   // i now has the value that was set in the function
 }
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 Using the ampersand, the parameter is
@@ -205,7 +205,7 @@ through the \n{return} statement, and the value through a parameter.
 
 \begin{block}{Pass by reference example 2}
   \label{sl:pass-reference2}
-\begin{verbatim}
+\begin{lstlisting}
 bool can_read_value( int &value ) {
   int file_status = try_open_file();
   if (file_status==0) 
@@ -218,18 +218,18 @@ int main() {
   if (!can_read_value(n))
     // if you can't read the value, set a default
     n = 10;
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
 \begin{exercise}
   \label{ex:swap}
   Write a \n{void} function \n{swapij} of two parameters that
   exchanges the input values:
-\begin{verbatim}
+\begin{lstlisting}
 int i=2,j=3;
 swapij(i,j);
 // now i==3 and j==2
-\end{verbatim}
+\end{lstlisting}
 \end{exercise}
 
 \begin{exercise}
@@ -238,7 +238,7 @@ swapij(i,j);
   remainder:
 
 {\small
-\begin{verbatim}
+\begin{lstlisting}
 int number,divisor,remainder;
 // read in the number and divisor
 if ( is_divisible(number,divisor,remainder) )
@@ -246,7 +246,7 @@ if ( is_divisible(number,divisor,remainder) )
 else
   cout << number << "/" << divisor <<
       " has remainder " << remainder << endl;
-\end{verbatim}
+\end{lstlisting}
 }
 \end{exercise}
 

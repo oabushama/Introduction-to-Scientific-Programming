@@ -77,10 +77,13 @@ for (int var=low; var<upper; var++) {
   cout << "The square of " << var << " is " << var*var << endl;
 }
 \end{lstlisting}
-\begin{cnote}
-Use compiler flag \n{-std=c99}.
-\end{cnote}
 \end{slide}
+
+\begin{remark}
+  Declaring the loop variable in the loop header is also a modern
+  addition to the C~language.
+  Use compiler flag \n{-std=c99}.
+\end{remark}
 
 If you want to perform $N$ iterations you can write
 \begin{lstlisting}
@@ -134,45 +137,33 @@ This is how a loop is executed.
   \label{q:loop}
   For each of the following loop headers, how many times is the body
   executed? (You can assume that the body does not change the loop variable.)
-  \begin{itemize}
-  \item 
+
 \begin{lstlisting}
 for (int i=0; i<7; i++)
-\end{lstlisting}
-  \item 
-\begin{lstlisting}
+
 for (int i=0; i<=7; i++)
-\end{lstlisting}
-  \item 
-\begin{lstlisting}
+
 for (int i=0; i<0; i++)
 \end{lstlisting}
-  \item What is the last iteration executed? \n{1,2,3}?
+
+What is the last iteration executed?
 \begin{lstlisting}
 for (int i=1; i<=2; i=i+2)
-\end{lstlisting}
-  \item What is the last iteration executed? \n{2,4,5}?
-\begin{lstlisting}
+
 for (int i=1; i<=5; i*=2)
-\end{lstlisting}
-  \item 
-\begin{lstlisting}
+
 for (int i=0; i<0; i--)
-\end{lstlisting}
-  \item 
-\begin{lstlisting}
+
 for (int i=5; i>=0; i--)
-\end{lstlisting}
-  \item 
-\begin{lstlisting}
+
 for (int i=5; i>0; i--)
 \end{lstlisting}
-  \end{itemize}
 \end{review}
 
 Some variations on the simple case.
 \begin{itemize}
-\item It is preferable to declare the loop variable in the loop header:
+\item It is preferable to declare the loop variable in the loop
+header:
 \begin{lstlisting}
 for (int var=low; var<upper; var++) {
 \end{lstlisting}
@@ -185,6 +176,7 @@ int var;
 for (var=low; var<upper; var++) {
 \end{lstlisting}
 You will see an example where this makes sense below.
+ 
 \item The stopping test can be omitted
 \begin{lstlisting}
 for (int var=low; ; var++) { ... }
@@ -245,29 +237,29 @@ Quite often, the loop body will contain another loop. For instance,
 you may want to iterate over all elements in a matrix. Both loops will
 have their own unique loop variable.
 \begin{lstlisting}
-for (int i=0; i<m; i++)
-  for (int j=0; j<n; j++)
+for (int row=0; row<m; row++)
+  for (int col=0; col<n; col++)
     ...
 \end{lstlisting}
 This is called \indextermbus{loop}{nest}; 
-the \n{i}-loop is called the \indextermsub{outer}{loop} and the
-\n{j}-loop the \indextermsub{inner}{loop}.
+the \n{row}-loop is called the \indextermsub{outer}{loop} and the
+\n{col}-loop the \indextermsub{inner}{loop}.
 
 \begin{slide}{Nested loops}
   \label{sl:for-nest}
   Traversing a matrix:
 \begin{lstlisting}
-for (int i=0; i<m; i++)
-  for (int j=0; j<n; j++)
+for (int row=0; row<m; row++)
+  for (int col=0; col<n; col++)
     ...
 \end{lstlisting}
 This is called `loop nest', with\\
-\n{i}: outer loop\\
-\n{j}: inner loop.
+\n{row}: outer loop\\
+\n{col}: inner loop.
 \end{slide}
 
 Traversing an index space (whether that corresponds to an array object
-or not) by $i,j$ is called the \indexterm{lexicographic ordering}.
+or not) by $row,col$ is called the \indexterm{lexicographic ordering}.
 Below you'll see that there are also different
 ways.
 
@@ -389,8 +381,8 @@ for (;;) { /* some code */ }
 
 \begin{block}{Where did the break happen?}
   \label{sl:for-break-var}
-  A loop with a break is one case where you want the loop variable to
-  be global:
+  Suppose you want to know what the loop variable was when the break happened.
+  You need the loop variable to be global:
 \begin{lstlisting}
 int var;
 ... code that sets var ...
@@ -401,6 +393,7 @@ for ( ; var<upper; var++) {
 }
 ... code that uses the breaking value of var ...
 \end{lstlisting}
+In other cases: define the loop variable in the header!
 \end{block}
 
 \begin{block}{Test in the loop header}
@@ -522,7 +515,7 @@ is an example in which the second syntax is more appropriate.
     3u_n+1&\hbox{if $u_n$ is odd}\\
   \end{cases}
   \]
-  leads to the Collatz conjecture: no matter the starting guess~$u_1$,
+  leads to the \indexterm{Collatz conjecture}: no matter the starting guess~$u_1$,
   the sequence $n\mapsto u_n$ will always terminate at~1.
 
   { \small
@@ -571,3 +564,20 @@ is an example in which the second syntax is more appropriate.
 
 The website
 \url{http://www.codeforwin.in/2015/06/for-do-while-loop-programming-exercises.html}
+
+\begin{comment}
+  \begin{multicols}{2}
+    \begin{lstlisting}
+    \end{lstlisting}
+    \columnbreak
+    \begin{lstlisting}
+    \end{lstlisting}
+  \end{multicols}
+  \begin{multicols}{2}
+    \begin{lstlisting}
+    \end{lstlisting}
+    \columnbreak
+    \begin{lstlisting}
+    \end{lstlisting}
+  \end{multicols}
+\end{comment}

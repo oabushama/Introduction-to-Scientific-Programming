@@ -18,7 +18,8 @@ class Vector {
 private:
   double x,y;
 public:
-  Vector( double userx,double usery ) : x(userx),y(usery) {
+  Vector( double userx,double usery )
+    : x(userx),y(usery) {
   }
 //codesnippet end
   double getx() { return x; };

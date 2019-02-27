@@ -21,7 +21,7 @@ about points than explicitly having to manipulate their coordinates.
 
 Structures are a
 first way to define your own datatypes. A~\indextermttdef{struct}
-acts like a datatype for which you choose the name. A~\n{struct}
+acts like a datatype for which you choose the name. A~\lstinline$struct$
 contains other datatypes; these can be elementary, or other structs.
 %
 \verbatimsnippet{structdef}
@@ -38,7 +38,7 @@ struct vector { double x=0.; double y=0.; } ;
   Sometimes a number of variables belong logically together. For
   instance two doubles can be the $x,y$ components of a vector.
 
-  This can be captured in the \n{struct} construct.
+  This can be captured in the \lstinline$struct$ construct.
 
   \verbatimsnippet{structdef}
 
@@ -117,7 +117,7 @@ There are various ways of setting the members of the structure:
 struct numbered { int n; double x; };
 \end{lstlisting}
 creates an object with an integer and a double as members.
-\item With the above definition and \n{struct numbered xn;},
+\item With the above definition and \lstinline$struct numbered xn;$,
 \begin{lstlisting}
 cout << xn << endl;
 \end{lstlisting}
@@ -129,7 +129,7 @@ xn.x = xn.n+1;
   \end{itemize}
 \end{exercise}
 
-Note: if you use initializations in the \n{struct} definition,
+Note: if you use initializations in the \lstinline$struct$ definition,
 you can not use the brace-assignment.
 
 \begin{block}{Functions on structures}
@@ -144,7 +144,7 @@ you can not use the brace-assignment.
   \hbox{%
     \begin{minipage}[t]{.6\hsize}
       Write a function that, given a vector as defined above, returns the
-      angle with the $x$-axis. (Hint: the \n{atan} function is in \n{cmath})
+      angle with the $x$-axis. (Hint: the \lstinline$atan$ function is in \lstinline$cmath$)
     \end{minipage}
     \includegraphics[scale=.4]{xy-atan}
     }
@@ -154,7 +154,7 @@ you can not use the brace-assignment.
 
 \begin{exercise}
   \label{ex:vecstruct-flip}
-  Write a \n{void} function that has a \n{struct vector} parameter,
+  Write a \lstinline$void$ function that has a \lstinline$struct vector$ parameter,
   and exchanges its coordinates:
   \[ \begin{pmatrix}2.5\\3.5\end{pmatrix} \rightarrow
     \begin{pmatrix}3.5\\2.5\end{pmatrix} \]
@@ -163,8 +163,8 @@ you can not use the brace-assignment.
 
 \begin{exercise}
   \label{ex:vecstruct-scale}
-  Write a function $y=f(x,a)$ that takes a \n{struct vector} and
-  \n{double} parameter as input, and returns a vector that is the
+  Write a function $y=f(x,a)$ that takes a \lstinline$struct vector$ and
+  \lstinline$double$ parameter as input, and returns a vector that is the
   input multiplied by the scalar.
   \[ \begin{pmatrix}2.5\\3.5\end{pmatrix},3 \rightarrow
     \begin{pmatrix}7.5\\10.5\end{pmatrix} \]
@@ -178,7 +178,7 @@ you can not use the brace-assignment.
 
 \begin{exercise}
   \label{ex:vecstruct}
-  Write a function \n{inner_product} that takes two \n{vector}
+  Write a function \lstinline$inner_product$ that takes two \lstinline$vector$
   structures and computes the inner product.
 \end{exercise}
 
@@ -208,7 +208,7 @@ you can not use the brace-assignment.
 \begin{exercise}
   \label{ex:matstruct}
   Write a $2\times 2$ matrix class (that is, a structure storing 4
-  real numbers), and write a function \n{multiply}
+  real numbers), and write a function \lstinline$multiply$
   that multiplies a matrix times a vector.
 
   Can you make a matrix structure that is based on the vector
@@ -218,7 +218,7 @@ you can not use the brace-assignment.
 
 \begin{block}{Passing structures by reference}
   \label{sl:struct-passref}
-  Prevent copying cost by passing by reference, use \n{const} to
+  Prevent copying cost by passing by reference, use \lstinline$const$ to
   prevent changes:
   \verbatimsnippet{structpassref}
 \end{block}

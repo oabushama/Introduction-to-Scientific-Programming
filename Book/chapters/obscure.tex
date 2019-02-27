@@ -223,21 +223,40 @@ const auto &object_immutable  = thing.get_some_object();
 
 \begin{block}{Auto iterators}
   \label{sl:auto-iterator}
-\begin{lstlisting}
-vector<int> myvector(20);
-for ( auto copy_of_int : myvector )
-  s += copy_of_int;
-for ( auto &ref_to_int : myvector )
-  ref_to_int = s;
-
-// short for:
-
-for ( std::iterator it=myvector.begin() ;
+  \begin{multicols}{2}
+    \begin{lstlisting}
+      vector<int> myvector(20);
+      for ( auto copy_of_int : myvector )
+      s += copy_of_int;
+      for ( auto &ref_to_int : myvector )
+      ref_to_int = s;
+    \end{lstlisting}
+    is actually short for:
+    \begin{lstlisting}
+      for ( std::iterator it=myvector.begin() ;
       it!=myvector.end() ; ++it )
-  s += *it ; // note the deref
-\end{lstlisting}
-Can be used with anything that is iteratable\\
-(vector, map, your own classes!)
+      s += *it ; // note the deref
+    \end{lstlisting}
+  \end{multicols}
+  Range iterators Can be used with anything that is iteratable\\
+  (vector, map, your own classes!)
+\end{block}
+
+\begin{block}{Other iterator uses}
+  \label{sl:reverse-iterator}
+  Reverse iteration can not be done with range-based syntax.
+  
+  Use general syntax with reverse iterator: \indextermtt{rbegin},
+  \indextermtt{rend}.
+
+  Also:
+  \begin{lstlisting}
+    auto first = myarray.begin();
+    first += 2;
+    auto last  = myarray.end();
+    last  -= 2-;
+    myarray.erase(first,last);
+  \end{lstlisting}
 \end{block}
 
 \Level 0 {Iterating over classes}
@@ -701,7 +720,10 @@ BigThing& operator=( BigThing &&other ) {
 
 \Level 0 {Move semantics}
 
-With overloaded addition on matrices (or any other big object):
+With an
+\emph{overloaded operator}\index{operator!overloading!and copies},
+such as addition,
+on matrices (or any other big object):
 \begin{lstlisting}
 Matrix operator+(Matrix &a,Matrix &b);
 \end{lstlisting}

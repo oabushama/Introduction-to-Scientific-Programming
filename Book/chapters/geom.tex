@@ -26,7 +26,7 @@ These exercises mostly use the material of section~\ref{ch:object}.
 
 \begin{exercise}
   \label{ex:pointrotate}
-  Write a function with inputs $x,y,\alpha$ that alters $x$ and~$y$
+  Write a function with inputs $x,y,\theta$ that alters $x$ and~$y$
   corresponding to rotating the point $(x,y)$ over an angle~$\theta$.
   \[
   \begin{pmatrix}
@@ -39,13 +39,9 @@ These exercises mostly use the material of section~\ref{ch:object}.
     x\\y
   \end{pmatrix}
   \]
-  Your code should look like:
-\begin{lstlisting}
-double x,y,alpha;
-// set x,y to some point
-rotate(x,y,alpha);
-// now x,y are rotated over alpha
-\end{lstlisting}
+  Your code should behave like:
+  %
+  \answerwithoutput{rotatedo2d}{geom}{rotate}
 \end{exercise}
 
 \Level 0 {Point class}

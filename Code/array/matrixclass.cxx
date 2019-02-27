@@ -22,10 +22,8 @@ private:
   std::vector<double> the_matrix;
   int m,n;
 public:
-  matrix(int m,int n) {
-    this->m = m; this->n = n;
-    the_matrix.reserve(m*n);
-  };
+  matrix(int m,int n)
+    : m(m),n(n),the_matrix(m*n) {};
   void set(int i,int j,double v) {
     the_matrix[ i*n +j ] = v;
   };

@@ -2,17 +2,17 @@
 !***
 !*** This file belongs with the course
 !*** Introduction to Scientific Programming in C++/Fortran2003
-!*** copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+!*** copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 !***
 !*** nocontain.F90 : the dangers of not using CONTAINS
 !***
 !****************************************************************
 
 !!codesnippet nocontain
-Program ContainsScope
+Program NoContains
   implicit none
   call DoWhat()
-end Program ContainsScope
+end Program NoContains
 
 subroutine DoWhat(i)
   implicit none

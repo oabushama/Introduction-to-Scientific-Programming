@@ -17,67 +17,129 @@ abstracting from the elementary data types. The elements of a
 structure were called its members.
 
 You also saw that it is possible to write
-functions that work on structures. Since these functions are really
-tied to the definition of the \n{struct}, shouldn't there be a way to
-make that tie explicitly?
+functions that work on structures. We now combine these two elements
+to give a new level of abstraction:
 
-That's what an object is:
-\begin{itemize}
-\item An object is like a structure in that it has data members.
-\item An object has \emph{methods}\index{methods (of an object)} which
-  are the functions that operate on that object.
-\end{itemize}
-C++ does not actually have a `object' keyword; instead you define a
-class with the \indextermttdef{class} keyword, which describes all the objects
-of that class.
+\begin{block}{Definition of object}
+  \label{sl:object-def}
+  An object is an entity that you can request to do certain
+  things. These actions are the
+  \emph{methods}\index{object!methods}\index{methods|see{object, methods}}
+  and to make these possible the object probably stores
+  data, the
+  \emph{members}\index{object!members}\index{members|see{object, members}}.
 
-First of all, you can make an object look pretty much like a
-structure:
-%
-\snippetwithoutput{pointstruct}{geom}{pointstruct}
+  When designing an object, first ask yourself: `what functionality
+  should this support'.
 
-Observations about the above code snippet:
-\begin{itemize}
-\item Again we have separate definition of the class and declaration
-  of the objects. You define the class only once, after which you can
-  make as many objects of that class as you want.
-\item There are data members. We will get to the \n{public} in a
-  minute.
-\item You make an object of that class by using the class name as the
-  datatype.
-\item The data members can be accessed with the period.
-\end{itemize}
+  The structure of an object is given in a \indextermbus{class}{definition}.
+\end{block}
 
-\begin{slide}{Classes look a bit like structures}
-  \label{sl:class-struct}
+Objects are defined by their functionality: that's what you use.
+
+\begin{block}{Object functionality}
+  \label{sl:object-functionality}
+  Small illustration: vector objects.
+  %
+  \snippetwithoutput{functionality}{object}{functionality}
+  %
+  Note the `dot' notation; in a \lstinline{struct} we use it for the
+  data members; in an object we (also) use it for methods.
+\end{block}
+
+\begin{exercise}
+  \label{ex:pointdesign}
+  Thought exercise:\\
+  What data does the object need to store to do this?\\
+  Is there more than one possibility?
+\end{exercise}
+
+\begin{comment}
+  First of all, you can make an object look pretty much like a
+  structure:
+  %
   \snippetwithoutput{pointstruct}{geom}{pointstruct}
 
-  Class definition versus object declaration.\\
-  We'll get to that `\n{public}' in a minute.
-\end{slide}
+  Observations about the above code snippet:
+  \begin{itemize}
+  \item Again we have separate definition of the class and declaration
+    of the objects. You define the class only once, after which you can
+    make as many objects of that class as you want.
+  \item There are data members. We will get to the \n{public} in a
+    minute.
+  \item You make an object of that class by using the class name as the
+    datatype.
+  \item The data members can be accessed with the period.
+  \end{itemize}
+
+  \begin{slide}{Classes look a bit like structures}
+    \label{sl:class-struct}
+    \snippetwithoutput{pointstruct}{geom}{pointstruct}
+
+    Class definition versus object declaration.\\
+    We'll get to that `\n{public}' in a minute.
+  \end{slide}
+\end{comment}
 
 \Level 1 {Constructor}
 
 Next we'll look at a syntax for creating class objects that is new. If
 you create an object, you actually call a function that has the same
 name as the class: the \indexterm{constructor}.
-Above you had a declaration \n{Vector v1} which was not just a
-declaration: it called the so-called \indextermsub{default}{constructor},
-which has no arguments, and does nothing.
 
 Usually you write your own constructor,
-for instance to initialize data members:
+for instance to initialize data members. This fragment of the \n{class
+  Vector} shows the constructor and the data members:
 %
-%\snippetwithoutput{pointconstruct}{geom}{pointconstruct}
-\verbatimsnippet{pointconstruct}
-\verbatimsnippet{pointconstructuse}
+\verbatimsnippet{functionalityconstruct}
 
-\begin{slide}{Class initialization and use}
+\begin{slide}{Constructor}
   \label{sl:class-construct}
-  Use a \indexterm{constructor}: function with same name as the class.
-  \verbatimsnippet{pointprivate}
-  \verbatimsnippet{pointprivatedefine}
+  Use a \indexterm{constructor}: function with same name as the
+  class.\\
+  Typically used to initialize data members.
+  
+  \verbatimsnippet{functionalityconstruct}
+
+  The synxtax \n{x(x)} copies the argument to the data member.
 \end{slide}
+
+\begin{block}{Constructor and initialization}
+  \begin{itemize}
+  \item Keyword \indextermtt{private} indicates that data is internal
+  \item keyword \indextermtt{public} indicates that the constructor
+    function can be used in the program.
+  \item Initialization \n{x(x)} should be read as
+    \begin{quotation}
+      \hbox{\sl membername(argumentname)}
+    \end{quotation}
+    Yes, having \n{x} twice is a little confusing.
+  \end{itemize}
+\end{block}
+
+\begin{comment}
+  Above you had a declaration \n{Vector v} which was not just a
+  declaration: it called the so-called \indextermsub{default}{constructor},
+  which has no arguments, and does nothing.
+\end{comment}
+
+\Level 1 {Methods}
+
+\begin{block}{Class methods}
+  \label{sl:method-define}
+  We used methods \n{length} and \n{scaleby}. These are defined inside the
+  class:
+  %
+  \verbatimsnippet{functionalitymethod}
+  %
+  \begin{itemize}
+  \item They look like ordinary functions,
+  \item except that they can use the data members of the class, for
+    instance~\n{x};
+  \item Methods can only be used on an object:
+    \verbatimsnippet{functionalitymethoduse}
+  \end{itemize}
+\end{block}
 
 \Level 1 {Public and private}
 
@@ -149,7 +211,20 @@ private:
   \verbatimsnippet{classpointinit}
 \end{block}
 
-\begin{block}{advantages}
+\begin{block}{Member initialization in the constructor}
+  \label{sl:class-set}
+\begin{lstlisting}
+class Vector {
+private:
+  double x,y;
+public:
+  Vector( double userx,double usery ) {
+    x = userx; y = usery;
+  }
+\end{lstlisting}
+\end{block}
+
+\begin{block}{Advantage of initializer list}
   \label{sl:class-init-why}
   Allows for reuse of names:
   %
@@ -300,7 +375,7 @@ The problem is with \n{v2}. How is it created? We need to define two constructor
 It is a good idea to keep data members private, and use accessor
 functions.
 
-\begin{block}{Use accessor functions!}
+\begin{block}{No direct access to internals!}
   \label{sl:repr-independent}
 \begin{lstlisting}
 class PositiveNumber { /* ... */ }
@@ -316,7 +391,8 @@ public:
   float get_theta() { /* ... */ };
 };
 \end{lstlisting}
-  Functionality is independent of implementation.
+  The `get' functionality is independent of what data members the
+  \n{Point} class has.
 \end{block}
 
 \begin{comment}
@@ -427,7 +503,7 @@ be directly changable!
 \end{block}
 
 You can have multiple methods with the same name, as long as they can
-be distinguished by their argument types. This is known as \indexterm{overloading}.
+be distinguished by their argument types. This is known as \indexterm{polymorphism}.
 
 \Level 2 {Operator overloading}
 \label{sec:operatordef}
@@ -440,7 +516,7 @@ you can actually redefine the \n{+} operator so that
 \begin{lstlisting}
 myobject + anotherobject
 \end{lstlisting}
-is legal.
+is legal. This is known as \indextermbusdef{operator}{overloading}.
 
 The syntax for this is
 \begin{block}{Operator overloading}
@@ -462,12 +538,30 @@ public:
 Can even redefine equals and parentheses.
 \end{block}
 
-See section~\ref{sec:overloadbracket} for redefining the parentheses
-and square brackets.
-
 \begin{exercise}
   Write a \n{Fraction} class, and define the arithmetic operators on it.
 \end{exercise}
+
+\Level 2 {Functors}
+
+A special case of operator overloading is
+\index{operator!overloading!of parentheses}%
+\emph{overloading the parentheses}. This makes an object look like a
+function; we call this a \indextermdef{functor}.
+
+Simple example:
+%
+\snippetwithoutput{printfunctor}{object}{functor}
+
+\begin{exercise}
+  \label{ex:functor2}
+  Can you extend that class so that it remembers a factor to scale by?
+  %
+  \answerwithoutput{functortworun}{object}{functor2}
+  %
+  (The \n{for_each} is part of \indextermtt{algorithm})
+\end{exercise}
+
 
 \Level 2 {Copy constructor}
 
