@@ -34,46 +34,11 @@ your program.
   \end{itemize}
 \end{slide}
 
-\begin{block}{Code reuse}
-  \label{sl:function-reuse}
-Example: multiple norm calculations:
-  \begin{multicols}{2}
-    \small
-    Repeated code:
-\begin{lstlisting}
-float s = 0;
-for (int i=0; i<x.size(); i++)
-  s += abs(x[i]);
-cout << "One norm x: " << s << endl;
-s = 0;
-for (int i=0; i<y.size(); i++)
-  s += abs(y[i]);
-cout << "One norm y: " << s << endl;
-\end{lstlisting}
-\vfill\columnbreak
-becomes:
-\begin{lstlisting}
-int OneNorm( vector<float> a ) {
-  float s = 0;
-  for (int i=0; i<n.size(); i++)
-    s += abs(a[i]);
-  return s;
-}
-int main() {
-  ... // stuff
-  cout << "One norm x: "
-       << OneNorm(x) << endl;
-  cout << "One norm y: " 
-       << OneNorm(y) << endl;
-\end{lstlisting}
-  \end{multicols}
-  (Don't worry about array stuff in this example)
-\end{block}
-
-Using a function can shorten your code, since it replaces two similar
+Using a function can also shorten your code, since it replaces two similar
 code blocks with one function definition and two calls.
-In this example, the code with loops is in fact longer, but there are
-still reasons for using functions.
+
+Even if the number of lines doesn't go down, there are still reasons
+for using functions.
 \begin{itemize}
 \item By removing \indexterm{code duplication} you have removed a
   likely source of future errors: if you later edit one occurrence of
@@ -161,13 +126,43 @@ int result;
 result = my_computation(5);
 \end{lstlisting}
 
-Functions are defined before the main program, and used in that program:
 Here is a program with a function that doubles its input:
 
 \begin{block}{Function definition and call}
   \label{sl:fun-example}
   \snippetwithoutput{twicein}{func}{twicein}
 \end{block}
+
+\Level 1 {Another option for defining functions}
+
+The C++ \emph{compiler} translates your code in
+\emph{one pass}\index{compiler!one pass}: it goes from top to
+bottom throgh your code. This means you can not make reference to
+anything, like a function name, that you haven't defined yet.
+This is why above we said that the function definition has to come
+before the main program.
+
+This is not entirely true: the translation of a program that uses a
+function can proceed once the compiler know its name, and the types of
+the inputs and result. Just like you can declare a variable and set
+its value later, you can declare a function and give its definition
+later. The resulting code looks like:
+
+\begin{lstlisting}
+int my_computation(int);
+int main() {
+  int result;
+  result = my_computation(5);
+  return 0;
+};
+int my_computation(int i) {
+   return i+3;
+}
+\end{lstlisting}
+Such a function declaration is normally called a
+\indextermbus{function}{header} or
+\indextermbus{function}{prototype}. See chapter~\ref{ch:proto} for
+more details.
 
 \Level 0 {Why use functions?}
 
@@ -206,6 +201,42 @@ double computation(double in) {
 y = computation(x);
 w = computation(v);
 \end{lstlisting}
+\end{block}
+
+\begin{block}{Code reuse}
+  \label{sl:function-reuse}
+Example: multiple norm calculations:
+  \begin{multicols}{2}
+    \small
+    Repeated code:
+\begin{lstlisting}
+float s = 0;
+for (int i=0; i<x.size(); i++)
+  s += abs(x[i]);
+cout << "One norm x: " << s << endl;
+s = 0;
+for (int i=0; i<y.size(); i++)
+  s += abs(y[i]);
+cout << "One norm y: " << s << endl;
+\end{lstlisting}
+\vfill\columnbreak
+becomes:
+\begin{lstlisting}
+int OneNorm( vector<float> a ) {
+  float s = 0;
+  for (int i=0; i<n.size(); i++)
+    s += abs(a[i]);
+  return s;
+}
+int main() {
+  ... // stuff
+  cout << "One norm x: "
+       << OneNorm(x) << endl;
+  cout << "One norm y: " 
+       << OneNorm(y) << endl;
+\end{lstlisting}
+  \end{multicols}
+  (Don't worry about array stuff in this example)
 \end{block}
 
 A final argument for using functions is code maintainability:

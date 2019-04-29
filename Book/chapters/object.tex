@@ -32,10 +32,14 @@ to give a new level of abstraction:
   When designing an object, first ask yourself: `what functionality
   should this support'.
 
-  The structure of an object is given in a \indextermbus{class}{definition}.
 \end{block}
 
-Objects are defined by their functionality: that's what you use.
+\begin{block}{Objects and classes}
+  \label{label:class-def}
+  An object is a particular instance of a \indextermdef{class} of
+  similar objects, see you need a \indextermbus{class}{definition},
+  after which you define objects of that class.
+\end{block}
 
 \begin{block}{Object functionality}
   \label{sl:object-functionality}
@@ -125,6 +129,10 @@ for instance to initialize data members. This fragment of the \n{class
 
 \Level 1 {Methods}
 
+Methods are things you can ask your class objects to do. For instance,
+in the \n{Vector} class, you could ask a vector what it's length is,
+or you could ask it to scale its length by some number.
+
 \begin{block}{Class methods}
   \label{sl:method-define}
   We used methods \n{length} and \n{scaleby}. These are defined inside the
@@ -143,24 +151,42 @@ for instance to initialize data members. This fragment of the \n{class
 
 \Level 1 {Public and private}
 
-In the first example above, the data members of the \n{Vector} class were
-declared \n{public}, meaning that they are accessable from the calling
-(main) program. While this is initially convenient for coding, it is a bad idea
-in the long term. For a variety of reasons it is good practice to
-separate interface and implementation of a class.
+You may have noticed the keywords \indextermtt{public} and
+\indextermtt{private}. We made the data members private, and the
+methods public. Thinking back to structures, you could say that their
+data members were (by default) public. Why don't we do that here?
 
-\begin{block}{Example of accessor functions}
-  \label{sl:pointaccess}
-  Getting and setting of members values is done through accessor functions:
-  \begin{multicols}{2}
-    \verbatimsnippet{pointprivate}
-    \verbatimsnippet{pointprivateset}
-    \verbatimsnippet{pointprivateclose}
-    \verbatimsnippet{pointprivatedefine}
-  \end{multicols}
-  Usage:
-  %
-  \verbatimsnippet{pointprivatesetuse}
+Objects are really supposed to be accessed through their
+functionality.
+
+Another reason for making data members inaccessible is that we can
+change the internals of a class, without affecting the code that uses
+the class. Consider the scenario where you have a \n{Point} class, and
+you store the $x,y$ coordinates. Then you change you mind and decide
+to store $r,\theta$ coordinates instead. If your program used the fact
+that it could directly access the $x,y$ coordinates, you would be in
+for a lot of rewriting. On the other hand if you have a function
+\n{getx()}, your program does not need any rewriting, and you would
+only change how that function was written.
+
+\begin{block}{No direct access to internals!}
+  \label{sl:repr-independent}
+\begin{lstlisting}
+class PositiveNumber { /* ... */ }
+class Point {
+private:
+  // data members
+public:
+  Point( float x,float y ) { /* ... */ };
+  Point( PositiveNumber r,float theta ) { /* ... */ };
+  float get_x() { /* ... */ };
+  float get_y() { /* ... */ };
+  float get_r() { /* ... */ };
+  float get_theta() { /* ... */ };
+};
+\end{lstlisting}
+  The `get' functionality is independent of what data members the
+  \n{Point} class has.
 \end{block}
 
 \begin{block}{Public versus private}
@@ -189,6 +215,28 @@ changes are allowed that maintain that relation.
   In general: enforce predicates on the members.
 \end{block}
 
+\begin{comment}
+  In the first example above, the data members of the \n{Vector} class were
+  declared \n{public}, meaning that they are accessable from the calling
+  (main) program. While this is initially convenient for coding, it is a bad idea
+  in the long term. For a variety of reasons it is good practice to
+  separate interface and implementation of a class.
+
+  \begin{block}{Example of accessor functions}
+    \label{sl:pointaccess}
+    Getting and setting of members values is done through accessor functions:
+    \begin{multicols}{2}
+      \verbatimsnippet{pointprivate}
+      \verbatimsnippet{pointprivateset}
+      \verbatimsnippet{pointprivateclose}
+      \verbatimsnippet{pointprivatedefine}
+    \end{multicols}
+    Usage:
+    %
+    \verbatimsnippet{pointprivatesetuse}
+  \end{block}
+\end{comment}
+
 \Level 1 {Initialization}
 
 \begin{block}{Member default values}
@@ -216,10 +264,11 @@ private:
 \begin{lstlisting}
 class Vector {
 private:
-  double x,y;
+  double r,theta;
 public:
-  Vector( double userx,double usery ) {
-    x = userx; y = usery;
+  Vector( double x,double y ) {
+    r = sqrt(x*x+y*y);
+    theta = atan(y/x);
   }
 \end{lstlisting}
 \end{block}
@@ -347,7 +396,7 @@ not. The following code looks plausible:
 but it will give an error message during compilation. The reason is
 that 
 \begin{lstlisting}
-Vector p;
+Vector v2;
 \end{lstlisting}
 calls the default constructor. Now that you have defined your own
 constructor, the default constructor no longer exists. So you need to
@@ -370,49 +419,29 @@ The problem is with \n{v2}. How is it created? We need to define two constructor
 \verbatimsnippet{pointdef1}
 \end{slide}
 
-\Level 1 {Accessors}
-
-It is a good idea to keep data members private, and use accessor
-functions.
-
-\begin{block}{No direct access to internals!}
-  \label{sl:repr-independent}
-\begin{lstlisting}
-class PositiveNumber { /* ... */ }
-class Point {
-private:
-  // data members
-public:
-  Point( float x,float y ) { /* ... */ };
-  Point( PositiveNumber r,float theta ) { /* ... */ };
-  float get_x() { /* ... */ };
-  float get_y() { /* ... */ };
-  float get_r() { /* ... */ };
-  float get_theta() { /* ... */ };
-};
-\end{lstlisting}
-  The `get' functionality is independent of what data members the
-  \n{Point} class has.
-\end{block}
-
 \begin{comment}
+  \Level 1 {Accessors}
+
+  It is a good idea to keep data members private, and use accessor
+  functions.
+
   \begin{exercise}
     \label{ex:geom:twoconstruct}
     Write a \n{Point} class that has two constructors:
-\begin{lstlisting}
-class Point {
-private:
-  // data members
-public:
-  Point( float x,float y ) { /* ... */ };
-  Point( float r,float theta ) { /* ... */ };
-  float get_x() { /* ... */ };
-  float get_y() { /* ... */ };
-  float get_r() { /* ... */ };
-  float get_theta() { /* ... */ };
-};
-\end{lstlisting}
-Use $r,\theta$ for the private variables, do not store $x,y$.
+    \begin{lstlisting}
+      class Point {
+        private:
+        // data members
+        public:
+        Point( float x,float y ) { /* ... */ };
+        Point( float r,float theta ) { /* ... */ };
+        float get_x() { /* ... */ };
+        float get_y() { /* ... */ };
+        float get_r() { /* ... */ };
+        float get_theta() { /* ... */ };
+      };
+    \end{lstlisting}
+    Use $r,\theta$ for the private variables, do not store $x,y$.
   \end{exercise}
 \end{comment}
 
@@ -434,6 +463,8 @@ Use $r,\theta$ for the private variables, do not store $x,y$.
 
 \emph{The remainder of this section is advanced material. Make sure
   you have studied section~\ref{sec:class-ref}.}
+
+\Level 2 {Accessor functions}
 
 It is a good idea to make the data in an object private,
 to control outside access to it.
@@ -477,7 +508,7 @@ same accessor for getting and setting?
 
   \snippetwithoutput{objaccessref}{object}{accessref}
   %
-  The function \n{the_x} returns a reference to the internal
+  The function \n{xvalue} returns a reference to the internal
   variable~\n{x}.
 \end{block}
 
@@ -555,7 +586,9 @@ Simple example:
 
 \begin{exercise}
   \label{ex:functor2}
-  Can you extend that class so that it remembers a factor to scale by?
+  Extend that class as follows: instead of printing the argument
+  directly, it should print it multiplied by a scalar. That scalar
+  should be set in the constructor. Make the following code work:
   %
   \answerwithoutput{functortworun}{object}{functor2}
   %
@@ -616,7 +649,7 @@ Example of the copy constructor in action:
 \Level 2 {Destructor}
 \label{sec:destructor}
 
-Just there is a constructor routine to create an object, there is a
+Just as there is a constructor routine to create an object, there is a
 \indextermdef{destructor} to destroy the object.
 As with the case of the default constructor, there is a default
 destructor, which you can replace with your own.
@@ -650,11 +683,17 @@ Example:
 \end{slide}
 
 \begin{slide}{Destructor example}
-  \label{sl:class-destruct-ex}
-  Destructor called implicitly:
-\snippetwithoutput{destructor}{object}{destructor}
+  \label{sl:class-destruct-ex1}
+  Just for tracing, constructor and destructor do \n{cout}:
+  %
+  \verbatimsnippet{destructor}
 \end{slide}
 
+\begin{slide}{Destructor example}
+  \label{sl:class-destruct-ex2}
+  Destructor called implicitly:
+\snippetwithoutput{destructoruse}{object}{destructor}
+\end{slide}
 
 \begin{exercise}
   \label{ex:destruct-trace}
@@ -669,19 +708,8 @@ public:
 }
 \end{lstlisting}
 used as
-\begin{lstlisting}
-{ HasInt v(5);
-  v.set(6);
-  v.set(-2);
-}
-\end{lstlisting}
-which gives output
-\begin{verbatim}
-**** creating object with 5 ****
-**** setting object to 6 ****
-**** setting object to -2 ****
-**** object destroyed after 2 updates ****
-\end{verbatim}
+%
+\answerwithoutput{destructexcall}{object}{destructexercise}
 \end{exercise}
 
 \begin{block}{Destructors and exceptions}

@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% ccpp.tex : differences between C++ and C
 %%%%
@@ -27,6 +27,28 @@ to use \indextermtt{vector}. Use range-based loops, even if you use
 bracket notation.
 
 Chapter~\ref{ch:array}.
+
+\Level 0 {Dynamic storage}
+
+Another advantage of vectors and other containers is the \indextermdef{RAII}
+mechanism, which implies that dynamic storage automatically gets
+deallocated when leaving a scope. Section~\ref{sec:stack-heap}. (For
+safe dynamic storage that transcends scope, see smart pointers
+discussed below.)
+
+RAII stands for `Resource Allocation Is Initialization'. This means
+that it is no longer possible to write
+\begin{verbatim}
+double *x;
+if (something1) x = malloc(10);
+if (something2) x[0];
+\end{verbatim}
+which may give a memory error. On the other hand:
+\begin{lstlisting}
+vector<double> x(10);
+\end{lstlisting}
+declares the variable \n{x}, allocates the dynamic storage, and
+initializes it.
 
 \Level 0 {Strings}
 

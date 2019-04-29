@@ -9,6 +9,41 @@
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\Level 0 {Random numbers}
+
+In this section we briefly discuss the Fortran \emph{random number
+  generator}\index{random number!generator!Fortran}.
+The basic mechanism is through the library subroutine
+\indextermfort{random_number}, which has a single argument of type
+\lstinline{REAL} with \lstinline{INTENT(OUT)}:
+\begin{lstlisting}
+real(4) :: randomfraction
+call random_number(randomfraction)
+\end{lstlisting}
+The result is a random number from the uniform distribution
+on~$\left[0,1\right)$.
+  
+Setting the \indextermbus{random}{seed} is slightly convoluted. The
+amount of storage needed to store the seed can be processor and
+implementation-dependent, so the routine \indextermfort{random_seed}
+can have three types of named argument, exactly one of which can be
+specified at any one time. The keyword can be:
+\begin{itemize}
+\item \lstinline{SIZE} for querying the size of the seed;
+\item \lstinline{PUT} for setting the seed; and
+\item \lstinline{GET} for querying the seed.
+\end{itemize}
+A typical fragment for setting the seed would be:
+\begin{lstlisting}
+integer :: seedsize
+integer,dimension(:),allocatable :: seed
+
+call random_seed(size=seedsize)
+allocate(seed(seedsize))
+seed(:) = ! your integer seed here
+call random_seed(put=seed)
+\end{lstlisting}
+
 \Level 0 {Timing}
 
 Timing is done with the \indextermfort{system_clock} routine.

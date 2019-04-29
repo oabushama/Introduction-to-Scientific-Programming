@@ -89,12 +89,12 @@ etc
   \verbatimsnippet{coutpoint}
   %
   Back to decimal:
-\begin{verbatim}
+\begin{lstlisting}
 cout << hex << i << dec << j;
-\end{verbatim}
+\end{lstlisting}
 \end{block}
 
-\Level 0 {Floating point output}
+\Level 1 {Floating point output}
 
 \begin{block}{Floating point precision}
   \label{sl:io-float}
@@ -150,7 +150,7 @@ Combine width and precision:
 \end{verbatim}
 \end{block}
 
-\Level 0 {Saving and restoring settings}
+\Level 1 {Saving and restoring settings}
 
 \begin{verbatim}
 ios::fmtflags old_settings = cout.flags();
@@ -188,7 +188,13 @@ Use:
 \end{verbatim}
 \end{block}
 
-\Level 1 {Output your own classes}
+\Level 1 {Binary output}
+
+\snippetwithoutput{fio}{io}{fio}
+
+\snippetwithoutput{fiobin}{io}{fiobin}
+
+\Level 0 {Output your own classes}
 \label{sec:lessless}
 
 You have used statements like:
@@ -209,11 +215,36 @@ together.
   \verbatimsnippet{classostream}
 \end{block}
 
-\Level 0 {Binary output}
+\Level 0 {Output buffering}
 
-\snippetwithoutput{fio}{io}{fio}
+In C, the way to get a newline in your output was to include the
+character~\verb+\n+ in the output. This still works in~C++, and at
+first it seems there is no difference with using \n{endl}. However,
+\indextermtt{endl} does more than breaking the output line: it
+performs a \n{std::}\indexterm{flush}.
 
-\snippetwithoutput{fiobin}{io}{fiobin}
+Output is usually not immediately written to screen or disc or
+printer: it is saved up in buffers. This can be for efficiency,
+because output a single character may have a large overhead, or it may
+be because the device is busy doing something else, and you don't want
+your program to hang waiting for the device to free up.
+
+However, a problem with buffering is the output on the screen may lag
+behind the actual state of the program. In particular, if your program
+crashes before it prints a certain message, does it mean that it
+crashed before it got to that line, or does it mean that the message
+is hanging in a buffer.
+
+This sort of output, that absolutely needs to be handled when the
+statement is called, is often called \indexterm{logging} output.
+The fact that \n{endl} does a flush would mean that it would be good
+for logging output. However, it also flushes when not strictly
+necessary. In fact there is a better solution:
+\n{std::}\indextermttdef{cerr} works just like \n{cout}, except it
+doesn't buffer the output.
+
+In other works, use \n{cout} for regular output, \n{cerr} for logging
+output, and use \verb+\n+ instead of \n{endl}.
 
 \Level 0 {Input}
 
@@ -249,7 +280,10 @@ together.
     \n{false} if no line can be read.
   \item The \indextermtt{eof} function can be used after you have done
     a read.
-  \item It is not a good idea to assume an \n{EOF} character, or
+  \item \indextermttdef{EOF} is a return code of some library
+    functions; it is not true that a file ends with an \n{EOT}
+    character.
+    Likewise you can not assume a
     \n{Control-D} or \n{Control-Z} at the end of the file.
   \end{itemize}
 \end{block}

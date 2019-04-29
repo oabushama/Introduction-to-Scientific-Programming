@@ -92,8 +92,10 @@ auto maybeinc =
       if (f(i)) count++; }
 \end{lstlisting}
 The lambda expression also needs to be marked
-\n{mutable}\index{lambda!make mutable}
+\indextermttdef{mutable}\index{lambda!make mutable}
 because by default it is a
 \n{const}\index{lamda!const by default}.
 
 \snippetwithoutput{counteach}{stl}{counteach}
+
+Lambdas without captures can be converted to a function pointer.

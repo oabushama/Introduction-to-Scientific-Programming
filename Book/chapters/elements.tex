@@ -288,8 +288,9 @@ cout << /* we are now going
   \item The language standard says that \n{main} has to be of type
     \n{int}; the \indextermbus{return}{statement} returns an int.
   \item Compilers are fairly tolerant of deviations from this.
-  \item Returning zero means success; anything else failure;
-  \item This \indextermsub{return}{code} can be detected by the Operating System.
+  \item Usual interpretation: returning zero means success; anything else failure;
+  \item This \indextermbus{return}{code} can be detected by the
+    \emph{shell}\index{shell!inspect return code}
   \end{itemize}
   \snippetwithoutput{returnone}{basic}{return}
 \end{block}
@@ -548,20 +549,6 @@ What happens?
 \end{enumerate}
 \end{exercise}
 
-\begin{block}{Integer constants}
-  \label{sl:intvals}
-  Integers are normally  written in decimal, and stored in 32 bits.
-  If you need something else:
-\begin{lstlisting}
-int d = 42;
-int o = 052; // start with zero
-int x = 0x2a;
-int X = 0X2A;
-int b = 0b101010; // C++14
-long ell = 42L;
-\end{lstlisting}
-\end{block}
-
 \Level 1 {Floating point variables}
 
 Mathematically, integers are a special case of real numbers.
@@ -580,22 +567,7 @@ In a computer, integers are stored very differently from
   number do a double precision).
 \end{itemize}
 
-\begin{block}{Floating point constants}
-  \label{sl:float-vars}
-  \begin{itemize}
-  \item Default: \n{double}
-  \item Float: \n{3.14f} or \n{3.14F}
-  \item Long double: \n{1.22l} or \n{1.22L}.
-  \end{itemize}
-  This prevents numerical accidents: 
-\begin{lstlisting}
-  double x = 3.;
-\end{lstlisting}
-  converts float to double, maybe introducing random bits.
-\end{block}
-
-  Floating points numbers do not behave like mathematical
-  numbers. 
+Floating points numbers do not behave like mathematical numbers. 
 
 \begin{block}{Warning: floating point arithmetic}
   \label{sl:float-arith}
@@ -762,7 +734,42 @@ For more I/O, see chapter~\ref{ch:io}.
 \label{sec:expr}
 
 The most basic step in computing is to form expressions such as sums,
-products, logical conjuctions, string appending. Expressions in
+products, logical conjuctions, string appending. Let's start with
+constants.
+
+\Level 1 {Constants}
+
+\begin{block}{Integer constants}
+  \label{sl:intvals}
+  Integers are normally  written in decimal, and stored in 32 bits.
+  If you need something else:
+\begin{lstlisting}
+int d = 42;
+int o = 052; // start with zero
+int x = 0x2a;
+int X = 0X2A;
+int b = 0b101010; // C++14
+long ell = 42L;
+\end{lstlisting}
+\end{block}
+
+\begin{block}{Floating point constants}
+  \label{sl:float-vars}
+  \begin{itemize}
+  \item Default: \n{double}
+  \item Float: \n{3.14f} or \n{3.14F}
+  \item Long double: \n{1.22l} or \n{1.22L}.
+  \end{itemize}
+  This prevents numerical accidents: 
+\begin{lstlisting}
+  double x = 3.;
+\end{lstlisting}
+  converts float to double, maybe introducing random bits.
+\end{block}
+
+\Level 1 {Numerical expressions}
+
+Expressions in
 programming languages for the most part look the way you would expect
 them to.
 \begin{itemize}

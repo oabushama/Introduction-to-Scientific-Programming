@@ -22,7 +22,9 @@ int main() {
   vector<float> v(5,0), vcopy;
   v[2] = 3.5;
   vcopy = v;
-  cout << vcopy[2] << endl;
+  vcopy[2] *= 2;
+  cout << v[2] << ","
+       << vcopy[2] << endl;
   //codesnippet end
 
   return 0;

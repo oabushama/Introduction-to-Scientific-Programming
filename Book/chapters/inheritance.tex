@@ -17,15 +17,15 @@ can be objects. For instance, if you write software to manage courses,
 each \n{Course} object will likely have a \n{Person} object,
 corresponding to the teacher.
 \begin{lstlisting}
-class Person { /* ... */ }
-class Course {
-private:
-  Person the_instructor;
-  int year;
-}
 class Person {
   string name;
   ....
+}
+class Course {
+private:
+  int year;
+  Person the_instructor;
+  vector<Person> students;
 }
 \end{lstlisting}
 

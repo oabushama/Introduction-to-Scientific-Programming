@@ -29,7 +29,7 @@ public:
 
 int main() {
 
-//examplesnippet destructor
+//examplesnippet destructoruse
   cout << "Before the nested scope"
        << endl;
   {

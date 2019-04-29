@@ -26,18 +26,53 @@ it is better to use \n{vector}. In particular, this is a safer way to
 do dynamic allocation. The old
 mechanisms are briefly discussed in section~\ref{sec:staticarray}.
 
-\Level 1 {Initialization}
+\Level 1 {Vector creation}
 
-To define an array you need to declare its size, and you need to give
-it its contents. Those actions don't necessarily have to occur
-together. (And the contents can later change, as with any other
-variable; maybe even the size can change.)
-However, 
-if you know the array size and contents already before you run your
-code, you can create the whole array in one statement. There is more
-than one syntax for doing so.
-%
-\snippetwithoutput{dynamicinit}{array}{dynamicinit}
+To use vectors, you first need the the \n{vector} header from the
+\ac{STL}. Then you declare a vector, specifying what type of element
+is in init. If you don't specify otherwise, your vector will be of
+size zero, but it is possible to specify the size of the vector.
+
+\begin{block}{Vector definition}
+  \label{sl:vector-def}
+  Definition, mostly without initialization.
+\begin{lstlisting}
+#include <vector>
+using std::vector;
+
+vector<type> name;
+vector<type> name(size);
+\end{lstlisting}
+where
+\begin{itemize}
+\item \n{vector} is a keyword,
+\item \n{type} (in angle brackets) is any elementary type or class
+  name,
+\item \n{name} is up to you, and
+\item \n{size} is the (initial size of the array). This is an integer,
+  or more precisely, a \n{size_t} parameter.
+\end{itemize}
+\end{block}
+
+\begin{remark}
+  There is also an \indextermttdef{array} class, which at first glance
+  looks like a non-resizable variant of \n{vector}. However, it is limited to
+  arrays where the size is known at compile time.
+\end{remark}
+
+\Level 1 {Element access}
+
+The simplest way to access vector elements is with the square bracket notation:
+\begin{lstlisting}
+x[1] = 3.14;
+cout << x[2];
+\end{lstlisting}
+This gives very fast access, but there is no \emph{checking} on whether the
+index is within the \emph{array
+  bounds}\index{array!bounds!checking}. Accessing an element outside
+the bounds may abort your code, typically with a
+\indexterm{segmentation fault}, but your code may just as well
+proceed, using invalid data.
 
 As you see in this example, if \n{a}~is an array, and \n{i} and
 integer, then \n{a[i]} is the i'th element.
@@ -55,7 +90,59 @@ integer, then \n{a[i]} is the i'th element.
   necessarily happen. You could just get some random value.
 \end{itemize}
 
-\Level 1 {Ranging over an array}
+There is a safer way to access elements:
+\begin{lstlisting}
+x.at(1) = 3.14;
+cout << x.at(2);  
+\end{lstlisting}
+This is slightly slower, but it does perform bounds checking for every access.
+
+\begin{slide}{Accessing vector elements}
+  \label{sl:vectorsub}
+  You have already seen the square bracket notation:
+\begin{lstlisting}
+vector<double> x(5, 0.1 );
+x[1] = 3.14;
+cout << x[2];
+\end{lstlisting}
+Alteratively:
+\begin{lstlisting}
+x.at(1) = 3.14;
+cout << x.at(2);
+\end{lstlisting}
+Safer, slower.
+\end{slide}
+
+\Level 1 {Initialization}
+
+In some applications you will create an array, and gradually fill it,
+for instance in a loop. However, sometimes your elements are known in
+advance and you can write them out. Specifying these values while
+creating the array is called \indextermbus{array}{initialization}, and
+there is more than one way to do so.
+
+First of all, you can easily set a vector to a constant:
+
+\begin{block}{Vector constant initialization}
+  \label{sl:vector-initconst}
+  There is a syntax for initializing a vector with a constant:
+\begin{lstlisting}
+vector<float> x(25,3.15);
+\end{lstlisting}
+which gives a vector of size~25, with all elements initialized to~3.15.
+\end{block}
+
+If your vector is short enough, you can set all elements explicitly with an
+\indexterm{initializer list}:
+
+\begin{block}{Vector initialization}
+  \label{sl:vector-init}
+  You can initialize a vector as a whole:
+  %
+  \snippetwithoutput{dynamicinit}{array}{dynamicinit}
+\end{block}
+
+\Level 0 {Ranging over an array}
 \label{sec:arrayrange}
 
 If you need to consider all the elements in an array, you typically
@@ -79,9 +166,48 @@ for ( auto e : array )
 \snippetwithoutput{dynamicmax}{array}{dynamicmax}
 \end{block}
 
+\begin{block}{Ranging over a vector}
+  \label{sl:vector-range}
+\begin{lstlisting}
+for ( auto e : my_vector)
+  cout << e;
+\end{lstlisting}
+Note that \n{e} is a copy of the vector element:
+\snippetwithoutput{vectorrangecopy}{array}{vectorrangecopy}
+\end{block}
+
 (You can spell out the type of the array element, but such type
 specifications can be complex. In that case, using \indextermtt{auto} is
 quite convenient.)
+
+\begin{block}{Ranging over a vector by reference}
+  \label{sl:vector-range-ref}
+To set array elements, make \n{e} a reference:
+\begin{lstlisting}
+for ( auto &e : my_vector)
+  e = ....
+\end{lstlisting}
+\snippetwithoutput{vectorrangeref}{array}{vectorrangeref}
+\end{block}
+
+\begin{exercise}
+  \label{ex:range-for}
+  Indicate for each of the following vector operations whether you
+  prefer to use an indexed loop or a range-based loop. Give a short
+  motivation.
+  \begin{itemize}
+  \item Count how many elements of a vector are zero.
+  \item Find the location of the last zero.
+  \end{itemize}
+\end{exercise}
+
+So-called \emph{initializer lists}\index{initializer list}
+can also be used as a list denotation:
+
+\begin{block}{Range over vector denotation}
+  \label{sl:range-denote}
+  \snippetwithoutput{rangedenote}{array}{rangedenote}  
+\end{block}
 
 If you actually need the array index of the element, you can use a
 traditional \n{for} loop with loop variable.
@@ -97,15 +223,6 @@ for (int i= /* from first to last index */ )
 Example: find the maximum element and where it occurs.
 %
 \snippetwithoutput{idxmax}{array}{idxmax}
-\end{block}
-
-\begin{block}{Indexing with pre/post increment}
-  \label{sl:prepostindex}
-Array indexing in \n{while} loop and such:
-\begin{lstlisting}
-  x = a[i++]; /* is */ x = a[i]; i++;
-  y = b[++i]; /* is */ i++; y = b[i];
-\end{lstlisting}
 \end{block}
 
 \begin{exercise}
@@ -148,112 +265,20 @@ absx = abs(x);
   If you do the prime numbers project, you can now do exercise~\ref{sec:arraysieve}.
 \end{exercise}
 
-\Level 1 {Vector are a class}
-\label{sec:stdvector}
-
-You wouldn't tell it from the above examples, but vectors actually
-form a \indextermttdef{vector} class. The angle bracket notation means
-that we have a class that is parametrized with the type (see
-chapter~\ref{ch:template} for the details), and you can
-have vectors of ints, vectors of chars, et cetera. We can now say that
-\n{vector<int>} is a type, pronounced `vector-of-int', and you can
-make new variables of that type.
-
-What we were doing above was creating an object and initializing it in
-one go. Let's decouple these actions.
-
-\begin{block}{Vector definition}
-  \label{sl:vector-def}
-  Definition, mostly without initialization.
+\begin{block}{Indexing with pre/post increment}
+  \label{sl:prepostindex}
+Array indexing in \n{while} loop and such:
 \begin{lstlisting}
-#include <vector>
-using std::vector;
-
-vector<type> name;
-vector<type> name(size);
-\end{lstlisting}
-where
-\begin{itemize}
-\item \n{vector} is a keyword,
-\item \n{type} (in angle brackets) is any elementary type or class
-  name,
-\item \n{name} is up to you, and
-\item \n{size} is the (initial size of the array). This is an integer,
-  or more precisely, a \n{size_t} parameter.
-\end{itemize}
-\end{block}
-
-\begin{remark}
-  There is also an \indextermttdef{array} class, which at first glance
-  looks like a non-resizable variant of \n{vector}. However, it is limited to
-  arrays where the size is known at compile time.
-\end{remark}
-
-\Level 2 {Vector initialization}
-
-There are several ways of initializing a vector. Note that if you
-don't initialize you can not rely on the elements being zero or so:
-the memory for the vector has been reserved, but there is no guarantee
-on what is in it.
-
-First of all, you can easily set a vector to a constant:
-
-\begin{block}{Vector constant initialization}
-  \label{sl:vector-initconst}
-  There is a syntax for initializing a vector with a constant:
-\begin{lstlisting}
-vector<float> x(25,3.15);
-\end{lstlisting}
-which gives a vector of size~25, with all elements initialized to~3.15.
-\end{block}
-
-If your vector is short enough, you can set all elements explicitly with an
-\indexterm{initializer list}:
-
-\begin{block}{Vector initialization}
-  \label{sl:vector-init}
-  You can initialize a vector as a whole:
-\begin{lstlisting}
-vector<int> odd_array{1,3,5,7,9};
-vector<int> even_array = {0,2,4,6,8};
+  x = a[i++]; /* is */ x = a[i]; i++;
+  y = b[++i]; /* is */ i++; y = b[i];
 \end{lstlisting}
 \end{block}
 
-\Level 2 {Element access}
-
-The simplest way to access vector elements is with the square bracket notation:
-\begin{lstlisting}
-x[1] = 3.14;
-cout << x[2];
-\end{lstlisting}
-This gives very fast access, but there is no \emph{checking} on whether the
-index is within the \emph{array
-  bounds}\index{array!bounds!checking}. Accessing an element outside
-the bounds may abort your code, typically with a
-\indexterm{segmentation fault}, but your code may just as well
-proceed, using invalid data.
-
-There is a safer way to access elements:
-\begin{lstlisting}
-x.at(1) = 3.14;
-cout << x.at(2);  
-\end{lstlisting}
-This is slightly slower, but it does perform bounds checking for every access.
-
-\begin{block}{Accessing vector elements}
-  \label{sl:vectorsub}
-  You have already seen the square bracket notation:
-\begin{lstlisting}
-vector<double> x(5, 0.1 );
-x[1] = 3.14;
-cout << x[2];
-\end{lstlisting}
-Alteratively:
-\begin{lstlisting}
-x.at(1) = 3.14;
-cout << x.at(2);
-\end{lstlisting}
-Safer, slower.
+\begin{block}{Example of increment indexing}
+  \snippetwithoutput{plusplustest1}{loop}{plusplus}
+  %
+  Exercise: modify this so that after the while loop \n{index} is the
+  number of leading odd elements.
 \end{block}
 
 \begin{block}{Ranging over a vector}
@@ -266,34 +291,16 @@ Note that \n{e} is a copy of the vector element:
 \snippetwithoutput{vectorrangecopy}{array}{vectorrangecopy}
 \end{block}
 
-\begin{block}{Ranging over a vector by reference}
-  \label{sl:vector-range-ref}
-To set array elements, make \n{e} a reference:
-\begin{lstlisting}
-for ( auto &e : my_vector)
-  e = ....
-\end{lstlisting}
-\snippetwithoutput{vectorrangeref}{array}{vectorrangeref}
-\end{block}
+\Level 0 {Vector are a class}
+\label{sec:stdvector}
 
-\begin{exercise}
-  \label{ex:range-for}
-  Indicate for each of the following vector operations whether you
-  prefer to use an indexed loop or a range-based loop. Give a short
-  motivation.
-  \begin{itemize}
-  \item Count how many elements of a vector are zero.
-  \item Find the location of the last zero.
-  \end{itemize}
-\end{exercise}
-
-So-called \emph{initializer lists}\index{initializer list}
-can also be used as a list denotation:
-
-\begin{block}{Range over vector denotation}
-  \label{sl:range-denote}
-  \snippetwithoutput{rangedenote}{array}{rangedenote}  
-\end{block}
+You wouldn't tell it from the above examples, but vectors actually
+form a \indextermttdef{vector} class. The angle bracket notation means
+that we have a class that is parametrized with the type (see
+chapter~\ref{ch:template} for the details), and you can
+have vectors of ints, vectors of chars, et cetera. We can now say that
+\n{vector<int>} is a type, pronounced `vector-of-int', and you can
+make new variables of that type.
 
 \begin{block}{Vector copy}
   \label{sl:vectorcopy}
@@ -333,7 +340,7 @@ can also be used as a list denotation:
   \end{itemize}
 \end{slide}
 
-\Level 0 {Vectors are dynamic}
+\Level 1 {Vectors are dynamic}
 \label{sec:stdvector-dynamic}
 
 There is an important difference between vectors and arrays: a vector
@@ -394,23 +401,16 @@ actually copied into the function.
 
 \begin{block}{Vector as function return}
   \label{sl:vector-return}
-  You can have a vector as return type of a function:
+  You can have a vector as return type of a function. This function
+  creates a vector, with the first element set to the size:
   %
   \snippetwithoutput{vectorreturn}{array}{vectorreturn}
 \end{block}
 
 \begin{exercise}
-  \label{ex:splitoddeven}
-  Write code to take a vector of integers, and construct two
-  vectors, one containing all the odd inputs, and one containing all
-  the even inputs. So:
-\begin{lstlisting}
-input:
-   5,6,2,4,5
-output:
-   5,5
-   6,2,4
-\end{lstlisting}
+  \label{ex:vec-of-squares}
+  Write a function of one \n{int} argument~$n$, which returns vector
+  of length~$n$, and which contains the first $n$ squares.
 \end{exercise}
 
 \begin{block}{Vector pass by reference}
@@ -436,11 +436,19 @@ See section~\ref{sec:crand} for the random fuction.
 \end{exercise}
 
 \begin{exercise}
-  \label{ex:splitoddeven-function}
-  Revisit exercise~\ref{ex:splitoddeven}. 
-
-  Can you write a function that accepts a vector and returns two
-  vectors with the above functionality?
+  \label{ex:splitoddeven}
+  Write code to take a vector of integers, and construct two
+  vectors, one containing all the odd inputs, and one containing all
+  the even inputs. So:
+\begin{lstlisting}
+input:
+   5,6,2,4,5
+output:
+   5,5
+   6,2,4
+\end{lstlisting}
+  Can you write a function that accepts a vector and produces two
+  vectors as described?
 \end{exercise}
 
 \Level 0 {Vectors in classes}
@@ -503,20 +511,19 @@ Better than
 \end{lstlisting}
 \end{block}
 
-You could read this as
+The two cases behave slightly differently.
 \begin{itemize}
-\item \n{vector<int> the_array} declares a int-vector variable, and
-\item \n{thearray = vector<int>(n)} assigns an array to it.
-\item Second form copy, first form only move.
-\end{itemize}
-However, 
-technically, it actually does the following:
-\begin{itemize}
-\item The class object initially has a zero-size vector;
-\item the expression \n{vector<int>(n)} creates an anonymous vector
+\item The expression \n{vector<int>(n)} creates an anonymous vector
   of size~\n{n};
-\item which is then assigned to the variable \n{the_array},
-\item so now you have an object with a vector of size~\n{n} internally.
+  \begin{itemize}
+  \item In the first case, that anonymous vector is moved to become
+    the value of the \n{the_array} variable;
+  \item in the second case, the object is first created with
+    \n{the_array} being an empty
+    vector, and the size-$n$ is then written over it. This is less
+    efficient and less elegant.
+  \end{itemize}
+\item Either way, now you have an object with a vector of size~\n{n} internally.
 \end{itemize}
 
 \Level 1 {Dynamic size of vector}
@@ -597,6 +604,11 @@ Unfortunately this means you may have to recreate some methods:
 
 \Level 0 {Multi-dimensional cases}
 
+Unlike Fortran, C++ has little support for multi-dimensional
+arrays. If your multi-dimensional arrays are to model linear algebra
+objects, it would be good to check out the \indexterm{Eigen}
+library. Here are some general remarks on multi-dimensional storage.
+
 \Level 1 {Matrix as vector of vectors}
 
 \begin{block}{Multi-dimensional vectors}
@@ -606,7 +618,8 @@ Unfortunately this means you may have to recreate some methods:
 vector<float> row(20);
 vector<vector<float>> rows(10,row);
 \end{lstlisting}
-Vector of vectors.
+Create a row vector, then store 10 copies of that:\\
+vector of vectors.
 \end{block}
 
 This is not the best implementation of a matrix, for instance because
@@ -617,18 +630,10 @@ the elements are not contiguous. However, let's continue with it for a moment.
   \verbatimsnippet{matrixclassdef}
 \end{block}
 
-\begin{block}{Matrix class'}
-  \label{sl:matrix-class-cont}
-  Better idea:
-\begin{lstlisting}
-  elements = vector<double>(rows*cols);
-  ...
-  void get(int i,int j) {
-    return elements.at(i*cols+j);
-  }
-\end{lstlisting}
-(Even more efficient: use cpp macro)
-\end{block}
+\begin{exercise}
+  \label{ex:matrixclass-rowcol1}
+  Can you write \n{rows()} and \n{cols()} methods for this class?
+\end{exercise}
 
 \begin{exercise}
   \label{ex:matrix-methods}
@@ -644,8 +649,27 @@ an object:
 %
 \verbatimsnippet{matrixclass}
 
-The most important advantage of this is that it is compatible with how
-many libraries and codes store a matrix traditionally.
+\begin{slide}{Matrix class'}
+  \label{sl:matrix-class-cont}
+  Better idea:
+\begin{lstlisting}
+  elements = vector<double>(rows*cols);
+  ...
+  void get(int i,int j) {
+    return elements.at(i*cols+j);
+  }
+\end{lstlisting}
+(Even more efficient: use cpp macro)
+\end{slide}
+
+\begin{exercise}
+  \label{ex:matrixclass-rowcol2}
+  Writing \n{rows()} and \n{cols()} methods is now hard. Discuss.  
+\end{exercise}
+
+The most important advantage of this is that it is compatible with
+the storage traditionally used in 
+many libraries and codes.
 
 The syntax for \n{set} and \n{get} can be improved.
 \begin{exercise}
@@ -684,7 +708,7 @@ Range-based indexing works the same as with vectors:
 
 You have seen how you can iterate over a vector
 \begin{itemize}
-\item by a for loop over the indices, and
+\item by an indexed loop over the indices, and
 \item with a range-based loop over the indices.
 \end{itemize}
 There is a third way, which is actually the basic mechanism underlying
@@ -704,7 +728,8 @@ for (auto elt_ptr=vec.begin(); elt_ptr<vec.end(); ++elt_ptr)
 Some remarks:
 \begin{itemize}
 \item This is one of the very few places where you need the asterisk in C++
-  for \indexterm{dereferencing}; section~\ref{sec:cderef}.
+  for \indexterm{dereferencing}; section~\ref{sec:cderef}. (However,
+  the thing you are dereferencing is an iterator, not a pointer.)
 \item As with a normal loop, the \n{end} iterator point just beyond the end
   of the vector.
 \item You can do \indextermbus{pointer}{arithmetic} on iterators, as
@@ -788,6 +813,35 @@ We can now also understand how arrays are passed to functions:
 \item In the higher dimensional case, the subprogram needs to know the
   size of all dimensions except for the first one.
 \end{itemize}
+
+\Level 1 {Stack and heap allocation}
+\label{sec:stack-heap}
+
+The concepts of \indexterm{stack} and \indexterm{heap} do not appear
+in the \indextermbus{C++}{standard}. However, the following
+description generally applies:
+\begin{itemize}
+\item Objects that obey scope are allocated on the stack, so that
+  their memory is automatically freed control leaves the scope.
+\item Dynamically created objects, such as the target of a pointer,
+  live on the heap because their lifetime is not subject to scope.
+\end{itemize}
+The existence of the second category is a source of
+\indextermbus{memory}{leak}s in languages such as~C. This danger is
+greatly lessened in~C++.
+
+While in C the only way to create dynamic objects is by a call to
+\indextermtt{malloc}, in C++ a \indextermtt{vector} obeys scope, and
+therefore lives on the stack. If you wonder if this may lead to
+\indextermbus{stack}{overflow}, rest assured: only the descriptor, the
+part of the vector that remembers the size, is on the stack, while the
+actual data is on the heap. However, it is no longer subject to memory
+leaking, since the heap storage is deallocated when the vector object
+goes out of scope.
+
+If you want heap memory that transcends scope you can use the
+\indextermsub{smart}{pointer} mechanism, which also guarantees against
+memory leaks. See chapter~\ref{pointer}.
 
 \Level 0 {Exercises}
 

@@ -142,6 +142,10 @@ side:
 %
 \snippetwithoutput{rhsref}{func}{rhsref}
 %
+(On the other hand, after \n{const auto &ref} the reference is not
+modifiable. This variant is useful if you want read-only access,
+without the cost of copying.)
+
 You see that, despite the fact that the method \n{data} was defined as
 returning a reference, you still need to indicate whether the
 left-hand side is a reference.
@@ -176,7 +180,7 @@ For this we need to return a reference to the array element:
 %
 \verbatimsnippet{refindexref}
 
-Another reason for wanting to return a reference is to prevent the
+Your reason for wanting to return a reference could be to prevent the
 \emph{copy of the return result}\index{return!makes copy}
 that is induced by the \n{return} statement.
 In this case, you may not want to be able to alter the object

@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2016/7 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2016-9 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** matrix.cxx : example of matrix class
  ****
@@ -19,11 +19,9 @@ using std::vector;
 //codesnippet matrixclassdef
 class matrix {
 private:
-  int rows,cols;
   vector<vector<double>> elements;
 public:
   matrix(int m,int n) {
-    rows = m; cols = n;
     elements =
       vector<vector<double>>(m,vector<double>(n));
   }

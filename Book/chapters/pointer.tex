@@ -76,14 +76,15 @@ shared_ptr<Obj> X =
     make_shared<Obj>( /* constructor args */ );
   // or:
 auto X = make_shared<Obj>( /* args */ );
-  // or:
-auto X = shared_ptr<Obj>( new Obj(/* args */) );
 
 X->method_or_member;
 \end{lstlisting}
 \end{block}
 
-This requires at the top of your file:
+(It is also possible to cast a \indextermtt{new} object to shared
+pointer, but that method is not recommended.)
+
+Using shared pointers requires at the top of your file:
 \begin{lstlisting}
 #include <memory>
 using std::shared_ptr;

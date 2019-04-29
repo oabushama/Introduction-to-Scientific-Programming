@@ -47,11 +47,14 @@
 \lstset{
   emph={std,using,cin,cout,endl,
     dec,fixed,hex,left,right,scientific,setbase,setfill,setprecision,setw,
-    nullptr,string,vector,
+    nullptr,
     make_shared,unique_ptr,shared_ptr},
   emphstyle={\bfseries\color{brown}},
   emph={[2]abs,NULL,pow,rand,RAND_MAX,srand,sqrt,time,},
-  emphstyle={[2]\bfseries\slshape\color{brown}},
+  emphstyle={[2]\slshape\color{brown}},
+  % STL libraries
+  emph={[3]algorithm,cmath,iostream,string,vector,},
+  emphstyle={[3]\slshape\color{brown!80!gray}},
 }
 \def\codesnippet#1{\lstinputlisting{snippets.code/#1}}
 

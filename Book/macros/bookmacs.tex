@@ -254,7 +254,7 @@
 \def\indextermtt#{\bgroup \innocentcharacters 
   \afterassignment\mpitoindex\edef\indexedmpi}
 \def\mpitoindex{%
-  %\expandafter\lstinline\expandafter$\indexedmpi$%
+  \expandafter\lstinline\expandafter$\indexedmpi$%
   \edef\idxtmp{%
     \noexpand\index{\indexedmpi@{\catcode95=12 \noexpand\texttt{\indexedmpi}}}%
     %\noexpand\index{\indexedmpi@{\protect\innocentcharacters\protect\texttt{\indexedmpi}}}%
@@ -266,7 +266,7 @@
 \def\indextermttdef#{\bgroup \innocentcharacters
   \afterassignment\mpitoindexbf\edef\indexedmpi}
 \def\mpitoindexbf{%
-  %\expandafter\lstinline\expandafter$\indexedmpi$%
+  \expandafter\lstinline\expandafter$\indexedmpi$%
   \edef\idxtmp{%
     \noexpand\index{\indexedmpi@{\catcode95=12 \noexpand\texttt{\indexedmpi}}|textbf}%
     %\noexpand\index{\indexedmpi@{\protect\innocentcharacters\protect\texttt{\indexedmpi}}|textbf}%
