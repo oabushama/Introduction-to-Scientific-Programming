@@ -194,11 +194,14 @@ The number 10 is 3+7
   \[ \forall_{r\,\mathrm{prime}}\exists_{p,q\,\mathrm{prime}}\colon
   \hbox{$r=(p+q)/2$ is prime}. \]
 
-  Write a program that tests this. You need two prime number
-  generators, one for the $p$-sequence and one for the $q$-sequence.
-  For each $p$ value, 
-  when the program finds the $q$~value, print the $q,p,r$ triple and
-  move on to the next~$p$.
+  Write a program that tests this. You need at least one loop that
+  tests all primes~$r$; for each $r$ you then need to find the primes
+  $p,q$ that are equidistant to it. Do you use two generators for
+  this, or is one enough?
+
+  For each $r$ value, 
+  when the program finds the $p,q$ values, print the $q,p,r$ triple and
+  move on to the next~$r$.
 
   Allocate an array where you record all the $p-q$ distances that you
   found. Print some elementary statistics, for instance: what is the average, do the

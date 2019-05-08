@@ -176,7 +176,29 @@ array(i,j) = 5./2
 \end{lstlisting}
 \end{block}
 
-\begin{block}{Array layout}
+With multidimensional arrays we have to worry how they are stored in
+memory. Are they stored row-by-row, or column-by-column? In Fortran
+the latter choice, also known as \indextermdef{column-major} storage,
+is used; see figure~\ref{fig:column-major}.
+
+\begin{figure}[ht]
+  \includegraphics[scale=.1]{arraybycol}
+  \caption{Column-major storage in Fortran}
+  \label{fig:column-major}
+\end{figure}
+
+To traverse the elements as they are stored in memory, you would need
+the following code:
+\begin{lstlisting}
+do col=1,size(A,2)
+  do row=1,size(A,1)
+    .... A(row,col) .....
+  end do
+end do
+\end{lstlisting}
+This is sometimes described as `First index varies quickest'.
+
+\begin{slide}{Array layout}
   \label{sl:farray-layout}
   Sometimes you have to take into account how a higher rank array
   is laid out in (linear) memory:
@@ -184,10 +206,23 @@ array(i,j) = 5./2
   \includegraphics[scale=.1]{arraybycol}
 
   `First index varies quickest'
-\end{block}
+\end{slide}
 
-For multi-dimensional arrays, you need to indicate a range in all
-dimensions.
+\begin{exercise}
+  Can you describe in words how memory elements are access if you
+  would write
+\begin{lstlisting}
+do row=1,size(A,1)
+  do col=1,size(A,2)
+    .... A(row,col) .....
+  end do
+end do
+\end{lstlisting}
+?
+\end{exercise}
+
+You can make sections in multi-dimensional arrays: you need to
+indicate a range in all dimensions.
 
 \begin{block}{Array sections in multi-D}
   \label{sl:farray-sectiond}

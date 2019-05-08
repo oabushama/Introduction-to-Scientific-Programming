@@ -61,7 +61,9 @@ Error reporting:
 \item Exception
 \end{itemize}
 
-\Level 0 {Assertions}
+\Level 0 {Mechanisms to support error handling and debugging}
+
+\Level 1 {Assertions}
 
 \begin{block}{Use assertions during development}
   \label{sl:cpp-assert}
@@ -82,7 +84,7 @@ You can pass this as compiler flag:\\
 
 Function return values
 
-\Level 0 {Exception handling}
+\Level 1 {Exception handling}
 
 \begin{block}{Exception throwing}
   \label{sl:exception-throw}
@@ -225,7 +227,20 @@ void f() noexcept { ... };
   \end{itemize}
 \end{block}
 
-\Level 0 {Legacy mechanisms}
+\Level 1 {`Where does this error come from'}
+
+The \ac{CPP} defines two macros, \indextermtt{__FILE__} and
+\indextermtt{__LINE__} that give you respectively the current file name
+and the current line number. You can use these to generate pretty
+error messages such as
+\begin{verbatim}
+Overflow occurred in line 25 of file numerics.cxx
+\end{verbatim}
+
+The \indextermbus{C++}{20} standard will offer
+\texttt{std::}\indextermtt{source_location} as a native mechanism instead.
+
+\Level 1 {Legacy mechanisms}
 
 The traditional approach to error checking is for each routine to
 return an integer parameter that indicates success or absence

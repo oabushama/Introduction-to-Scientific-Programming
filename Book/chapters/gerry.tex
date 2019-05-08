@@ -102,7 +102,7 @@ string District::print();
 \begin{exercise}
   Implement a \n{Population} class that will initially model a whole state.
   %
-  \answerwithoutput{populationexample}{gerry}{populationexample}
+  \answerwithoutput{populationexample}{gerry}{population}
 
   In addition to an explicit creation, also write a constructor that
   specifies how many people and what the majority is:
@@ -134,6 +134,12 @@ extending it.
 
 \Level 0 {Strategy}
 
+\begin{figure}[ht]
+  \includegraphics[scale=.4]{recursize-district}
+  \caption{Multiple ways of splitting a population}
+  \label{fig:recur-district}
+\end{figure}
+
 Now we need a method for districting a population:
 \begin{lstlisting}
 Districting Population::minority_rules( int ndistricts );
@@ -148,7 +154,10 @@ called \indextermsub{dynamic}{programming}):
   districts,
   \item and extending that with the remaining population as one district.
 \end{itemize}
-Schematically:
+This means that you need to consider all the ways of having the
+`remaining' population into one district, and that means that you will
+have a loop over all ways of splitting the population, outside of your
+recursion; see figure~\ref{fig:recur-district}.
 \begin{itemize}
 \item For all $p=0,\ldots n-1$ considering splitting the state into
   $0,\ldots,p-1$ and $p,\ldots,n-1$.
@@ -248,7 +257,8 @@ The project so far has several simplifying assumptions.
   one-dimensional state. With two dimensions you have more degrees of
   freedom of shaping the districts. Implement a two-dimensional
   scheme; use a completely square state, where the census districts
-  form a regular grid.
+  form a regular grid. Limit the shape of the congressional districts
+  to be convex.
 \end{exercise}
 
 The \indexterm{efficiency gap} is a measure of how `fair' a

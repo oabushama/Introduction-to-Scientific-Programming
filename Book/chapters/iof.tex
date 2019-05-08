@@ -113,10 +113,29 @@ The default formatting uses quite a few positions for what can be
 small numbers. To indicate explicitly the formatting, for instance
 limiting the number of positions used for a number, or the whole and
 fractional part of a real number, you can use a format string.
-\begin{lstlisting}
-print '(a6,3f5.3)',"Result",x,y,z
-\end{lstlisting}
-The format specifier is inside single quotes and parentheses, and
+
+For instance, you can use a letter followed by a digit to control the
+formatting width:
+%
+\snippetwithoutput{i4}{iof}{i4}
+%
+(In the last line, the format specifier was not wide enough for the
+data, so an
+\emph{asterisk}\index{asterisk!in Fortran formatted I/O}
+was used as output.)
+
+If you want to display items of the same type, you can use a repeat
+count:
+%
+\snippetwithoutput{ii}{iof}{ii}
+
+You can mix variables of different types, as well as literal string,
+by separating them with commas. And you can group them with
+parentheses, and put a repeat count on those groups again:
+%
+\snippetwithoutput{ij}{iof}{ij}
+
+To be precise, the format specifier is inside single quotes and parentheses, and
 consists of comma-separated specifications for a single item:
 \begin{itemize}
 \item `\n{a}$n$' specifies a string of $n$~characters. If the actual
