@@ -131,14 +131,16 @@ temporarily remove code from compilation:
 
 \Level 1 {Check for macros}
 
-The \n{#ifdef}\index{#ifdef@{\texttt{\#ifdef}}}
+The \indexpragma{ifdef}
+%\n{#ifdef}\index{#ifdef@{\texttt{\#ifdef}}}
 test tests for a macro being defined. Conversely,
-\n{#ifndef}\index{#ifndef@{\texttt{\#ifndef}}}
+\indexpragma{ifndef}
+%\n{#ifndef}\index{#ifndef@{\texttt{\#ifndef}}}
 tests for a macro not being defined. For instance,
 \begin{lstlisting}
 #ifndef N
 #define N 100
-#fi
+#endif
 \end{lstlisting}
 Why would a macro already be defined? Well you can do that on the
 compile line:
@@ -172,8 +174,9 @@ Now the file will effectively be included only once: the second time
 it is included its content is skipped.
 
 Many compilers support the pragma
-\n{once}\index{#pragma once@{\texttt{\#pragma once}}}%
-\index{once@{\texttt{once}}|see{\texttt{\#pragma once}}}
+\indexpragma{once}
+%\n{once}\index{#pragma once@{\texttt{\#pragma once}}}%
+%\index{once@{\texttt{once}}|see{\texttt{\#pragma once}}}
 (which, however, is not a language standard) that has the same
 effect:
 \begin{lstlisting}
@@ -183,3 +186,13 @@ effect:
 // the things you want to include only once
 \end{lstlisting}
 
+\Level 0 {Other pragmas}
+
+\begin{itemize}
+\item Packing data structure without padding bytes by \indexpragma{pack}
+  \begin{lstlisting}
+    #pragma pack(push, 1)
+    // data structures
+    #pragma pack(pop)
+  \end{lstlisting}
+\end{itemize}

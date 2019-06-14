@@ -96,6 +96,14 @@ using std::make_shared;
   \snippetwithoutput{pointx}{pointer}{pointx}
 \end{block}
 
+\begin{block}{Pointers to arrays}
+  \label{sl:shared-vector}
+  The constructor syntax is a little involved for vectors:
+\begin{lstlisting}
+auto x = make_shared<vector<double>>(vector<double>{1.1,2.2});
+\end{lstlisting}
+\end{block}
+
 \Level 1 {Pointers and arrays}
 
 \begin{slide}{Shared pointers for arrays}
@@ -299,24 +307,24 @@ Can we do this with shared pointers?
 Your code would start something
 like this, handling the case where the new node is appended to the current:
 \begin{lstlisting}
-shared_pointer<node> node:append
+shared_pointer<node> node::append
     ( shared_ptr<node> other ) {
   if (other->value>this->value) {
     this->tail = other;
 \end{lstlisting}
 But now you need to return this node, as a shared pointer. But
-\n{this} is a \n{node*}, not a \n{shared_ptr<node>}.
+\lstinline{this} is a \lstinline{node*}, not a \lstinline{shared_ptr<node>}.
 
 \begin{slide}{A problem with shared pointers}
   \label{sl:share-ptr-node-sh}
 \begin{lstlisting}
-shared_pointer<node> node:prepend_or_append
+shared_pointer<node> node::prepend_or_append
     ( shared_ptr<node> other ) {
   if (other->value>this->value) {
     this->tail = other;
 \end{lstlisting}
-So far so good. However, \n{this} is a \n{node*}, not a
-\n{shared_ptr<node>}, so
+So far so good. However, \lstinline{this} is a \lstinline{node*}, not a
+\lstinline{shared_ptr<node>}, so
 \begin{lstlisting}
     return this;
 \end{lstlisting}
@@ -353,7 +361,7 @@ used to indicate
 \emph{null pointers}\index{pointer!null}:
 pointers that do not point to anything.
 C++ has the \indextermtt{nullptr}, which is an object of type
-\n{std::}\indextermtt{nullptr_t}.
+\lstinline{std::}\indextermtt{nullptr_t}.
 
 There are some scenarios where this is useful, for instance, with
 polymorphic functions:
@@ -361,13 +369,13 @@ polymorphic functions:
 void f(int);
 void f(int*);
 \end{lstlisting}
-Calling \n{f(ptr)} where the point is \n{NULL}, the first function is
-called, whereas with \n{nullptr} the second is called.
+Calling \lstinline{f(ptr)} where the point is \lstinline{NULL}, the first function is
+called, whereas with \lstinline{nullptr} the second is called.
 
 \begin{slide}{Null pointer}
   \label{sl:cpp-nullptr}
   C++ has the \indextermtt{nullptr}, which is an object of type
-  \n{std::}\indextermtt{nullptr_t}.
+  \lstinline{std::}\indextermtt{nullptr_t}.
 
 \begin{lstlisting}
 void f(int);
@@ -389,7 +397,7 @@ which is usually smart enough to call destructors when needed.
 
 \begin{slide}{Void pointer}
   \label{sl:void-ptr}
-  Use \n{std::any} instead of void pointers.
+  Use \lstinline{std::any} instead of void pointers.
 \end{slide}
 
 \Level 1 {Pointers to non-objects}
@@ -401,8 +409,8 @@ other object.
 
 You can still make shared pointers to scalar data, for instance to an
 array of scalars. You then get the advantage of the memory management,
-but you do not get the \n{size} function and such that you would have
-if you'd used a \n{vector} object.
+but you do not get the \lstinline{size} function and such that you would have
+if you'd used a \lstinline{vector} object.
 
 Here is an example of a pointer to a solitary double:
 %

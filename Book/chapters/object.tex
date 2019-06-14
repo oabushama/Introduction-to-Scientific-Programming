@@ -12,7 +12,7 @@
 \Level 0 {What is an object?}
 \label{sec:object}
 
-You learned about \n{struct}s (chapter~\ref{ch:struct}) as a way of
+You learned about \lstinline{struct}s (chapter~\ref{ch:struct}) as a way of
 abstracting from the elementary data types. The elements of a
 structure were called its members.
 
@@ -69,7 +69,7 @@ to give a new level of abstraction:
   \item Again we have separate definition of the class and declaration
     of the objects. You define the class only once, after which you can
     make as many objects of that class as you want.
-  \item There are data members. We will get to the \n{public} in a
+  \item There are data members. We will get to the \indextermtt{public} in a
     minute.
   \item You make an object of that class by using the class name as the
     datatype.
@@ -81,7 +81,7 @@ to give a new level of abstraction:
     \snippetwithoutput{pointstruct}{geom}{pointstruct}
 
     Class definition versus object declaration.\\
-    We'll get to that `\n{public}' in a minute.
+    We'll get to that `\lstinline{public}' in a minute.
   \end{slide}
 \end{comment}
 
@@ -92,8 +92,9 @@ you create an object, you actually call a function that has the same
 name as the class: the \indexterm{constructor}.
 
 Usually you write your own constructor,
-for instance to initialize data members. This fragment of the \n{class
-  Vector} shows the constructor and the data members:
+for instance to initialize data members.
+This fragment of the \lstinline{class Vector}
+shows the constructor and the data members:
 %
 \verbatimsnippet{functionalityconstruct}
 
@@ -105,7 +106,7 @@ for instance to initialize data members. This fragment of the \n{class
   
   \verbatimsnippet{functionalityconstruct}
 
-  The synxtax \n{x(x)} copies the argument to the data member.
+  The synxtax \lstinline{x(x)} copies the argument to the data member.
 \end{slide}
 
 \begin{block}{Constructor and initialization}
@@ -113,16 +114,16 @@ for instance to initialize data members. This fragment of the \n{class
   \item Keyword \indextermtt{private} indicates that data is internal
   \item keyword \indextermtt{public} indicates that the constructor
     function can be used in the program.
-  \item Initialization \n{x(x)} should be read as
+  \item Initialization \lstinline{x(x)} should be read as
     \begin{quotation}
       \hbox{\sl membername(argumentname)}
     \end{quotation}
-    Yes, having \n{x} twice is a little confusing.
+    Yes, having \lstinline{x} twice is a little confusing.
   \end{itemize}
 \end{block}
 
 \begin{comment}
-  Above you had a declaration \n{Vector v} which was not just a
+  Above you had a declaration \lstinline{Vector v} which was not just a
   declaration: it called the so-called \indextermsub{default}{constructor},
   which has no arguments, and does nothing.
 \end{comment}
@@ -130,12 +131,12 @@ for instance to initialize data members. This fragment of the \n{class
 \Level 1 {Methods}
 
 Methods are things you can ask your class objects to do. For instance,
-in the \n{Vector} class, you could ask a vector what it's length is,
+in the \lstinline{Vector} class, you could ask a vector what it's length is,
 or you could ask it to scale its length by some number.
 
 \begin{block}{Class methods}
   \label{sl:method-define}
-  We used methods \n{length} and \n{scaleby}. These are defined inside the
+  We used methods \lstinline{length} and \lstinline{scaleby}. These are defined inside the
   class:
   %
   \verbatimsnippet{functionalitymethod}
@@ -143,7 +144,7 @@ or you could ask it to scale its length by some number.
   \begin{itemize}
   \item They look like ordinary functions,
   \item except that they can use the data members of the class, for
-    instance~\n{x};
+    instance~\lstinline{x};
   \item Methods can only be used on an object:
     \verbatimsnippet{functionalitymethoduse}
   \end{itemize}
@@ -161,12 +162,12 @@ functionality.
 
 Another reason for making data members inaccessible is that we can
 change the internals of a class, without affecting the code that uses
-the class. Consider the scenario where you have a \n{Point} class, and
+the class. Consider the scenario where you have a \lstinline{Point} class, and
 you store the $x,y$ coordinates. Then you change you mind and decide
 to store $r,\theta$ coordinates instead. If your program used the fact
 that it could directly access the $x,y$ coordinates, you would be in
 for a lot of rewriting. On the other hand if you have a function
-\n{getx()}, your program does not need any rewriting, and you would
+\lstinline{getx()}, your program does not need any rewriting, and you would
 only change how that function was written.
 
 \begin{block}{No direct access to internals!}
@@ -186,14 +187,14 @@ public:
 };
 \end{lstlisting}
   The `get' functionality is independent of what data members the
-  \n{Point} class has.
+  \lstinline{Point} class has.
 \end{block}
 
 \begin{block}{Public versus private}
   \label{sl:interfaceimpl}
   \begin{itemize}
-  \item Implementation: data members, keep \n{private},
-  \item Interface: \n{public} functions to get/set data.
+  \item Implementation: data members, keep \indextermtt{private},
+  \item Interface: \indextermtt{public} functions to get/set data.
   \item Protect yourself against inadvertant changes of object data.
   \item Possible to change implementation without rewriting calling code.
   \end{itemize}
@@ -208,7 +209,7 @@ changes are allowed that maintain that relation.
 \begin{block}{Private access gone wrong}
   \label{sl:privatenogood}
   We make a class for points on the unit circle\\
-  You don't want to be able to change just one of \n{x,y}!
+  You don't want to be able to change just one of \lstinline{x,y}!
   %
   \verbatimsnippet{unitpointdef}
   %
@@ -216,8 +217,8 @@ changes are allowed that maintain that relation.
 \end{block}
 
 \begin{comment}
-  In the first example above, the data members of the \n{Vector} class were
-  declared \n{public}, meaning that they are accessable from the calling
+  In the first example above, the data members of the \lstinline{Vector} class were
+  declared \lstinline{public}, meaning that they are accessable from the calling
   (main) program. While this is initially convenient for coding, it is a bad idea
   in the long term. For a variety of reasons it is good practice to
   separate interface and implementation of a class.
@@ -294,14 +295,14 @@ With the accessors, you have just seen a first example of a class
 \indextermdef{method}: a function that is only defined for objects of
 that class, and that have access to the private data of that object.
 Let's now look at more meaningful methods. For instance, for the
-\n{Vector} class you can define functions such as \n{length} and
-\n{angle}. 
+\lstinline{Vector} class you can define functions such as \lstinline{length} and
+\lstinline{angle}. 
 %
 \snippetwithoutput{pointfunc}{geom}{pointfunc}
 
 \begin{exercise}
   \label{ex:vectorclass-print}
-  Add a \n{print} function to the \n{Vector} class.
+  Add a \lstinline{print} function to the \lstinline{Vector} class.
 
   How many parameters does it need?
 \end{exercise}
@@ -312,8 +313,8 @@ private, you define an \acf{API} for the class:
 \item You are defining operations for that class; they are the only
   way to access the data of the object.
 \item The methods can use the data of the object, or alter it. All
-  data members, even when declared \n{private}, are global to the methods.
-\item  Data members declared \n{private} are not accessible from outside the
+  data members, even when declared \indextermtt{private}, are global to the methods.
+\item  Data members declared \indextermtt{private} are not accessible from outside the
   object.
 \end{itemize}
 
@@ -322,7 +323,7 @@ private, you define an \acf{API} for the class:
   \snippetwithoutput{pointfunc}{geom}{pointfunc}
   %\verbatimsnippet{pointfunc}
   We call such internal functions `methods'.\\
-  Data members, even \n{private}, are global to the methods.
+  Data members, even \lstinline{private}, are global to the methods.
 \end{slide}
 
 So far you have seen methods that use the data members of an object to
@@ -415,7 +416,7 @@ pointdefault.cxx:32:21: error: no matching function for call to
                 'Vector::Vector()'
    Vector v1(1.,2.), v2;
 \end{lstlisting}
-The problem is with \n{v2}. How is it created? We need to define two constructors:
+The problem is with \lstinline{v2}. How is it created? We need to define two constructors:
 \verbatimsnippet{pointdef1}
 \end{slide}
 
@@ -427,7 +428,7 @@ The problem is with \n{v2}. How is it created? We need to define two constructor
 
   \begin{exercise}
     \label{ex:geom:twoconstruct}
-    Write a \n{Point} class that has two constructors:
+    Write a \lstinline{Point} class that has two constructors:
     \begin{lstlisting}
       class Point {
         private:
@@ -494,7 +495,7 @@ void set_x(float v) {
   cout << "setting: " << v << endl;
   x = v; }
 \end{lstlisting}
-\item You can catch specific values: if \n{x} is always supposed to be
+\item You can catch specific values: if \lstinline{x} is always supposed to be
   positive, print an error (throw an exception) if nonpositive.
 \end{itemize}
 
@@ -508,8 +509,8 @@ same accessor for getting and setting?
 
   \snippetwithoutput{objaccessref}{object}{accessref}
   %
-  The function \n{xvalue} returns a reference to the internal
-  variable~\n{x}.
+  The function \lstinline{xvalue} returns a reference to the internal
+  variable~\lstinline{x}.
 \end{block}
 
 Of course you should only do this if you want the internal variable to
@@ -543,7 +544,7 @@ Instead of writing
 \begin{lstlisting}
 myobject.plus(anotherobject)
 \end{lstlisting}
-you can actually redefine the \n{+} operator so that
+you can actually redefine the \lstinline{+} operator so that
 \begin{lstlisting}
 myobject + anotherobject
 \end{lstlisting}
@@ -570,7 +571,7 @@ Can even redefine equals and parentheses.
 \end{block}
 
 \begin{exercise}
-  Write a \n{Fraction} class, and define the arithmetic operators on it.
+  Write a \lstinline{Fraction} class, and define the arithmetic operators on it.
 \end{exercise}
 
 \Level 2 {Functors}
@@ -592,7 +593,7 @@ Simple example:
   %
   \answerwithoutput{functortworun}{object}{functor2}
   %
-  (The \n{for_each} is part of \indextermtt{algorithm})
+  (The \lstinline{for_each} is part of \indextermtt{algorithm})
 \end{exercise}
 
 
@@ -670,7 +671,7 @@ Example:
 \begin{slide}{Destructor}
   \label{sl:class-destruct}
   \begin{itemize}
-  \item Every class \n{myclass} has a \emph{destructor} \n{~myclass}
+  \item Every class \lstinline{myclass} has a \emph{destructor} \lstinline{~myclass}
     defined by default.
   \item The default destructor does nothing:
 \begin{lstlisting}
@@ -684,7 +685,7 @@ Example:
 
 \begin{slide}{Destructor example}
   \label{sl:class-destruct-ex1}
-  Just for tracing, constructor and destructor do \n{cout}:
+  Just for tracing, constructor and destructor do \lstinline{cout}:
   %
   \verbatimsnippet{destructor}
 \end{slide}

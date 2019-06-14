@@ -28,6 +28,32 @@ bracket notation.
 
 Chapter~\ref{ch:array}.
 
+\Level 1 {Vectors from C arrays}
+
+Suppose you have to interface to a C~code that uses
+\indextermtt{malloc}.  Vectors have advantages, such as that they know
+their size, you may want to wrap these C~style arrays in a vector
+object. This is easily done using a \indextermsub{range}{constructor}:
+\begin{lstlisting}
+vector<double> x( pointer_to_first, pointer_after_last );
+\end{lstlisting}
+
+Such vectors can still be used dynamically, but this may give a memory
+leak and other possibly unwanted behavior:
+
+\snippetwithoutput{cvector1}{array}{cvector}
+
+\begin{slide}{Vectors from C arrays}
+  \label{sl:cvector}
+  Use a range constructor to make a vector from a C array:
+\begin{lstlisting}
+vector<double> x( pointer_to_first, pointer_after_last );
+\end{lstlisting}
+Note subtleties:
+%
+\snippetwithoutput{cvector1}{array}{cvector}
+\end{slide}
+
 \Level 0 {Dynamic storage}
 
 Another advantage of vectors and other containers is the \indextermdef{RAII}
@@ -43,7 +69,11 @@ double *x;
 if (something1) x = malloc(10);
 if (something2) x[0];
 \end{verbatim}
-which may give a memory error. On the other hand:
+which may give a memory error.
+Instead, declaration of the
+name and allocation of the storage are one indivisible action.
+
+On the other hand:
 \begin{lstlisting}
 vector<double> x(10);
 \end{lstlisting}

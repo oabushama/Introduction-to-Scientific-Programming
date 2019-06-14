@@ -25,7 +25,7 @@ program?
   \item \emph{binary files}\index{file!binary}, which are understandable
     to the computer, and unreadable to you.
   \end{itemize}
-  Your source file(s) is/are translated by binary by a
+  Your source file(s) is/are translated to binary by a
   \indexterm{compiler}.
 \end{block}
 
@@ -51,12 +51,10 @@ g++ -o myprogram myprogram.cxx
 which you can verbalize as `invoke the \n{g++} (or \n{icpc}) compiler,
 with output \n{myprogram}, on \n{myprogram.cxx}'.
 
-So let's do an example.
+Let's do an example.
 
 \begin{exercise}{The edit-compile-run cycle}
 \label{ex:compile-cycle}
-
-\begin{multicols}{2}
   Make a file \n{zero.cc} with the following lines:
   %
   \verbatimsnippet{nullprogc}
@@ -75,8 +73,6 @@ Run this program (it gives no output):
 \begin{verbatim}
 ./zeroprogram
 \end{verbatim}
-\end{multicols}
-
 \end{exercise}
 
 In the above program:
@@ -100,7 +96,7 @@ Add this line:
 
 Compile and run again.
 
-  (Did you indent the `hello world' line? Did you editor help you with
+  (Did you indent the `hello world' line? Did your editor help you with
   the indentation?)
 
 \end{exercise}
@@ -114,9 +110,9 @@ Compile and run again.
   \begin{itemize}
   \item \n{program.cxx} or \n{program.cc} are typical extensions for
     C++ sources.
-  \item \n{program.cpp} is also used.\\
-    (Possible confusion with `C~PreProcessor'.)
-  \item \n{program} without extension usually indicates an \indexterm{executable}.
+  \item \n{program.cpp} is also used, but there is a
+    possible confusion with `C~PreProcessor'.
+  \item Using \n{program} without extension usually indicates an \indexterm{executable}.
   \end{itemize}
 \end{block}
 
@@ -159,6 +155,8 @@ g++ -o myprogram.cxx myprogram
 then Unix will reason: `\n{myprogram.cxx} is the output, so if that
 file already exists (which, yes, it does) let's just empty it before
 we do anything else'. And you have just lost your program.
+Good thing that editors like
+\indexterm{emacs} keep a backup copy of your file.
 
 \Level 1 {C++ is a moving target}
 
@@ -169,17 +167,36 @@ The C++ language has gone through a number of standards.
   it. However, it contains many mechanisms and constructs that have
   been replaced by more elegant variants. Where these exist, the older
   variants should not be used unless there is an overwhelming need.
+  However, for many compilers this is the default.
+\item \emph{C++03}\index{C++!C++03} is a minor amendment of the 98 standard.
 \item \emph{C++11}\index{C++!C++11} is a major overhaul of the
   standard, introducing many simplifications and additions. 
 \item \emph{C++14}\index{C++!C++14} is a minor refinement of C++11.
   This book is completely based on this standard. There may be
   occasional remarks about features that are new to C++11, but many
   times they go  unremarked.
+
+  You can tell your compiler to use this standard:
+\begin{verbatim}
+icpc -std=c++14 [other options]
+\end{verbatim}
+but to save yourself a lot of typing, you can define
+\begin{verbatim}
+alias icpc='icpc -std=c++14'
+\end{verbatim}
+in your shell startup files.
+\begin{tacc}
+On the class \n{isp} machine this alias has been defined by default.
+\end{tacc}
 \item \emph{C++17}\index{C++!C++17} adds yet more goodness to
   C++. This book will use 17-specific features only sporadically.
+\item \emph{C++20/23/\ldots}\index{C++!C++20}: the C++ standars
+  committee has committed itself to releasing a new standard every
+  three years. Many features of these new standards are only for
+  advanced use or in very large scale projects.
 \end{itemize}
 
-\begin{block}{C++ versions}
+\begin{slide}{C++ versions}
   \label{sl:cpp-version}
   \begin{itemize}
   \item
@@ -189,14 +206,14 @@ The C++ language has gone through a number of standards.
   \item On \n{isp.tacc.utexas.edu} `icpc' uses this by default.
   \item On your own machine you need to do
 \begin{verbatim}
-  gcc -std=c++14 [other options]
+  icpc -std=c++14 [other options]
 \end{verbatim}
 or
 \begin{verbatim}
-  alias gcc='gcc -std=c++14'
+  alias icpc='icpc -std=c++14'
 \end{verbatim}
   \end{itemize}
-\end{block}
+\end{slide}
 
 \Level 0 {Statements}
 \label{sec:statements}
@@ -249,8 +266,8 @@ cout << /* we are now going
   \item \emph{Syntax}\index{error!syntax} or
     \emph{compile-time}\index{error!compile-time} errors: these arise
     if what you write is not according to the language specification.
-    The compiler catches these errors, and it refuses to produce an
-    \indexterm{executable}.
+    The compiler catches these errors, and it refuses to produce a
+    \indextermsub{binary}{file}.
   \item \emph{Run-time}\index{error!run-time} errors: these arise if
     your code is syntactically correct, and the compiler has produced
     an executable, but the program does not behave the way you
@@ -354,13 +371,14 @@ variable may contain random memory contents.
   \label{sl:varname}
   \begin{itemize}
   \item
-    A variable name has to start with a letter,
-  \item can contains letters and  digits, but not most
-    special characters (except for the underscore).
+    A variable name has to start with a letter;
+  \item a name can contains letters and  digits, but not most
+    special characters, except for the underscore.
   \item For letters it matters
     whether you use upper or lowercase: the language is \indexterm{case sensitive}.
-  \item Words such as \n{main} or \n{cout} are \indexterm{reserved words}.
-  \item Usually \n{i} and \n{j} are not the best variable names.
+  \item Words such as \n{main} or \n{return} are \indexterm{reserved words}.
+  \item Usually \n{i} and \n{j} are not the best variable names: use
+    \n{row} and \n{column} instead.
   \end{itemize}
 \end{block}
 
@@ -399,13 +417,20 @@ double re_part,im_part;
 
 \Level 1 {Initialization}
 
+It is a possible to give a variable a value right when it's
+created. This is known as
+\emph{initialization}\index{variable!initialization} and it's
+different from creating the variable and later assigning to it
+(section~\ref{c:assign}).
+
 \begin{block}{Initialization syntax}
-  There are two ways of initializing a variable\index{variable!initialization}:
+  \label{sl:init-var}
+  There are two ways of initializing a variable
   \begin{lstlisting}
     int i = 5;
     int j{6};
   \end{lstlisting}
-  Writing 
+  Note that writing 
   \begin{lstlisting}
     int i;
     i = 7;
@@ -419,6 +444,7 @@ double re_part,im_part;
 \end{block}
 
 \Level 1 {Datatypes}
+\label{sec:ctypes}
 
 \begin{block}{Datatypes}
   \label{sl:datatypes}
@@ -440,7 +466,7 @@ For complex numbers see section~\ref{sec:stl-complex}.
 For strings see chapter~\ref{ch:string}.
 
 \Level 1 {Assignments}
-\label{sec:ctypes}
+\label{c:assign}
 
 Setting a variable
 \begin{lstlisting}
@@ -496,7 +522,7 @@ Integer add/subtract one:
 
 \begin{exercise}
   \label{q:assign}
-  Which of the following are legal?
+  Which of the following are legal? If they are, what is their meaning?
   \begin{enumerate}
   \item \n{n = n;}
   \item \n{n = 2n;}
@@ -506,20 +532,6 @@ Integer add/subtract one:
   \item \n{n /= k;}
   \end{enumerate}
 \end{exercise}
-
-\begin{block}{Initialization}
-  \label{sl:init-var}
-  You can also give a variable a value a in
-  \indextermbus{variable}{initialization}. Confusingly, there are
-  several ways of doing that. Here's two:
-\begin{lstlisting}
-int n = 0;
-double x = 5.3, y = 6.7;
-double pi{3.14};
-\end{lstlisting}
-  Do not use uninitialized variables! Doing so is legal, but there is
-  no guarantee about the initial value. Do not count on it being zero\ldots
-\end{block}
 
 \begin{exercise}
   \label{ex:print-variables}
@@ -589,11 +601,11 @@ float one = 1.;
 \end{lstlisting}
 and
   \begin{enumerate}
-  \item Read a \n{float eps},
-  \item Make a new variable that has the value \n{one+eps}. Print
+  \item Read a \lstinline{float eps},
+  \item Make a new variable that has the value \lstinline{one+eps}. Print
     this.
-  \item Make another variable that is the previous one mine
-    \n{one}. Print the result again.
+  \item Make another variable that is the previous one minus
+    \lstinline{one}. Print the result again.
   \item Test your program with a range of inputs. Are there ones that
     surprise you?  
   \end{enumerate}
@@ -628,12 +640,12 @@ becomes either:
 \begin{itemize}
 \item \indextermtt{Inf}: infinity. This happens if you add or multiply
   enough large numbers together. There is of course also a value
-  \n{-inf}. Or:
+  \n{-}\indextermtt{Inf}. Or:
 \item \indextermtt{NaN}: not a number. This happens if you subtract
-  one \n{inf} from another, or do things such as taking the
+  one \lstinline{Inf} from another, or do things such as taking the
   root of a negative number.
 \end{itemize}
-Your program will not be interrupted if a \n{nan} or \n{inf} is
+Your program will not be interrupted if a \lstinline{NaN} or \lstinline{Inf} is
 generated: the computation will merrily (and at full speed) progress
 with these numbers. See section~\ref{sec:limits} for detection of such quantities.
 
@@ -673,7 +685,7 @@ using std::string;
 \begin{lstlisting}
 string name;
 \end{lstlisting}
-\item And you can now \n{cin} and \n{cout} them.
+\item And you can now \lstinline{cin} and \lstinline{cout} them.
   \end{itemize}
 \end{block}
 
@@ -704,7 +716,7 @@ cout << "Here is the root: " << sqrt(x) << endl;
 
 \begin{block}{Terminal input}
   \label{sl:cin}
-  There is also a \indexterm{cin}, which serves to take user input and
+  There is also a \lstinline{cin}, which serves to take user input and
   put it in a numerical variable.
 \begin{lstlisting}
 // add at the top of your program:
@@ -714,7 +726,7 @@ using std::cin;
 int i;
 cin >> i;
 \end{lstlisting}
-There is also \n{getline}, which is more general.
+There is also \lstinline{getline}, which is more general.
 \end{block}
 
 \begin{exercise}
@@ -722,7 +734,7 @@ There is also \n{getline}, which is more general.
   Write a program that :
   \begin{itemize}
   \item displays the message \n{Type a number},
-  \item accepts an integer number from you (use~\n{cin}),
+  \item accepts an integer number from you (use~\lstinline{cin}),
   \item makes another variable that is three times that integer plus one,
   \item and then prints out the second variable.
   \end{itemize}
@@ -756,9 +768,9 @@ long ell = 42L;
 \begin{block}{Floating point constants}
   \label{sl:float-vars}
   \begin{itemize}
-  \item Default: \n{double}
-  \item Float: \n{3.14f} or \n{3.14F}
-  \item Long double: \n{1.22l} or \n{1.22L}.
+  \item Default: \lstinline{double}
+  \item Float: \lstinline{3.14f} or \lstinline{3.14F}
+  \item Long double: \lstinline{1.22l} or \n{1.22L}.
   \end{itemize}
   This prevents numerical accidents: 
 \begin{lstlisting}

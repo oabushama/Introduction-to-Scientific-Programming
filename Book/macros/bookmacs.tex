@@ -155,11 +155,16 @@
   }
   {\endgroup}
 
-\renewenvironment{frame}[2][keyword]
-                 {\textsl{#2}\par
-                   \begingroup \raggedright \leftskip=.5\unitindent
-                 }
-                 {\endgroup}
+\renewenvironment
+    {frame}[2][keyword]
+    {\dimen0=\parskip
+      \begin{quote}
+        \leftskip=.5\unitindent
+        \parskip=.5\dimen0 plus .1\dimen0
+        \leavevmode \noindent \hbox{\hskip-\unitindent \textsl{#2}}\par
+        \raggedright %\leftskip=.5\unitindent
+    }
+    {\end{quote}}
 \newenvironment{cnote}{\begin{quotation}\noindent\emph{C difference:\ }}{\end{quotation}}
 \newenvironment{f77note}{\begin{quotation}\noindent\emph{F77 note:\ }}{\end{quotation}}
 \newenvironment{advanced}{\begin{quotation}\noindent\emph{Advanced note:\ }}{\end{quotation}}
@@ -240,16 +245,11 @@
   \catcode`\&=12 \catcode`\^=12 \catcode`\~=12
 }
 
-{ \catcode`\_=13
-  \gdef\indexmpishow#{\bgroup \innocentcharacters
-    \catcode`\_=13 \def_{\char95\discretionary{}{}{}}
-    \def\\{\char`\\}\relax
-    \tt \afterassignment\mpitoindex\edef\indexedmpi}
-  \gdef\indexmpidef#{\bgroup \innocentcharacters
-    \catcode`\_=13 \def_{\char95\discretionary{}{}{}}
-    \def\\{\char`\\}\relax
-    \tt \afterassignment\mpitoindexbf\edef\indexedmpi}
+\newcommand{\indexpragma}[1]{%
+  \n{\##1}\index{\#pragma #1@{\texttt{\##1}}}%
+  \index{#1@{\texttt{#1}}|see{\texttt{\#pragma #1}}}%
 }
+
 %\tracingmacros=2 \tracingcommands=2
 \def\indextermtt#{\bgroup \innocentcharacters 
   \afterassignment\mpitoindex\edef\indexedmpi}
@@ -294,7 +294,6 @@
   \egroup
 }
 
-\makeatletter
 \newcommand\indexac[1]{\emph{\ac{#1}}%
   \edef\tmp{\noexpand\index{%
     \expandafter\expandafter\expandafter
@@ -320,7 +319,11 @@
     \expandafter\expandafter\expandafter
         \@secondoftwo\csname fn@#1\endcsname
     @\acl{#1} (#1)|)}}\tmp}
-\makeatother
+\newcommand\indexacdef[1]{\emph{\ac{#1}}%
+  \edef\tmp{\noexpand\index{%
+    \expandafter\expandafter\expandafter
+        \@secondoftwo\csname fn@#1\endcsname%
+    @\acl{#1} (#1)}|textbf}\tmp}
 
 \newenvironment{exercises}{\begin{enumerate}}{\end{enumerate}}
 \newcommand{\project}{\item[Project]}
@@ -328,10 +331,8 @@
 
 \newcounter{excounter}[chapter]
 \newcounter{revcounter}[chapter]
-\makeatletter
 \renewcommand\theexcounter{\@arabic\c@chapter.\@arabic\c@excounter}
 \renewcommand\therevcounter{\@arabic\c@chapter.\@arabic\c@revcounter}
-\makeatother
 
 \newcommand\exercisenumber{\arabic{chapter}.\arabic{excounter}}
 \generalcomment{exercise}
@@ -367,7 +368,6 @@
 \newif\ifIncludeAnswers
 \input qa
 
-\makeatletter
 \generalcomment{answer}
   {\begingroup
    \edef\tmp{\def\noexpand\CommentCutFile
@@ -382,7 +382,6 @@
    \input{\CommentCutFile}
    \end{sl}\fi
    \endgroup}
-\makeatother
 
 \newenvironment{exerciseB}[1]
   {\par
@@ -392,5 +391,7 @@
   }
   {\par}
 
+
+\makeatother
 
 \input acmacs

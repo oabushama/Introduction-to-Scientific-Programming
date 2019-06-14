@@ -198,13 +198,40 @@ The solution to the above `a~number or an error' now becomes:
 
 \Level 1 {Optional}
 
-\begin{block}{Optional results}
+The most elegant solution to `a~number or an error' is to have a
+single quantity that you can query whether it's valid.
+This can be done through \lstinline{std::}\indextermtt{optional}:
+\begin{lstlisting}
+#include <optional>
+using std::optional;
+\end{lstlisting}
+
+\begin{itemize}
+\item You can create an optional quantity with a function that returns
+  either a value of the indicated type, or \verb+{}+:
+\begin{lstlisting}
+optional<float> f {
+  if (something) return 3.14;
+  else return {};
+}
+\end{lstlisting}
+\item You can test whether the optional quantity has a quantity with
+  \indextermtt{has_value}, in which case you can extract the quantity
+  with \indextermtt{value}:
+\begin{lstlisting}
+auto maybe_x = f();
+if (f.has_value)
+  // do something with f.value();
+\end{lstlisting}
+\end{itemize}
+
+\begin{slide}{Optional results}
   \label{sl:optional-root}
   The most elegant solution to `a~number or an error' is to have a
   single quantity that you can query whether it's valid.
   %
   \verbatimsnippet{mayberootptr}
-\end{block}
+\end{slide}
 
 \Level 0 {Algorithms}
 
