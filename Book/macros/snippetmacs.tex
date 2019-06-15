@@ -85,6 +85,21 @@
   %\hbox{}\kern-20pt\hbox{} % 1.5\baselineskip
 }
 
+\newcommand\snippetwithoutput[4][]{
+  %\message{snippet <<#1>> <<#2>> <<#3>> <<#4>>}
+  %\tracingmacros=2 \tracingcommands=2
+  \answerwithoutput{#2}{#3}{#4}
+  \ifthenelse{\isempty{#1}}
+             {\def\snippetfilename{#4}}
+             {\def\snippetfilename{#1}}
+  % record this file as bracketed name
+  \ifInBook
+  \nobreak
+  \textsl{For the source of this example, see section~\ref{lst:#3/\snippetfilename}}\par
+  \addchaptersource{{#3/\snippetfilename}}
+  \fi
+}
+\iffalse
 \newcommand\snippetwithoutput[3]{
   \answerwithoutput{#1}{#2}{#3}
   % record this file as bracketed name
@@ -94,6 +109,7 @@
   \addchaptersource{{#2/#3}}
   \fi
 }
+\fi
 
 
 \newcommand{\answerwitherror}[3]{

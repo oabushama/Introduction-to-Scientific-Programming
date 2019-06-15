@@ -145,13 +145,13 @@
   {\refstepcounter{frcounter}%
     \begingroup
     \def\ProcessCutFile{}\par
+    \edef\tmp{\def\noexpand\CommentCutFile
+      {frames/\chapshortname-block-\arabic{frcounter}.tex}}\tmp
     \def\PrepareCutFile{\immediate\write\CommentStream
       {\noexpand\begin{frame}[containsverbatim]{\CommentBlockName}
         \noexpand\par\noexpand\nobreak}}%
     \def\FinalizeCutFile{\immediate\write\CommentStream
       {\noexpand\end{frame}}}%
-    \edef\tmp{\def\noexpand\CommentCutFile
-      {frames/\chapshortname-block-\arabic{frcounter}.tex}}\tmp
   }
   {\endgroup}
 
@@ -335,20 +335,23 @@
 \renewcommand\therevcounter{\@arabic\c@chapter.\@arabic\c@revcounter}
 
 \newcommand\exercisenumber{\arabic{chapter}.\arabic{excounter}}
+\makeatletter
 \generalcomment{exercise}
   {\refstepcounter{excounter}%
    \begingroup\def\ProcessCutFile{}\par
+   \edef\@currentlabel{\exercisenumber}%
    \edef\tmp{\def\noexpand\CommentCutFile
                  {exercises/\chapshortname-ex\arabic{excounter}.tex}}\tmp
    }
   {\begin{quote}
+      %\tracingmacros=2 \tracingcommands=2
    \leavevmode
-   \hbox{\kern-\unitindent 
-         \textbf Exercise \exercisenumber.\hspace{1em}}%
-     \ignorespaces
+   \hbox{\kern-\unitindent \textbf Exercise \exercisenumber.\hspace{1em}}%
+   \ignorespaces
    \input{\CommentCutFile}
    \end{quote}
    \endgroup}
+\makeatother
 \newcommand\reviewnumber{\arabic{chapter}.\arabic{revcounter}}
 \generalcomment{review}
   {\refstepcounter{revcounter}%
