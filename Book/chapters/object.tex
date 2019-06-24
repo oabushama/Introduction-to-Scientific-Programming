@@ -37,7 +37,7 @@ to give a new level of abstraction:
 \begin{block}{Objects and classes}
   \label{label:class-def}
   An object is a particular instance of a \indextermdef{class} of
-  similar objects, see you need a \indextermbus{class}{definition},
+  similar objects, so you need a \indextermbus{class}{definition},
   after which you define objects of that class.
 \end{block}
 
@@ -114,12 +114,24 @@ shows the constructor and the data members:
   \item Keyword \indextermtt{private} indicates that data is internal
   \item keyword \indextermtt{public} indicates that the constructor
     function can be used in the program.
-  \item Initialization \lstinline{x(x)} should be read as
-    \begin{quotation}
-      \hbox{\sl membername(argumentname)}
-    \end{quotation}
+  \item The initialization \lstinline{x(x)} is a
+    \indextermbus{member}{initializer list}; it should be read as
+    \lstinline{membername(argumentname)}.
     Yes, having \lstinline{x} twice is a little confusing.
   \end{itemize}
+\end{block}
+
+\begin{block}{Initialization}
+  \label{sl:init-no-list}
+\begin{lstlisting}
+Vector( float x,float y )
+  : x(x),y(y) {};
+\end{lstlisting}
+or
+\begin{lstlisting}
+Vector( float xx,float yy ) {
+  x = xx; y = yy; };
+\end{lstlisting}
 \end{block}
 
 \begin{comment}
@@ -131,7 +143,7 @@ shows the constructor and the data members:
 \Level 1 {Methods}
 
 Methods are things you can ask your class objects to do. For instance,
-in the \lstinline{Vector} class, you could ask a vector what it's length is,
+in the \lstinline{Vector} class, you could ask a vector what its length is,
 or you could ask it to scale its length by some number.
 
 \begin{block}{Class methods}
@@ -291,9 +303,9 @@ public:
 
 \Level 1 {Methods}
 
-With the accessors, you have just seen a first example of a class
-\indextermdef{method}: a function that is only defined for objects of
-that class, and that have access to the private data of that object.
+You have just seen examples of class
+\indextermdef{method}s: a function that is only defined for objects of
+that class, and that has access to the private data of that object.
 Let's now look at more meaningful methods. For instance, for the
 \lstinline{Vector} class you can define functions such as \lstinline{length} and
 \lstinline{angle}. 
@@ -336,43 +348,6 @@ For instance, you may want to scale a vector by some amount:
   \label{sl:obj-func-on}
   \snippetwithoutput{pointscaleby}{geom}{pointscaleby}
 \end{slide}
-
-\begin{block}{Direct alteration of internals}
-  \label{sl:obj-return-ref}
-  Return a reference to a private member:
-\begin{lstlisting}
-class Vector {
-private:
-  double vx,vy;
-public:
-  double &x() { return vx; };
-};
-int main() {
-  Vector v;
-  v.x() = 3.1;
-}
-\end{lstlisting}
-\end{block}
-
-\begin{block}{Reference to internals}
-  \label{sl:obj-return-const-ref}
-  Returning a reference saves you on copying.\\
-  Prevent unwanted changes by using a `const reference'.
-\begin{lstlisting}
-class Grid {
-private:
-  vector<Point> thepoints;
-public:
-  const vector<Point> &points() {
-    return thepoints; };
-};
-int main() {
-  Grid grid;
-  cout << grid.points()[0];
-  // grid.points()[0] = whatever ILLEGAL
-}
-\end{lstlisting}
-\end{block}
 
 The methods you have seen so far only returned elementary
 datatypes. It is also possible to return an object, even from the same
@@ -460,10 +435,54 @@ The problem is with \lstinline{v2}. How is it created? We need to define two con
   now is a good time to do exercise~\ref{ex:prime:sequence}.
 \end{exercise}
 
-\Level 1 {Advanced topics}
+% {Relations between classes}
+%\SetBaseLevel 1
+\input inheritance
+%\SetBaseLevel 0
+
+\Level 0 {Advanced topics}
 
 \emph{The remainder of this section is advanced material. Make sure
   you have studied section~\ref{sec:class-ref}.}
+
+\Level 2 {Returning by reference}
+
+\begin{block}{Direct alteration of internals}
+  \label{sl:obj-return-ref}
+  Return a reference to a private member:
+\begin{lstlisting}
+class Vector {
+private:
+  double vx,vy;
+public:
+  double &x() { return vx; };
+};
+int main() {
+  Vector v;
+  v.x() = 3.1;
+}
+\end{lstlisting}
+\end{block}
+
+\begin{block}{Reference to internals}
+  \label{sl:obj-return-const-ref}
+  Returning a reference saves you on copying.\\
+  Prevent unwanted changes by using a `const reference'.
+\begin{lstlisting}
+class Grid {
+private:
+  vector<Point> thepoints;
+public:
+  const vector<Point> &points() {
+    return thepoints; };
+};
+int main() {
+  Grid grid;
+  cout << grid.points()[0];
+  // grid.points()[0] = whatever ILLEGAL
+}
+\end{lstlisting}
+\end{block}
 
 \Level 2 {Accessor functions}
 
@@ -533,6 +552,8 @@ be directly changable!
     section~\ref{sec:derive-method}).
   \end{itemize}
 \end{block}
+
+\Level 2 {Polymorphism}
 
 You can have multiple methods with the same name, as long as they can
 be distinguished by their argument types. This is known as \indexterm{polymorphism}.
@@ -719,11 +740,6 @@ used as
   %
   \snippetwithoutput{exceptdestruct}{object}{exceptdestruct}
 \end{block}
-
-% {Relations between classes}
-%\SetBaseLevel 1
-\input inheritance
-%\SetBaseLevel 0
 
 \Level 2 {`this' pointer}
 

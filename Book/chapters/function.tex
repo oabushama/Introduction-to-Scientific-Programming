@@ -55,24 +55,29 @@ There are two sides to a function:
 \item
   The \indextermbus{function}{definition} is done once, typically
   above the main program;
-\item \indextermbus{function}{call}s can happen multiple times, inside
-  the main or inside other functions.
+\item a \indextermbus{function}{call} to any function can happen
+  multiple times, inside the main or inside other functions.
 \end{itemize}
 
 \begin{block}{Function definition and call}
   \label{sl:def-call}
+Everything in the main:
   \begin{multicols}{2}
 \begin{lstlisting}
-for (int i=0; i<N; i++) {
-  cout << i;
-  if (i%2==0)
-    cout << " is even";
-  else
-    cout << " is odd";
-  cout << endl;
+int main() {
+  for (int i=0; i<N; i++) {
+    cout << i;
+    if (i%2==0)
+      cout << " is even";
+    else
+      cout << " is odd";
+    cout << endl;
+  }
 }
 \end{lstlisting}
-\columnbreak
+  \end{multicols}
+Function used in main:
+  \begin{multicols}{2}
 \begin{lstlisting}
 void report_evenness(int n) {
   cout << n;
@@ -110,7 +115,7 @@ In this example, the function definition consists of:
 The \indextermbus{function}{call} consists of
 \begin{itemize}
 \item The name of the function, and
-\item In between parentheses, the value of the input argument.
+\item In between parentheses, any input argument(s).
 \end{itemize}
 
 In the previous example, the function had an input, and performed some
@@ -137,7 +142,7 @@ Here is a program with a function that doubles its input:
 
 The C++ \emph{compiler} translates your code in
 \emph{one pass}\index{compiler!one pass}: it goes from top to
-bottom throgh your code. This means you can not make reference to
+bottom through your code. This means you can not make reference to
 anything, like a function name, that you haven't defined yet.
 This is why above we said that the function definition has to come
 before the main program.
@@ -159,7 +164,7 @@ int my_computation(int i) {
    return i+3;
 }
 \end{lstlisting}
-Such a function declaration is normally called a
+The line above the main program is called a
 \indextermbus{function}{header} or
 \indextermbus{function}{prototype}. See chapter~\ref{ch:proto} for
 more details.
@@ -325,6 +330,8 @@ The function can then be used in the main program, or in another function:
   \end{enumerate}
 \end{block}
 
+\Level 1 {Examples}
+
 \begin{block}{Functions without input, without return result}
   \label{sl:func-ex1}
 \begin{lstlisting}
@@ -416,11 +423,12 @@ the sequence of factorials $n\mapsto f_n\equiv n!$ can be defined as
 \[ f_0=1,\qquad \forall_{n>0}\colon f_n=n\times f_{n-1}. \]
 Instead of using a subscript, we write an argument in parentheses
 \[ F(n) = n \times F(n-1) \qquad \hbox{if $n>0$, otherwise~$1$} \]
-and now it looks like a C++ function:
+This is a form that can be translated into a C++ function.
+The header of a factorial function can look like:
 \begin{lstlisting}
 int factorial(int n)
 \end{lstlisting}
-is the function header of a factorial function. So what would the
+So what would the
 function body be? We need a \n{return} statement, and what we return
 should be $n \times F(n-1)$:
 \begin{lstlisting}

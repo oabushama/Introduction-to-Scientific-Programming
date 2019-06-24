@@ -11,7 +11,8 @@
 
 C++~functions resemble mathematical functions: you have seen that a
 function can have an input and an output. In fact, they can have
-multiple inputs, separated by commas, but they have only one output.
+multiple inputs, separated by commas, but they have only one
+output\footnote{Unless you use more sophisticated mechanisms.}.
 
 We start by studying functions that look like these mathematical
 functions. They involve a \indextermbus{parameter}{passing} mechanism
@@ -234,8 +235,12 @@ swapij(i,j);
 
 \begin{exercise}
   \label{ex:div-remain}
-  Write a \n{bool} function that tests divisibility and returns a
-  remainder:
+  Write a divisibility function that takes a number and a divisor, and gives:
+  \begin{itemize}
+  \item a \n{bool} return result indicating that the number is
+    divisible, and
+  \item a remainder as output parameter.
+  \end{itemize}
 
 {\small
 \begin{lstlisting}
