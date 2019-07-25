@@ -30,15 +30,27 @@ int tester(float);
   A first use of prototypes is \indexterm{forward declaration}.
 
   Some people like defining functions after the main:
+\begin{multicols}{2}
 \begin{lstlisting}
-int f(int);
-int main() {
-  f(5);
-};
+  int f(int);
+  int main() {
+    f(5);
+  };
+  int f(int i) {
+    return i;
+  }
+\end{lstlisting}
+\columnbreak
+versus before:
+\begin{lstlisting}
 int f(int i) {
   return i;
 }
+int main() {
+  f(5);
+};
 \end{lstlisting}
+\end{multicols}
 \end{block}
 
 \begin{block}{Prototypes and forward declarations, 2}
@@ -53,19 +65,57 @@ int f(int i) { return g(i); }
 
 Prototypes are useful if you spread your program over multiple
 files. You would put your functions in one file
-and the main program in another. Splitting your code over multiple
-files is good software engineering practice for a number of
-reasons. For instance, it decreases compilation
-time: if you make a small change, only that file needs to be recompiled.
+and the main program in another.
+
+\begin{multicols}{2}  
+\begin{lstlisting}
+// file: def.cxx
+int tester(float x) {
+  .....
+}
+\end{lstlisting}
+\vfill\columnbreak
+\begin{lstlisting}
+// file : main.cxx
+int main() {
+  int t = tester(...);
+  return 0;
+}
+\end{lstlisting}
+\end{multicols}
 
 In this example a function \n{tester}
 is defined in a different file from the main program, so we need to
 tell \n{main} what the function looks like in order for the main
 program to be compilable:
 
-\begin{block}{Prototypes for separate compilation}
-  \label{sl:separate-proto}
-  \begin{multicols}{2}  
+\begin{lstlisting}
+// file : main.cxx
+int tester(float);
+int main() {
+  int t = tester(...);
+  return 0;
+}
+\end{lstlisting}
+
+Splitting your code over multiple
+files and using
+\indextermsub{separate}{compilation} 
+is good software engineering practice for a number of
+reasons. 
+\begin{enumerate}
+\item If your code gets large, compiling only the necessary files cuts
+  down on compilation time.
+\item Your functions may be useful in other projects, by yourself or
+  others, so you can reuse the code without cutting and pasting it
+  between projects.
+\item It makes it easier to search through a file without being
+  distracted by unrelated bits of code.
+\end{enumerate}
+
+\begin{slide}{Prototypes for separate compilation}
+\label{sl:separate-proto}
+\begin{multicols}{2}  
 \begin{lstlisting}
 // file: def.cxx
 int tester(float x) {
@@ -82,26 +132,14 @@ int main() {
   return 0;
 }
 \end{lstlisting}
-  \end{multicols}
-\end{block}
+\end{multicols}
+\end{slide}
 
-(However, you would not do things like this in practice. See the next
-section about header files.)
+(However, you would not do things like this in practice. See 
+section~\ref{sec:headerfile} about header files.)
 
 \Level 1 {Separate compilation}
 \index{object file|see{file, object}}
-
-Breaking your code in multiple files and using
-\indextermsub{separate}{compilation} has several advantages.
-\begin{enumerate}
-\item If your code gets large, compiling only the necessary files cuts
-  down on compilation time.
-\item Your functions may be useful in other projects, by yourself or
-  others, so you can reuse the code without cutting and pasting it
-  between projects.
-\item It makes it easier to search through a file without being
-  distracted by unrelated bits of code.
-\end{enumerate}
 
 \begin{block}{Compiling and linking}
   \label{sl:compile-link}
@@ -144,6 +182,7 @@ At this point, you should learn about the \indexterm{Make} tool for
 managing your programming project.
 
 \Level 1 {Header files}
+\label{sec:headerfile}
 \label{sec:hfile}
 
 Even better than writing the prototype every time you need the

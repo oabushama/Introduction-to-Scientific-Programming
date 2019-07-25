@@ -10,11 +10,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The term pointer is used to denote a reference to a quantity.  This
-chapter will explain pointers, and give some uses for them.  If you
-don't already speak~C, skip to the first subsection.
+chapter will explain pointers, and give some uses for them.
 
-If you do
-already know~C, we remark that there is less need for pointers in C++
+We remark that there is less need for pointers in C++
 than there was in~C.
 
 \begin{itemize}
@@ -22,9 +20,9 @@ than there was in~C.
   \emph{by reference}\index{parameter!passing!by reference},
   use a \emph{reference}\index{reference!argument}.
   Section~\ref{sec:passing}.
-\item Strings are done through \n{std::string}, not character arrays;
+\item Strings are done through \lstinline{std::string}, not character arrays;
   see~\ref{ch:string}.
-\item Arrays can largely be done through \n{std::vector}, rather than
+\item Arrays can largely be done through \lstinline{std::vector}, rather than
   \indextermtt{malloc}; see~\ref{ch:array}.
 \item Traversing arrays and vectors can be done with ranges;
   section~\ref{sec:arrayrange}.
@@ -43,9 +41,9 @@ Legitimate needs:
 
 \begin{block}{Members from pointer}
   \begin{itemize}
-  \item If \n{x} is object with member~\n{y}:\\ \n{x.y}
-  \item If \n{xx} is pointer to object with member~\n{y}:\\ \n{xx->y}
-  \item In class methods \n{this} is a pointer to the object, so:
+  \item If \lstinline{x} is object with member~\lstinline{y}:\\ \lstinline{x.y}
+  \item If \lstinline{xx} is pointer to object with member~\lstinline{y}:\\ \lstinline{xx->y}
+  \item In class methods \lstinline{this} is a pointer to the object, so:
 \begin{lstlisting}
 class x {
   int y;
@@ -63,10 +61,10 @@ class x {
 
 Smart pointers are used the same way as old-style pointers in~C.
 If you have an
-object \n{Obj X} with a member \n{y}, you access that with \n{X.y}; if you
-have a pointer~\n{X} to such an object, you write \n{X->y}.
+object \lstinline{Obj X} with a member \lstinline{y}, you access that with \lstinline{X.y}; if you
+have a pointer~\lstinline{X} to such an object, you write \lstinline{X->y}.
 
-So what is the type of this latter~\n{X} and how did you create it?
+So what is the type of this latter~\lstinline{X} and how did you create it?
 
 \begin{block}{Creating a shared pointer}
   \label{sl:make-shared}
@@ -107,8 +105,8 @@ auto x = make_shared<vector<double>>(vector<double>{1.1,2.2});
 \Level 1 {Pointers and arrays}
 
 \begin{slide}{Shared pointers for arrays}
-This offers a safer version of \n{new}. But you should use a
-\n{vector} anyway:
+This offers a safer version of \lstinline{new}. But you should use a
+\lstinline{vector} anyway:
 \begin{lstlisting}
 shared_ptr<myobject> obj_ptr
     = make_shared<myobject>(x);
@@ -125,7 +123,7 @@ array->at(2) = 3.15;
 \begin{block}{Linked lists}
   \label{sl:linkedlistimpl}
   The prototypical example use of pointers is in linked lists. Let a
-  class \n{Node} be given:
+  class \lstinline{Node} be given:
   %
   \begin{multicols}{2}
     \verbatimsnippet{simplenodeimpl}
@@ -151,7 +149,7 @@ array->at(2) = 3.15;
 
 \begin{exercise}
   \label{ex:linkedlist1}
-  Write a recursive \n{append} method that appends a node to the end
+  Write a recursive \lstinline{append} method that appends a node to the end
   of a list:
   %
   \answerwithoutput{linkappend}{tree}{append}
@@ -159,7 +157,7 @@ array->at(2) = 3.15;
 
 \begin{exercise}
   \label{ex:linkedlist2}
-  Write a recursive \n{insert} method that inserts a node in a list, such that
+  Write a recursive \lstinline{insert} method that inserts a node in a list, such that
   the list stays sorted:
   %
   \answerwithoutput{linkinsert}{tree}{insert}
@@ -181,7 +179,7 @@ array->at(2) = 3.15;
 \begin{block}{Pointers don't go with addresses}
   \label{sl:shareaddress}
 
-  The oldstyle \n{&y} address pointer can not be made smart:
+  The oldstyle \lstinline{&y} address pointer can not be made smart:
   %
   \verbatimsnippet{shareaddress}
   %
@@ -285,7 +283,7 @@ Inside an object method, the object is accessible as
 if you want to refer to `this' but you need a shared pointer?
 
 For instance, suppose you're writing a linked list code, and your
-\n{node} class has a method \n{prepend_or_append} that gives a shared
+\lstinline{node} class has a method \lstinline{prepend_or_append} that gives a shared
 pointer to the new head of the list.
 
 \begin{slide}{Linked list code}

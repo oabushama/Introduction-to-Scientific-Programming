@@ -101,6 +101,13 @@ However, an \indextermtt{iterator} can be used outside of strictly iterating.
   (Note: the \n{auto} actually stands for \n{vector::iterator})
 \end{block}
 
+Note that the star notation is an operator, no a
+\indextermbus{pointer}{dereference}:
+%
+\verbatimsnippet{iterderef}
+
+\Level 2 {Vector methods using iterators}
+
 Vector methods such as \indextermtt{erase} and \indextermtt{insert} use
 these iterators:
 \begin{block}{Iterators in vector methods}
@@ -108,17 +115,19 @@ these iterators:
   Methods \n{erase} and \n{insert} indicate their range with begin/end
   iterators
   %
-  \snippetwithoutput{vecerase}{stl}{erase}
+  \snippetwithoutput[iter]{vecerase}{stl}{erase}
   %
   Note: end is exclusive.
 \end{block}
+
+\Level 2 {Algorithms using iterators}
 
 Numerical \emph{reductions}\index{reduction} can be applied using iterators:
 \begin{block}{Reduction operation}
   \label{sl:vec-accumulate}
   Default is sum reduction:
   %
-  \snippetwithoutput{vecaccumulate}{stl}{accumulate}
+  \snippetwithoutput[reduce]{vecaccumulate}{stl}{accumulate}
   %
 \end{block}
 
@@ -126,8 +135,16 @@ Numerical \emph{reductions}\index{reduction} can be applied using iterators:
   \label{sl:vec-multiplies}
   Supply multiply operator:
   %
-  \snippetwithoutput{vecproduct}{stl}{product}  
+  \snippetwithoutput[reduce]{vecproduct}{stl}{product}  
 \end{block}
+
+\Level 2 {Forming sub-arrays}
+
+Iterators can be used to construct a \indextermtt{vector}. This can
+for instance be used to create a
+\emph{subvector}\index{vector!subvector}:
+%
+\snippetwithoutput[iter]{subvector}{iter}{subvector}
 
 \Level 0 {Union-like stuff: tuples, optionals, variants}
 
@@ -234,12 +251,23 @@ if (f.has_value)
 \end{slide}
 
 \Level 0 {Algorithms}
+\label{sec:algorithm}
 
 Many simple algorithms on arrays, testing `there is' or `for all', no
-longer have to be coded out in~C++. It is enough to specify the
-iteratable object and the test. Actually, you have to specify a start
-and end iterator, rather than the object. For things like
-\n{std::vector}:
+longer have to be coded out in~C++. They can now be done with a single
+function from \lstinline{std::}\indextermttdef{algorithm}.
+\begin{itemize}
+\item Test if any element satisfies a condition:
+  \indextermttdef{any_of}
+\item Test if all elements satisfy a condition:
+  \indextermttdef{all_of}
+\item Apply an operation to all elements: \indextermttdef{for_each}.
+\end{itemize}
+
+The object to which the function applies is not specified directly; 
+rather, you have to specify a start
+and end iterator. An examples applied to a 
+\lstinline{std::vector}:
 %
 \snippetwithoutput{printeach}{stl}{printeach}
 

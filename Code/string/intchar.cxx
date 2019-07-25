@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2018 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2018/9 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** intchar.cxx : int/char equivalence
  ****
@@ -29,7 +29,7 @@ int main() {
   char why = y_num;
   cout << "x is at position " << x_num
        << endl;
-  cout << "; one further lies " << why
+  cout << "one further lies " << why
        << endl;
   //codesnippet end
 

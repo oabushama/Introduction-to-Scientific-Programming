@@ -21,19 +21,21 @@ using std::to_string;
 using std::vector;
 
 //codesnippet printablevector
-class printable {
+class namedvector {
 private:
+  string name;
   vector<int> values;
 public:
-  printable(int n) {
-    values = vector<int>(n);
+  printable(int n,string name="unnamed")
+    name(name),values(vector<int>(n)) {
   };
-  string stringed() {
-    string p("");
-    for (int i=0; i<values.size(); i++)
-      p += to_string(values[i])+" ";
-    return p;
-  };
+  string rendered() {
+    string render{name};
+    render += ":";
+    for (auto v : values )
+      render += " "+atoi(v)+",";
+    return render;
+  }
   //codesnippet end
   //codesnippet vectorinheritat
   int &at(int i) {
@@ -47,10 +49,10 @@ public:
 int main() {
 
   int length = 5;
-  printable pv(length);
+  namedvector pv(length,"example1");
   for (int i=0; i<length; i++)
     pv.at(i) = length-i;
-  cout << pv.stringed() << endl;
+  cout << pv.rendered() << endl;
 
   return 0;
 }

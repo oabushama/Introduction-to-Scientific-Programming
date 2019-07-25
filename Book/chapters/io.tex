@@ -86,7 +86,7 @@ etc
   \label{sl:io-hex}
   Hex output is useful for pointers (chapter~\ref{ch:pointer}):
   %
-  \verbatimsnippet{coutpoint}
+  \snippetwithoutput{coutpoint}{pointer}{coutpoint}
   %
   Back to decimal:
 \begin{lstlisting}
@@ -243,7 +243,7 @@ necessary. In fact there is a better solution:
 \n{std::}\indextermttdef{cerr} works just like \n{cout}, except it
 doesn't buffer the output.
 
-In other works, use \n{cout} for regular output, \n{cerr} for logging
+In other words, use \n{cout} for regular output, \n{cerr} for logging
 output, and use \verb+\n+ instead of \n{endl}.
 
 \Level 0 {Input}

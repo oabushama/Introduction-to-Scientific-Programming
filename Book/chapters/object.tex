@@ -445,7 +445,7 @@ The problem is with \lstinline{v2}. How is it created? We need to define two con
 \emph{The remainder of this section is advanced material. Make sure
   you have studied section~\ref{sec:class-ref}.}
 
-\Level 2 {Returning by reference}
+\Level 1 {Returning by reference}
 
 \begin{block}{Direct alteration of internals}
   \label{sl:obj-return-ref}
@@ -484,7 +484,7 @@ int main() {
 \end{lstlisting}
 \end{block}
 
-\Level 2 {Accessor functions}
+\Level 1 {Accessor functions}
 
 It is a good idea to make the data in an object private,
 to control outside access to it.
@@ -539,7 +539,7 @@ be directly changable!
   This is a good time to do the exercises in section~\ref{ex:pointfunc}.
 \end{exercise}
 
-\Level 2 {Accessability}
+\Level 1 {Accessability}
 
 \begin{block}{Access levels}
   \label{sl:private-etc}
@@ -553,12 +553,12 @@ be directly changable!
   \end{itemize}
 \end{block}
 
-\Level 2 {Polymorphism}
+\Level 1 {Polymorphism}
 
 You can have multiple methods with the same name, as long as they can
 be distinguished by their argument types. This is known as \indexterm{polymorphism}.
 
-\Level 2 {Operator overloading}
+\Level 1 {Operator overloading}
 \label{sec:operatordef}
 
 Instead of writing 
@@ -595,7 +595,7 @@ Can even redefine equals and parentheses.
   Write a \lstinline{Fraction} class, and define the arithmetic operators on it.
 \end{exercise}
 
-\Level 2 {Functors}
+\Level 1 {Functors}
 
 A special case of operator overloading is
 \index{operator!overloading!of parentheses}%
@@ -618,7 +618,7 @@ Simple example:
 \end{exercise}
 
 
-\Level 2 {Copy constructor}
+\Level 1 {Copy constructor}
 
 Just like the default constructor which is defined if you don't define
 an explicit constructor, there is an implicitly defined
@@ -668,7 +668,7 @@ Example of the copy constructor in action:
   \snippetwithoutput{classwithcopyvectoruse}{object}{copyvector}
 \end{block}
 
-\Level 2 {Destructor}
+\Level 1 {Destructor}
 \label{sec:destructor}
 
 Just as there is a constructor routine to create an object, there is a
@@ -741,7 +741,7 @@ used as
   \snippetwithoutput{exceptdestruct}{object}{exceptdestruct}
 \end{block}
 
-\Level 2 {`this' pointer}
+\Level 1 {`this' pointer}
 
 \begin{block}{`this' pointer to the current object}
   \label{sl:class-this}
@@ -774,7 +774,7 @@ void somemethod() {
 \end{lstlisting}
 \end{block}
 
-\Level 2 {Static members}
+\Level 1 {Static members}
 
 \begin{block}{Static class members}
   \label{sl:static-member}

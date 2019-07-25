@@ -28,10 +28,11 @@ mechanisms are briefly discussed in section~\ref{sec:staticarray}.
 
 \Level 1 {Vector creation}
 
-To use vectors, you first need the the \n{vector} header from the
+To use vectors, you first need the \n{vector} header from the
 \ac{STL}. Then you declare a vector, specifying what type of element
-is in init. If you don't specify otherwise, your vector will be of
-size zero, but it is possible to specify the size of the vector.
+it contains. Next you may want to decide how many elements it
+contains; you can specify this when you declare the vector, or
+determine it later, dynamically.
 
 \begin{block}{Vector definition}
   \label{sl:vector-def}
@@ -172,23 +173,11 @@ for ( auto e : array )
 for ( auto e : my_vector)
   cout << e;
 \end{lstlisting}
-Note that \n{e} is a copy of the vector element:
-\snippetwithoutput{vectorrangecopy}{array}{vectorrangecopy}
 \end{block}
 
 (You can spell out the type of the array element, but such type
 specifications can be complex. In that case, using \indextermtt{auto} is
 quite convenient.)
-
-\begin{block}{Ranging over a vector by reference}
-  \label{sl:vector-range-ref}
-To set array elements, make \n{e} a reference:
-\begin{lstlisting}
-for ( auto &e : my_vector)
-  e = ....
-\end{lstlisting}
-\snippetwithoutput{vectorrangeref}{array}{vectorrangeref}
-\end{block}
 
 \begin{exercise}
   \label{ex:range-for}
@@ -258,7 +247,12 @@ absx = abs(x);
   Range-based loop indexing makes a copy of the array element. If you
   want to alter the array, use a reference:
   %
-  \snippetwithoutput{dynamicscale}{array}{dynamicscale}
+\begin{lstlisting}
+for ( auto &e : my_vector)
+  e = ....
+\end{lstlisting}
+%
+\snippetwithoutput{vectorrangeref}{array}{vectorrangeref}
 \end{block}
 
 \begin{exercise}
@@ -347,7 +341,26 @@ Use the \n{push_back} method to add elements at the end:
   Flexibility comes with a price.
 \end{block}
 
-This is not a good way of creating arrays. If you know the size,
+It is tempting to use \n{push_back} to create a vector dynamically.
+
+\begin{block}{Dynamic size extending}
+  \label{sl:vector-extend}
+\begin{lstlisting}
+vector<int> iarray;
+\end{lstlisting}
+creates a vector of size zero. You can then
+\begin{lstlisting}
+iarray.push_back(5);
+iarray.push_back(32);
+iarray.push_back(4);
+\end{lstlisting}
+\end{block}
+
+However, this dynamic resizing involves memory management, and maybe
+operating system functions. This will probably be
+inefficient. Therefore you should use such dynamic mechanisms only
+when strictly necessary.
+If you know the size,
 create a vector with that size. If the size is not precisely known but
 you have a reasonable upper bound, you can 
 reserve the vector at that size:
@@ -357,8 +370,6 @@ iarray.reserve(100);
 while ( ... )
   iarray.push_back( ... );
 \end{lstlisting}
-
-Other methods that change the size: \n{insert}, \n{erase}.
 
 \Level 0 {Vectors and functions}
 
@@ -516,28 +527,6 @@ The two cases behave slightly differently.
 \item Either way, now you have an object with a vector of size~\n{n} internally.
 \end{itemize}
 
-\Level 1 {Dynamic size of vector}
-
-It is tempting to use \n{push_back} to create a vector dynamically.
-
-\begin{block}{Dynamic size extending}
-  \label{sl:vector-extend}
-\begin{lstlisting}
-vector<int> iarray;
-\end{lstlisting}
-creates a vector of size zero. You can then
-\begin{lstlisting}
-iarray.push_back(5);
-iarray.push_back(32);
-iarray.push_back(4);
-\end{lstlisting}
-\end{block}
-
-However, this dynamic resizing involves memory management, and maybe
-operating system functions. This will probably be
-inefficient. Therefore you should use such dynamic mechanisms only
-when strictly necessary.
-
 \Level 1 {Timing}
 
 Different ways of acessing a vector can have drastically different
@@ -669,28 +658,6 @@ A.element(2,3) = 7.24;
 \end{lstlisting}
 \end{exercise}
 
-\Level 0 {Static arrays}
-\label{sec:staticarray}
-
-For small arrays you can use a different syntax. 
-
-\snippetwithoutput{arrayinit}{array}{staticinit}
-
-This has the
-(minimal) advantage of not having the overhead of a class
-mechanism. On the other hand, it has a number of disadvantages:
-\begin{itemize}
-\item You can not query the size of an array by its name: you have to
-  store that information separately in a variable.
-\item Passing such an array to a function is really passing the
-  address of its first element, so it is always (sort of) by
-  reference.
-\end{itemize}
-
-Range-based indexing works the same as with vectors:
-%
-\snippetwithoutput{rangemax}{array}{rangemax}
-
 \Level 0 {Advanced topics}
 
 \Level 1 {Iterators}
@@ -704,8 +671,9 @@ You have seen how you can iterate over a vector
 There is a third way, which is actually the basic mechanism underlying
 the range-based looping.
 
-An \indextermdef{iterator} is a pointer to a vector element. Mirroring
-the index-loop convention of
+An \indexterm{iterator} is, in a metaphorical sense (see
+section~\ref{sec:iterator-class} for details) a pointer to a vector
+element. Mirroring the index-loop convention of
 \begin{lstlisting}
 for (int i=0; i<hi; i++)
   element = vec.at(i);
@@ -732,10 +700,30 @@ last element of a vector:
 \snippetwithoutput[vectorend]{vectorpushiterator}{array}{vectorenditerator}
 
 \Level 1 {Old-style arrays}
+\label{sec:staticarray}
 
 Static arrays are really an abuse of the equivalence of arrays and
 addresses of the C programming language. This appears for instance in
 parameter passing mechanisms.
+
+For small arrays you can use a different syntax. 
+
+\snippetwithoutput{arrayinit}{array}{staticinit}
+
+This has the
+(minimal) advantage of not having the overhead of a class
+mechanism. On the other hand, it has a number of disadvantages:
+\begin{itemize}
+\item You can not query the size of an array by its name: you have to
+  store that information separately in a variable.
+\item Passing such an array to a function is really passing the
+  address of its first element, so it is always (sort of) by
+  reference.
+\end{itemize}
+
+Range-based indexing works the same as with vectors:
+%
+\snippetwithoutput{rangemax}{array}{rangemax}
 
 \Level 2 {C-style arrays and subprograms}
 

@@ -24,7 +24,8 @@ your program.
 \item The function is called by its name.
 \end{itemize}
 
-%1
+\includegraphics[scale=.5]{function}
+
 \begin{slide}{Turn blocks of code into functions}
   \label{sl:function-intro}
   \begin{itemize}
@@ -45,7 +46,7 @@ for using functions.
   the code block, you're likely to forget the other.
 \item By introducting a function name you have introduced
   \indexterm{abstraction}: your program now uses terms related to your
-  problem, and not only \n{for} and \n{int} and such.
+  problem, and not only \lstinline{for} and \lstinline{int} and such.
 \end{itemize}
 
 \Level 0 {Function definition and call}
@@ -103,10 +104,10 @@ In this example, the function definition consists of:
 \begin{itemize}
 \item The keyword \indextermtt{void} indicates that the function does
   not give any results back to the main program.
-\item The name \n{report_evenness} is picked by you.
-\item The parenthetical \n{(int n)} is called the `parameter list': it
-  says that the function takes an \n{int} as input. For purposes of
-  the function, the int will have the name~\n{n}, but this is not
+\item The name \lstinline{report_evenness} is picked by you.
+\item The parenthetical \lstinline{(int n)} is called the `parameter list': it
+  says that the function takes an \lstinline{int} as input. For purposes of
+  the function, the int will have the name~\lstinline{n}, but this is not
   necessarily the same as the name in the main program.
 \item The `body' of the function, the code that is going to be
   executed, is enclosed in curly brackets.
@@ -305,14 +306,14 @@ Formally, a~function consists of:
 \begin{slide}{Anatomy of a function definition}
   \label{sl:func-anatomy}
   \begin{itemize}
-  \item Result type: what's computed.\\ \n{void} if no result
+  \item Result type: what's computed.\\ \lstinline{void} if no result
   \item Name: make it descriptive.
   \item Parameters: zero or more.\\
-    \n{int i,double x,double y}\\
+    \lstinline{int i,double x,double y}\\
     These act like variable declarations.
   \item Body: any length. This is a scope.
   \item Return statement: usually at the end, but can be anywhere; the
-    computed result. Not necessary for a \n{void} function.
+    computed result. Not necessary for a \lstinline{void} function.
   \end{itemize}
 \end{slide}
 
@@ -324,7 +325,7 @@ The function can then be used in the main program, or in another function:
   \item copies the value of the \indextermbus{function}{argument}
     to the \indextermbus{function}{parameter};
   \item causes the function body to be executed, and
-  \item the function call is replaced by whatever you \n{return}.
+  \item the function call is replaced by whatever you \lstinline{return}.
   \item (If the function does not return anything, for instance because
     it only prints output, you declare the return type to be \indextermtt{void}.)
   \end{enumerate}
@@ -374,7 +375,7 @@ double pi() {
   return 4*atan(1.0);
 }
 \end{lstlisting}
-The \n{atan} is a \indextermsub{standard}{function}
+The \lstinline{atan} is a \indextermsub{standard}{function}
 \end{block}
 
 \begin{block}{Functions with input and output}
@@ -402,7 +403,7 @@ body of another function.
   \begin{itemize}
   \item A function can have only one input
   \item A function can have only one return result
-  \item A void function can not have a \n{return} statement.
+  \item A void function can not have a \lstinline{return} statement.
   \end{itemize}
 \end{review}
 
@@ -429,7 +430,7 @@ The header of a factorial function can look like:
 int factorial(int n)
 \end{lstlisting}
 So what would the
-function body be? We need a \n{return} statement, and what we return
+function body be? We need a \lstinline{return} statement, and what we return
 should be $n \times F(n-1)$:
 \begin{lstlisting}
 int factorial(int n) {
@@ -442,17 +443,17 @@ int f3; f3 = factorial(3);
 \end{lstlisting}
 Well,
 \begin{itemize}
-\item The expression \n{factorial(3)} calls the \n{factorial}
-  function, substituting~\n{3} for the argument~\n{n}.
-\item The return statement returns \n{n*factorial(n-1)}, in this case
-  \n{3*factorial(2)}.
-\item But what is \n{factorial(2)}? Evaluating that expression means
-  that the \n{factorial} function is called again, but now with \n{n}
+\item The expression \lstinline{factorial(3)} calls the \lstinline{factorial}
+  function, substituting~\lstinline{3} for the argument~\lstinline{n}.
+\item The return statement returns \lstinline{n*factorial(n-1)}, in this case
+  \lstinline{3*factorial(2)}.
+\item But what is \lstinline{factorial(2)}? Evaluating that expression means
+  that the \lstinline{factorial} function is called again, but now with \lstinline{n}
   equal to~2.
-\item Evaluating \n{factorial(2)} returns \n{2*factorial(1)},\ldots
-\item \ldots~which returns \n{1*factorial(0)},\ldots
+\item Evaluating \lstinline{factorial(2)} returns \lstinline{2*factorial(1)},\ldots
+\item \ldots~which returns \lstinline{1*factorial(0)},\ldots
 \item \ldots~which returns~\ldots
-\item Uh oh. We forgot to include the case where \n{n} is zero. Let's
+\item Uh oh. We forgot to include the case where \lstinline{n} is zero. Let's
   fix that:
 \begin{lstlisting}
 int factorial(int n) {
@@ -462,9 +463,9 @@ int factorial(int n) {
     return n*factorial(n-1);
 }
 \end{lstlisting}
-\item Now \n{factorial(0)} is~1, so \n{factorial(1)} is
-  \n{1*factorial(0)}, which is~1,\ldots
-\item \ldots~so \n{factorial(2)} is~2, and \n{factorial(3)} is~6.
+\item Now \lstinline{factorial(0)} is~1, so \lstinline{factorial(1)} is
+  \lstinline{1*factorial(0)}, which is~1,\ldots
+\item \ldots~so \lstinline{factorial(2)} is~2, and \lstinline{factorial(3)} is~6.
 \end{itemize}
 
 \begin{slide}{Recursion}
@@ -545,8 +546,8 @@ int oneless = 1;
 Do we still get the right result for~$g_3$? Is it going to compute
 $g_3=2\cdot g_2$ or $g_3=1\cdot g_2$?
 
-Not to worry: each time you call \n{multifact} a new local variable
-\n{oneless} gets created `on the \indexterm{stack}'. That is good, because it means your program
+Not to worry: each time you call \lstinline{multifact} a new local variable
+\lstinline{oneless} gets created `on the \indexterm{stack}'. That is good, because it means your program
 will be correct\footnote{Historical note: very old versions of Fortran
   did not do this, and so recursive functions were basically
   impossible.}, but it also means that if your function has both
@@ -683,7 +684,7 @@ int main() {
 bool f(int);
 \end{lstlisting}
 is given, which is true for some positive input value. Write a main program that
-finds the smallest positive input value for which \n{f} is true.
+finds the smallest positive input value for which \lstinline{f} is true.
 \end{exercise}
 
 \begin{exercise}
@@ -693,7 +694,7 @@ finds the smallest positive input value for which \n{f} is true.
 bool f(int);
 \end{lstlisting}
 is given, which is true for some negative input value. Write a code fragment that
-finds the (negative) input with smallest absolute value for which \n{f} is true.
+finds the (negative) input with smallest absolute value for which \lstinline{f} is true.
 \end{exercise}
 
 \begin{exercise}

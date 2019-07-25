@@ -48,8 +48,10 @@ that argument to a fixed power.
   that argument to a fixed power.
 \end{slide}
 
+\Level 1 {Lambda members of classes}
+
 Storing a lambda in a class is hard because it has unique
-type. Solution: use \n{std::function}
+type. Solution: use \lstinline{std::}\indextermtt{function}.
 
 \begin{block}{Lambda in object}
   \label{sl:lambda-class}
@@ -84,6 +86,16 @@ type. Solution: use \n{std::function}
   \verbatimsnippet{newtonlambda1}
 \end{exercise}
 
+\Level 1 {Lambda in algorithm}
+
+The \indextermtt{algorithm} header contains a number of functions that
+naturally use lambdas. For instance, \indextermtt{any_of} can test
+whether any element of a \lstinline{vector} satisfies a condition.
+You can then use a lambda to specify the \lstinline{bool} function
+that tests the condition.
+
+\Level 1 {Lambda variables by reference}
+
 Normally, captured variables are copied by value. You can capture them
 by reference by prefixing an ampersand to them
 \begin{lstlisting}
@@ -96,6 +108,6 @@ The lambda expression also needs to be marked
 because by default it is a
 \n{const}\index{lamda!const by default}.
 
-\snippetwithoutput{counteach}{stl}{counteach}
+\snippetwithoutput[printeach]{counteach}{stl}{counteach}
 
 Lambdas without captures can be converted to a function pointer.

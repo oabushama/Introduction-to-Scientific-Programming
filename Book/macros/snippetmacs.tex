@@ -18,9 +18,9 @@
 \ifInBook
 \lstdefinestyle{reviewcode}{
   belowcaptionskip=1\baselineskip,
-  breaklines=true,
+  breaklines=false,basicstyle=\footnotesize,
   frame=L,
-  xleftmargin=\unitindent,
+  xleftmargin=.5\unitindent,
   showstringspaces=false,
   basicstyle=\footnotesize\ttfamily,
   keywordstyle=\bfseries\color{blue},
@@ -64,6 +64,7 @@
   % go into vertical mode
   \par
   % make nice two-column layout
+  \moveright .5\unitindent
   \hbox{%
     \begin{minipage}[t]{.6\hsize}
       \def\verbatim@startline{\verbatim@line{\leavevmode\relax}}
@@ -82,7 +83,6 @@
       \verbatiminput{\codedir /#2/#3.out}
     \end{minipage}
   }
-  %\hbox{}\kern-20pt\hbox{} % 1.5\baselineskip
 }
 
 \newcommand\snippetwithoutput[4][]{

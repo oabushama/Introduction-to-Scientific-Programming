@@ -61,11 +61,13 @@ int main() {
   cout << ".. using " << divisor << endl;
   //codesnippet lambdaclassed
   SelectedInts multiples
-    ( [divisor] (int i) -> bool { return i%divisor==0; } );
+    ( [divisor] (int i) -> bool {
+	return i%divisor==0; } );
   for (int i=1; i<50; i++)
     multiples.add(i);
   //codesnippet end
-  cout << "Multiples of " <<divisor << ": " << endl
+  cout << "Multiples of " <<divisor << ": "
+       << "\n"
        << multiples.string() << endl;
 
   return 0;
