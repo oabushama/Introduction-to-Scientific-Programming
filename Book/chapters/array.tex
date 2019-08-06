@@ -22,13 +22,13 @@ In this chapter you will see the C++ \indextermtt{vector} construct,
 which implements the notion of an array of things, whether they be
 numbers, strings, object.
 While C++ can use the C~mechanisms for arrays, for almost all purposes
-it is better to use \n{vector}. In particular, this is a safer way to
+it is better to use \lstinline{vector}. In particular, this is a safer way to
 do dynamic allocation. The old
 mechanisms are briefly discussed in section~\ref{sec:staticarray}.
 
 \Level 1 {Vector creation}
 
-To use vectors, you first need the \n{vector} header from the
+To use vectors, you first need the \lstinline{vector} header from the
 \ac{STL}. Then you declare a vector, specifying what type of element
 it contains. Next you may want to decide how many elements it
 contains; you can specify this when you declare the vector, or
@@ -46,18 +46,18 @@ vector<type> name(size);
 \end{lstlisting}
 where
 \begin{itemize}
-\item \n{vector} is a keyword,
+\item \lstinline{vector} is a keyword,
 \item \n{type} (in angle brackets) is any elementary type or class
   name,
 \item \n{name} is up to you, and
 \item \n{size} is the (initial size of the array). This is an integer,
-  or more precisely, a \n{size_t} parameter.
+  or more precisely, a \indextermtt{size_t} parameter.
 \end{itemize}
 \end{block}
 
 \begin{remark}
   There is also an \indextermttdef{array} class, which at first glance
-  looks like a non-resizable variant of \n{vector}. However, it is limited to
+  looks like a non-resizable variant of \lstinline{vector}. However, it is limited to
   arrays where the size is known at compile time.
 \end{remark}
 
@@ -147,12 +147,13 @@ If your vector is short enough, you can set all elements explicitly with an
 \label{sec:arrayrange}
 
 If you need to consider all the elements in an array, you typically
-use a \n{for} loop. There are various ways of doing this.
+use a \lstinline{for} loop. There are various ways of doing this.
 
 First of all consider the cases where you consider the array as a
 collection of elements, and the loop functions like a mathematical
 `for all'.
 
+\index{range-based for loop|see{for, range-based}}
 \begin{block}{Range over elements}
   \label{sl:array-range}
   You can write a \indextermsub{range-based}{for} loop, which
@@ -199,7 +200,7 @@ can also be used as a list denotation:
 \end{block}
 
 If you actually need the array index of the element, you can use a
-traditional \n{for} loop with loop variable.
+traditional \lstinline{for} loop with loop variable.
 
 \begin{block}{Indexing the elements}
   \label{sl:index-range}
@@ -261,7 +262,7 @@ for ( auto &e : my_vector)
 
 \begin{block}{Indexing with pre/post increment}
   \label{sl:prepostindex}
-Array indexing in \n{while} loop and such:
+Array indexing in \lstinline{while} loop and such:
 \begin{lstlisting}
   x = a[i++]; /* is */ x = a[i]; i++;
   y = b[++i]; /* is */ i++; y = b[i];
@@ -283,7 +284,7 @@ form a \indextermttdef{vector} class. The angle bracket notation means
 that we have a class that is parametrized with the type (see
 chapter~\ref{ch:template} for the details), and you can
 have vectors of ints, vectors of chars, et cetera. We can now say that
-\n{vector<int>} is a type, pronounced `vector-of-int', and you can
+\lstinline{vector<int>} is a type, pronounced `vector-of-int', and you can
 make new variables of that type.
 
 \begin{block}{Vector copy}
@@ -297,7 +298,7 @@ make new variables of that type.
 
 \begin{exercise}
   \label{ex:vectornormalize}
-  Create a \n{vector} $x$ of \n{float} elements, and set them to random
+  Create a \n{vector} $x$ of \lstinline{float} elements, and set them to random
   values.
 
   Now normalize the vector in $L_2$ norm and check the correctness of
@@ -314,13 +315,13 @@ make new variables of that type.
 \begin{slide}{Vector methods}
   \label{sl:vector-method}
   \begin{itemize}
-  \item Get elements with \n{ar[3]} (zero-based indexing).
+  \item Get elements with \lstinline{ar[3]} (zero-based indexing).
     %% (for C programmers: this is not dereferencing, this uses an
     %% operator method)
-  \item Get elements, including bound checking, with \n{ar.at(3)}.
-  \item Size: \n{ar.size()}.
-  \item Other functions: \n{front}, \n{back}.
-  \item \n{vector} is a `templated class'
+  \item Get elements, including bound checking, with \lstinline{ar.at(3)}.
+  \item Size: \lstinline{ar.size()}.
+  \item Other functions: \lstinline{front}, \lstinline{back}.
+  \item \lstinline{vector} is a `templated class'
   \end{itemize}
 \end{slide}
 
@@ -329,7 +330,7 @@ make new variables of that type.
 
 There is an important difference between vectors and arrays: a vector
 can be grown or shrunk after its creation.
-Use the \n{push_back} method to add elements at the end:
+Use the \lstinline{push_back} method to add elements at the end:
 
 \begin{block}{Dynamic extension}
   \label{sl:vector-dynamic}
@@ -337,11 +338,11 @@ Use the \n{push_back} method to add elements at the end:
   %
   \snippetwithoutput{vectorpush}{array}{vectorend}
   %
-  also \n{pop_back}, \n{insert}, \n{erase}.\\
+  also \lstinline{pop_back}, \lstinline{insert}, \lstinline{erase}.\\
   Flexibility comes with a price.
 \end{block}
 
-It is tempting to use \n{push_back} to create a vector dynamically.
+It is tempting to use \lstinline{push_back} to create a vector dynamically.
 
 \begin{block}{Dynamic size extending}
   \label{sl:vector-extend}
@@ -410,7 +411,7 @@ actually copied into the function.
 
 \begin{exercise}
   \label{ex:vec-of-squares}
-  Write a function of one \n{int} argument~$n$, which returns vector
+  Write a function of one \lstinline{int} argument~$n$, which returns vector
   of length~$n$, and which contains the first $n$ squares.
 \end{exercise}
 
@@ -514,8 +515,8 @@ Better than
 
 The two cases behave slightly differently.
 \begin{itemize}
-\item The expression \n{vector<int>(n)} creates an anonymous vector
-  of size~\n{n};
+\item The expression \lstinline{vector<int>(n)} creates an anonymous vector
+  of size~\lstinline{n};
   \begin{itemize}
   \item In the first case, that anonymous vector is moved to become
     the value of the \n{the_array} variable;
@@ -546,7 +547,7 @@ timing cost.
   With subscript:
   \verbatimsnippet{vectorsub}
 
-  You can also use \n{new} to allocate (see section~\ref{sec:cnew}):
+  You can also use \indextermtt{new} to allocate (see section~\ref{sec:cnew}):
   \verbatimsnippet{vectornew}
 \end{block}
 
@@ -561,10 +562,10 @@ Timings are partly predictable, partly surprising:
 \end{lstlisting}
 \end{block}
 
-The increased time for \n{new} is a mystery.
+The increased time for \lstinline{new} is a mystery.
 
-So do you use \n{at} for safety or \n{[]} for speed? Well, you could
-use \n{at} during development of the code, and insert
+So do you use \lstinline{at} for safety or \lstinline{[]} for speed? Well, you could
+use \lstinline{at} during development of the code, and insert
 \begin{lstlisting}
 #define at(x) operator[](x)
 \end{lstlisting}
@@ -820,6 +821,33 @@ goes out of scope.
 If you want heap memory that transcends scope you can use the
 \indextermsub{smart}{pointer} mechanism, which also guarantees against
 memory leaks. See chapter~\ref{pointer}.
+
+\Level 1 {Span}
+\label{sec:gsl-span}
+
+The old C~style arrays allowed for some operations that are harder to
+do with vectors. For instance, you could create a subset of an array with:
+\begin{lstlisting}
+double *x = (double*)malloc(N*sizeof(double));
+double *subx = x+1;
+subx[1] = 5.; // same as: x[2] = 5.;
+\end{lstlisting}
+In C++ you can write
+\begin{lstlisting}
+vector<double> x(N);
+vector<double> subx( x.begin()+1,x.end() );
+\end{lstlisting}
+but that allocates new storage.
+
+If you really want two vector-like objects to share data there is the
+\indextermttdef{span} class, which is in the \ac{STL} of
+\emph{C++20}\index{C++!C++20}. Until this standard is available you
+can use the \indexac{GSL}, for instance implemented in
+\url{https://github.com/Microsoft/GSL}.
+
+A span is little more than a pointer and a size, so it allows for the
+above use case. Also, it does not have the overhead of creating a
+whole new vector.
 
 \Level 0 {Exercises}
 

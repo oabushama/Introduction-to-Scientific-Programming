@@ -257,7 +257,6 @@
   \expandafter\lstinline\expandafter$\indexedmpi$%
   \edef\idxtmp{%
     \noexpand\index{\indexedmpi@{\catcode95=12 \noexpand\texttt{\indexedmpi}}}%
-    %\noexpand\index{\indexedmpi@{\protect\innocentcharacters\protect\texttt{\indexedmpi}}}%
   }%
   \idxtmp
   \egroup
@@ -269,13 +268,10 @@
   \expandafter\lstinline\expandafter$\indexedmpi$%
   \edef\idxtmp{%
     \noexpand\index{\indexedmpi@{\catcode95=12 \noexpand\texttt{\indexedmpi}}|textbf}%
-    %\noexpand\index{\indexedmpi@{\protect\innocentcharacters\protect\texttt{\indexedmpi}}|textbf}%
   }%
   \idxtmp
   \egroup
 }
-%\let\indextermtt\indexmpishow
-%\let\indextermttdef\indexmpidef
 
 %%
 %% Fortran special case

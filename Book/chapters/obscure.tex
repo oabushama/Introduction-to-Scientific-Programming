@@ -636,3 +636,101 @@ public:
 C++ has no built-in graphics facilities, so you have to use external
 libraries such as \indexterm{OpenFrameworks},
 \url{https://openframeworks.cc}.
+
+\Level 0 {Standards timeline}
+
+Each standard has many changes over the previous. That said, here are
+some of the highlights of recent standards.
+
+\Level 1 {C++11}
+\index{C++!C++11|(textbf}
+
+\begin{itemize}
+\item \indextermtt{auto}
+\begin{lstlisting}
+const auto count = std::count
+    (begin(vec),end(vec),value);
+\end{lstlisting}
+The \lstinline{count} variable now gets the type of whatever
+\lstinline{vec} contained.
+
+\item  Range-based for. We have been treating this as the base case,
+  for instance in section~\ref{sec:arrayrange}. The C++11 mechanism,
+  using an \indexterm{iterator} (section~\ref{sec:iterator-class}) is
+  largely obviated.
+
+\item Lambdas. See section~\ref{sec:lambda}.
+
+\item Variadic templates.
+
+\item Unique pointer. 
+\begin{lstlisting}
+unique_ptr<int> iptr( new int(5) );    
+\end{lstlisting}
+This fixes problems with \indextermtt{auto_ptr}.
+
+\item \indextermtt{constexpr}
+\begin{lstlisting}
+constexpr int get_value() {
+  return 5*3;
+}
+\end{lstlisting}
+\end{itemize}
+
+\index{C++!C++11|)}
+
+\Level 1 {C++14}
+
+\index{C++!C++14|(textbf}
+
+C++14\index{C++!C++14|textbf} can be considered a bug fix on C++1.
+It simplifies a number of things and makes them more elegant.
+
+\begin{itemize}
+\item
+  Auto return type deduction:
+\begin{lstlisting}
+  auto f() {
+    SomeType something;
+    return something;
+  }
+\end{lstlisting}
+
+\item Generic lambdas
+\begin{lstlisting}
+const auto count = std::count(begin(vec),end(vec),
+    [] ( const auto i ) { return i<3; }    
+);
+\end{lstlisting}
+Also more sophisticated capture expressions.
+
+\item Unique pointer
+\begin{lstlisting}
+auto iptr( make_unique<int>(5) );    
+\end{lstlisting}
+This makes \indextermtt{new} and \indextermtt{delete} completely superfluous.
+
+\item \indextermtt{constexpr}
+\begin{lstlisting}
+constexpr int get_value() {
+  int val = 5;
+  int val2 = 3;
+  return val*val2
+}
+\end{lstlisting}
+\end{itemize}
+
+\index{C++!C++14|)}
+
+\Level 1 {C++17}
+
+\index{C++!C++17|(textbf}
+\index{C++!C++17|)}
+
+\Level 1 {C++20}
+
+\index{C++!C++20|(textbf}
+\begin{itemize}
+\item \indextermtt{span}. See section~\ref{sec:gsl-span}.
+\end{itemize}
+\index{C++!C++20|)}

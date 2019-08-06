@@ -276,6 +276,33 @@ management. Therefore, there exists a \indextermsub{unique}{pointer},
 `owned' by one pointer. In that case, you can use a C-style
 \indextermsub{bare}{pointer} for non-owning references.
 
+\Level 1 {Base and derived pointers}
+
+Suppose you have base and derived classes:
+\begin{lstlisting}
+class A {};
+class B : public A {};  
+\end{lstlisting}
+Just like you could assign a \lstinline{B} object to an \lstinline{A}
+variable:
+\begin{lstlisting}
+B b_object;
+A a_object = b_object;
+\end{lstlisting}
+is it possible to assign a \lstinline{B} pointer to an \lstinline{A}
+pointer?
+
+The following construct makes this possible:
+\begin{lstlisting}
+auto a_ptr = shared_pointer<A>( make_shared<B>() );
+\end{lstlisting}
+
+Note: this is better than
+\begin{lstlisting}
+auto a_ptr = shared_pointer<A>( new B() );
+\end{lstlisting}
+Again a reason we don't need \indextermtt{new} anymore!
+
 \Level 1 {Shared pointer to `this'}
 
 Inside an object method, the object is accessible as

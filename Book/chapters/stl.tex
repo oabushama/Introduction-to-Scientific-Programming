@@ -279,7 +279,8 @@ section~\ref{sec:lambda} for the use of lambda expressions.
 
 There used to be a header file \indextermtt{limits.h} that contained
 macros such as \indextermtt{MAX_INT}. While this is still available,
-the \ac{STL} offers a better solution.
+the \ac{STL} offers a better solution in the
+\indextermtt{numeric_limits} header.
 
 \begin{block}{Templated functions for limits}
   \label{sl:stl-limits}
@@ -319,6 +320,17 @@ isinf(-1.0/0.0);   // true
 isinf(sqrt(-1.0)); // false
 \end{lstlisting}
 \end{block}
+
+\Level 1 {Storage}
+
+\begin{itemize}
+\item An \n{int} used to be 16 bits in the olden days, but these days
+  32~bits is more common.
+\item A \n{long int}\indextermtt{long} has at least the range of an
+  \n{int}, and at least 32~bits.
+\item A \n{long long int}\indextermtt{long long} has at least the
+  range of a \n{long}, and at least 64~bits.
+\end{itemize}
 
 \Level 0 {Random numbers}
 \label{sec:stl:random}
