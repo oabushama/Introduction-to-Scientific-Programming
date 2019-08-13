@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% loop.tex : loop constructs
 %%%%
@@ -18,13 +18,6 @@ of operations:
 \item Inspect or change every element of a database table.
 \end{itemize}
 
-The first two cases actually need to be performed in sequence, while
-the last one corresponds more to a mathematical `forall' quantor. You
-will later learn two different syntaxes for this in the context of arrays.
-This
-difference can also be exploited when you learn
-\indextermsub{parallel}{programming}. Fortran has a
-\indextermbus{do}{concurrent} loop construct for this.
 
 The C++ construct for such repetitions
 is known as a~\indextermdef{loop}: a~number of
@@ -102,7 +95,7 @@ The loop header has three components, all of which are optional.
   floating point values is less advisable.
 \item A stopping test, usually
   involving the loop variable. If you leave this out, you need a
-  different mechanism for stopping the loop; see~\ref{sec:loopuntil}.
+  different mechanism for stopping the loop; see section~\ref{sec:loopuntil}.
 \item An increment, often~\n{i++} or spelled out \n{i=i+1}. You can let the loop count down by using~\n{i--}.
 \end{itemize}
 
@@ -132,6 +125,17 @@ This is how a loop is executed.
   performed with the current value of the loop variable(s).
 \item At the end of each iteration, the increment is performed.
 \end{itemize}
+
+\begin{block}{Popular increments}
+  \label{sl:more-increment}
+  \begin{itemize}
+  \item \n{i++} for a loop that counts forward;
+  \item \n{i--} for a loop that counts backward;
+  \item \n{i+=2} to cover only odd or even numbers, depending on
+    where you started;
+  \item \n{i*=10} to cover powers of ten.
+  \end{itemize}
+\end{block}
 
 \begin{review}
   \label{q:loop}
@@ -187,14 +191,6 @@ if the loops ends in some other way. You'll see this later.
 \begin{lstlisting}
 for (int var=high; var>=low; var--) { ... }
 \end{lstlisting}
-\item Here are a couple of popular increments:
-  \begin{itemize}
-  \item \n{i++} for a loop that counts forward;
-  \item \n{i--} for a loop that counts backward;
-  \item \n{i+=2} to cover only odd or even numbers, depending on
-    where you started;
-  \item \n{i*=10} to cover powers of ten.
-  \end{itemize}
 \item The test is performed before each iteration:
   \snippetwithoutput{pretest}{basic}{pretest}
   %
@@ -202,14 +198,16 @@ for (int var=high; var>=low; var--) { ... }
   iteration was always performed.)
 \item The loop body can be a single statement:
 \begin{lstlisting}
-if (x<0)
-  x = -x;
+int s{0};
+for ( int i=0; i<N; i++)
+  s += i;
 \end{lstlisting}
 or a block:
 \begin{lstlisting}
-if (x<0) {
-  cout << "Error" << endl;
-  x = -x;
+int s{0};
+for ( int i=0; i<N; i++) {
+  int t = i*i;
+  s += t;
 }
 \end{lstlisting}
 \end{itemize}
@@ -301,21 +299,6 @@ a diagonal is defined by $i+j=\mathrm{constant}$.
   \label{fig:ij-min}
 \end{figure}
 
-\begin{exercise}
-  \label{ex:ij-product}
-  Write a double loop over $0\leq i,j<10$ that prints the first pair
-  where the product of indices satisfies $i\cdot j> N$, where $N$~is a
-  number your read in. A~good test case is $N=40$.
-
-  Secondly, find pair with $i\cdot j>N$, but with the smallest value for $i+j$.
-  Can you traverse the $i,j$ indices such that they first enumerate
-  all pairs $i+j=1$, then $i+j=2$, then $i+j=3$ et cetera? Hint:
-  write a loop over the sum value $1,2,3,\ldots$, then find~$i,j$.
-
-  You program should print out both pairs, each on a separate line,
-  with the numbers separated with a comma, for instance~\n{8,5}.
-\end{exercise}
-
 \Level 0 {Looping until}
 \label{sec:loopuntil}
 
@@ -369,6 +352,21 @@ for (int var=low; ; var=var+1) {
 }
 \end{lstlisting}
 \end{slide}
+
+\begin{exercise}
+  \label{ex:ij-product}
+  Write a double loop over $0\leq i,j<10$ that prints the first pair
+  where the product of indices satisfies $i\cdot j> N$, where $N$~is a
+  number your read in. A~good test case is $N=40$.
+
+  Secondly, find pair with $i\cdot j>N$, but with the smallest value for $i+j$.
+  Can you traverse the $i,j$ indices such that they first enumerate
+  all pairs $i+j=1$, then $i+j=2$, then $i+j=3$ et cetera? Hint:
+  write a loop over the sum value $1,2,3,\ldots$, then find~$i,j$.
+
+  You program should print out both pairs, each on a separate line,
+  with the numbers separated with a comma, for instance~\n{8,5}.
+\end{exercise}
 
 \begin{exercise}
   All three parts of a loop header are optional. What would be the
@@ -485,6 +483,14 @@ is an example in which the second syntax is more appropriate.
 \end{exercise}
 
 \begin{exercise}
+  \label{ex:horsespider}
+  A horse is tied to a pole with a 1~meter elastic band. A~spider that
+  was sitting on the pole starts walking to the horse over the band,
+  at 1cm/sec. This startles the horse, which runs away at
+  1m/sec. Assuming that the elastic band is infinitely stretchable,
+  will the spider ever reach the horse?
+\end{exercise}
+\begin{exercise}
   \label{ex:interest}
   One bank account has 100 dollars and earns a 5~percent per year interest
   rate. Another account has 200 dollars but earns only 2~percent per
@@ -496,6 +502,25 @@ is an example in which the second syntax is more appropriate.
   Food for thought: compare solutions with a pre-test and post-test,
   and also using a for-loop.
 \end{exercise}
+
+\Level 0 {Advanced topics}
+
+\Level 1 {Parallelism}
+
+At the start of this chapter we mentioned the following examples of loops:
+\begin{itemize}
+\item A time-dependent numerical simulation executes a fixed number of
+  steps, or until some stoping test.
+\item Recurrences: \[ x_{i+1} = f(x_i). \]
+\item Inspect or change every element of a database table.
+\end{itemize}
+The first two cases actually need to be performed in sequence, while
+the last one corresponds more to a mathematical `forall' quantor. You
+will later learn two different syntaxes for this in the context of arrays.
+This
+difference can also be exploited when you learn
+\indextermsub{parallel}{programming}. Fortran has a
+\indextermbus{do}{concurrent} loop construct for this.
 
 \Level 0 {Exercises}
 

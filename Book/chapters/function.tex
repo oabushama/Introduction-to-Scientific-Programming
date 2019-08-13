@@ -24,7 +24,10 @@ your program.
 \item The function is called by its name.
 \end{itemize}
 
-\includegraphics[scale=.5]{function}
+\begin{block}{Introducing a function}
+  \label{sl:func-scheme}
+  \includegraphics[scale=.5]{function}
+\end{block}
 
 \begin{slide}{Turn blocks of code into functions}
   \label{sl:function-intro}
@@ -60,39 +63,63 @@ There are two sides to a function:
   multiple times, inside the main or inside other functions.
 \end{itemize}
 
+\begin{block}{Program without functions}
+  \label{sl:nodef-nocall}
+  Everything in the main:
+  \begin{multicols}{2}
+    \begin{lstlisting}
+      int main() {
+        float left{0.},right{1.};
+        while (right-left>.1) {
+          float mid = (left+right)/2.,
+          fmid = mid*mid*mid - mid*mid-1;
+          if (fmid<0) left = mid;
+          else right = mid;  
+        }
+        cout << "Zero happens at: " << mid << endl;
+      }
+    \end{lstlisting}
+  \end{multicols}
+\end{block}
+
 \begin{block}{Function definition and call}
   \label{sl:def-call}
-Everything in the main:
+Function for which we compute the zero:
   \begin{multicols}{2}
 \begin{lstlisting}
+float f(float m) {
+  return m*m*m - m*m-1;
+};
 int main() {
-  for (int i=0; i<N; i++) {
-    cout << i;
-    if (i%2==0)
-      cout << " is even";
-    else
-      cout << " is odd";
-    cout << endl;
+  float left{0.},right{1.};
+  while (right-left>.1) {
+    float mid = (left+right)/2.,
+      fmid = f(mid);
+    if (fmid<0) left = mid;
+    else right = mid;  
   }
+  cout << "Zero happens at: " << mid << endl;
 }
 \end{lstlisting}
   \end{multicols}
-Function used in main:
+Function for zero finding:
   \begin{multicols}{2}
 \begin{lstlisting}
-void report_evenness(int n) {
-  cout << n;
-  if (n%2==0)
-    cout << " is even";
-  else
-    cout << " is odd";
-  cout << endl;
-}
-...
+float f(float m) {
+  return m*m*m - m*m-1;
+};
+float find_zero_between(float l,float r) {
+  while (r-l>.1) {
+    float mid = (l+r)/2.,
+      fmid = f(mid);
+    if (fmid<0) l = mid;
+    else r = mid;  
+  }
+};
 int main() {
-  ...
-  for (int i=0; i<N; i++)
-    report_evenness(i);
+  float left{0.},right{1.};
+  float mid = find_zero_between(left,right);
+  cout << "Zero happens at: " << mid << endl;
 }
 \end{lstlisting}
   \end{multicols}
@@ -107,7 +134,7 @@ In this example, the function definition consists of:
 \item The name \lstinline{report_evenness} is picked by you.
 \item The parenthetical \lstinline{(int n)} is called the `parameter list': it
   says that the function takes an \lstinline{int} as input. For purposes of
-  the function, the int will have the name~\lstinline{n}, but this is not
+  the function, the \lstinline{int} will have the name~\lstinline{n}, but this is not
   necessarily the same as the name in the main program.
 \item The `body' of the function, the code that is going to be
   executed, is enclosed in curly brackets.
@@ -151,7 +178,7 @@ before the main program.
 This is not entirely true: the translation of a program that uses a
 function can proceed once the compiler know its name, and the types of
 the inputs and result. Just like you can declare a variable and set
-its value later, you can declare a function and give its definition
+its value later, you can declare the existence of a function and give its definition
 later. The resulting code looks like:
 
 \begin{lstlisting}
@@ -333,40 +360,6 @@ The function can then be used in the main program, or in another function:
 
 \Level 1 {Examples}
 
-\begin{block}{Functions without input, without return result}
-  \label{sl:func-ex1}
-\begin{lstlisting}
-void print_header() {
-  cout << "****************" << endl;
-  cout << "* Output       *" << endl;
-  cout << "****************" << endl;
-  }
-int main() {
-  print_header();
-  cout << "The results for day 25:" << endl;
-  // code that prints results ....
-  return 0;
-}
-\end{lstlisting}
-\end{block}
-
-\begin{block}{Functions with input}
-  \label{sl:func-ex2}
-\begin{lstlisting}
-void print_result(int day,float value) {
-  cout << "****************" << endl;
-  cout << "* Output       *" << endl;
-  cout << "****************" << endl;
-  cout << "The results for day " << day << ":" << endl;
-  cout << "    " << value << endl;
-  }
-int main() {
-  print_result(25,3.456);
-  return 0;
-}
-\end{lstlisting}
-\end{block}
-
 \begin{block}{Functions with return result}
   \label{sl:func-return}
 \begin{lstlisting}
@@ -396,6 +389,46 @@ calling program.
 
 Functions can not be nested: you can not define a function inside the
 body of another function.
+
+\Level 0 {Void functions}
+
+Some functions do not return anything, for instance because only write
+output to screen or file. In that case you define the function to be
+of type \indextermttdef{void}.
+
+\begin{block}{Functions without input, without return result}
+  \label{sl:func-ex1}
+\begin{lstlisting}
+void print_header() {
+  cout << "****************" << endl;
+  cout << "* Output       *" << endl;
+  cout << "****************" << endl;
+  }
+int main() {
+  print_header();
+  cout << "The results for day 25:" << endl;
+  // code that prints results ....
+  return 0;
+}
+\end{lstlisting}
+\end{block}
+
+\begin{block}{Void function with input}
+  \label{sl:func-ex2}
+\begin{lstlisting}
+void print_result(int day,float value) {
+  cout << "****************" << endl;
+  cout << "* Output       *" << endl;
+  cout << "****************" << endl;
+  cout << "The results for day " << day << ":" << endl;
+  cout << "    " << value << endl;
+  }
+int main() {
+  print_result(25,3.456);
+  return 0;
+}
+\end{lstlisting}
+\end{block}
 
 \begin{review}
   \label{rev:func-param}
@@ -557,7 +590,7 @@ will be correct\footnote{Historical note: very old versions of Fortran
 \end{itemize}
 it may lead to \indextermbus{stack}{overflow}.
 
-\Level 0 {More function topics}
+\Level 0 {Advanced function topics}
 
 \Level 1 {Default arguments}
 

@@ -23,7 +23,7 @@ int main() {
     = {1.1, 2.2, 3.3};
   for ( auto &e : myvector )
     e *= 2;
-  cout << myvector[2] << endl;
+  cout << myvector.at(2) << endl;
   //codesnippet end
 
   return 0;

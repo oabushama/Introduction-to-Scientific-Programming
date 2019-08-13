@@ -25,14 +25,14 @@ public:
   matrix(int m,int n)
     : m(m),n(n),the_matrix(m*n) {};
   void set(int i,int j,double v) {
-    the_matrix[ i*n +j ] = v;
+    the_matrix.at( i*n +j ) = v;
   };
   double get(int i,int j) {
-    return the_matrix[ i*n +j ];
+    return the_matrix.at( i*n +j );
   };
   //examplesnippet end
   double &element(int i,int j) {
-    return the_matrix[ i*n +j ];
+    return the_matrix.at( i*n +j );
   };
   //examplesnippet matrixclass
 };

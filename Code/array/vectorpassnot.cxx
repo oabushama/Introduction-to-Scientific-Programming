@@ -20,7 +20,7 @@ using std::vector;
 void set0
   ( vector<float> v,float x )
 {
-  v[0] = x;
+  v.at(0) = x;
 }
 //codesnippet end
 
@@ -28,9 +28,9 @@ int main() {
 
   //codesnippet vectorpassval
   vector<float> v(1);
-  v[0] = 3.5;
+  v.at(0) = 3.5;
   set0(v,4.6);
-  cout << v[0] << endl;
+  cout << v.at(0) << endl;
   //codesnippet end
 
   return 0;

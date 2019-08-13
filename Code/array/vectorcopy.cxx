@@ -20,11 +20,11 @@ int main() {
 
   //codesnippet vectorcopy
   vector<float> v(5,0), vcopy;
-  v[2] = 3.5;
+  v.at(2) = 3.5;
   vcopy = v;
-  vcopy[2] *= 2;
-  cout << v[2] << ","
-       << vcopy[2] << endl;
+  vcopy.at(2) *= 2;
+  cout << v.at(2) << ","
+       << vcopy.at(2) << endl;
   //codesnippet end
 
   return 0;

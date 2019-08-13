@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2016/7 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2016-9 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** array.cxx : basic array stuff
  ****
@@ -27,7 +27,7 @@ public:
 
 int main() {
   vector<int>xinit(5,3);
-  cout << "array has been initialized to " << xinit[2] << endl;
+  cout << "array has been initialized to " << xinit.at(2) << endl;
 
   vector<int>x(5);
   cout << x.size() << endl;

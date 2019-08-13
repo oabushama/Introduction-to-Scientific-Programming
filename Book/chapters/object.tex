@@ -162,94 +162,6 @@ or you could ask it to scale its length by some number.
   \end{itemize}
 \end{block}
 
-\Level 1 {Public and private}
-
-You may have noticed the keywords \indextermtt{public} and
-\indextermtt{private}. We made the data members private, and the
-methods public. Thinking back to structures, you could say that their
-data members were (by default) public. Why don't we do that here?
-
-Objects are really supposed to be accessed through their
-functionality.
-
-Another reason for making data members inaccessible is that we can
-change the internals of a class, without affecting the code that uses
-the class. Consider the scenario where you have a \lstinline{Point} class, and
-you store the $x,y$ coordinates. Then you change you mind and decide
-to store $r,\theta$ coordinates instead. If your program used the fact
-that it could directly access the $x,y$ coordinates, you would be in
-for a lot of rewriting. On the other hand if you have a function
-\lstinline{getx()}, your program does not need any rewriting, and you would
-only change how that function was written.
-
-\begin{block}{No direct access to internals!}
-  \label{sl:repr-independent}
-\begin{lstlisting}
-class PositiveNumber { /* ... */ }
-class Point {
-private:
-  // data members
-public:
-  Point( float x,float y ) { /* ... */ };
-  Point( PositiveNumber r,float theta ) { /* ... */ };
-  float get_x() { /* ... */ };
-  float get_y() { /* ... */ };
-  float get_r() { /* ... */ };
-  float get_theta() { /* ... */ };
-};
-\end{lstlisting}
-  The `get' functionality is independent of what data members the
-  \lstinline{Point} class has.
-\end{block}
-
-\begin{block}{Public versus private}
-  \label{sl:interfaceimpl}
-  \begin{itemize}
-  \item Implementation: data members, keep \indextermtt{private},
-  \item Interface: \indextermtt{public} functions to get/set data.
-  \item Protect yourself against inadvertant changes of object data.
-  \item Possible to change implementation without rewriting calling code.
-  \end{itemize}
-\end{block}
-
-You should not write access functions lightly: you should first think
-about what elements of your class should conceptually be inspectable
-or changeable by the outside world.  Consider for example a class
-where a certain relation holds between members. In that case only
-changes are allowed that maintain that relation.
-
-\begin{block}{Private access gone wrong}
-  \label{sl:privatenogood}
-  We make a class for points on the unit circle\\
-  You don't want to be able to change just one of \lstinline{x,y}!
-  %
-  \verbatimsnippet{unitpointdef}
-  %
-  In general: enforce predicates on the members.
-\end{block}
-
-\begin{comment}
-  In the first example above, the data members of the \lstinline{Vector} class were
-  declared \lstinline{public}, meaning that they are accessable from the calling
-  (main) program. While this is initially convenient for coding, it is a bad idea
-  in the long term. For a variety of reasons it is good practice to
-  separate interface and implementation of a class.
-
-  \begin{block}{Example of accessor functions}
-    \label{sl:pointaccess}
-    Getting and setting of members values is done through accessor functions:
-    \begin{multicols}{2}
-      \verbatimsnippet{pointprivate}
-      \verbatimsnippet{pointprivateset}
-      \verbatimsnippet{pointprivateclose}
-      \verbatimsnippet{pointprivatedefine}
-    \end{multicols}
-    Usage:
-    %
-    \verbatimsnippet{pointprivatesetuse}
-  \end{block}
-\end{comment}
-
 \Level 1 {Initialization}
 
 \begin{block}{Member default values}
@@ -314,9 +226,9 @@ Let's now look at more meaningful methods. For instance, for the
 
 \begin{exercise}
   \label{ex:vectorclass-print}
-  Add a \lstinline{print} function to the \lstinline{Vector} class.
+  Add methods \lstinline{print} and \lstinline{angle} to the \lstinline{Vector} class.
 
-  How many parameters does it need?
+  How many parameters do they need?
 \end{exercise}
 
 By making these functions public, and the data members
@@ -395,6 +307,72 @@ The problem is with \lstinline{v2}. How is it created? We need to define two con
 \verbatimsnippet{pointdef1}
 \end{slide}
 
+\Level 1 {Accessors}
+
+You may have noticed the keywords \indextermtt{public} and
+\indextermtt{private}. We made the data members private, and the
+methods public. Thinking back to structures, you could say that their
+data members were (by default) public. Why don't we do that here?
+
+Objects are really supposed to be accessed through their
+functionality.
+
+Another reason for making data members inaccessible is that we can
+change the internals of a class, without affecting the code that uses
+the class. Consider the scenario where you have a \lstinline{Point} class, and
+you store the $x,y$ coordinates. Then you change you mind and decide
+to store $r,\theta$ coordinates instead. If your program used the fact
+that it could directly access the $x,y$ coordinates, you would be in
+for a lot of rewriting. On the other hand if you have a function
+\lstinline{getx()}, your program does not need any rewriting, and you would
+only change how that function was written.
+
+\begin{block}{Decouple internals from externals}
+  \label{sl:repr-independent}
+\begin{lstlisting}
+class PositiveNumber { /* ... */ }
+class Point {
+private:
+  // data members
+public:
+  Point( float x,float y ) { /* ... */ };
+  Point( PositiveNumber r,float theta ) { /* ... */ };
+  float get_x() { /* ... */ };
+  float get_y() { /* ... */ };
+  float get_r() { /* ... */ };
+  float get_theta() { /* ... */ };
+};
+\end{lstlisting}
+  The `get' functionality is independent of what data members the
+  \lstinline{Point} class has.
+\end{block}
+
+\begin{block}{Public versus private}
+  \label{sl:interfaceimpl}
+  \begin{itemize}
+  \item Implementation: data members, keep \indextermtt{private},
+  \item Interface: \indextermtt{public} functions to get/set data.
+  \item Protect yourself against inadvertant changes of object data.
+  \item Possible to change implementation without rewriting calling code.
+  \end{itemize}
+\end{block}
+
+You should not write access functions lightly: you should first think
+about what elements of your class should conceptually be inspectable
+or changeable by the outside world.  Consider for example a class
+where a certain relation holds between members. In that case only
+changes are allowed that maintain that relation.
+
+\begin{block}{Private access gone wrong}
+  \label{sl:privatenogood}
+  We make a class for points on the unit circle\\
+  You don't want to be able to change just one of \lstinline{x,y}!
+  %
+  \verbatimsnippet{unitpointdef}
+  %
+  In general: enforce predicates on the members.
+\end{block}
+
 \begin{comment}
   \Level 1 {Accessors}
 
@@ -429,6 +407,20 @@ The problem is with \lstinline{v2}. How is it created? We need to define two con
   %
   \snippetwithoutput{integerstream}{object}{stream}
 \end{block}
+
+\begin{exercise}
+  \begin{itemize}
+  \item
+    Write a class \lstinline{multiples_of_two} where every call of
+    \lstinline{next} yields the next multiple of two. 
+  \item Write a class \lstinline{multiples} used as follows:
+\begin{lstlisting}
+multiples multiples_of_three(3);      
+\end{lstlisting}
+  where the \lstinline{next} call gives the next multiple of the
+  argument of the constructor.
+  \end{itemize}
+\end{exercise}
 
 \begin{exercise}
   If you are doing the prime project (chapter~\ref{ch:prime}),

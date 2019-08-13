@@ -43,6 +43,7 @@ using std::vector;
 
 vector<type> name;
 vector<type> name(size);
+vector<type> name(size,init_value);
 \end{lstlisting}
 where
 \begin{itemize}
@@ -52,14 +53,9 @@ where
 \item \n{name} is up to you, and
 \item \n{size} is the (initial size of the array). This is an integer,
   or more precisely, a \indextermtt{size_t} parameter.
+\item \n{init_value} will be used for all elements.
 \end{itemize}
 \end{block}
-
-\begin{remark}
-  There is also an \indextermttdef{array} class, which at first glance
-  looks like a non-resizable variant of \lstinline{vector}. However, it is limited to
-  arrays where the size is known at compile time.
-\end{remark}
 
 \Level 1 {Element access}
 
@@ -76,9 +72,9 @@ the bounds may abort your code, typically with a
 proceed, using invalid data.
 
 As you see in this example, if \n{a}~is an array, and \n{i} and
-integer, then \n{a[i]} is the i'th element.
+integer, then \n{a.at(i)} is the i'th element.
 \begin{itemize}
-\item An array element \n{a[i]} can be used to get the value of an
+\item An array element \n{a.at(i)} can be used to get the value of an
   array element, or it can occur in the left-hand side of an
   assignment to set the value.
 \item The \indextermbus{array}{index} (or
@@ -100,7 +96,7 @@ This is slightly slower, but it does perform bounds checking for every access.
 
 \begin{slide}{Accessing vector elements}
   \label{sl:vectorsub}
-  You have already seen the square bracket notation:
+  Square bracket notation:
 \begin{lstlisting}
 vector<double> x(5, 0.1 );
 x[1] = 3.14;
@@ -180,17 +176,6 @@ for ( auto e : my_vector)
 specifications can be complex. In that case, using \indextermtt{auto} is
 quite convenient.)
 
-\begin{exercise}
-  \label{ex:range-for}
-  Indicate for each of the following vector operations whether you
-  prefer to use an indexed loop or a range-based loop. Give a short
-  motivation.
-  \begin{itemize}
-  \item Count how many elements of a vector are zero.
-  \item Find the location of the last zero.
-  \end{itemize}
-\end{exercise}
-
 So-called \emph{initializer lists}\index{initializer list}
 can also be used as a list denotation:
 
@@ -212,8 +197,19 @@ for (int i= /* from first to last index */ )
 \end{lstlisting}
 Example: find the maximum element and where it occurs.
 %
-\snippetwithoutput{idxmax}{array}{idxmax}
+\snippetwithoutput{vecidxmax}{array}{vecidxmax}
 \end{block}
+
+\begin{exercise}
+  \label{ex:range-for}
+  Indicate for each of the following vector operations whether you
+  prefer to use an indexed loop or a range-based loop. Give a short
+  motivation.
+  \begin{itemize}
+  \item Count how many elements of a vector are zero.
+  \item Find the location of the last zero.
+  \end{itemize}
+\end{exercise}
 
 \begin{exercise}
   \label{ex:array-max}
@@ -264,8 +260,8 @@ for ( auto &e : my_vector)
   \label{sl:prepostindex}
 Array indexing in \lstinline{while} loop and such:
 \begin{lstlisting}
-  x = a[i++]; /* is */ x = a[i]; i++;
-  y = b[++i]; /* is */ i++; y = b[i];
+  x = a[i++]; /* is */ x = a.at(i); i++;
+  y = b[++i]; /* is */ i++; y = b.at(i);
 \end{lstlisting}
 \end{block}
 
@@ -296,6 +292,18 @@ make new variables of that type.
 
 \Level 1 {Vector methods}
 
+There are several \emph{methods}\index{vector!methods}
+to the \lstinline{vector} class. Some of the simpler ones are:
+\begin{itemize}
+\item \lstinline{at}: index an element
+\item \lstinline{size}: give the size of the vector
+\item \lstinline{front}: first element
+\item \lstinline{back}: last element
+\end{itemize}
+
+There are also methods relating to dynamic storage management, which
+we will get to next.
+
 \begin{exercise}
   \label{ex:vectornormalize}
   Create a \n{vector} $x$ of \lstinline{float} elements, and set them to random
@@ -320,7 +328,7 @@ make new variables of that type.
     %% operator method)
   \item Get elements, including bound checking, with \lstinline{ar.at(3)}.
   \item Size: \lstinline{ar.size()}.
-  \item Other functions: \lstinline{front}, \lstinline{back}.
+  \item Other functions: \lstinline{front}, \lstinline{back}, \lstinline{empty}.
   \item \lstinline{vector} is a `templated class'
   \end{itemize}
 \end{slide}
@@ -328,9 +336,9 @@ make new variables of that type.
 \Level 1 {Vectors are dynamic}
 \label{sec:stdvector-dynamic}
 
-There is an important difference between vectors and arrays: a vector
+A vector
 can be grown or shrunk after its creation.
-Use the \lstinline{push_back} method to add elements at the end:
+For instance, you can use the \lstinline{push_back} method to add elements at the end:
 
 \begin{block}{Dynamic extension}
   \label{sl:vector-dynamic}
@@ -381,7 +389,7 @@ while ( ... )
   You can pass a vector to a function:
 \begin{lstlisting}
 void print0( vector<double> v ) {
-  cout << v[0] << endl;
+  cout << v.at(0) << endl;
 };
 \end{lstlisting}
 Vectors, like any argument, are passed by value, so the vector is
@@ -399,22 +407,6 @@ actually copied into the function.
   for computing the $L_2$ norm.
 \end{exercise}
 
-\Level 1 {Vector as function return}
-
-\begin{block}{Vector as function return}
-  \label{sl:vector-return}
-  You can have a vector as return type of a function. This function
-  creates a vector, with the first element set to the size:
-  %
-  \snippetwithoutput{vectorreturn}{array}{vectorreturn}
-\end{block}
-
-\begin{exercise}
-  \label{ex:vec-of-squares}
-  Write a function of one \lstinline{int} argument~$n$, which returns vector
-  of length~$n$, and which contains the first $n$ squares.
-\end{exercise}
-
 \begin{block}{Vector pass by reference}
   \label{sl:vector-arg-ref}
   If you want to alter the vector, you have to pass by reference:
@@ -429,12 +421,36 @@ actually copied into the function.
 \begin{lstlisting}
 int length = 10;
 vector<float> values = random_vector(length);
-sort(values);
+vector<float> sorted = sort(values);
 \end{lstlisting}
-  (This creates a vector of random values of a specified length, and
-then sorts it.)
+  This creates a vector of random values of a specified length, and
+  then makes a sorted copy of it.
 
-See section~\ref{sec:crand} for the random fuction.
+  The alternative would in-place sorting. Find
+  arguments for/against that approach.
+
+\end{exercise}
+
+(See section~\ref{sec:crand} for the random fuction.)
+
+Passing a vector by reference means that the subprogram becomes able
+to alter it. To prevent that, pass it as a
+\indextermsub{const}{reference}; section~\ref{sec:const-ref}.
+
+\Level 1 {Vector as function return}
+
+\begin{block}{Vector as function return}
+  \label{sl:vector-return}
+  You can have a vector as return type of a function. This function
+  creates a vector, with the first element set to the size:
+  %
+  \snippetwithoutput{vectorreturn}{array}{vectorreturn}
+\end{block}
+
+\begin{exercise}
+  \label{ex:vec-of-squares}
+  Write a function of one \lstinline{int} argument~$n$, which returns vector
+  of length~$n$, and which contains the first $n$ squares.
 \end{exercise}
 
 \begin{exercise}
@@ -489,8 +505,8 @@ public:
 
 The solution is to specify a vector without size in the class
 definition, which creates a vector of size zero. When you create an
-object, you then create a vector of the right size, and write that
-over the vector member of the object.
+object, you then create a vector of the right size, and use that as
+the vector member of the object.
 
 \begin{block}{Create and assign}
   \label{sl:class-has-vector}
@@ -612,7 +628,8 @@ the elements are not contiguous. However, let's continue with it for a moment.
 
 \begin{exercise}
   \label{ex:matrixclass-rowcol1}
-  Can you write \n{rows()} and \n{cols()} methods for this class?
+  Write \n{rows()} and \n{cols()} methods for this class that return
+  the number of rows ad columns respectively.
 \end{exercise}
 
 \begin{exercise}
@@ -639,12 +656,13 @@ an object:
     return elements.at(i*cols+j);
   }
 \end{lstlisting}
-(Even more efficient: use cpp macro)
+(Old-style solution: use cpp macro)
 \end{slide}
 
 \begin{exercise}
   \label{ex:matrixclass-rowcol2}
-  Writing \n{rows()} and \n{cols()} methods is now hard. Discuss.  
+  Why are \lstinline{m,n} here stored explicitly, and not in the
+  previous case?
 \end{exercise}
 
 The most important advantage of this is that it is compatible with
@@ -681,7 +699,7 @@ for (int i=0; i<hi; i++)
 \end{lstlisting}
 you can iterate:
 \begin{lstlisting}
-for (auto elt_ptr=vec.begin(); elt_ptr<vec.end(); ++elt_ptr)
+for (auto elt_ptr=vec.begin(); elt_ptr!=vec.end(); ++elt_ptr)
   element = *elt_ptr;
 \end{lstlisting}
 Some remarks:
@@ -821,6 +839,15 @@ goes out of scope.
 If you want heap memory that transcends scope you can use the
 \indextermsub{smart}{pointer} mechanism, which also guarantees against
 memory leaks. See chapter~\ref{pointer}.
+
+\Level 1 {The Array class}
+
+In cases where an array will never change size it would be convenient
+to have a variant of the \lstinline{vector} class that does not have
+the dynamic memory management facility.
+The \indextermttdef{array} class seems to fulfill this role at first sight.
+However, it
+is limited to arrays where the size is known at compile time.
 
 \Level 1 {Span}
 \label{sec:gsl-span}

@@ -19,7 +19,7 @@ using std::vector;
 //codesnippet vectorreturn
 vector<int> make_vector(int n) {
   vector<int> x(n);
-  x[0] = n;
+  x.at(0) = n;
   return x;
 }
 //codesnippet end
@@ -30,7 +30,7 @@ int main() {
   vector<int> x1 = make_vector(10);
   // "auto" also possible!
   cout << "x1 size: " << x1.size() << endl;
-  cout << "zero element check: " << x1[0] << endl;
+  cout << "zero element check: " << x1.at(0) << endl;
   //codesnippet end
   
   return 0;

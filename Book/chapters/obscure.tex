@@ -638,6 +638,7 @@ libraries such as \indexterm{OpenFrameworks},
 \url{https://openframeworks.cc}.
 
 \Level 0 {Standards timeline}
+\label{sec:cpp-standards}
 
 Each standard has many changes over the previous. That said, here are
 some of the highlights of recent standards.
@@ -729,8 +730,21 @@ constexpr int get_value() {
 
 \Level 1 {C++20}
 
+%% https://www.reddit.com/r/cpp/comments/cfk9de/201907_cologne_iso_c_committee_trip_report_the/
+
 \index{C++!C++20|(textbf}
 \begin{itemize}
+\item   \indexterm{modules}: these offer a better interface
+  specification than using
+  \emph{header files}\index{header file!vs modules}.
+\item   \indexterm{coroutines}, another form of parallelism.
+\item   \indexterm{concepts} including in the standard library via ranges
+\item   \indextermsub{spaceship}{operator} including in the standard library
+\item   broad use of normal C++ for direct compile-time programming, without
+  resorting to template metaprogramming (see last trip reports)
+\item \indexterm{ranges}
+\item   \indexterm{calendars} and \indexterm{time zones}
+\item   \indextermbus{text}{formatting}
 \item \indextermtt{span}. See section~\ref{sec:gsl-span}.
 \end{itemize}
 \index{C++!C++20|)}

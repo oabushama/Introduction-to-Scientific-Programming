@@ -25,7 +25,7 @@ program?
   \item \emph{binary files}\index{file!binary}, which are understandable
     to the computer, and unreadable to you.
   \end{itemize}
-  Your source file(s) is/are translated to binary by a
+  Your source files are translated to binary by a
   \indexterm{compiler}.
 \end{block}
 
@@ -37,16 +37,6 @@ Let's say that
   \indexterm{GNU} project. (If you have the Intel compilers, you will
   use \indexterm{icpc} instead.)
 \end{itemize}
-To compile your program, you then type
-\begin{verbatim}
-g++ -o myprogram myprogram.cxx
-\end{verbatim}
-\begin{tacc}
-  On TACC machines, use the Intel compiler:
-\begin{verbatim}
-  icpc -o myprogram myprogram.cxx
-\end{verbatim}
-\end{tacc}
 
 which you can verbalize as `invoke the \n{g++} (or \n{icpc}) compiler,
 with output \n{myprogram}, on \n{myprogram.cxx}'.
@@ -64,7 +54,8 @@ Let's do an example.
 icpc -o zeroprogram zero.cc
 \end{verbatim}
 \begin{itemize}
-\item \texttt{icpc} : compiler. Alternative Gnu: use \texttt{g++} instead of \texttt{icpc}.
+\item \texttt{icpc} : compiler. Alternative Gnu: use \indextermtt{g++}
+  or \indextermtt{clang++} instead of \indextermtt{icpc}.
 \item \texttt{-o programname} : output into a binary name of your choosing
 \item \texttt{something.cc} : your source file.
 \end{itemize}
@@ -160,57 +151,41 @@ Good thing that editors like
 
 \Level 1 {C++ is a moving target}
 
-The C++ language has gone through a number of standards.
-\begin{itemize}
-\item \emph{C++98}\index{C++!C++98} is used in many codes, and many
-  textbooks and internet tutorials have been written about
-  it. However, it contains many mechanisms and constructs that have
-  been replaced by more elegant variants. Where these exist, the older
-  variants should not be used unless there is an overwhelming need.
-  However, for many compilers this is the default.
-\item \emph{C++03}\index{C++!C++03} is a minor amendment of the 98 standard.
-\item \emph{C++11}\index{C++!C++11} is a major overhaul of the
-  standard, introducing many simplifications and additions. 
-\item \emph{C++14}\index{C++!C++14} is a minor refinement of C++11.
-  This book is completely based on this standard. There may be
-  occasional remarks about features that are new to C++11, but many
-  times they go  unremarked.
+The C++ language has gone through a number of standards. (This is
+described in some detail in section~\ref{sec:cpp-standards}.) In this
+course we focus on a fairly recent standard: 
+\emph{C++17}\index{C++!C++17}.
+Unfortunately, your compiler will assume an earlier standard, so
+constructs taught here may be marked as ungrammatical.
 
-  You can tell your compiler to use this standard:
+You can tell your compiler to use the modern standard:
 \begin{verbatim}
-icpc -std=c++14 [other options]
+icpc -std=c++17 [other options]
 \end{verbatim}
 but to save yourself a lot of typing, you can define
 \begin{verbatim}
-alias icpc='icpc -std=c++14'
+alias icpc='icpc -std=c++17'
 \end{verbatim}
 in your shell startup files.
 \begin{tacc}
 On the class \n{isp} machine this alias has been defined by default.
 \end{tacc}
-\item \emph{C++17}\index{C++!C++17} adds yet more goodness to
-  C++. This book will use 17-specific features only sporadically.
-\item \emph{C++20/23/\ldots}\index{C++!C++20}: the C++ standars
-  committee has committed itself to releasing a new standard every
-  three years. Many features of these new standards are only for
-  advanced use or in very large scale projects.
-\end{itemize}
 
 \begin{slide}{C++ versions}
   \label{sl:cpp-version}
   \begin{itemize}
   \item
     The compiler by default uses \n{C++98}. 
-  \item This course explains \n{C++14}. You need tell your compiler
+  \item This course explains \n{C++17}. You need tell your compiler
     about this.
   \item On \n{isp.tacc.utexas.edu} `icpc' uses this by default.
   \item On your own machine you need to do
 \begin{verbatim}
-  icpc -std=c++14 [other options]
+  g++ -std=c++17 [other options]
 \end{verbatim}
 or
 \begin{verbatim}
-  alias icpc='icpc -std=c++14'
+  alias g++='g++ -std=c++17'
 \end{verbatim}
   \end{itemize}
 \end{slide}
@@ -275,6 +250,14 @@ cout << /* we are now going
     outside the bounds of an array.
   \end{enumerate}
 \end{block}
+
+\begin{exercise}{Quick review}
+  True or false?
+  \begin{itemize}
+  \item If your program compiles correctly, it is correct.
+  \item If you run your program and you get the right output, it is correct.
+  \end{itemize}  
+\end{exercise}
 
 \begin{block}{Fixed elements}
   \label{sl:fixedstuff}
@@ -415,60 +398,6 @@ double re_part,im_part;
   \end{enumerate}
 \end{exercise}
 
-\Level 1 {Initialization}
-
-It is a possible to give a variable a value right when it's
-created. This is known as
-\emph{initialization}\index{variable!initialization} and it's
-different from creating the variable and later assigning to it
-(section~\ref{c:assign}).
-
-\begin{block}{Initialization syntax}
-  \label{sl:init-var}
-  There are two ways of initializing a variable
-  \begin{lstlisting}
-    int i = 5;
-    int j{6};
-  \end{lstlisting}
-  Note that writing 
-  \begin{lstlisting}
-    int i;
-    i = 7;
-  \end{lstlisting}
-  is not an initialization: it's a declaration followed by an
-  assignment.
-
-  If you declare a variable but not initialize, you can not count on
-  its value being anything, in particular not zero. Initialization is
-  often omitted for performance reasons.
-\end{block}
-
-\Level 1 {Datatypes}
-\label{sec:ctypes}
-
-\begin{block}{Datatypes}
-  \label{sl:datatypes}
-  Variables come in different types;
-  \begin{itemize}
-  \item We call a variable of type
-    \n{int,float,double} a \indextermsub{numerical}{variable}.
-  \item \emph{Complex numbers}\index{complex numbers} will be
-    discussed later.
-  \item 
-    For characters: \n{char}. Strings are complicated; see later.
-  \item Truth values: \n{bool}
-  \item 
-    You can make your own types. Later.
-  \end{itemize}
-\end{block}
-
-For complex numbers see section~\ref{sec:stl-complex}.
-For strings see chapter~\ref{ch:string}.
-
-At some point you may start to wonder precisely what the range of
-integers or real numbers is that is storedin an \n{int} or \n{float}
-variable. This is addressed in section~\ref{sec:limits}.
-
 \Level 1 {Assignments}
 \label{c:assign}
 
@@ -538,12 +467,6 @@ Integer add/subtract one:
 \end{exercise}
 
 \begin{exercise}
-  \label{ex:print-variables}
-  Write a program that has several variables. Assign values either in
-  an initialization or in an assignment. Print out the values.
-\end{exercise}
-
-\begin{exercise}{Quick review}
   \label{q:initvar}
 \begin{lstlisting}
 #include <iostream>
@@ -565,15 +488,71 @@ What happens?
 \end{enumerate}
 \end{exercise}
 
-\Level 1 {Floating point variables}
+\Level 1 {Datatypes}
+\label{sec:ctypes}
+
+\begin{block}{Datatypes}
+  \label{sl:datatypes}
+  Variables come in different types;
+  \begin{itemize}
+  \item We call a variable of type
+    \n{int,float,double} a \indextermsub{numerical}{variable}.
+  \item \emph{Complex numbers}\index{complex numbers} will be
+    discussed later.
+  \item 
+    For characters: \n{char}. Strings are complicated; see later.
+  \item Truth values: \n{bool}
+  \item 
+    You can make your own types. Later.
+  \end{itemize}
+\end{block}
+
+For complex numbers see section~\ref{sec:stl-complex}.
+For strings see chapter~\ref{ch:string}.
+
+At some point you may start to wonder precisely what the range of
+integers or real numbers is that is storedin an \n{int} or \n{float}
+variable. This is addressed in section~\ref{sec:limits}.
+
+\Level 2 {Integers}
 
 Mathematically, integers are a special case of real numbers.
 In a computer, integers are stored very differently from
+real numbers --~or technically, floating point numbers.
+
+C++ integers are stored as binary number and a sign bit, though not as
+naively as this sounds. The upshot is that normally
+ within a certain range all integer values can be represented.
+
+\begin{exercise}{Integer range}
+  \label{ex:int-range}
+  These days, the default amount of storage for an \lstinline{int} is
+  32 bits. After one bit is used for the sign, that leave 31 bits for
+  the digits. What is the representible integer range?
+\end{exercise}
+
+The integer type in C++ is \indextermttdef{int}:
+\begin{lstlisting}
+int my_integer;
+my_integer = 5;
+cout << my_integer << endl;
+\end{lstlisting}
+
+\begin{exercise}
+  \label{ex:cin-cout3np1}
+  Write a program that :
+  \begin{itemize}
+  \item displays the message \n{Type a number},
+  \item accepts an integer number from you (use~\lstinline{cin}),
+  \item makes another variable that is three times that integer plus one,
+  \item and then prints out the second variable.
+  \end{itemize}
+\end{exercise}
+
+\Level 2 {Floating point variables}
+
 \indextermdef{floating point} numbers.
 \begin{itemize}
-\item Within a certain range, roughly
-  $-2\cdot 10^9,\ldots,2\cdot 10^9$,
-  all integer values can be represented.
 \item On the other hand, not all real numbers have a floating point
   representation. For instance, since computer numbers are binary,
   $1/2$~is representable but $1/3$~is not.
@@ -618,45 +597,7 @@ and
 
 Complex numbers exist, see section~\ref{sec:stl-complex}.
 
-\Level 1 {Number values and undefined values}
-\label{sec:naninf}
-
-A computer allocates a fixed amount of space for integers and floating
-point numbers, typically 4 or 8 bytes. That means that not all numbers
-are representable.
-\begin{itemize}
-\item Using 4 bytes, that is 32 bits, we can represent $2^{32}$
-  integers. Typically this is the range $-2^{31}\ldots 0 \ldots
-  2^{31}-1$.
-\item Floating point numbers are representated by a sign bit, an
-  exponent, and a number of significant digits.
-  For 4-byte numbers, the number of significant (decimal) digits is
-  around~6; for 8-byte numbers it is around 15.
-\end{itemize}
-
-If you compute a number that `fall in between the gaps' of the
-representable numbers, it gets truncated or rounded. The effects of
-this on your computation constitute its own field of numerical
-mathematics, called \indexterm{roundoff error analysis}.
-
-If a number goes outside the bounds of what is representable, it
-becomes either:
-\begin{itemize}
-\item \indextermtt{Inf}: infinity. This happens if you add or multiply
-  enough large numbers together. There is of course also a value
-  \n{-}\indextermtt{Inf}. Or:
-\item \indextermtt{NaN}: not a number. This happens if you subtract
-  one \lstinline{Inf} from another, or do things such as taking the
-  root of a negative number.
-\end{itemize}
-Your program will not be interrupted if a \lstinline{NaN} or \lstinline{Inf} is
-generated: the computation will merrily (and at full speed) progress
-with these numbers. See section~\ref{sec:limits} for detection of such quantities.
-
-Some people advocate filling uninitialized memory with such illegal
-values, to make it recognizable as such.
-
-\Level 1 {Boolean values}
+\Level 2 {Boolean values}
 
 \begin{block}{Truth values}
   \label{sl:bool-var}
@@ -669,7 +610,7 @@ found = true;
 \end{lstlisting}
 \end{block}
 
-\Level 1 {Strings}
+\Level 2 {Strings}
 
 Strings, that is, strings of characters, are not a C++ built-in
 datatype. Thus, they take some extra setup to use.
@@ -700,6 +641,34 @@ string name;
 
   What happens if you enter first and last name?
 \end{exercise}
+
+\Level 1 {Initialization}
+
+It is a possible to give a variable a value right when it's
+created. This is known as
+\emph{initialization}\index{variable!initialization} and it's
+different from creating the variable and later assigning to it
+(section~\ref{c:assign}).
+
+\begin{block}{Initialization syntax}
+  \label{sl:init-var}
+  There are two ways of initializing a variable
+  \begin{lstlisting}
+    int i = 5;
+    int j{6};
+  \end{lstlisting}
+  Note that writing 
+  \begin{lstlisting}
+    int i;
+    i = 7;
+  \end{lstlisting}
+  is not an initialization: it's a declaration followed by an
+  assignment.
+
+  If you declare a variable but not initialize, you can not count on
+  its value being anything, in particular not zero. Initialization is
+  often omitted for performance reasons.
+\end{block}
 
 \Level 0 {Input/Output, or I/O as we say}
 \label{sec:io}
@@ -733,17 +702,6 @@ cin >> i;
 There is also \lstinline{getline}, which is more general.
 \end{block}
 
-\begin{exercise}
-  \label{ex:cin-cout3np1}
-  Write a program that :
-  \begin{itemize}
-  \item displays the message \n{Type a number},
-  \item accepts an integer number from you (use~\lstinline{cin}),
-  \item makes another variable that is three times that integer plus one,
-  \item and then prints out the second variable.
-  \end{itemize}
-\end{exercise}
-
 For more I/O, see chapter~\ref{ch:io}.
 
 \Level 0 {Expressions}
@@ -753,36 +711,6 @@ The most basic step in computing is to form expressions such as sums,
 products, logical conjuctions, string appending. Let's start with
 constants.
 
-\Level 1 {Constants}
-
-\begin{block}{Integer constants}
-  \label{sl:intvals}
-  Integers are normally  written in decimal, and stored in 32 bits.
-  If you need something else:
-\begin{lstlisting}
-int d = 42;
-int o = 052; // start with zero
-int x = 0x2a;
-int X = 0X2A;
-int b = 0b101010; // C++14
-long ell = 42L;
-\end{lstlisting}
-\end{block}
-
-\begin{block}{Floating point constants}
-  \label{sl:float-vars}
-  \begin{itemize}
-  \item Default: \lstinline{double}
-  \item Float: \lstinline{3.14f} or \lstinline{3.14F}
-  \item Long double: \lstinline{1.22l} or \n{1.22L}.
-  \end{itemize}
-  This prevents numerical accidents: 
-\begin{lstlisting}
-  double x = 3.;
-\end{lstlisting}
-  converts float to double, maybe introducing random bits.
-\end{block}
-
 \Level 1 {Numerical expressions}
 
 Expressions in
@@ -790,12 +718,11 @@ programming languages for the most part look the way you would expect
 them to.
 \begin{itemize}
 \item Mathematical operators: \n{+ - /} and \n{*}~for multiplication.
-\item C++ does not have a power operator (Fortran does).
 \item Integer modulus:~\n{5\char`\%2}
 \item You can use parentheses: \n{5*(x+y)}. Use parentheses if you're
   not sure about the precedence rules for operators.
-\item `Power' and various mathematical functions are realized through
-  library calls.
+\item C++ does not have a power operator (Fortran does): `Power' and
+  various mathematical functions are realized through library calls.
 \end{itemize}
 
 \begin{block}{Math library calls}
@@ -936,9 +863,11 @@ Dangerous:
 The fraction is executed as integer division.\\
 For floating point result do:
 \begin{lstlisting}
-(double)i/j /* or */ (1.*i)/j
+(1.*i)/j
 \end{lstlisting}
 \end{slide}
+
+Other conversation are done through a \indexterm{cast}; see section~\ref{sec:cast}.
 
 \begin{exercise}
   \label{ex:modulus}
@@ -983,7 +912,9 @@ For floating point result do:
   \end{enumerate}
 \end{exercise}
 
-\Level 0 {Library functions}
+\Level 0 {Advanced topics}
+
+\Level 1 {Library functions}
 
 Some functions, such as \indexterm{abs} can be included through \indextermtt{cmath}:
 \begin{lstlisting}
@@ -995,6 +926,76 @@ Others, such as \indexterm{max}, are in the less common \indextermtt{algorithm}:
 #include <algorithm>
 using std::max;
 \end{lstlisting}
+
+\Level 1 {Number values and undefined values}
+\label{sec:naninf}
+
+A computer allocates a fixed amount of space for integers and floating
+point numbers, typically 4 or 8 bytes. That means that not all numbers
+are representable.
+\begin{itemize}
+\item Using 4 bytes, that is 32 bits, we can represent $2^{32}$
+  integers. Typically this is the range $-2^{31}\ldots 0 \ldots
+  2^{31}-1$.
+\item Floating point numbers are representated by a sign bit, an
+  exponent, and a number of significant digits.
+  For 4-byte numbers, the number of significant (decimal) digits is
+  around~6; for 8-byte numbers it is around 15.
+\end{itemize}
+
+If you compute a number that `fall in between the gaps' of the
+representable numbers, it gets truncated or rounded. The effects of
+this on your computation constitute its own field of numerical
+mathematics, called \indexterm{roundoff error analysis}.
+
+If a number goes outside the bounds of what is representable, it
+becomes either:
+\begin{itemize}
+\item \indextermtt{Inf}: infinity. This happens if you add or multiply
+  enough large numbers together. There is of course also a value
+  \n{-}\indextermtt{Inf}. Or:
+\item \indextermtt{NaN}: not a number. This happens if you subtract
+  one \lstinline{Inf} from another, or do things such as taking the
+  root of a negative number.
+\end{itemize}
+Your program will not be interrupted if a \lstinline{NaN} or \lstinline{Inf} is
+generated: the computation will merrily (and at full speed) progress
+with these numbers. See section~\ref{sec:limits} for detection of such quantities.
+
+Some people advocate filling uninitialized memory with such illegal
+values, to make it recognizable as such.
+
+\Level 1 {Constants}
+
+\begin{block}{Integer constants}
+  \label{sl:intvals}
+  Integers are normally  written in decimal, and stored in 32 bits.
+  If you need something else:
+\begin{lstlisting}
+int d = 42;
+int o = 052; // start with zero
+int x = 0x2a;
+int X = 0X2A;
+int b = 0b101010;
+long ell = 42L;
+\end{lstlisting}
+\end{block}
+
+Binary numbers are new to C++14\index{C++!C++14}.
+
+\begin{block}{Floating point constants}
+  \label{sl:float-vars}
+  \begin{itemize}
+  \item Default: \lstinline{double}
+  \item Float: \lstinline{3.14f} or \lstinline{3.14F}
+  \item Long double: \lstinline{1.22l} or \n{1.22L}.
+  \end{itemize}
+  This prevents numerical accidents: 
+\begin{lstlisting}
+  double x = 3.;
+\end{lstlisting}
+  converts float to double, maybe introducing random bits.
+\end{block}
 
 \Level 0 {Review questions}
 

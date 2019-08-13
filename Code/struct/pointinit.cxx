@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2016-8 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2016-9 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** vectorinit.cxx : 
  ****
@@ -10,7 +10,6 @@
 
 //codesnippet pointinit
 struct vector_a { double x; double y; } ;
-// needs compiler option: -std=c++11
 struct vector_b { double x=0; double y=0; } ;
 
 int main() {
