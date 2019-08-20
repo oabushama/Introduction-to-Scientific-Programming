@@ -157,14 +157,14 @@
 
 \renewenvironment
     {frame}[2][keyword]
-    {\dimen0=\parskip
-      \begin{quote}
-        \leftskip=.5\unitindent
+    {\smallskip %dimen0=\parskip
+      %\begin{quote}
+        \leftskip=0pt % .5\unitindent
         \parskip=.5\dimen0 plus .1\dimen0
-        \leavevmode \noindent \hbox{\hskip-\unitindent \textsl{#2}}\par
+        \leavevmode \noindent \hbox{\textsl{#2}}\par % \hskip-\unitindent
         \raggedright %\leftskip=.5\unitindent
     }
-    {\end{quote}}
+    {\par\smallskip} %\end{quote}}
 \newenvironment{cnote}{\begin{quotation}\noindent\emph{C difference:\ }}{\end{quotation}}
 \newenvironment{f77note}{\begin{quotation}\noindent\emph{F77 note:\ }}{\end{quotation}}
 \newenvironment{advanced}{\begin{quotation}\noindent\emph{Advanced note:\ }}{\end{quotation}}

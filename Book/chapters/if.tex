@@ -65,8 +65,8 @@ if (x>0) {
 \end{lstlisting}
 \begin{itemize}
 \item
-  In that last example the outer curly brackets are optional. But it's
-  safer to use them anyway.
+  In that last example the outer curly brackets in the true branch are
+  optional. But it's safer to use them anyway.
 \item When you start nesting constructs, use indentation to make it
   clear which line is at which level. A~good editor helps you with that.
 \end{itemize}
@@ -190,7 +190,7 @@ if ( /* your test here */ )
 else
   cout << "odd" << endl;
 \end{lstlisting}
-Can you rewrite your test so that the output lines are switched?
+Then, rewrite your test so that the true branch corresponds to the odd case?
 \end{exercise}
 
 \begin{exercise}
@@ -271,6 +271,8 @@ if ( something ) {
 }
 // the variable `i' has gone away.
 \end{lstlisting}
+
+See chapter~\ref{ch:scope} for more detail.
 
 \begin{slide}{Local variables in conditionals}
   \label{sl:if-scope}

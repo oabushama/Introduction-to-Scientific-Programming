@@ -37,15 +37,19 @@ Most notably, Object-Oriented programming is covered
 before arrays and pointers come very late, if at all.
 
 There are several thoughts behind this. For one, dynamic arrays in~C++
-are most easily realized through the \n{std::vector} mechanism, which
+are most easily realized through the \lstinline{std::vector} mechanism, which
 requires an understanding of classes. The same goes for
-\n{std::string}.
+\lstinline{std::string}.
 
 Secondly, in the traditional approach, object-oriented techniques are
 taught late in the course, after all the basic mechanisms, including
 arrays. We consider OOP to be an important notion in program design,
 and central to~C++, rather than an embellishment on the traditional
 C~mechanisms, so we introduce it as early as possible.
+
+Even more elementary, we emphasize range-based loops as much as
+possible over indexed loops, since ranges are increasing in importance
+in recent language versions.
 
 \Level 0 {Timeline for a C++/F03 course}
 
@@ -138,6 +142,9 @@ projects that students gradually build towards.
   simulated internet, and explore pageranking, including `search
   engine optimization'. This exercise uses lots of
   pointers. Chapter~\ref{ch:google}.
+\item[scheduling] Exploration of concepts related to the
+  \ac{TSP}, with some modifications that
+  model \indexterm{Amazon Prime}.
 \end{description}
 
 Rather than including the project exercises in the didactic sections,

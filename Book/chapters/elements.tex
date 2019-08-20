@@ -54,7 +54,7 @@ Let's do an example.
 icpc -o zeroprogram zero.cc
 \end{verbatim}
 \begin{itemize}
-\item \texttt{icpc} : compiler. Alternative Gnu: use \indextermtt{g++}
+\item \texttt{icpc} : compiler. Alternative: use \indextermtt{g++}
   or \indextermtt{clang++} instead of \indextermtt{icpc}.
 \item \texttt{-o programname} : output into a binary name of your choosing
 \item \texttt{something.cc} : your source file.
@@ -231,7 +231,8 @@ cout << /* we are now going
   same line or on different lines?
 
   Experiment with other changes to the layout of your source. Find at
-  least one change that leads to a compiler error.
+  least one change that leads to a compiler error. Can you relate the
+  message to the error?
 \end{exercise}
 
 \begin{block}{Errors}
@@ -361,7 +362,7 @@ variable may contain random memory contents.
     whether you use upper or lowercase: the language is \indexterm{case sensitive}.
   \item Words such as \n{main} or \n{return} are \indexterm{reserved words}.
   \item Usually \n{i} and \n{j} are not the best variable names: use
-    \n{row} and \n{column} instead.
+    \n{row} and \n{column}, or other meaningful names, instead.
   \end{itemize}
 \end{block}
 
@@ -488,6 +489,21 @@ What happens?
 \end{enumerate}
 \end{exercise}
 
+\begin{block}{Terminal input}
+  \label{sl:cin}
+  To make a program run dynamic, you can set starting values from
+  keyboard input. For this, use \indextermtt{cin}, which takes
+  keyboard input and puts it in a numerical (or string) variable.
+\begin{lstlisting}
+// add at the top of your program:
+using std::cin;
+
+// then in your main:
+int i;
+cin >> i;
+\end{lstlisting}
+\end{block}
+
 \Level 1 {Datatypes}
 \label{sec:ctypes}
 
@@ -589,10 +605,9 @@ and
     this.
   \item Make another variable that is the previous one minus
     \lstinline{one}. Print the result again.
-  \item Test your program with a range of inputs. Are there ones that
-    surprise you?  
+  \item Test your program with \n{.001}, \n{.0001}, \n{.00001},
+    \n{000001}. Do you understand the result?
   \end{enumerate}
-
 \end{exercise}
 
 Complex numbers exist, see section~\ref{sec:stl-complex}.
@@ -636,7 +651,8 @@ string name;
 
 \begin{exercise}
   \label{ex:ask-for-name}
-  Write a program that asks for the user's first name, and prints
+  Write a program that asks for the user's first name, uses
+  \lstinline{cin} to read that, and prints
   something like \n{Hello, Susan!} in response.
 
   What happens if you enter first and last name?
@@ -666,7 +682,7 @@ different from creating the variable and later assigning to it
   assignment.
 
   If you declare a variable but not initialize, you can not count on
-  its value being anything, in particular not zero. Initialization is
+  its value being anything, in particular not zero. Such implicit initialization is
   often omitted for performance reasons.
 \end{block}
 
@@ -688,18 +704,9 @@ cout << "Here is the root: " << sqrt(x) << endl;
 \end{block}
 
 \begin{block}{Terminal input}
-  \label{sl:cin}
-  There is also a \lstinline{cin}, which serves to take user input and
-  put it in a numerical variable.
-\begin{lstlisting}
-// add at the top of your program:
-using std::cin;
-
-// then in your main:
-int i;
-cin >> i;
-\end{lstlisting}
-There is also \lstinline{getline}, which is more general.
+  \label{sl:cin-more}
+  \indextermtt{cin} is limited.
+  There is also \lstinline{getline}, which is more general.
 \end{block}
 
 For more I/O, see chapter~\ref{ch:io}.
@@ -867,8 +874,6 @@ For floating point result do:
 \end{lstlisting}
 \end{slide}
 
-Other conversation are done through a \indexterm{cast}; see section~\ref{sec:cast}.
-
 \begin{exercise}
   \label{ex:modulus}
   Write a program that asks for two integer numbers \n{n1,n2}.
@@ -907,7 +912,7 @@ Other conversation are done through a \indexterm{cast}; see section~\ref{sec:cas
     float variable.
   \item \verb-5(7+2)- is equivalent to~\n{45}.
   \item \verb+1--1+ is equivalent to zero.
-  \item \verb-int i = 2./3.;- The variable \n{i} is~1.
+  \item \verb-int i = 5/3.;- The variable \n{i} is~2.
   \item \verb-float x = 2/3;- The variable \n{x} is approximately~\n{0.6667}.
   \end{enumerate}
 \end{exercise}

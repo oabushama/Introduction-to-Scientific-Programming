@@ -169,6 +169,18 @@ a special case of another class.
 Typically the object of the \indextermsub{derived}{class} (the special
 case) then also inherits the data and methods of the
 \indextermsub{base}{class} (the general case).
+
+\begin{block}{Examples for base and derived cases}
+  \label{sl:derived-example}
+  \begin{itemize}
+  \item Base case: employee. Has: salary, employee number.\\
+    Special case: manager. Has in addition: underlings.
+  \item Base case: shape in drawing program. Has: extent, area,
+    drawing routine.\\
+    Special case: square et cetera; has specific drawing routine.
+  \end{itemize}  
+\end{block}
+
 \begin{lstlisting}
 class General {
 protected: // note!
@@ -267,6 +279,17 @@ public:
 };
 \end{lstlisting}
 \end{slide}
+
+\begin{block}{Access levels}
+  \label{sl:private-etc}
+  Methods and data can be
+  \begin{itemize}
+  \item private, because they are only used internally;
+  \item public, because they should be usable from outside a class
+    object, for instance in the main program;
+  \item protected, because they should be usable in derived classes.
+  \end{itemize}
+\end{block}
 
 \Level 1 {Methods of base and derived classes}
 \label{sec:derive-method}

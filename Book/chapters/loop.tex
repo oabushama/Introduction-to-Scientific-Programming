@@ -32,7 +32,7 @@ statements that get repeated. The two types of loop statement in C++ are:
 However, the difference between the two is not clear-cut: in many
 cases you can use either.
 
-We will now first consider the \n{for} loop; the \n{while} loop comes in
+We will now first consider the \lstinline{for} loop; the \lstinline{while} loop comes in
 section~\ref{sec:loopuntil}.
 
 \Level 0 {The `for' loop}
@@ -47,7 +47,7 @@ for (int var=low; var<upper; var++) {
   cout << "The square of " << var << " is " << var*var << endl;
 }
 \end{lstlisting}
-The \n{for} line is called the \indextermbus{loop}{header}, and the
+The \lstinline{for} line is called the \indextermbus{loop}{header}, and the
 statements between curly brackets the \indextermbus{loop}{body}.
 Each execution of the loop body is called an
 %
@@ -96,12 +96,12 @@ The loop header has three components, all of which are optional.
 \item A stopping test, usually
   involving the loop variable. If you leave this out, you need a
   different mechanism for stopping the loop; see section~\ref{sec:loopuntil}.
-\item An increment, often~\n{i++} or spelled out \n{i=i+1}. You can let the loop count down by using~\n{i--}.
+\item An increment, often~\lstinline{i++} or spelled out \lstinline{i=i+1}. You can let the loop count down by using~\lstinline{i--}.
 \end{itemize}
 
 \begin{exercise}
   \label{ex:manyhello}
-  Read an integer value with \n{cin}, and print `Hello world' that many times.
+  Read an integer value with \lstinline{cin}, and print `Hello world' that many times.
 \end{exercise}
 \begin{exercise}
   \label{ex:counthello}
@@ -129,11 +129,11 @@ This is how a loop is executed.
 \begin{block}{Popular increments}
   \label{sl:more-increment}
   \begin{itemize}
-  \item \n{i++} for a loop that counts forward;
-  \item \n{i--} for a loop that counts backward;
-  \item \n{i+=2} to cover only odd or even numbers, depending on
+  \item \lstinline{i++} for a loop that counts forward;
+  \item \lstinline{i--} for a loop that counts backward;
+  \item \lstinline{i+=2} to cover only odd or even numbers, depending on
     where you started;
-  \item \n{i*=10} to cover powers of ten.
+  \item \lstinline{i*=10} to cover powers of ten.
   \end{itemize}
 \end{block}
 
@@ -218,9 +218,9 @@ for ( int i=0; i<N; i++) {
   \item Loop variable is usually an integer.
   \item The stopping test be any test; can even be empty.
   \item The stopping test is performed at the start of each iteration.
-  \item The increment can be a decrement or something like \n{var*=10}
+  \item The increment can be a decrement or something like \lstinline{var*=10}
   \item Any and all of initialization, test, increment can be empty:\\
-    \n{for(;;) {...}}
+    \lstinline{for(;;) {...}}
   \item (The loop variable can be defined outside the loop:
 \begin{lstlisting}
 int var;
@@ -240,8 +240,8 @@ for (int row=0; row<m; row++)
     ...
 \end{lstlisting}
 This is called \indextermbus{loop}{nest}; 
-the \n{row}-loop is called the \indextermsub{outer}{loop} and the
-\n{col}-loop the \indextermsub{inner}{loop}.
+the \lstinline{row}-loop is called the \indextermsub{outer}{loop} and the
+\lstinline{col}-loop the \indextermsub{inner}{loop}.
 
 \begin{slide}{Nested loops}
   \label{sl:for-nest}
@@ -252,8 +252,8 @@ for (int row=0; row<m; row++)
     ...
 \end{lstlisting}
 This is called `loop nest', with\\
-\n{row}: outer loop\\
-\n{col}: inner loop.
+\lstinline{row}: outer loop\\
+\lstinline{col}: inner loop.
 \end{slide}
 
 Traversing an index space (whether that corresponds to an array object
@@ -265,11 +265,11 @@ ways.
   \label{ex:ij-triangle}
   Write an $i,j$ loop nest that prints out all pairs with
   \[ 1\leq i,j\leq 10,\quad  j\leq i. \]
-  Output one line for each \n{i} value.
+  Output one line for each \lstinline{i} value.
 
   Now write an $i,j$ loop that prints all pairs with
   \[ 1\leq i,j\leq 10,\quad |i-j|<2, \]
-  again printing one line per \n{i} value.
+  again printing one line per \lstinline{i} value.
   Food for thought: this exercise is definitely easiest with a
   conditional in the inner loop, but can you do
   it without? 
@@ -479,7 +479,7 @@ is an example in which the second syntax is more appropriate.
   If it is not prime, find integers $p\leq q$ so that $r=p\cdot q$ and so
   that $p$ and $q$ are as close together as possible.
   For instance, for $r=30$ you should print out \n{5,6}, rather than
-  \n{3,10}. You are allowed to use the function~\n{sqrt}.
+  \n{3,10}. You are allowed to use the function~\lstinline{sqrt}.
 \end{exercise}
 
 \begin{exercise}
@@ -497,7 +497,7 @@ is an example in which the second syntax is more appropriate.
   year. In both cases the interest is deposited into the account.
   
   After how many years will the amount of money in the first account
-  be more than in the second? Solve this with a \n{while} loop.
+  be more than in the second? Solve this with a \lstinline{while} loop.
 
   Food for thought: compare solutions with a pre-test and post-test,
   and also using a for-loop.
