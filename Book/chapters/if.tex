@@ -77,9 +77,9 @@ if (x>0) {
   this, otherwise maybe do something else'. The C++ syntax is
 \begin{lstlisting}
 if ( something ) {
-  do something;
+  // do something;
 } else {
-  do otherwise;
+  // do otherwise;
 }
 \end{lstlisting}
 \begin{itemize}
@@ -92,16 +92,16 @@ if ( something ) {
   \label{sl:elseif}
   Chain:
 \begin{lstlisting}
-if ( something ) {
+if ( /* some test */ ) {
   ...
-} else if ( something other ) {
+} else if ( /* other test */ ) {
   ...
 }
 \end{lstlisting}
 Nest:
 \begin{lstlisting}
-if ( something ) {
-  if ( something other ) {
+if ( /* some test */ ) {
+  if ( /* other test */ ) {
     ...
   } else {
     ...
@@ -198,7 +198,7 @@ Then, rewrite your test so that the true branch corresponds to the odd case?
   Read in an integer. If it's a multiple of three print `Fizz!';
   if it's a multiple of five print `Buzz'!. It it is 
   a multiple of both three and five print `Fizzbuzz!'. Otherwise
-  print nothing.
+  print nothing. (Note: your program should display at most one output.)
 \end{exercise}
 
 \begin{review}

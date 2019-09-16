@@ -77,6 +77,11 @@ auto X = make_shared<Obj>( /* args */ );
 
 X->method_or_member;
 \end{lstlisting}
+Much better than
+\begin{lstlisting}
+Obj *X;
+*X = Obj( /* args */ );
+\end{lstlisting}
 \end{block}
 
 (It is also possible to cast a \indextermtt{new} object to shared
@@ -313,7 +318,7 @@ For instance, suppose you're writing a linked list code, and your
 \lstinline{node} class has a method \lstinline{prepend_or_append} that gives a shared
 pointer to the new head of the list.
 
-\begin{slide}{Linked list code}
+\begin{slide}{Linked list code, old style}
   \label{sl:share-ptr-node}  
 \begin{lstlisting}
 node *node::prepend_or_append(node *other) {
@@ -411,18 +416,23 @@ void f(int*);
 Note: dereferencing is undefined behaviour; does not throw an exception.
 \end{slide}
 
-\Level 1 {Void pointer}
+\Level 1 {Opaque pointer}
 
-The need for \emph{void pointers}\index{pointer!void!in C++}
+The need for \emph{opaque pointers}\index{pointer!opaque!in C++}
+\lstinline{void*}
 is a lot less in C++ than it was in~C. For
 instance, contexts can often be modeled with captures in closures
 (chapter~\ref{sec:lambda}). If you really need a pointer that does not
 \textit{a~priori} knows what it points to, use \indextermtt{std::any},
 which is usually smart enough to call destructors when needed.
 
-\begin{slide}{Void pointer}
+\snippetwithoutput{opaqueany}{pointer}{any}
+
+\begin{slide}{Opaque pointer}
   \label{sl:void-ptr}
   Use \lstinline{std::any} instead of void pointers.
+
+  \snippetwithoutput{opaqueany}{pointer}{any}
 \end{slide}
 
 \Level 1 {Pointers to non-objects}

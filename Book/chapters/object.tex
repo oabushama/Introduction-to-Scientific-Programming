@@ -121,19 +121,6 @@ shows the constructor and the data members:
   \end{itemize}
 \end{block}
 
-\begin{block}{Initialization}
-  \label{sl:init-no-list}
-\begin{lstlisting}
-Vector( float x,float y )
-  : x(x),y(y) {};
-\end{lstlisting}
-or
-\begin{lstlisting}
-Vector( float xx,float yy ) {
-  x = xx; y = yy; };
-\end{lstlisting}
-\end{block}
-
 \begin{comment}
   Above you had a declaration \lstinline{Vector v} which was not just a
   declaration: it called the so-called \indextermsub{default}{constructor},
@@ -188,9 +175,9 @@ private:
   \label{sl:class-set}
 \begin{lstlisting}
 class Vector {
-private:
+private: // members
   double r,theta;
-public:
+public: // methods
   Vector( double x,double y ) {
     r = sqrt(x*x+y*y);
     theta = atan(y/x);
@@ -245,10 +232,11 @@ private, you define an \acf{API} for the class:
 \begin{slide}{Functions on objects}
   \label{sl:obj-func}
   \snippetwithoutput{pointfunc}{geom}{pointfunc}
-  %\verbatimsnippet{pointfunc}
   We call such internal functions `methods'.\\
   Data members, even \lstinline{private}, are global to the methods.
 \end{slide}
+
+\Level 2 {Methods that return objects}
 
 So far you have seen methods that use the data members of an object to
 return some quantity. It is also possible to alter the members. 
@@ -273,6 +261,19 @@ could create a new object based on the scaled members:
   \snippetwithoutput{pointscale}{geom}{pointscale}
 \end{slide}
 
+\Level 2 {Changing state}
+
+Objects usually have data members that maintain the
+\emph{state}\index{object!state of} of the object. By changing the
+values of the members you change the state of the object. Doing so is
+usually done through a method.
+
+\begin{block}{Changing the state of an object}
+  \label{sl:state-method}
+  Example: scaling a vector:
+  \verbatimsnippet{stationalitymethod}
+\end{block}
+
 \Level 1 {Default constructor}
 
 One of the more powerful ideas in C++ is that there can be more than
@@ -293,18 +294,30 @@ define it explicitly:
 \verbatimsnippet{pointdef1}
 
 \begin{slide}{Default constructor}
-  \label{sl:obj-def-construct}
-\small
+  \label{sl:obj-def-construct1}
   \verbatimsnippet{pointdef2}
   gives (g++; different for intel):
 \begin{lstlisting}
 pointdefault.cxx: In function 'int main()':
 pointdefault.cxx:32:21: error: no matching function for call to
                 'Vector::Vector()'
-   Vector v1(1.,2.), v2;
 \end{lstlisting}
-The problem is with \lstinline{v2}. How is it created? We need to define two constructors:
+\end{slide}
+
+\begin{slide}{Default constructor}
+  \label{sl:obj-def-construct2}
+  The problem is with \lstinline{v2}:
+\begin{lstlisting}
+Vector v1(1.,2.), v2;    
+\end{lstlisting}
+\begin{itemize}
+\item \lstinline{v1} is created with the constructor;
+\item \lstinline{v2} uses the default constructor;
+\item as soon as you define a constructor, the default constructor
+  goes away;
+\item you need to redefine the default constructor:
 \verbatimsnippet{pointdef1}
+\end{itemize}
 \end{slide}
 
 \Level 1 {Accessors}
@@ -445,15 +458,16 @@ multiples multiples_of_three(3);
 \begin{lstlisting}
 class Vector {
 private:
-  double vx,vy;
+  double x,y;
 public:
-  double &x() { return vx; };
+  double &x_component() { return x; };
 };
 int main() {
   Vector v;
-  v.x() = 3.1;
+  v.x_component() = 3.1;
 }
 \end{lstlisting}
+Only define this is really needed.
 \end{block}
 
 \begin{block}{Reference to internals}
@@ -540,8 +554,7 @@ be directly changable!
   \item private, because they are only used internally;
   \item public, because they should be usable from outside a class
     object, for instance in the main program;
-  \item protected, because they should be usable in derived classes (see
-    section~\ref{sec:derive-method}).
+  \item protected, because they should be usable in derived classes.
   \end{itemize}
 \end{block}
 
@@ -570,16 +583,9 @@ The syntax for this is
 <returntype> operator<op>( <argument> ) { <definition> }
 \end{lstlisting}
 For instance:
-\begin{lstlisting}
-class Point {
-private:
-  float x,y;
-public:
-  Point operator*(float factor) {
-    return Point(factor*x,factor*y);
-  };
-};
-\end{lstlisting}
+%
+\snippetwithoutput{pointmultop}{geom}{pointmult}
+%
 Can even redefine equals and parentheses.
 \end{block}
 
@@ -750,9 +756,10 @@ public:
 };
 \end{lstlisting}
 \end{block}
+
 \begin{block}{`this' use}
   \label{sl:class-this-fun}
-This is not often needed. Typical use case:
+You don't often need the \lstinline{this} pointer. Example:
 you need to call a function inside a method that needs the object as argument)
 \begin{lstlisting}
 class someclass;
@@ -764,25 +771,21 @@ void somemethod() {
   somefunction(*this);
 };
 \end{lstlisting}
+(Rare use of dereference star)
 \end{block}
 
 \Level 1 {Static members}
 
 \begin{block}{Static class members}
   \label{sl:static-member}
-  A static member acts like shared between all objects.
-\begin{lstlisting}
-class MyClass {
-private:
-  static int object_count;
-public:
-  MyClass() { object_count++; };
-}
-\end{lstlisting}
-Initialization has to be done elsewhere:
-\begin{lstlisting}
-MyClass::object_count = 0;
-\end{lstlisting}
+  A static member acts as if it's shared between all objects.\\
+  (Note: C++17 syntax)
+  \snippetwithoutput{classstatic17}{link}{static17}
+\end{block}
+
+\begin{block}{Static class members, C++11 syntax}
+  \label{sl:static-member11}
+  \verbatimsnippet{classstatic11}
 \end{block}
 
 \Level 0 {Review question}

@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017/8 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% warmup.tex : chapter of preliminary stuff
 %%%%
@@ -17,13 +17,16 @@
   \label{sl:neumann}
   Historically, computers were used for big physics calculations, for
   instance, atom bomb calculations\\
+
   \includegraphics[scale=.5]{neumann}
+
+  (Robert Oppenheimer and John von Neumann)
 \end{block}
 
 \begin{block}{Hands-on programming}
   \label{sl:eniac}
   Very early computers such as ENIAC were hardwired\\
-  \includegraphics[scale=.5]{eniac-programming}\\
+  \includegraphics[scale=.4]{eniac-programming}\\
   later became `stored program' computer.\\
   see \url{http://eniacprogrammers.org/}
 \end{block}
@@ -31,7 +34,7 @@
 \begin{block}{Program entry}
   \label{sl:punch}
   Later programs were written on punchcards\\
-  \includegraphics[scale=.2]{punchcards}
+  \includegraphics[scale=.14]{punchcards}
 \end{block}
 
 \begin{block}{The first programming language}
@@ -100,6 +103,7 @@ now.
 
 \begin{block}{Programming is not simple}
   \label{sl:hamilton}
+  \small
   Programs can get pretty big:
 
   \begin{multicols}{2}
@@ -108,14 +112,22 @@ now.
     \textsl
     {\small Margaret Hamilton, director of the Software Engineering Division,
     the MIT Instrumentation Laboratory, which developed on-board
-    flight software for the Apollo space program.}\par
+    software for the Apollo program.}\par
     \includegraphics[scale=.10]{Margaret_Hamilton_in_action}
     \vfill\hbox{}\columnbreak
   \end{multicols}
 
-  It's not just translating formulas anymore.
+  \framebox{\vbox{\noindent It's not just translating formulas anymore.\par
+      Translating ideas to computer code: computational thinking.}
+  }
 
-  Translating ideas to computer code: computational thinking.
+  %% \setbox0=\hbox{%
+  %% \begin{parbox}{.8\hsize}
+  %% \end{parbox}
+  %% }
+  %% \begin{framebox}{\box0}    
+  %% \end{framebox}
+
 \end{block}
 
 \begin{block}{Computational thinking: elevator scheduling}
@@ -149,13 +161,13 @@ now.
 
 \begin{exercise}
   \label{ex:googlecar}
-  Algorithms are usually not uniquely determined. There can be
-  cleverness involved.
+  Algorithms are usually not uniquely determined:\\
+  there is more than one way solve a problem.
 
-  Four self-driving cars arrive simultaenously at an all-way-stop intersection. Come
+  Four self-driving cars arrive simultaneously at an all-way-stop intersection. Come
   up with an algorithm that a car can follow to safely cross the
   intersection. If you can come up with more than one algorithm, what
-  happens two cars using different algorithms meet each other?
+  happens when two cars using different algorithms meet each other?
 \end{exercise}
 
 \begin{block}{Computation and complexity}
@@ -173,6 +185,7 @@ now.
 \begin{block}{Programming languages are about ideas}
   \label{sl:sussman}
   \begin{quotation}
+    \raggedright\noindent
     A powerful programming language serves as a framework within which
     we organize our ideas. Every programming language has three
     mechanisms for accomplishing this:
@@ -206,7 +219,7 @@ now.
   Your program should read like a story about your application; not
   about bits and bytes.
 
-  Good programming style makes code intelligibe and maintainable.
+  Good programming style makes code intelligible and maintainable.
 
   (Bad programming style may lead to lower grade.)
 \end{block}
@@ -214,7 +227,8 @@ now.
 \begin{block}{Trust him, he's Dutch!}
   \label{sl:dijkstra-trick}
   \begin{quotation}
-    The competent programming is fully aware of the strictly limited
+    \raggedright\noindent
+    The competent programmer is fully aware of the strictly limited
     size of his own skull; therefore he approaches the programming
     task in full humility, and among other things he avoids clever
     tricks like the plague ---~Edsger~Dijkstra
@@ -244,8 +258,6 @@ now.
   \label{sl:hardwarevid}
   Yes, it's there, but we don't think too much about it in this course.
 
-  \url{https://youtu.be/JEpsKnWZrJ8}
-
   Advanced programmers know that hardware influences the speed of
   execution (see TACC's ISTC course).
 \end{block}
@@ -255,13 +267,14 @@ now.
 \begin{block}{What is an algorithm?}
   \label{sl:whatalgo}
   \begin{quotation}
+    \raggedright\noindent
     An algorithm is a sequence of unambiguous instructions for solving
     a problem, i.e., for obtaining a required output for any
     legitimate input in a finite amount of time\\\relax [A. Levitin,
       Introduction to The Design and Analysis of Algorithms,
       Addison-Wesley, 2003]
   \end{quotation}
-  The instructions are in some language:
+  The instructions are written in some language:
   \begin{itemize}
   \item We will teach you C++ and Fortran;
   \item the compiler translates those languages to machine language
@@ -272,7 +285,7 @@ now.
   \label{sl:step-by-step}
   \begin{itemize}
   \item Simple instructions: arithmetic.
-  \item Compicated instructions: control structures
+  \item Complicated instructions: control structures
     \begin{itemize}
     \item conditionals
     \item loops
@@ -321,7 +334,7 @@ sorting algorithm, coded in both C++ and python.
   \label{sl:languages}
   Python vs C++ on bubblesort:
   \begin{multicols}{2}
-    \footnotesize
+    \scriptsize
 \begin{lstlisting}[language=Python]
 for i in range(n-1):
   for j in range(n-i-1):
@@ -342,9 +355,9 @@ for (int i=0; i<n-1; i++)
 \end{lstlisting}
   \end{multicols}
 \begin{verbatim}
-[] python bubblesort.py 5000
+$ python bubblesort.py 5000
 Elapsed time: 12.1030311584
-[] ./bubblesort 5000
+$ ./bubblesort 5000
 Elapsed time: 0.24121
 \end{verbatim}
 \end{block}
@@ -379,10 +392,12 @@ coded it or it's part of the language, don't redo it yourself.
     manipulation.
   \item Is your algorithm part of a standard library or a library you
     can download/buy?\\
-    Millions of programmers, just like you, have needed linear algebra
-    algorithms. Most of what you could need already exists!
   \end{itemize}
+  Millions of programmers, just like you, have needed linear algebra
+  and sorting algorithms. Much of what you could need already exists!
 \end{slide}
+
+\endinput
 
 \Level 0 {Further reading}
 

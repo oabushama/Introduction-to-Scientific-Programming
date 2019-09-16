@@ -103,21 +103,22 @@ const auto &object_immutable  = thing.get_some_object();
 \begin{block}{Auto iterators}
   \label{sl:auto-iterator}
   \begin{multicols}{2}
-    \begin{lstlisting}
-      vector<int> myvector(20);
-      for ( auto copy_of_int : myvector )
-      s += copy_of_int;
-      for ( auto &ref_to_int : myvector )
-      ref_to_int = s;
-    \end{lstlisting}
+\begin{lstlisting}
+vector<int> myvector(20);
+for ( auto copy_of_int : myvector )
+  s += copy_of_int;
+for ( auto &ref_to_int : myvector )
+  ref_to_int = s;
+\end{lstlisting}
     is actually short for:
-    \begin{lstlisting}
-      for ( std::iterator it=myvector.begin() ;
-      it!=myvector.end() ; ++it )
-      s += *it ; // note the deref
-    \end{lstlisting}
+\begin{lstlisting}
+for ( std::vector<int>
+     iterator it=myvector.begin() ;
+     it!=myvector.end() ; ++it )
+   s += *it ; // note the deref
+\end{lstlisting}
   \end{multicols}
-  Range iterators Can be used with anything that is iteratable\\
+  Range iterators can be used with anything that is iteratable\\
   (vector, map, your own classes!)
 \end{block}
 
@@ -192,8 +193,7 @@ to determine
 \begin{lstlisting}
 iteratableClass::operator*()
 \end{lstlisting}
-that takes the
-  iterator object and returns its state.
+that takes the iterator object and returns its state.
 \end{itemize}
 
 \begin{slide}{Requirements}
@@ -259,6 +259,8 @@ that takes the
   We can iterate over our own class:
   %
   \snippetwithoutput{bagfinditer}{loop}{bagfind}
+
+  (for this particular case, use \lstinline{std::}\indextermtt{any_of})
 \end{block}
 
 If we add a method \n{has} to the class:
@@ -726,6 +728,9 @@ constexpr int get_value() {
 \Level 1 {C++17}
 
 \index{C++!C++17|(textbf}
+\begin{itemize}
+\item  Optional; section~\label{sec:std-optional}.
+\end{itemize}
 \index{C++!C++17|)}
 
 \Level 1 {C++20}

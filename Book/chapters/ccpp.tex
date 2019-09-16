@@ -28,6 +28,10 @@ bracket notation.
 
 Chapter~\ref{ch:array}.
 
+Vectors own their data exclusively, so having multiple C~style pointers into
+the same data act like so many arrays does not work. For that, use the
+\indextermtt{span}; section~\ref{sec:gsl-span}.
+
 \Level 1 {Vectors from C arrays}
 
 Suppose you have to interface to a C~code that uses

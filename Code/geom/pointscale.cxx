@@ -30,12 +30,17 @@ public:
     return Vector( vx*a, vy*a ); };
 //codesnippet end
   double length() { return sqrt(vx*vx + vy*vy); };
-//codesnippet pointscale
+//codesnippet pointmultop
+  Vector operator*(double factor) {
+    return Vector(factor*vx,factor*vy);
+  };
+//codesnippet end
 };
 //codesnippet end
 
 int main() {
   Vector p1(1.,2.);
+  cout << "Scale2" << endl;
 //codesnippet pointscale
   cout << "p1 has length "
        << p1.length() << endl;
@@ -43,6 +48,18 @@ int main() {
   cout << "p2 has length "
        << p2.length() << endl;
 //codesnippet end
+  cout << "scale2" << endl;
+
+  cout << "Mult2" << endl;
+//codesnippet pointmultop
+  cout << "p1 has length "
+       << p1.length() << endl;
+  Vector scale2r = p1*2.;
+  cout << "scaled right: "
+       << scale2r.length() << endl;
+  // ILLEGAL Vector scale2l = 2.*p1;
+//codesnippet end
+  cout << "mult2" << endl;
 
   return 0;
 }

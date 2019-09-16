@@ -315,7 +315,7 @@
     \expandafter\expandafter\expandafter
         \@secondoftwo\csname fn@#1\endcsname
     @\acl{#1} (#1)|)}}\tmp}
-\newcommand\indexacdef[1]{\emph{\ac{#1}}%
+\newcommand\indexacdef[1]{\emph{\acf{#1}}%
   \edef\tmp{\noexpand\index{%
     \expandafter\expandafter\expandafter
         \@secondoftwo\csname fn@#1\endcsname%
@@ -358,7 +358,7 @@
   {\begin{quote}
    \leavevmode
    \hbox{\kern-\unitindent 
-         \textbf Review \reviewnumber.\hspace{1em}}%
+         \textbf{Review} \reviewnumber.\hspace{1em}}%
      \ignorespaces
    \input{\CommentCutFile}
    \end{quote}

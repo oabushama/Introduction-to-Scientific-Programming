@@ -175,8 +175,9 @@ components, possibly of different type, and which unlike a
 \begin{block}{C++11 style tuples}
   \label{sl:tuple11}
   \begin{lstlisting}
-    std::tuple<int,double> id = std:
-    id = std::make_tuple<int,double>(3,5.12);
+    std::tuple<int,double> id = \
+        std::make_tuple<int,double>(3,5.12);
+    double result = std::get<1>(id);
     std::get<0>(id) += 1;
   \end{lstlisting}
 \end{block}
@@ -197,7 +198,9 @@ but more interestingly, you can use a
 \begin{slide}{Function returning tuple}
   \label{sl:tuplefun}
   \begin{multicols}{2}
+    Return type deduction:
     \verbatimsnippet{tuplemake}\columnbreak
+    Alternative:
     \verbatimsnippet{tupledenote}
   \end{multicols}
 \end{slide}
@@ -214,10 +217,12 @@ The solution to the above `a~number or an error' now becomes:
 \verbatimsnippet{rootandvalid}
 
 \Level 1 {Optional}
+\label{sec:std-optional}
 
 The most elegant solution to `a~number or an error' is to have a
 single quantity that you can query whether it's valid.
-This can be done through \lstinline{std::}\indextermtt{optional}:
+This can be done through \lstinline{std::}\indextermtt{optional}
+(part of the \emph{C++17}\index{C++!C++17} standard):
 \begin{lstlisting}
 #include <optional>
 using std::optional;
@@ -242,7 +247,7 @@ if (f.has_value)
 \end{lstlisting}
 \end{itemize}
 
-\begin{slide}{Optional results}
+\begin{slide}{Optional results (C++17)}
   \label{sl:optional-root}
   The most elegant solution to `a~number or an error' is to have a
   single quantity that you can query whether it's valid.

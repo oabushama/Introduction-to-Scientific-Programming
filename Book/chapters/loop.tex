@@ -13,7 +13,7 @@ There are many cases where you want to repeat an operation or series
 of operations:
 \begin{itemize}
 \item A time-dependent numerical simulation executes a fixed number of
-  steps, or until some stoping test.
+  steps, or until some stopping test.
 \item Recurrences: \[ x_{i+1} = f(x_i). \]
 \item Inspect or change every element of a database table.
 \end{itemize}
@@ -42,10 +42,13 @@ In the most common case, a for loop has a
 \indextermbus{loop}{counter}, ranging from some lower to some upper
 bound. An example showing the syntax for this simple case is:
 \begin{lstlisting}
+int sum_of_squares{0};
 for (int var=low; var<upper; var++) {
-  // statements involving the loop variable:
-  cout << "The square of " << var << " is " << var*var << endl;
+  sum_of_squares += var*var;
 }
+cout << "The sum of squares from "
+     << low << " to " << upper
+     << " is " << sum_of_squares << endl;
 \end{lstlisting}
 The \lstinline{for} line is called the \indextermbus{loop}{header}, and the
 statements between curly brackets the \indextermbus{loop}{body}.
@@ -65,10 +68,13 @@ Each execution of the loop body is called an
 
   Here is the syntax in the simplest case:
 \begin{lstlisting}
+int sum_of_squares{0};
 for (int var=low; var<upper; var++) {
-  // statements involving var
-  cout << "The square of " << var << " is " << var*var << endl;
+  sum_of_squares += var*var;
 }
+cout << "The sum of squares from "
+     << low << " to " << upper
+     << " is " << sum_of_squares << endl;
 \end{lstlisting}
 \end{slide}
 
@@ -212,6 +218,15 @@ for ( int i=0; i<N; i++) {
 \end{lstlisting}
 \end{itemize}
 
+\Level 1 {Loop syntax}
+
+The loop variable is typically an integer. You can use floating point
+numbers, this may complicated the stopping test:
+\begin{lstlisting}
+for (float x=.1; x<=.5; x+=.1)
+\end{lstlisting}
+because of numerical rounding it is not clear when this loop will end.
+
 \begin{slide}{Loop syntax}
   \label{sl:for-syntax}
   \begin{itemize}
@@ -220,7 +235,7 @@ for ( int i=0; i<N; i++) {
   \item The stopping test is performed at the start of each iteration.
   \item The increment can be a decrement or something like \lstinline{var*=10}
   \item Any and all of initialization, test, increment can be empty:\\
-    \lstinline{for(;;) {...}}
+    \lstinline{for(;;) loop_body;}
   \item (The loop variable can be defined outside the loop:
 \begin{lstlisting}
 int var;
@@ -399,10 +414,11 @@ In other cases: define the loop variable in the header!
   If the test comes at the start or end of an iteration, you can move it
   to the loop header:
 \begin{lstlisting}
-bool some_test{false};
-for (int var=low; !some_test ; var++) {
+bool stopping_test{false};
+for (int var=low; !stopping_test ; var++) {
   ... some code ...
-  some_test = ... some condition ...
+  if ( some condition )
+    stopping_test = true;
 }
 \end{lstlisting}
 \end{block}
@@ -510,7 +526,7 @@ is an example in which the second syntax is more appropriate.
 At the start of this chapter we mentioned the following examples of loops:
 \begin{itemize}
 \item A time-dependent numerical simulation executes a fixed number of
-  steps, or until some stoping test.
+  steps, or until some stopping test.
 \item Recurrences: \[ x_{i+1} = f(x_i). \]
 \item Inspect or change every element of a database table.
 \end{itemize}

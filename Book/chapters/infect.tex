@@ -213,7 +213,53 @@ Again start the simulation with a single infected person.
   percent. Investigate the percentage of inoculation that is needed
   for this as a function of the contagiousness of the disease.
 \end{exercise}
+\begin{comment}
+\begin{verbatim}
+for p in 0 10 25 50 75 90 95 98 ; do (echo 400 ; echo .2 ; echo $p ) 
+    | ./infect3 ; done
 
+
+An inoculation percentage of 0 leads to a maximum number of infected
+of 17052 or 42.6325 percent
+The disease ran its course in 38 days
+susceptible people unaffected: 17295 out of 40000
+
+An inoculation percentage of 10 leads to a maximum number of infected
+of 14719 or 36.8 percent
+The disease ran its course in 36 days
+susceptible people unaffected: 15797 out of 36043
+
+An inoculation percentage of 25 leads to a maximum number of infected
+of 10823 or 27.06 percent
+The disease ran its course in 37 days
+susceptible people unaffected: 13576 out of 29993
+
+An inoculation percentage of 50 leads to a maximum number of infected
+of 5075 or 12.69 percent
+The disease ran its course in 52 days
+susceptible people unaffected: 9925 out of 20017
+
+An inoculation percentage of 75 leads to a maximum number of infected
+of   0 or 0.0025 percent
+The disease ran its course in 6 days
+susceptible people unaffected: 9922 out of 9922
+
+An inoculation percentage of 90 leads to a maximum number of infected
+of   0 or 0.0025 percent
+The disease ran its course in 6 days
+susceptible people unaffected: 3971 out of 3971
+
+An inoculation percentage of 95 leads to a maximum number of infected
+of   0 or 0.0025 percent
+The disease ran its course in 6 days
+susceptible people unaffected: 1990 out of 1990
+
+An inoculation percentage of 98 leads to a maximum number of infected
+of   0 or 0.0025 percent
+The disease ran its course in 6 days
+susceptible people unaffected: 843 out of 843
+\end{verbatim}
+\end{comment}
 \Level 0 {Project writeup and submission}
 
 \Level 1 {Program files}

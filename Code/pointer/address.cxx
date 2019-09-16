@@ -25,10 +25,9 @@ int main() {
   HasY y(5);
   //codesnippet shareaddress
   auto
-    p1 = shared_ptr<HasY>( &y ),
-    p2 = shared_ptr<HasY>( &y );
-  p1->y = 3;
-  cout << "Pointer 2's y: "
-       << p2->y << endl;
+    p = shared_ptr<HasY>( &y );
+  p->y = 3;
+  cout << "Pointer's y: "
+       << p->y << endl;
   //codesnippet end
 }

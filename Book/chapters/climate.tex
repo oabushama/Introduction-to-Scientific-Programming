@@ -54,6 +54,16 @@ data files and more can be found at
 
 \end{exercise}
 
+\begin{comment}
+\begin{verbatim}
+DATAFILE = GLB.Ts.txt
+run_annual : annual
+	@(    cat ${DATAFILE} | grep '^[12]' | grep -v 2018 | wc -l \
+	   && cat ${DATAFILE} | grep '^[12]' | grep -v 2018 \
+	 ) | ./annual
+\end{verbatim}
+\end{comment}
+
 \Level 0 {Statistical hypothesis}
 
 We assume that mr Shah was really saying that climate has a

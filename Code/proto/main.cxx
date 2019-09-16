@@ -3,7 +3,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2017/9 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** main.cxx : a program file
  ****
@@ -13,6 +13,8 @@
 using std::cin;
 using std::cout;
 using std::endl;
+
+#include <vector>
 
 //int f(int i) { return 2*i; }
 //codesnippet headeruse

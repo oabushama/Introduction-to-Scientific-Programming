@@ -25,6 +25,7 @@ int main() {
     cout << "Number: "
          << setw(6) << i << endl;
   cout << endl;
+
   cout << "Width is 6:" << endl;
   cout << "."
        << setw(6) << 1 << 2 << 3 << endl;

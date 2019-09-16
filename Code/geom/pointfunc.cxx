@@ -19,13 +19,12 @@ using std::sqrt;
 //codesnippet pointfunc
 class Vector {
 private:
-  double vx,vy;
+  double x,y;
 public:
-  Vector( double x,double y ) {
-    vx = x; vy = y;
-  };
+  Vector( double x,double y )
+    : x(x),y(y) {};
   double length() {
-    return sqrt(vx*vx + vy*vy); };
+    return sqrt(x*x + y*y); };
   double angle() {
     return 0.; /* something trig */; };
 };

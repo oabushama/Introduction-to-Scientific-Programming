@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2018 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2018/9 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** lambdafun.cxx : storing a lambda
  ****
@@ -57,9 +57,9 @@ int main() {
   //   " greater than 5: " << greaterthan5.size() << endl;
   
   int divisor;
+  //codesnippet lambdaclassed
   cout << "Give a divisor: "; cin >> divisor; cout << endl;
   cout << ".. using " << divisor << endl;
-  //codesnippet lambdaclassed
   SelectedInts multiples
     ( [divisor] (int i) -> bool {
 	return i%divisor==0; } );

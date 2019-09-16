@@ -276,22 +276,14 @@ idiomatic way of including them in C++ is
 \begin{block}{Class prototypes}
   \label{sl:class-proto}
   Header file:
-\begin{lstlisting}
-class something {
-public:
-  double somedo(vector);
-};
-\end{lstlisting}
+  \verbatimsnippet{classheaderdefine}
 
-Implementation file:
-\begin{lstlisting}
-double something::somedo(vector v) {
-   .... something with v ....
-};
-\end{lstlisting}
+  Implementation file:
+  \verbatimsnippet{classheaderimpl}
 \end{block}
 
 \begin{block}{Data members in proto}
+  \label{sl:class-proto-private}
   Data members, even private ones, need to be in the header file:
 \begin{lstlisting}
 class something {

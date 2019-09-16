@@ -34,7 +34,7 @@ public:
     seek = first; return *this;
   };
   bag end() {
-    return *this;
+    seek = last; return *this;
   };
   //codesnippet end
 

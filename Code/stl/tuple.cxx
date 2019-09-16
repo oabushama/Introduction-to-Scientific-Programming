@@ -23,14 +23,17 @@ using std::tuple;
 //codesnippet tuplemake
 auto maybe_root1(float x) {
   if (x<0)
-    return make_tuple<bool,float>(false,-1);
+    return make_tuple
+      <bool,float>(false,-1);
   else
-    return make_tuple<bool,float>(true,sqrt(x));
+    return make_tuple
+      <bool,float>(true,sqrt(x));
 };
 //codesnippet end
 
 //codesnippet tupledenote
-tuple<bool,float> maybe_root2(float x) {
+tuple<bool,float>
+    maybe_root2(float x) {
   if (x<0)
     return {false,-1};
   else
@@ -41,22 +44,26 @@ tuple<bool,float> maybe_root2(float x) {
 int main() {
   float x;
   cin >> x;
-  {
-    //codesnippet tupleauto
+  if (false) {
     auto [succeed,y] = maybe_root1(x);
     if (succeed)
-      cout << "Root of " << x << " is " << y << endl;
+      cout << "Root of " << x
+           << " is " << y << endl;
     else
-      cout << "Sorry, " << x << " is negative" << endl;
-    //codesnippet tupleauto
+      cout << "Sorry, " << x
+           << " is negative" << endl;
   }
   
-  if (false) {
+  {
+    //codesnippet tupleauto
     auto [succeed,y] = maybe_root2(x);
     if (succeed)
-      cout << "Root of " << x << " is " << y << endl;
+      cout << "Root of " << x
+           << " is " << y << endl;
     else
-      cout << "Sorry, " << x << " is negative" << endl;
+      cout << "Sorry, " << x
+           << " is negative" << endl;
+    //codesnippet end
   }
   return 0;
 }

@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2018 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2018/9 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** lambdait.cxx : lambda example
  ****
@@ -24,15 +24,18 @@ float nf(float x,int n) {
 
 int main() {
 
-  for (int exponent=1; exponent<=5; exponent++) {
-    //codesnippet lambdacapt
-    auto powerfunction = [exponent] (float x) -> float {
+  //codesnippet lambdacapt
+  int exponent=5;
+  auto powerfunction =
+    [exponent] (float x) -> float {
       return pow(x,exponent); };
-    //codesnippet end
-    cout << "To the power " << exponent << endl;
-    for (float x=1.; x<=9.; x+=1.)
-      cout << x << ":" << powerfunction(x) << endl;
-  }
+  //codesnippet end
+  //codesnippet lambdapowercall
+  cout << "To the power "
+       << exponent << endl;
+  for (float x=1.; x<=9.; x+=1.)
+    cout << x << ":" << powerfunction(x) << endl;
+  //codesnippet end
   
   return 0;
 }

@@ -13,6 +13,8 @@
 using std::cout;
 using std::endl;
 
+def swop(int i,int j) {};
+
 int main() {
   int i=1,j=2;
   swap(i,j);

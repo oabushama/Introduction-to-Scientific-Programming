@@ -21,6 +21,10 @@ using std::vector;
 */
 //examplesnippet end
 
+//examplesnippet constrefarray
+void pass_array_constref( const vector<double>& v ) { /* */ }
+//examplesnippet end
+
 //examplesnippet refparm
 void change_scalar_by_reference(int &i) { i += 1; }
 //examplesnippet end

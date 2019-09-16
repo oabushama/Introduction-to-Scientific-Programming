@@ -12,6 +12,8 @@
 #include <iostream>
 using namespace std;
 
+def swop(int i,int j) {};
+
 int main() {
   int i=1,j=2;
   swap(i,j);

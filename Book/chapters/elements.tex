@@ -53,26 +53,29 @@ Let's do an example.
 \begin{verbatim}
 icpc -o zeroprogram zero.cc
 \end{verbatim}
-\begin{itemize}
-\item \texttt{icpc} : compiler. Alternative: use \indextermtt{g++}
-  or \indextermtt{clang++} instead of \indextermtt{icpc}.
-\item \texttt{-o programname} : output into a binary name of your choosing
-\item \texttt{something.cc} : your source file.
-\end{itemize}
-
 Run this program (it gives no output):
 \begin{verbatim}
 ./zeroprogram
 \end{verbatim}
 \end{exercise}
 
+\begin{block}{Compile line}
+  \label{sl:compile-line}
+  \begin{itemize}
+  \item \indextermtt{icpc} : compiler. Alternative: use \indextermtt{g++}
+    or \indextermtt{clang++}
+  \item \texttt{-o zeroprogram} : output into a binary name of your choosing
+  \item \texttt{zero.cc} : your source file.
+  \end{itemize}
+\end{block}
+
 In the above program:
 \begin{enumerate}
 \item The first three lines are magic, for now. Always include them.
-\item The \n{main} line indicates where the program starts; between
+\item The \lstinline{main} line indicates where the program starts; between
   its opening and closing brace will be the
   \indextermbus{program}{statements}.
-\item The \n{return} statement indicates successful completion of your program.
+\item The \lstinline{return} statement indicates successful completion of your program.
 \end{enumerate}
 As you may have guessed, this program produces absolutely no output
 when you run it.
@@ -107,14 +110,14 @@ Compile and run again.
   \end{itemize}
 \end{block}
 
-\begin{exercise}{Quick review}
+\begin{review}
   \label{q:compiler}
   True or false?
   \begin{enumerate}
   \item The programmer only writes source files, no binaries.
   \item The computer only executes binary files, no human-readable files.
   \end{enumerate}
-\end{exercise}
+\end{review}
 
 \Level 1 {A quick word about unix commands}
 
@@ -252,42 +255,43 @@ cout << /* we are now going
   \end{enumerate}
 \end{block}
 
-\begin{exercise}{Quick review}
+\begin{review}
+  \label{q:compile}
   True or false?
   \begin{itemize}
   \item If your program compiles correctly, it is correct.
   \item If you run your program and you get the right output, it is correct.
   \end{itemize}  
-\end{exercise}
+\end{review}
 
 \begin{block}{Fixed elements}
   \label{sl:fixedstuff}
   You see that certain parts of your program are inviolable:
   \begin{itemize}
-  \item There are \indexterm{keywords} such as \n{return} or \n{cout}; you
+  \item There are \indexterm{keywords} such as \lstinline{return} or \lstinline{cout}; you
     can not change their definition.
   \item Curly braces and parentheses need to be matched.
-  \item There has to be a \n{main} keyword.
-  \item The \n{iostream} and \n{std} are usually needed.
+  \item There has to be a \lstinline{main} keyword.
+  \item The \lstinline{iostream} and \lstinline{std} are usually needed.
   \end{itemize}
 \end{block}
 
 \begin{exercise}
   \label{ex:cout-what}
-  Experiment with the \n{cout} statement. Replace the string by a
+  Experiment with the \lstinline{cout} statement. Replace the string by a
   number or a mathematical expression. Can you guess how to print more
   than one thing, for instance:
   \begin{itemize}
   \item the string \n{One third is}, and
   \item the result of the computation~$1/3$,     
   \end{itemize}
-  with the same \n{cout} statement?
+  with the same \lstinline{cout} statement?
 \end{exercise}
 
 \begin{block}{Return statement}
   \begin{itemize}
-  \item The language standard says that \n{main} has to be of type
-    \n{int}; the \indextermbus{return}{statement} returns an int.
+  \item The language standard says that \lstinline{main} has to be of type
+    \lstinline{int}; the \indextermbus{return}{statement} returns an int.
   \item Compilers are fairly tolerant of deviations from this.
   \item Usual interpretation: returning zero means success; anything else failure;
   \item This \indextermbus{return}{code} can be detected by the
@@ -333,8 +337,8 @@ Think of a variable as a labeled placed in memory.
   \label{sl:varlife}
 \begin{lstlisting}
 int i,j; // declaration
-i = 5; // set a value
-i = 6; // set a new value
+i = 5;   // set a value
+i = 6;   // set a new value
 j = i+1; // use the value of i
 i = 8; // change the value of i
        // but this doesn't affect j:
@@ -360,9 +364,9 @@ variable may contain random memory contents.
     special characters, except for the underscore.
   \item For letters it matters
     whether you use upper or lowercase: the language is \indexterm{case sensitive}.
-  \item Words such as \n{main} or \n{return} are \indexterm{reserved words}.
-  \item Usually \n{i} and \n{j} are not the best variable names: use
-    \n{row} and \n{column}, or other meaningful names, instead.
+  \item Words such as \lstinline{main} or \lstinline{return} are \indexterm{reserved words}.
+  \item Usually \lstinline{i} and \lstinline{j} are not the best variable names: use
+    \lstinline{row} and \lstinline{column}, or other meaningful names, instead.
   \end{itemize}
 \end{block}
 
@@ -458,12 +462,12 @@ Integer add/subtract one:
   \label{q:assign}
   Which of the following are legal? If they are, what is their meaning?
   \begin{enumerate}
-  \item \n{n = n;}
-  \item \n{n = 2n;}
-  \item \n{n = n2;}
-  \item \n{n = 2*k;}
-  \item \n{n/2 = k;}
-  \item \n{n /= k;}
+  \item \lstinline{n = n;}
+  \item \lstinline{n = 2n;}
+  \item \lstinline{n = n2;}
+  \item \lstinline{n = 2*k;}
+  \item \lstinline{n/2 = k;}
+  \item \lstinline{n /= k;}
   \end{enumerate}
 \end{exercise}
 
@@ -483,7 +487,7 @@ int main() {
 What happens?
 \begin{enumerate}
 \item Compiler error
-\item Output: \n{1}
+\item Output: \lstinline{1}
 \item Output is undefined
 \item Error message during running the program.
 \end{enumerate}
@@ -512,12 +516,12 @@ cin >> i;
   Variables come in different types;
   \begin{itemize}
   \item We call a variable of type
-    \n{int,float,double} a \indextermsub{numerical}{variable}.
+    \lstinline{int}, \lstinline{float}, \lstinline{double} a \indextermsub{numerical}{variable}.
   \item \emph{Complex numbers}\index{complex numbers} will be
     discussed later.
   \item 
-    For characters: \n{char}. Strings are complicated; see later.
-  \item Truth values: \n{bool}
+    For characters: \lstinline{char}. Strings are complicated; see later.
+  \item Truth values: \lstinline{bool}
   \item 
     You can make your own types. Later.
   \end{itemize}
@@ -527,7 +531,7 @@ For complex numbers see section~\ref{sec:stl-complex}.
 For strings see chapter~\ref{ch:string}.
 
 At some point you may start to wonder precisely what the range of
-integers or real numbers is that is storedin an \n{int} or \n{float}
+integers or real numbers is that is storedin an \lstinline{int} or \lstinline{float}
 variable. This is addressed in section~\ref{sec:limits}.
 
 \Level 2 {Integers}
@@ -554,17 +558,6 @@ my_integer = 5;
 cout << my_integer << endl;
 \end{lstlisting}
 
-\begin{exercise}
-  \label{ex:cin-cout3np1}
-  Write a program that :
-  \begin{itemize}
-  \item displays the message \n{Type a number},
-  \item accepts an integer number from you (use~\lstinline{cin}),
-  \item makes another variable that is three times that integer plus one,
-  \item and then prints out the second variable.
-  \end{itemize}
-\end{exercise}
-
 \Level 2 {Floating point variables}
 
 \indextermdef{floating point} numbers.
@@ -584,7 +577,7 @@ Floating points numbers do not behave like mathematical numbers.
   \label{sl:float-arith}
   Floating point arithmetic is full of pitfalls.
   \begin{itemize}
-  \item Don't count on \n{3*(1./3)} being exactly~1.
+  \item Don't count on \lstinline{3*(1./3)} being exactly~1.
   \item Not even associative.
   \end{itemize}
   (See Eijkhout, Introduction to High Performance Computing, chapter~3.)
@@ -605,8 +598,8 @@ and
     this.
   \item Make another variable that is the previous one minus
     \lstinline{one}. Print the result again.
-  \item Test your program with \n{.001}, \n{.0001}, \n{.00001},
-    \n{000001}. Do you understand the result?
+  \item Test your program with \lstinline{.001}, \lstinline{.0001}, \lstinline{.00001},
+    \lstinline{000001}. Do you understand the result?
   \end{enumerate}
 \end{exercise}
 
@@ -752,13 +745,21 @@ For squaring, usually better to write \n{x*x} than \n{pow(x,2)}.
     with reals: \n{3.2/7}
   \item Use parentheses to group \n{25.1*(37+42/3.)}
   \item Careful with types.
-  \item There is no `power' operator: library functions. Needs a line
-\begin{lstlisting}
-#include <cmath>
-\end{lstlisting}
+  \item There is no `power' operator: library functions.
   \item Modulus: \n{\char`\%}
   \end{itemize}
 \end{slide}
+
+\begin{exercise}
+  \label{ex:cin-cout3np1}
+  Write a program that :
+  \begin{itemize}
+  \item displays the message \n{Type a number},
+  \item accepts an integer number from you (use~\lstinline{cin}),
+  \item makes another variable that is three times that integer plus one,
+  \item and then prints out the second variable.
+  \end{itemize}
+\end{exercise}
 
 \Level 1 {Truth values}
 
@@ -783,7 +784,7 @@ Logical expressions in C++ are evaluated using
 \begin{lstlisting}
 x>=0 && sqrt(x)<2
 \end{lstlisting}
-If \n{x}~is negative, the second part will never be evaluated because
+If \lstinline{x}~is negative, the second part will never be evaluated because
 the `and' conjunction can already be concluded to be false.
 Similarly, `or' conjunctions will only be evaluated until the first
 true clause.
@@ -827,7 +828,7 @@ x = i;
     point value to an integer variable?
   \item What happens when you assign a negative floating
     point value to an integer variable?
-  \item What happens when you assign a \n{float} to a \n{double}? 
+  \item What happens when you assign a \lstinline{float} to a \lstinline{double}? 
     Try various numbers for the original float. Can you explain the
     result?
     (Hint: think about the conversion between binary and decimal.)
@@ -902,7 +903,7 @@ For floating point result do:
   Can you use Unix pipes to make one accept the output of the other?
 \end{exercise}
 
-\begin{exercise}{Quick review}
+\begin{review}
   \label{q:vartypes}
   True of false?
   \begin{enumerate}
@@ -915,7 +916,7 @@ For floating point result do:
   \item \verb-int i = 5/3.;- The variable \n{i} is~2.
   \item \verb-float x = 2/3;- The variable \n{x} is approximately~\n{0.6667}.
   \end{enumerate}
-\end{exercise}
+\end{review}
 
 \Level 0 {Advanced topics}
 
@@ -972,6 +973,23 @@ values, to make it recognizable as such.
 
 \Level 1 {Constants}
 
+\begin{block}{Floating point constants}
+  \label{sl:float-vars}
+  \begin{itemize}
+  \item Default: \lstinline{double}
+  \item Float: \lstinline{3.14f} or \lstinline{3.14F}
+  \item Long double: \lstinline{1.22l} or \n{1.22L}.
+  \end{itemize}
+\end{block}
+
+\begin{comment}
+  This prevents numerical accidents: 
+  \begin{lstlisting}
+    double x = 3.;
+  \end{lstlisting}
+  converts float to double, maybe introducing random bits.
+\end{comment}
+
 \begin{block}{Integer constants}
   \label{sl:intvals}
   Integers are normally  written in decimal, and stored in 32 bits.
@@ -988,19 +1006,11 @@ long ell = 42L;
 
 Binary numbers are new to C++14\index{C++!C++14}.
 
-\begin{block}{Floating point constants}
-  \label{sl:float-vars}
-  \begin{itemize}
-  \item Default: \lstinline{double}
-  \item Float: \lstinline{3.14f} or \lstinline{3.14F}
-  \item Long double: \lstinline{1.22l} or \n{1.22L}.
-  \end{itemize}
-  This prevents numerical accidents: 
-\begin{lstlisting}
-  double x = 3.;
-\end{lstlisting}
-  converts float to double, maybe introducing random bits.
-\end{block}
+\Level 1 {Numerical precision}
+
+Truncation and precision are tricky things.
+
+\snippetwithoutput{truncvsf}{basic}{point3}
 
 \Level 0 {Review questions}
 

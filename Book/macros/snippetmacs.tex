@@ -11,7 +11,10 @@
 
 \usepackage{verbatim}
 \def\verbatimsnippet#1{
-  \IfFileExists{#1}{\lstinputlisting{#1}}{}
+  \IfFileExists{#1}{\lstinputlisting{#1}}{missing snippet #1}
+}
+\def\answersnippet#1{
+  \IfFileExists{#1}{\lstinputlisting{#1}}{missing snippet #1}
 }
 
 \usepackage{listings,xcolor}
@@ -64,7 +67,7 @@
   % go into vertical mode
   \par
   % make nice two-column layout
-  \moveright .5\unitindent
+  %%%%\moveright .5\unitindent
   \hbox{%
     \begin{minipage}[t]{.6\hsize}
       \def\verbatim@startline{\verbatim@line{\leavevmode\relax}}

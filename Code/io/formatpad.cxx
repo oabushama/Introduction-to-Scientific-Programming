@@ -22,7 +22,8 @@ int main() {
   //codesnippet formatpad
   for (int i=1; i<200000000; i*=10)
     cout << "Number: "
-         << setfill('.') << setw(6) << i
+         << setfill('.')
+	 << setw(6) << i
 	 << endl;
   //codesnippet end
   

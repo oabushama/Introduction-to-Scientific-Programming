@@ -16,6 +16,7 @@ The data members of an object can be of elementary datatypes, or they
 can be objects. For instance, if you write software to manage courses,
 each \n{Course} object will likely have a \n{Person} object,
 corresponding to the teacher.
+
 \begin{lstlisting}
 class Person {
   string name;
@@ -54,7 +55,7 @@ class Person {
   called the \indexterm{has-a relation}.  
 \end{slide}
 
-\Level 1 {Accessors and other methods}
+\Level 1 {Literal and figurative has-a}
 
 Sometimes a class can behave as if it includes an object of another
 class, while not actually doing so. For instance, a line segment can
@@ -111,7 +112,8 @@ private:
   float length,angle;
 public:
   Point get_the_end_point() {
-    /* some computation from the
+    /* some computation
+       from the
        starting point */ };
 }
 \end{lstlisting}
@@ -152,7 +154,7 @@ public:
   Segment( Point start,Point end ) { ... }
 \end{lstlisting}
 Advantage: with a good API you can change your mind about the
-implementation without bothering the user.
+implementation without changing the calling code.
 \end{slide}
 
 \begin{exercise}
@@ -266,8 +268,9 @@ public:
 
 \begin{slide}{Constructors}
   \label{sl:obj-derive-construct}
-  When you run the special case constructor, usually the general case
-  needs to run too. By default the `default constructor', but:
+  When you run the special case constructor, usually the general
+  constructor needs to run too. By default the `default constructor',
+  but usually explicitly invoked:
 \begin{lstlisting}
 class General {
 public:
@@ -290,6 +293,11 @@ public:
   \item protected, because they should be usable in derived classes.
   \end{itemize}
 \end{block}
+
+\begin{exercise}
+  If you are doing the geometry project, 
+  you can now do the exercises in section~\ref{sec:geom-isa}.
+\end{exercise}
 
 \Level 1 {Methods of base and derived classes}
 \label{sec:derive-method}
@@ -315,10 +323,10 @@ public:
   \end{itemize}
 \end{block}
 
-\begin{exercise}
-  If you are doing the geometry project, 
-  you can now do the exercises in section~\ref{sec:geom-isa}.
-\end{exercise}
+\begin{block}{Override and base method}
+  \label{sl:virtualoverride}
+  \snippetwithoutput{virtualoverride}{object}{virtual}
+\end{block}
 
 \Level 1 {Virtual methods}
 
@@ -372,15 +380,10 @@ public:
 
 \Level 1 {Advanced topics in inheritance}
 
-\begin{block}{More}
-  \label{sl:obj-more}  
-  \begin{itemize}
-  \item  Multiple inheritance: an~X is-a~A, but also is-a~B.\\
-    This mechanism is somewhat dangerous.
-  \item Virtual base class: you don't actually define a function in
-    the base class, you only say `any derived class has to define this
-    function'.
-  \item Friend classes:
+\begin{block}{Friend classes}
+  \label{sl:obj-friend}
+  A \indextermtt{friend} class can access private data and methods
+  even if there is no inheritance relationship.
 \begin{lstlisting}
 class A;
 class B {
@@ -393,8 +396,16 @@ public:
   void f(B b) { b.i; };
 };
 \end{lstlisting}
-  A \indextermtt{friend} class can access private data and methods
-  even if there is no inheritance relationship.
+\end{block}
+
+\begin{block}{More}
+  \label{sl:obj-more}  
+  \begin{itemize}
+  \item  Multiple inheritance: an~X is-a~A, but also is-a~B.\\
+    This mechanism is somewhat dangerous.
+  \item Virtual base class: you don't actually define a function in
+    the base class, you only say `any derived class has to define this
+    function'.
   \end{itemize}
 \end{block}
 

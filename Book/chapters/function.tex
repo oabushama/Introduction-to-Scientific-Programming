@@ -26,7 +26,7 @@ your program.
 
 \begin{block}{Introducing a function}
   \label{sl:func-scheme}
-  \includegraphics[scale=.5]{function}
+  \includegraphics[scale=.4]{functiondiagram}
 \end{block}
 
 \begin{slide}{Turn blocks of code into functions}
@@ -71,10 +71,14 @@ There are two sides to a function:
 int main() {
   float left{0.},right{1.};
   while (right-left>.1) {
-    float mid = (left+right)/2.,
-    fmid = mid*mid*mid - mid*mid-1;
-    if (fmid<0) left = mid;
-    else right = mid;  
+    float mid
+      = (left+right)/2.,
+    fmid = mid*mid*mid
+      - mid*mid-1;
+    if (fmid<0)
+      left = mid;
+    else
+      right = mid;  
   }
   cout << "Zero happens at: " << mid << endl;
 }
@@ -82,27 +86,37 @@ int main() {
   \end{multicols}
 \end{block}
 
-\begin{block}{Function definition and call}
-  \label{sl:def-call}
+\begin{block}{Introducing functions, step1}
+  \label{sl:def-call1}
 Function for which we compute the zero:
   \begin{multicols}{2}
 \begin{lstlisting}
 float f(float m) {
   return m*m*m - m*m-1;
 };
+\end{lstlisting}
+\vfill\columnbreak
+\begin{lstlisting}
 int main() {
   float left{0.},right{1.};
   while (right-left>.1) {
-    float mid = (left+right)/2.,
+    float mid
+      = (left+right)/2.,
       fmid = f(mid);
-    if (fmid<0) left = mid;
-    else right = mid;  
+    if (fmid<0)
+      left = mid;
+    else
+      right = mid;  
   }
   cout << "Zero happens at: " << mid << endl;
 }
 \end{lstlisting}
   \end{multicols}
-Function for zero finding:
+\end{block}
+
+\begin{block}{Introducting functions, step 2}
+  \label{sl:def-call2}
+  Function for zero finding:
   \begin{multicols}{2}
 \begin{lstlisting}
 float f(float m) {
@@ -113,16 +127,24 @@ float find_zero_between
   while (r-l>.1) {
     float mid = (l+r)/2.,
       fmid = f(mid);
-    if (fmid<0) l = mid;
-    else r = mid;  
+    if (fmid<0)
+      l = mid;
+    else
+      r = mid;  
   }
 };
+\end{lstlisting}
+\columnbreak
+\begin{lstlisting}
 int main() {
   float left{0.},right{1.};
-  float mid = find_zero_between(left,right);
-  cout << "Zero happens at: " << mid << endl;
+  float mid
+   = find_zero_between(left,right);
+  cout << "Zero happens at: "
+       << mid << endl;
 }
 \end{lstlisting}
+\vfill
   \end{multicols}
 Code becomes more readable (though not necessarily shorter): introduce
 application terminology.
@@ -132,7 +154,7 @@ In this example, the function definition consists of:
 \begin{itemize}
 \item The  keyword \lstinline{float} indicates that the function 
   returns a \lstinline{float} result to the calling code.
-\item The name \lstinline{report_evenness} is picked by you.
+\item The name \lstinline{find_zero_between} is picked by you.
 \item The parenthetical \lstinline{(int n)} is called the `parameter list': it
   says that the function takes an \lstinline{int} as input. For purposes of
   the function, the \lstinline{int} will have the name~\lstinline{n}, but this is not
@@ -241,7 +263,7 @@ void print_mod(int n,int d) {
 \begin{slide}{Why functions?}
   \label{sl:func-why}
   \begin{itemize}
-  \item Easier to read
+  \item Easier to read: use application terminology
   \item Shorter code: reuse
   \item Cleaner code: local variables are no longer in the main program.
   \item Maintainance and debugging
@@ -253,10 +275,11 @@ void print_mod(int n,int d) {
   True or false?
   \begin{itemize}
   \item The purpose of functions is to make your code shorter.
-  \item Using functions makes your code easier to read.
+  \item Using functions makes your code easier to read and understand.
   \item Functions have to be defined before you can use them.
   \end{itemize}
 \end{review}
+
 
 \Level 0 {Anatomy of a function definition and call}
 
@@ -532,6 +555,39 @@ int factorial( int n ) {
   problem is addressed in section~\ref{sec:memo}.
 \end{remark}
 
+\Level 0 {Advanced function topics}
+
+\Level 1 {Default arguments}
+
+\begin{block}{Default arguments}
+  \label{sl:def-arg}
+  Functions can have \indextermsub{default}{argument}(s):
+\begin{lstlisting}
+double distance( double x, double y=0. ) {
+  return sqrt( (x-y)*(x-y) );
+}
+  ...
+  d = distance(x); // distance to origin
+  d = distance(x,y); // distance between two points
+\end{lstlisting}
+Any default argument(s) should come last in the parameter list.
+\end{block}
+
+\Level 1 {Polymorphic functions}
+\label{sec:polyfunc}
+
+\begin{block}{Polymorphic functions}
+  \label{sl:func-poly}
+  You can have multiple functions with the same name:
+\begin{lstlisting}
+double sum(double a,double b) {
+  return (a+b)/2; }
+double sum(double a,double b,double c) {
+  return (a+b+c)/3; }
+\end{lstlisting}
+Distinguished by type or number of input arguments: can not differ only in return type.
+\end{block}
+
 \Level 1 {Stack overflow}
 
 So far you have seen only very simple recursive functions. Consider
@@ -570,39 +626,6 @@ will be correct\footnote{Historical note: very old versions of Fortran
 \item a large \indextermbus{recursion}{depth},
 \end{itemize}
 it may lead to \indextermbus{stack}{overflow}.
-
-\Level 0 {Advanced function topics}
-
-\Level 1 {Default arguments}
-
-\begin{block}{Default arguments}
-  \label{sl:def-arg}
-  Functions can have \indextermsub{default}{argument}(s):
-\begin{lstlisting}
-double distance( double x, double y=0. ) {
-  return sqrt( (x-y)*(x-y) );
-}
-  ...
-  d = distance(x); // distance to origin
-  d = distance(x,y); // distance between two points
-\end{lstlisting}
-Any default argument(s) should come last in the parameter list.
-\end{block}
-
-\Level 1 {Polymorphic functions}
-\label{sec:polyfunc}
-
-\begin{block}{Polymorphic functions}
-  \label{sl:func-poly}
-  You can have multiple functions with the same name:
-\begin{lstlisting}
-double sum(double a,double b) {
-  return a+b; }
-double sum(double a,double b,double c) {
-  return a+b+c; }
-\end{lstlisting}
-Distinguished by type or number of input arguments: can not differ only in return type.
-\end{block}
 
 \Level 0 {Library functions}
 

@@ -65,7 +65,31 @@ Error reporting:
 
 \Level 1 {Assertions}
 
-\begin{block}{Use assertions during development}
+One way catch errors before they happen, is to sprinkle your code with
+assertions: statements about things that have to be true. For
+instance, if a function should mathematically always return a positive
+result, it may be a good idea to check for that anyway. You do this by
+using the \indextermttdef{assert} command, which takes a boolean, and
+will stop your program if the boolean is false:
+\begin{lstlisting}
+#include <cassert>
+
+float positive_outcome = f(x,y,z);
+assert( positive_outcome>0 );
+\end{lstlisting}
+
+Since checking an assertion is a minor computation, you may want to
+disable it when you run your program in production by defining the
+\indextermttdef{NDEBUG} macro:
+\begin{lstlisting}
+#define NDEBUG
+\end{lstlisting}
+One way of doing that is passing it as a compiler flag:
+\begin{verbatim}
+icpc -DNDEBUG yourprog.cxx
+\end{verbatim}
+
+\begin{slide}{Use assertions during development}
   \label{sl:cpp-assert}
 \begin{lstlisting}
 #include <cassert>
@@ -80,7 +104,7 @@ before the include.
 
 You can pass this as compiler flag:\\
 \n{icpc -DNDEBUG yourprog.cxx}
-\end{block}
+\end{slide}
 
 Function return values
 
