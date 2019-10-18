@@ -210,6 +210,8 @@ but more interestingly, you can use a
   The calling code is particularly elegant:
   %
   \snippetwithoutput{tupleauto}{stl}{tuple}
+
+  This is known as \indexterm{structured binding}.
 \end{block}
 
 The solution to the above `a~number or an error' now becomes:
@@ -247,6 +249,9 @@ if (f.has_value)
 \end{lstlisting}
 \end{itemize}
 
+There is a function \indextermttdef{value_or} that gives the value, or
+a default if the optional did not have a value.
+
 \begin{slide}{Optional results (C++17)}
   \label{sl:optional-root}
   The most elegant solution to `a~number or an error' is to have a
@@ -254,6 +259,41 @@ if (f.has_value)
   %
   \verbatimsnippet{mayberootptr}
 \end{slide}
+
+\Level 1 {Variant}
+\label{sec:stl-variant}
+
+In~C, a~\indextermtt{union} is an entity that can be one of a number
+of types. Just like that C~arrays do not know their size, a
+\lstinline{union} does not know what type it is. The C++
+\indextermttdef{variant} does not suffer from these limitations. The
+function \indextermttdef{get_if} can retrieve a value by type.
+
+\begin{lstlisting}
+#include <variant>
+using std::variant;
+variant<int,double,string> union_ids {"Hello world"};
+if ( auto union_int =  get_if<int>(&union_ids) ; union_int )
+  cout << "Int: " << union_int.value() << endl;
+\end{lstlisting}
+(You can also use the dereference `star' or \lstinline{union_int}.)
+
+If you know what type the variant is, you
+can get it directly:
+\begin{lstlisting}
+  cout << "Int: " << get<int>( union_ids ) << endl;
+\end{lstlisting}
+
+\begin{exercise}
+  Write a routine that computes the roots of the quadratic equation
+  \[ ax^2+bx+c=0. \]
+  The routine should return two roots, or one root, or an indication
+  that the equation has no solutions.
+\end{exercise}
+
+In this exercise you can return a boolean to indicate `no roots', but
+a boolean can have two values, and only one has meaning. For such
+cases there is \lstinline{std::}\indextermttdef{monostate}.
 
 \Level 0 {Algorithms}
 \label{sec:algorithm}

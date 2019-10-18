@@ -34,12 +34,27 @@ to give a new level of abstraction:
 
 \end{block}
 
-\begin{block}{Objects and classes}
+Objects belong to a class, so, as with structures:
+\begin{itemize}
+\item You need a class definition, typically places before the main
+  program.
+\item (In larger programs you would put it in a
+  \indextermsub{include}{file}.)
+\item You can then create multiple objects belonging to that
+  class. Objects behave largely like any other datatype.
+\end{itemize}
+
+\begin{slide}{Objects and classes}
   \label{label:class-def}
   An object is a particular instance of a \indextermdef{class} of
   similar objects, so you need a \indextermbus{class}{definition},
   after which you define objects of that class.
-\end{block}
+\end{slide}
+
+Let's look at a simple example: as with structures we want a
+\lstinline{vector} object, corresponding to a mathematical vector
+in~$\mathbb{R}^2$. Given a vector, you could want to know its length, or its
+angle with the $x$-axis.
 
 \begin{block}{Object functionality}
   \label{sl:object-functionality}
@@ -57,6 +72,30 @@ to give a new level of abstraction:
   What data does the object need to store to do this?\\
   Is there more than one possibility?
 \end{exercise}
+
+\begin{block}{The object workflow}
+  \label{sl:object-flow}
+  Similar to \lstinline{struct}:
+  \begin{itemize}
+  \item You have to declare what an object looks like by giving a
+\begin{lstlisting}
+class myobject { /* ... */ };
+\end{lstlisting}
+    definition, typically before the
+    \lstinline{main};
+  \item You create specific objects with a declaration
+\begin{lstlisting}
+myobject
+  object1(/* .. */),
+  object2( /* .. */ );    
+\end{lstlisting}
+  \item You let the objects do things:
+\begin{lstlisting}
+object1.do_this();
+object2.do_that( /* ... */ );
+\end{lstlisting}
+  \end{itemize}
+\end{block}
 
 \begin{comment}
   First of all, you can make an object look pretty much like a
@@ -96,7 +135,14 @@ for instance to initialize data members.
 This fragment of the \lstinline{class Vector}
 shows the constructor and the data members:
 %
-\verbatimsnippet{functionalityconstruct}
+\begin{multicols}{2}
+  \verbatimsnippet{functionalityconstruct}
+  \vfill\hbox{}
+  \columnbreak
+  Slightly less confusing:
+  \verbatimsnippet{functionalityconstructmyx}
+  \vfill\hbox{}
+\end{multicols}
 
 \begin{slide}{Constructor}
   \label{sl:class-construct}
@@ -135,7 +181,7 @@ or you could ask it to scale its length by some number.
 
 \begin{block}{Class methods}
   \label{sl:method-define}
-  We used methods \lstinline{length} and \lstinline{scaleby}. These are defined inside the
+  Let's define methods \lstinline{length} and \lstinline{scaleby}. These are defined inside the
   class:
   %
   \verbatimsnippet{functionalitymethod}
@@ -173,6 +219,11 @@ private:
 
 \begin{block}{Member initialization in the constructor}
   \label{sl:class-set}
+  The members stored can be different from the constructor arguments.
+
+  Example: create a vector from \lstinline{x,y} cartesian coordinates,
+  but store \lstinline{r,theta} polar coordinates:
+
 \begin{lstlisting}
 class Vector {
 private: // members
@@ -261,6 +312,24 @@ could create a new object based on the scaled members:
   \snippetwithoutput{pointscale}{geom}{pointscale}
 \end{slide}
 
+\begin{block}{Anonymous objects}
+  \label{sl:obj-return-move}
+  (also known as `move semantics')
+  Instead of
+\begin{lstlisting}
+  Vector scale( double a ) {
+    return Vector( vx*a, vy*a ); };
+\end{lstlisting}
+  we could have written:
+\begin{lstlisting}
+Vector scale( double a ) {
+  Vector result_vector( vx*a, vy*a );
+  return result_vector;
+};
+\end{lstlisting}
+However, that involves an extra copy.
+\end{block}
+
 \Level 2 {Changing state}
 
 Objects usually have data members that maintain the
@@ -275,6 +344,7 @@ usually done through a method.
 \end{block}
 
 \Level 1 {Default constructor}
+\label{sec:default-constructor}
 
 One of the more powerful ideas in C++ is that there can be more than
 one constructor. You will often be faced with this whether you want or
@@ -363,8 +433,13 @@ public:
 \begin{block}{Public versus private}
   \label{sl:interfaceimpl}
   \begin{itemize}
-  \item Implementation: data members, keep \indextermtt{private},
-  \item Interface: \indextermtt{public} functions to get/set data.
+  \item Interface: \indextermtt{public} functions that determine the
+    functionality of the object; effect on data members is secondary.
+  \item Implementation: data members, keep \indextermtt{private}: they
+    only support the functionality.
+  \end{itemize}
+  This separation is a Good Thing:
+  \begin{itemize}
   \item Protect yourself against inadvertant changes of object data.
   \item Possible to change implementation without rewriting calling code.
   \end{itemize}
@@ -414,7 +489,7 @@ changes are allowed that maintain that relation.
 
 \Level 1 {Examples}
 
-\begin{block}{Classes for abstact objects}
+\begin{block}{Classes for abstract objects}
   \label{sl:intstream}
   Objects can model fairly abstract things:
   %

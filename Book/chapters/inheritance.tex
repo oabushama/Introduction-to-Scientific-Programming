@@ -123,22 +123,61 @@ Implementation vs API: implementation can be very different from user interface.
 \end{slide}
 
 Related to this decoupling, a class can also have two very different constructors.
-\begin{lstlisting}
-class Segment {
-private:
- // up to you how to implement!
-public:
-  Segment( Point start,float length,float angle )
-    { .... }
-  Segment( Point start,Point end ) { ... }
-\end{lstlisting}
-Depending on how you actually implement the class, the one constructor
-will simply store the defining data, and the other will do some
-conversion from the given data to the actually stored data.
+\begin{block}{Multiple constructors}
+  \label{sl:segment-constructors}
+  \begin{lstlisting}
+    class Segment {
+      private:
+      // up to you how to implement!
+      public:
+      Segment( Point start,float length,float angle )
+      { .... }
+      Segment( Point start,Point end ) { ... }
+  \end{lstlisting}
+  Depending on how you actually implement the class, the one constructor
+  will simply store the defining data, and the other will do some
+  conversion from the given data to the actually stored data.
+\end{block}
 
 This is another strength of object-oriented programming: you can
 change your mind about the implementation of a class without having
 to change the program that uses the class.
+
+When you have a has-a relation between classes, the `default
+constructor' problem (section~\ref{sec:default-constructor}) can pop
+up again:
+
+\begin{block}{Default Constructors in initialization}
+  \label{sl:member-init-def-construct}
+\begin{lstlisting}
+class Inner { /* ... */ };
+class Outer {
+private:
+  Inner inside_thing;
+\end{lstlisting}
+Two possibilities for constructor:
+\begin{multicols}{2}
+\begin{lstlisting}
+Outer( Inner put_it )
+: inside_thing(put_it) {};
+\end{lstlisting}
+The \lstinline{Inner} object is copied during construction
+of \lstinline{Outer} object.
+\par\vfill\hbox{}
+
+\columnbreak
+
+\begin{lstlisting}
+Outer( Inner put_it ) {
+  inside_thing = put_it;
+};
+\end{lstlisting}
+The \lstinline{Outer} object is created, including construction of
+\lstinline{Inner} object, then the argument is copied into place:
+$\Rightarrow$~needs default constructor on \lstinline{Inner}.
+
+\end{multicols}
+\end{block}
 
 \begin{slide}{Polymorphism in constructors}
   \label{sl:obj-poly-construct}

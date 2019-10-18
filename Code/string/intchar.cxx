@@ -23,7 +23,7 @@ using std::string;
 
 int main() {
 
-  //codesnippet intchar
+  //codesnippet intcharxy
   char ex = 'x';
   int x_num = ex, y_num = ex+1;
   char why = y_num;

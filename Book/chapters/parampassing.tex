@@ -46,8 +46,9 @@ y = f(x1,x2,x3);
 
 \end{itemize}
 
-We say that the input argument is \emph{passed by
-  value}\index{parameter!pass by value}: its value is copied into the
+We say that the input argument is
+\emph{passed by value}\index{parameter!pass by value|textbf}:
+its value is copied into the
 function.  In this example, the function parameter \n{x} acts as a
 local variable in the function, and it is initialized with a copy of
 the value of \n{number} in the main program.
@@ -151,7 +152,7 @@ int main() {
 \end{block}
 
 Using the ampersand, the parameter is
-\emph{passed by reference}\index{parameter!passing by reference}:
+\emph{passed by reference}\index{parameter!passing by reference|textbf}:
 instead of copying the value, the function receives a \emph{reference}:
 information where the variable is stored in memory.
 
@@ -212,7 +213,7 @@ bool can_read_value( int &value ) {
   int file_status = try_open_file();
   if (file_status==0) 
     value = read_value_from_file();
-  return file_status!=0;
+  return file_status==0;
 }
 
 int main() {

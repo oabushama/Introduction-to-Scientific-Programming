@@ -42,10 +42,15 @@ struct vector { double x=0.; double y=0.; } ;
 
   \verbatimsnippet{structdef}
 
-  (This can go in the main program or before it.)
+  (This is a declaration; it can go in the main program or before it.)
 
 The elements of a structure are usually called \indexterm{members}.
 \end{slide}
+
+The reason for using structures is to `raise the level of
+abstraction': instead of talking about \lstinline{x,y}-values, you can
+now talk about vectors and such. This makes your code look closer to
+the application you are modeling.
 
 \Level 0 {The basics of structures}
 
@@ -53,7 +58,7 @@ A structure behaves like a data type: you declare variables of the
 structure type, and you use them in your program. The new aspect is
 that you first need to define the structure type. This definition can
 be done inside your main program or before it. The latter is
-preferable, for instance if you need to pass the structure to a function.
+preferable.
 
 \begin{lstlisting}
 // definition of the struct
@@ -68,8 +73,8 @@ int main() {
 \begin{slide}{How to use structures}
   \label{sl:structinprog}
   \begin{enumerate}
-  \item Declare what is in your structure;
-  \item Make some structures;
+  \item Define the structure: what members are in it.
+  \item Declare some structure variables;
   \item Use them.
   \end{enumerate}
 \begin{lstlisting}
@@ -104,25 +109,25 @@ There are various ways of setting the members of the structure:
   %
   \snippetwithoutput{structuse}{struct}{point}
   %
-  Period syntax: `apostrophe-s'.
+  Period syntax: compare to possessive `apostrophe-s' in English.
 \end{block}
 
 \begin{review}
   \label{rev:func-def}
   True or false?
   \begin{itemize}
-  \item All members of a struct have to have the same type.
+  \item All members of a struct have to be of the same type.
   \item Writing
 \begin{lstlisting}
 struct numbered { int n; double x; };
 \end{lstlisting}
-creates an object with an integer and a double as members.
+creates a structure with an integer and a double as members.
 \item With the above definition and \lstinline$struct numbered xn;$,
 \begin{lstlisting}
 cout << xn << endl;
 \end{lstlisting}
-is correct C++.
-\item With the same definitions, this is correct C++:
+Is this correct C++?
+\item With the same definitions, is this correct C++?
 \begin{lstlisting}
 xn.x = xn.n+1;
 \end{lstlisting}
@@ -131,6 +136,11 @@ xn.x = xn.n+1;
 
 Note: if you use initializations in the \lstinline$struct$ definition,
 you can not use the brace-assignment.
+
+\Level 1 {Structures and functions}
+
+You can use structures with functions, just as you could with
+elementary datatypes.
 
 \begin{block}{Functions on structures}
   \label{sl:struct-pass}
@@ -143,7 +153,7 @@ you can not use the brace-assignment.
   \label{ex:vecstruct-angle}
   \hbox{%
     \begin{minipage}[t]{.6\hsize}
-      Write a function that, given a vector as defined above, returns the
+      Write a vector class, and a function that, given such a  vector, returns the
       angle with the $x$-axis. (Hint: the \lstinline$atan$ function is in \lstinline$cmath$)
     \end{minipage}
     \includegraphics[scale=.4]{xy-atan}
@@ -151,6 +161,10 @@ you can not use the brace-assignment.
 
   \answerwithoutput{anglepi4}{struct}{pointangle}
 \end{exercise}
+
+The mechanisms of \indextermbus{parameter}{passing by value} and
+\indextermbus{parameter}{passing by reference} apply to structures just as
+to simple datatypes.
 
 \begin{exercise}
   \label{ex:vecstruct-flip}
@@ -217,12 +231,11 @@ you can not use the brace-assignment.
   then using the inner product method to multiply matrices?
 \end{exercise}
 
+\endinput
+
 \begin{block}{Passing structures by reference}
   \label{sl:struct-passref}
   Prevent copying cost by passing by reference, use \lstinline$const$ to
   prevent changes:
   \verbatimsnippet{structpassref}
 \end{block}
-
-
-

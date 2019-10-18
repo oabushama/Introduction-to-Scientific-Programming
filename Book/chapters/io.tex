@@ -69,19 +69,6 @@ etc
 \end{verbatim}
 \end{exercise}
 
-\begin{exercise}
-  \label{ex:fixedpout}
-  Use integer output to print real numbers aligned on the
-  decimal:
-\begin{verbatim}
-  1.345
- 23.789
-456.1234
-\end{verbatim}
-  Use four spaces for both the integer and fractional part; test only
-  with numbers that fit this format.
-\end{exercise}
-
 \begin{block}{Hexadecimal}
   \label{sl:io-hex}
   Hex output is useful for pointers (chapter~\ref{ch:pointer}):
@@ -177,22 +164,16 @@ Streams are general: work the same for console out and file out.
 #include <fstream>
 \end{verbatim}
 Use:
-\verbatimsnippet{fio}
+\snippetwithoutput{fio}{io}{fio}
+%\verbatimsnippet{fio}
 \end{block}
 
 \begin{block}{Binary output}
   \label{sl:io-bin}
-  \verbatimsnippet{fiobin}
-\begin{verbatim}
-  
-\end{verbatim}
+%  \verbatimsnippet{fiobin}
+\snippetwithoutput{fiobin}{io}{fiobin}
 \end{block}
 
-\Level 1 {Binary output}
-
-\snippetwithoutput{fio}{io}{fio}
-
-\snippetwithoutput{fiobin}{io}{fiobin}
 
 \Level 0 {Output your own classes}
 \label{sec:lessless}

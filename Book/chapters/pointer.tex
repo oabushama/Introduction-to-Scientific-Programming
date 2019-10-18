@@ -84,8 +84,13 @@ Obj *X;
 \end{lstlisting}
 \end{block}
 
-(It is also possible to cast a \indextermtt{new} object to shared
-pointer, but that method is not recommended.)
+There is a final variant where you cast a \indextermtt{new} object to shared
+pointer
+\begin{lstlisting}
+auto p = shared_ptr<Obj>( new Obj );
+\end{lstlisting}
+This is not necessarily in general, but can be useful in the case of
+\indextermsub{weak}{pointer}s; section~\ref{sec:weak_ptr}.
 
 Using shared pointers requires at the top of your file:
 \begin{lstlisting}
@@ -383,6 +388,48 @@ This allows you to write:
     return this->shared_from_this();
 \end{lstlisting}
 \end{slide}
+
+\Level 1 {Weak pointers}
+\label{sec:weak_ptr}
+
+In addition to shared and unique pointers, which own an object, there
+is also \indextermttdef{weak_ptr} which creates a
+\indextermsubdef{weak}{pointer}. This pointer type does not own, but
+at least it knows when it dangles.
+
+\begin{lstlisting}
+weak_ptr<R> wp;
+shared_ptr<R> sp( new R );
+sp->call_member();
+wp = sp;
+// access through new shared pointer:
+auto p = wp.lock();
+if (p) {
+  p->call_member();
+}
+if (!wp.expired()) { // not thread-safe!
+  wp.lock()->call_member();
+}
+\end{lstlisting}
+
+There is a subtlety with weak pointers and shared pointers. The call
+\begin{lstlisting}
+auto sp = shared_ptr<Obj>( new Obj );
+\end{lstlisting}
+creates first the object, then the `control block' that counts owners.
+On the other hand,
+\begin{lstlisting}
+auto sp = make_shared<Obj>();
+\end{lstlisting}
+does a single allocation for object and control block. However, if you
+have a weak pointer to such a single object, it is possible that the
+object is destructed, but not de-allocated. On the other hand, using
+\begin{lstlisting}
+auto sp  = shared_ptr<Obj>( new Obj );
+\end{lstlisting}
+creates the control block separately, so the pointed object can be
+destructed and de-allocated. Having a weak pointer to it means that only
+the control block needs to stick around.
 
 \Level 1 {Null pointer}
 

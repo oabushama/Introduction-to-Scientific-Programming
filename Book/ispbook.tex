@@ -23,6 +23,9 @@
 \usepackage{times,makeidx,multirow,multicol}
 \usepackage{dirtree}
 
+\usepackage{wasysym}
+\DeclareUnicodeCharacter{1F600}{\smiley}
+
 \input bookmacs
 \input snippetmacs
 
@@ -109,6 +112,7 @@
 \CHAPTER{PageRank}{google}
 \CHAPTER{Redistricting}{gerry}
 \CHAPTER{Amazon delivery truck scheduling}{amazon}
+\CHAPTER{High performance linear algebra}{lapack}
 \CHAPTER{Memory allocation}{malloc}
 \CHAPTER{DNA Sequencing}{dna}
 \CHAPTER{Cryptography}{crypt}
@@ -129,6 +133,8 @@
 \begin{multicols}{2}
 \printindex
 \end{multicols}
+
+\Level 0 {Bibliography}
 
 \bibliographystyle{plain}
 \bibliography{vle}

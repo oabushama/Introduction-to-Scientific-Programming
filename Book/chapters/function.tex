@@ -65,16 +65,15 @@ There are two sides to a function:
 
 \begin{block}{Program without functions}
   \label{sl:nodef-nocall}
-  Everything in the main:
-  \begin{multicols}{2}
+Example: zero-finding through bisection; 
+  everything in the main program.
+
 \begin{lstlisting}
 int main() {
   float left{0.},right{1.};
   while (right-left>.1) {
-    float mid
-      = (left+right)/2.,
-    fmid = mid*mid*mid
-      - mid*mid-1;
+    float mid = (left+right)/2.,
+    fmid = mid*mid*mid - mid*mid-1;
     if (fmid<0)
       left = mid;
     else
@@ -83,13 +82,13 @@ int main() {
   cout << "Zero happens at: " << mid << endl;
 }
 \end{lstlisting}
-  \end{multicols}
+
 \end{block}
 
 \begin{block}{Introducing functions, step1}
   \label{sl:def-call1}
-Function for which we compute the zero:
   \begin{multicols}{2}
+Introduce function for the objective function:
 \begin{lstlisting}
 float f(float m) {
   return m*m*m - m*m-1;
@@ -114,9 +113,9 @@ int main() {
   \end{multicols}
 \end{block}
 
-\begin{block}{Introducting functions, step 2}
+\begin{block}{Introducing functions, step 2}
   \label{sl:def-call2}
-  Function for zero finding:
+  Add function for zero finding:
   \begin{multicols}{2}
 \begin{lstlisting}
 float f(float m) {
@@ -197,7 +196,7 @@ double x,y, v,w;
 y = ...... computation from x .....
 w = ...... same computation, but from v .....
 \end{lstlisting}
-With a fuction this can be replaced by:
+With a function this can be replaced by:
 \begin{lstlisting}
 double computation(double in) {
   return .... computation from `in' ....
@@ -227,11 +226,11 @@ cout << "One norm y: " << s << endl;
 \vfill\columnbreak
 becomes:
 \begin{lstlisting}
-int OneNorm( vector<float> a ) {
-  float s = 0;
-  for (int i=0; i<n.size(); i++)
-    s += abs(a[i]);
-  return s;
+float OneNorm( vector<float> a ) {
+  float sum = 0;
+  for (int i=0; i<a.size(); i++)
+    sum += abs(a[i]);
+  return sum;
 }
 int main() {
   ... // stuff
@@ -507,8 +506,10 @@ int factorial(int n) {
 
 \begin{slide}{Recursion}
   \label{sl:func-recur}
-  A functions is allowed to call itself, making it a \indextermsubdef{recursive}{function}.
-  For example, you can define factorial as
+  A function is allowed to call itself, making it a \indextermsubdef{recursive}{function}.
+  For example, factorial:
+  \[ 5! = 5\cdot 4 \cdot \cdots \cdot 1 = 5 \times 4! \]
+  You can define factorial as
   \[ F(n) = n \times F(n-1) \qquad \hbox{if $n>1$, otherwise~$1$} \]
 \begin{lstlisting}
 int factorial( int n ) {

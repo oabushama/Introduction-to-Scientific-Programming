@@ -49,7 +49,8 @@ int main() {
    
   dosomething(n);
 \end{lstlisting}
-You can also use a \emph{preprocessor macro}:
+You can also use \indexpragma{define} to define a
+\emph{preprocessor macro}:
 \begin{lstlisting}
 #define N 100000
 void dosomething() {
@@ -64,6 +65,7 @@ int main() {
 It is traditional to use all uppercase for such macros.
 
 \Level 0 {Parametrized macros}
+\label{sec:cpp-define-fun}
 
 Instead of simple text substitution, you can have
 %

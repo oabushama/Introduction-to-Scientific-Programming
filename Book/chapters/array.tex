@@ -21,6 +21,21 @@ matrices, potentialy of quite large size. (If you know about the
 In this chapter you will see the C++ \indextermtt{vector} construct,
 which implements the notion of an array of things, whether they be
 numbers, strings, object.
+
+\begin{slide}{What are vectors?}
+  \label{sl:what-vector}
+  \begin{itemize}
+  \item `Array' of items:
+    \begin{itemize}
+    \item items of any type (but the same for all elements of one
+      vector)
+    \item potentially very many items
+    \end{itemize}
+  \item Indexed set of items
+  \item \ldots~but if you don't need the index: collection of items
+  \end{itemize}
+\end{slide}
+
 While C++ can use the C~mechanisms for arrays, for almost all purposes
 it is better to use \lstinline{vector}. In particular, this is a safer way to
 do dynamic allocation. The old
@@ -64,9 +79,9 @@ where
 \item \n{type} (in angle brackets) is any elementary type or class
   name,
 \item \n{name} is up to you, and
-\item \n{size} is the (initial size of the array). This is an integer,
+\item \n{size} is the (initial size of the vector). This is an integer,
   or more precisely, a \indextermtt{size_t} parameter.
-\item \n{init_value} will be used for all elements.
+\item Initialize all elements to \n{init_value}.
 \end{itemize}
 \end{block}
 
@@ -84,20 +99,20 @@ the bounds may abort your code, typically with a
 \indexterm{segmentation fault}, but your code may just as well
 proceed, using invalid data.
 
-As you see in this example, if \n{a}~is an array, and \n{i} and
+As you see in this example, if \n{a}~is a vector, and \n{i} an
 integer, then \n{a.at(i)} is the i'th element.
 \begin{itemize}
-\item An array element \n{a.at(i)} can be used to get the value of an
-  array element, or it can occur in the left-hand side of an
+\item The expression \n{a.at(i)} can be used to get the value of a
+  vector element, or it can occur in the left-hand side of an
   assignment to set the value.
 \item The \indextermbus{array}{index} (or
   \indextermbus{array}{subscript}) \n{i} starts numbering at zero.
-\item Therefore, if an array has $n$ elements, its last element has
+\item Therefore, if a vector has $n$ elements, its last element has
   index~\n{n-1}.
-\item If you try to get an array elements outside the bounds of the
-  array, the compiler will only detect this in simple cases. More
-  likely, your program may give a runtime error, but that does not
-  necessarily happen. You could just get some random value.
+\item If you try to get an element outside the bounds of the vector,
+  the compiler will only detect this in simple cases. More likely,
+  your program may give a runtime error, but that does not necessarily
+  happen. You could just get some random value.
 \end{itemize}
 
 There is a safer way to access elements:
@@ -152,13 +167,13 @@ If your vector is short enough, you can set all elements explicitly with an
   \snippetwithoutput{dynamicinit}{array}{dynamicinit}
 \end{block}
 
-\Level 0 {Ranging over an array}
+\Level 0 {Ranging over a vector}
 \label{sec:arrayrange}
 
-If you need to consider all the elements in an array, you typically
+If you need to consider all the elements in a vector, you typically
 use a \lstinline{for} loop. There are various ways of doing this.
 
-First of all consider the cases where you consider the array as a
+First of all consider the cases where you consider the vector as a
 collection of elements, and the loop functions like a mathematical
 `for all'.
 
@@ -183,9 +198,10 @@ for ( auto e : array )
 for ( auto e : my_vector)
   cout << e;
 \end{lstlisting}
+(Technical note: \lstinline{e}~is a copy of the array element.)
 \end{block}
 
-(You can spell out the type of the array element, but such type
+(You can spell out the type of the vector element, but such type
 specifications can be complex. In that case, using \indextermtt{auto} is
 quite convenient.)
 
@@ -197,7 +213,7 @@ can also be used as a list denotation:
   \snippetwithoutput{rangedenote}{array}{rangedenote}  
 \end{block}
 
-If you actually need the array index of the element, you can use a
+If you actually need the index of the element, you can use a
 traditional \lstinline{for} loop with loop variable.
 
 \begin{block}{Indexing the elements}
@@ -208,7 +224,7 @@ traditional \lstinline{for} loop with loop variable.
 for (int i= /* from first to last index */ )
   // statement about index i
 \end{lstlisting}
-Example: find the maximum element and where it occurs.
+Example: find the maximum element in the array, and where it occurs.
 %
 \snippetwithoutput{vecidxmax}{array}{vecidxmax}
 \end{block}
@@ -226,11 +242,11 @@ Example: find the maximum element and where it occurs.
 
 \begin{exercise}
   \label{ex:array-max}
-  Find the element with maximum absolute value in an array. Use:
+  Find the element with maximum absolute value in a vector. Use:
 \begin{lstlisting}
 vector<int> numbers = {1,-4,2,-6,5};
 \end{lstlisting}
-Which mechanism do you use for traversing the array?
+% Which mechanism do you use for traversing the vector?
 
 Hint:
 \begin{lstlisting}
@@ -242,20 +258,20 @@ absx = abs(x);
 
 \begin{exercise}
   \label{ex:array-maxidx}
-  Find the location of the first negative element in an array.
+  Find the location of the first negative element in a vector.
 
   Which mechanism do you use?
 \end{exercise}
 
 \begin{exercise}
   \label{ex:array-sorted}
-  Check whether an array is sorted.
+  Check whether a vector is sorted.
 \end{exercise}
 
 \begin{block}{Range over elements by reference}
   \label{sl:array-range-ref}
-  Range-based loop indexing makes a copy of the array element. If you
-  want to alter the array, use a reference:
+  Range-based loop indexing makes a copy of the vector element. If you
+  want to alter the vector, use a reference:
   %
 \begin{lstlisting}
 for ( auto &e : my_vector)
@@ -274,10 +290,10 @@ prevent altering data.)
 
 \begin{block}{Indexing with pre/post increment}
   \label{sl:prepostindex}
-Array indexing in \lstinline{while} loop and such:
+Indexing in \lstinline{while} loop and such:
 \begin{lstlisting}
-  x = a[i++]; /* is */ x = a.at(i); i++;
-  y = b[++i]; /* is */ i++; y = b.at(i);
+x = a.at(i++); /* is */ x = a.at(i); i++;
+y = b.at(++i); /* is */ i++; y = b.at(i);
 \end{lstlisting}
 \end{block}
 
@@ -292,12 +308,14 @@ Array indexing in \lstinline{while} loop and such:
 \label{sec:stdvector}
 
 You wouldn't tell it from the above examples, but vectors actually
-form a \indextermttdef{vector} class. The angle bracket notation means
-that we have a class that is parametrized with the type (see
-chapter~\ref{ch:template} for the details), and you can
-have vectors of ints, vectors of chars, et cetera. We can now say that
-\lstinline{vector<int>} is a type, pronounced `vector-of-int', and you can
-make new variables of that type.
+form a \indextermttdef{vector} class. You can have a vector of ints,
+floats, doubles, et cetera; 
+the angle bracket notation indicates what the specific type stored in
+the vector is.
+You could say that the vector class is parametrized with the type (see
+chapter~\ref{ch:template} for the details). We could say that
+\lstinline{vector<int>} is a new data type, pronounced `vector-of-int', and you can
+make variables of that type.
 
 \begin{block}{Vector copy}
   \label{sl:vectorcopy}
@@ -339,13 +357,16 @@ we will get to next.
 \begin{slide}{Vector methods}
   \label{sl:vector-method}
   \begin{itemize}
-  \item Get elements with \lstinline{ar[3]} (zero-based indexing).
+  \item Get elements, including bound checking, with
+    \lstinline{ar.at(3)}.
+    Note: (zero-based indexing).
+  \item (also get elements with \lstinline{ar[3]}: see later discussion.)
     %% (for C programmers: this is not dereferencing, this uses an
     %% operator method)
-  \item Get elements, including bound checking, with \lstinline{ar.at(3)}.
   \item Size: \lstinline{ar.size()}.
   \item Other functions: \lstinline{front}, \lstinline{back}, \lstinline{empty}.
-  \item \lstinline{vector} is a `templated class'
+  \item \lstinline{vector} is a `templated class':
+    \lstinline{vector<X>} is a vector-of-\lstinline{X}.
   \end{itemize}
 \end{slide}
 
@@ -356,7 +377,7 @@ A vector
 can be grown or shrunk after its creation.
 For instance, you can use the \lstinline{push_back} method to add elements at the end:
 
-\begin{block}{Dynamic extension}
+\begin{block}{Dynamic vector extension}
   \label{sl:vector-dynamic}
   Extend with \indextermtt{push_back}:
   %
@@ -490,8 +511,8 @@ output:
 
 You may want an object that contains a vector, where the size of the
 vector is passed to the constructor. Since the class definition is an
-abstract definition of all the object, clearly you can not have the
-array size there.
+abstract definition of all possible objects, clearly you can not have the
+vector size there.
 
 \begin{lstlisting}
 class witharray {
@@ -566,7 +587,7 @@ The two cases behave slightly differently.
 Different ways of acessing a vector can have drastically different
 timing cost.
 
-\begin{block}{Vector extension}
+\begin{block}{Filling in vector elements}
   \label{sl:vect-extend-code}
   You can push elements into a vector:
   \verbatimsnippet{vectorflex}
@@ -575,20 +596,23 @@ timing cost.
   \verbatimsnippet{vectorat}
 \end{block}
 
-\begin{block}{Vector extension}
+\begin{block}{Filling in vector elements}
   \label{sl:vect-extend-code2}
   With subscript:
   \verbatimsnippet{vectorsub}
 
-  You can also use \indextermtt{new} to allocate
+  You can also use \indextermtt{new} to allocate:
+  %
   \verbatimsnippet{vectornew}
+  %
+  (note: legacy C mechanism. Do not use)
 \end{block}
 
 For \indextermtt{new}, see section~\ref{sec:cnew}. However, note that
 this mode of allocation is basically never needed.
 
 Timings are partly predictable, partly surprising:
-\begin{block}{Timing}
+\begin{block}{Timing the ways of filling a vector}
   \label{sl:vector-extend-time}
 \begin{lstlisting}
   Flexible time: 2.445
@@ -633,6 +657,10 @@ library. Here are some general remarks on multi-dimensional storage.
 \begin{lstlisting}
 vector<float> row(20);
 vector<vector<float>> rows(10,row);
+// alternative:
+vector<vector<float>> rows(10);
+for ( auto &row : rows )
+  row = vector<float>(20);
 \end{lstlisting}
 Create a row vector, then store 10 copies of that:\\
 vector of vectors.
@@ -898,7 +926,13 @@ whole new vector.
 
 \begin{block}{Span}
   \label{sl:spandef}
-  To be written.
+\begin{lstlisting}
+vector<double> v;
+auto v_span = gsl::span<double>( v.data(),v.size() );
+\end{lstlisting}
+The \indextermtt{span} object has the same \lstinline{at}, \lstinline{data}, and
+\lstinline{size} methods, and you can iterate over it, but it has no
+dynamic methods.
 \end{block}
 
 \Level 0 {Exercises}

@@ -53,9 +53,9 @@ auto result = someobject.somemethod();
   \verbatimsnippet{autofun}  
 \end{block}
 
-\begin{block}{Type deduction in functions}:
+\begin{block}{Type deduction in methods}:
   \label{sl:auto-method}
-  Return type can be deduced in C++17:
+  Return type of methods can be deduced in C++17:
   \verbatimsnippet{autoclass}  
 \end{block}
 
@@ -109,6 +109,8 @@ for ( auto copy_of_int : myvector )
   s += copy_of_int;
 for ( auto &ref_to_int : myvector )
   ref_to_int = s;
+for ( const auto& copy_of_thing : myvector )
+  s += copy_of_thing.f();
 \end{lstlisting}
     is actually short for:
 \begin{lstlisting}
@@ -138,6 +140,40 @@ for ( std::vector<int>
     myarray.erase(first,last);
   \end{lstlisting}
 \end{block}
+
+\Level 1 {\texttt{decltype}: declared type}
+
+There are places where you want the compiler to deduce the type of a
+variable, but where this is not immediately possible. Suppose that in
+\begin{lstlisting}
+auto v = some_object.get_stuff();
+f(v);
+\end{lstlisting}
+you want to put a \lstinline{try ... catch} block around just the
+creation of~\lstinline{v}. This does not work:
+\begin{lstlisting}
+try { auto v = some_object.get_stuff(); 
+} catch (...) {}
+f(v);
+\end{lstlisting}
+because the \lstinline{try} block is a scope. It also doesn't work to write
+\begin{lstlisting}
+auto v;
+try { v = some_object.get_stuff(); 
+} catch (...) {}
+f(v);
+\end{lstlisting}
+because there is no indication what type \lstinline{v} is created
+with.
+
+Instead, it is possible to query the type of the expression that
+creates~\lstinline{v} with \indextermttdef{decltype}:
+\begin{lstlisting}
+decltype(some_object.get_stuff()) v;
+try { auto v = some_objects.get_stuff(); 
+} catch (...) {}
+f(v);
+\end{lstlisting}
 
 %% \Level 0 {RAII}
 %% \label{sec:raii}
@@ -439,6 +475,19 @@ but, as said, this does not work correctly in this case.
 
 With \indextermtt{const_cast} you can add or remove const from a
 variable. This is the only cast that can do this.
+
+\Level 1 {Reinterpret cast}
+
+The \indextermttdef{reinterpret_cast} is the crudest cast, and it
+corresponds to the C~mechanism of `take this byte and pretend it of
+type whatever'. There is a legitimate use for this:
+\begin{lstlisting}
+void *ptr;
+ptr = malloc( how_much );
+auto address = reinterpret_cast<long int>(ptr);
+\end{lstlisting}
+so that you can do arithmetic on the address. For this particular
+case, \indextermttdef{intptr_t} is actually better.
 
 \Level 1 {A word about void pointers}
 

@@ -25,7 +25,7 @@
   \label{sl:int-char}
   Equivalent to (short) integer:
   %
-  \snippetwithoutput{intchar}{string}{intchar}
+  \snippetwithoutput{intcharxy}{string}{intchar}
   %
   Also: \n{'x'-'a'} is distance \n{a--x}
 \end{block}
@@ -102,13 +102,16 @@ cout << "The second character is <<"
 
 \begin{block}{Ranging over a string}
   \label{sl:string-index}
+  Same as ranging over vectors.
+
+  Range-based for:
+  %
+  \snippetwithoutput{stringrange}{string}{stringrange}
+
   Ranging by index:
   %
   \snippetwithoutput[stringrange]{stringindex}{string}{stringindex}
-  %
-  New syntax: range-based for
-  %
-  \snippetwithoutput{stringrange}{string}{stringrange}
+
 \end{block}
 
 \begin{block}{Range with reference}
@@ -201,9 +204,61 @@ for ( auto c : some_string)
   \end{itemize}
 \end{exercise}
 
-\Level 0 {Conversion}
+\Level 1 {String streams}
+
+You can concatenate string with the \lstinline{+} operator.
+The less-less operator also does a sort of concatenation. It is
+attractive because it does conversion from quantities to string.
+Sometimes you may want a combination of these facilities: conversion
+to string, with a string as result.
+
+For this you can use a \indextermbus{string}{stream}: 
+
+\begin{block}{String stream}
+  \label{sl:sstream}
+  Like cout (including conversion from quantity to string), but to
+  object, not to screen.
+\begin{itemize}
+\item Use the \lstinline{<<} operator to build it up; then
+\item use the \lstinline{str} method to extract the string.
+\end{itemize}
+\begin{lstlisting}
+#include <sstream>
+stringstream s;
+s << "text" << 1.5;
+cout << s.str() << endl;
+\end{lstlisting}
+\end{block}
+
+\begin{exercise}
+  \label{ex:fixedpout}
+  Use integer output to print real numbers aligned on the
+  decimal:
+  %
+  \answerwithoutput{qfcall}{string}{quasifix}
+  %
+  Use four spaces for both the integer and fractional part; test only
+  with numbers that fit this format.
+\end{exercise}
+
+\Level 1 {Conversation to/from string}
 
 \n{to_string}
+
+\Level 1 {Unicode}
+
+C++ strings are essentially vectors of characters. A~character is a
+single byte. Unfortunately, in these interweb days there are more
+characters around than fit in one byte. In particular, there is the
+\indextermdef{Unicode} standard that covers millions of
+characters. The way they are rendered is by an
+\indextermsub{extendible}{encoding}, in
+particular~\indextermdef{UTF8}. This means that sometimes a single
+`character', or more correctly \indextermdef{glyph}, takes more than
+one byte.
+
+Example:
+%\snippetwithoutput{unismile}{string}{smile}
 
 \Level 0 {C strings}
 \label{sec:cstring}
