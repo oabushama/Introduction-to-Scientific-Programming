@@ -161,6 +161,8 @@ quantity :: number | variable
 
 \begin{block}{Comparison and logical operators}
   \label{sl:operators}
+  Here are the most common \indextermsub{logic}{operator}s and
+  \indextermsub{comparison}{operator}s.
   \begin{tabular}{|l|l|l|}
     \hline
     Operator&meaning&example\\ \hline
@@ -176,9 +178,13 @@ quantity :: number | variable
     \hline
   \end{tabular}
 
-  \emph{Precedence}\index{precedence} rules are common sense. When in
-  doubt, use parentheses.
+  \emph{Precedence}\index{operator!precedence} rules of operators are
+  common sense. When in doubt, use parentheses.
 \end{block}
+
+\begin{remark}
+  There are also \indextermsub{bitwise}{operator}s.
+\end{remark}
 
 \begin{exercise}
   \label{ex:oddeven}
@@ -229,6 +235,31 @@ if ( x == true )
   // do something
 \end{lstlisting}
 \end{review}
+
+\Level 1 {Short-circuit operators}
+
+C++ logic operators have a feature called short-circuiting:
+a \indextermsub{short-circuit}{operator} stops evaluating when the
+result is clear. For instance, in
+\begin{lstlisting}
+clause1 and clause2
+\end{lstlisting}
+the second clause is not evaluated if the first one is
+\lstinline{false}, because the truth value of this conjunction is
+already determined.
+
+Likewise, in
+\begin{lstlisting}
+clause1 or clause2
+\end{lstlisting}
+the second clause is not evaluated if the first one is \lstinline{true}.
+
+This mechanism allows you to write
+\begin{lstlisting}
+if ( x>=0 and sqrt(x)<10 ) { /* ... */ }
+\end{lstlisting}
+Without short-circuiting the square root operator could be applied to
+negative numbers.
 
 \Level 0 {Switch statement}
 

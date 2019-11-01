@@ -35,7 +35,6 @@ int main() {
     vector<int> array(5,2);
     array.push_back(35);
     cout << array.size() << endl;
-    cout << array[array.size()-1] << endl;
     cout << *( --array.end() ) << endl;
     //codesnippet end
   }

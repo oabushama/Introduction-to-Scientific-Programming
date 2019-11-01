@@ -111,6 +111,7 @@ section~\ref{sec:editor-mode}.)
 
 \begin{slide}{Program structure}
   \label{sl:programf}
+Structure of your program file:
 \begin{lstlisting}
 Program foo
   < declarations >
@@ -118,6 +119,16 @@ Program foo
 End Program foo
 \end{lstlisting}
 \end{slide}
+
+\begin{block}{Things to note}
+  \label{sl:programfnotes}
+  \begin{itemize}
+  \item No includes before the program
+  \item Program has a name (emacs tip: type \n{end<TAB>})
+  \item There is an \lstinline{End}, rather than curly braces.
+  \item Declarations first, not interspersed.
+  \end{itemize}
+\end{block}
 
 \Level 1 {Statements}
 
@@ -152,6 +163,7 @@ x = very &
 x = 1
 y = 2
 \end{lstlisting}
+(historical reasons)
 \item semicolon to separate multiple statements per line
 \begin{lstlisting}
 x = 1; y = 2
@@ -241,7 +253,9 @@ where
   \n{logical}
 \item \textit{attributes} can be \n{dimension}, \n{allocatable},
   \n{intent}, \n{parameters} et cetera.
-  \end{itemize}
+\end{itemize}
+\item Keywords and variables are
+  \emph{case-insensitive}\index{Fortran!case-insensitive}
 \end{itemize}
 \end{slide}
 
@@ -249,13 +263,24 @@ where
   \label{sl:ftypes}
   \begin{itemize}
   \item Numeric: \indextermfort{Integer}, \indextermfort{Real},
-    \indextermfort{Complex}. Further specifications for numerical
-    precision are discussed in section~\ref{sec:fprecision}.
+    \indextermfort{Complex}. 
   \item Logical: \indextermfort{Logical}.
   \item Character: \indextermfort{Character}. Strings are realized as
-    arrays of characters; chapter~\ref{ch:stringf}.
+    arrays of characters.
   \end{itemize}  
 \end{block}
+
+\begin{slide}{Strings}
+  \label{sl:fchar20}
+  \begin{lstlisting}
+    character*20 :: prompt
+    prompt = "up to 20 characters"
+  \end{lstlisting}
+\end{slide}
+
+Further specifications for numerical
+    precision are discussed in section~\ref{sec:fprecision}.
+Strings are discussed in chapter~\ref{ch:stringf}.
 
 \Level 1 {Declarations}
 \label{sec:ftype}
@@ -273,7 +298,7 @@ immediately after any program or subprogram header.
   \label{sl:fimplicit}
   Fortran does not need variable declarations (like python):\\
   variables have a type that is determined by name.\\
-  This is very dangerous. Use \n{implicit none}
+  This is \textbf{very dangerous}. Use \lstinline{implicit none}
   in every program unit.
 \begin{lstlisting}
 Program myprogram
@@ -414,7 +439,7 @@ PRINT *,n
   \begin{itemize}
   \item Pretty much as in C++
   \item Exception: \n{r**a} for power $r^a$.
-  \item Modulus is a function: \n{MOD(7,3)}.
+  \item Modulus is a function: \lstinline{MOD(7,3)}.
   \end{itemize}
 \end{block}
 

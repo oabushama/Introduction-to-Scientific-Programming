@@ -9,33 +9,37 @@
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The term pointer is used to denote a reference to a quantity.  This
-chapter will explain pointers, and give some uses for them.
 
-We remark that there is less need for pointers in C++
-than there was in~C.
+Pointers are an indirect way of associating an entity with a variable
+name. Consider for instance self-referential data structures:
+\begin{quote}
+  A list is a node that functions as the head, and which has a tail
+  that is a list.
+\end{quote}
 
-\begin{itemize}
-\item To pass an argument
-  \emph{by reference}\index{parameter!passing!by reference},
-  use a \emph{reference}\index{reference!argument}.
-  Section~\ref{sec:passing}.
-\item Strings are done through \lstinline{std::string}, not character arrays;
-  see~\ref{ch:string}.
-\item Arrays can largely be done through \lstinline{std::vector}, rather than
-  \indextermtt{malloc}; see~\ref{ch:array}.
-\item Traversing arrays and vectors can be done with ranges;
-  section~\ref{sec:arrayrange}.
-\item Anything that obeys a scope should be created through a
-  \indexterm{constructor}, rather than using \indextermtt{malloc}.
-\end{itemize}
+\begin{block}{Recursive data structures}
+  \label{sl:recursive-node}
+\begin{lstlisting}
+clast Node {
+private:
+  int value;
+  Node tail;
+  /* ... */
+};
+\end{lstlisting}
+This does not work: would take infinite memory.
+\begin{lstlisting}
+clast Node {
+private:
+  int value;
+  PointToNode tail;
+  /* ... */
+};
+\end{lstlisting}
+  Pointer `points' to the location of the tail.
+\end{block}
 
-Legitimate needs:
-\begin{itemize}
-\item Linked lists and \acp{DAG}; see the example in section~\ref{sec:linklist}.
-\item Objects on the heap.
-\item Use \indextermtt{nullptr} as a signal.
-\end{itemize}
+This chapter will explain C++ \indextermsub{smart}{pointer}s, and give some uses for them.
 
 \Level 0 {The `arrow' notation}
 
@@ -77,27 +81,17 @@ auto X = make_shared<Obj>( /* args */ );
 
 X->method_or_member;
 \end{lstlisting}
-Much better than
-\begin{lstlisting}
-Obj *X;
-*X = Obj( /* args */ );
-\end{lstlisting}
 \end{block}
 
-There is a final variant where you cast a \indextermtt{new} object to shared
-pointer
-\begin{lstlisting}
-auto p = shared_ptr<Obj>( new Obj );
-\end{lstlisting}
-This is not necessarily in general, but can be useful in the case of
-\indextermsub{weak}{pointer}s; section~\ref{sec:weak_ptr}.
-
-Using shared pointers requires at the top of your file:
-\begin{lstlisting}
-#include <memory>
-using std::shared_ptr;
-using std::make_shared;
-\end{lstlisting}
+\begin{block}{Headers for smart pointers}
+  \label{sl:pointer-header}
+  Using shared pointers requires at the top of your file:
+  \begin{lstlisting}
+    #include <memory>
+    using std::shared_ptr;
+    using std::make_shared;
+  \end{lstlisting}
+\end{block}
 
 \begin{block}{Simple example}
   \label{sl:shared-ptr}
@@ -200,6 +194,21 @@ address(56325,0x7fff977cc380) malloc: *** error for object
 \end{verbatim}
 \end{block}
 
+Smart pointers are much better than old style pointers
+\begin{lstlisting}
+Obj *X;
+*X = Obj( /* args */ );
+\end{lstlisting}
+
+There is a final way of creating a shared pointer where you cast an
+old-style
+\indextermtt{new} object to shared
+pointer
+\begin{lstlisting}
+auto p = shared_ptr<Obj>( new Obj );
+\end{lstlisting}
+This is not the preferred mode of creation, but it can be useful in the case of
+\indextermsub{weak}{pointer}s; section~\ref{sec:weak_ptr}.
 
 \Level 0 {Garbage collection}
 
@@ -267,11 +276,6 @@ X.get()->y;
 
 \snippetwithoutput{pointy}{pointer}{pointy}
 \end{block}
-
-\Level 1 {Example: linked lists}
-
-The standard example of pointer manipulation is `linked lists'. This
-is discussed in some detail in section~\ref{sec:linklist}.
 
 \Level 0 {Advanced topics}
 
@@ -501,4 +505,31 @@ Here is an example of a pointer to a solitary double:
 It is possible to initialize that double:
 %
 \snippetwithoutput[ptrdouble]{ptrdoubleinit}{pointer}{ptrdoubleinit}
+
+\Level 0 {Smart pointers vs C pointers}
+
+We remark that there is less need for pointers in C++
+than there was in~C.
+
+\begin{itemize}
+\item To pass an argument
+  \emph{by reference}\index{parameter!passing!by reference},
+  use a \emph{reference}\index{reference!argument}.
+  Section~\ref{sec:passing}.
+\item Strings are done through \lstinline{std::string}, not character arrays;
+  see~\ref{ch:string}.
+\item Arrays can largely be done through \lstinline{std::vector}, rather than
+  \indextermtt{malloc}; see~\ref{ch:array}.
+\item Traversing arrays and vectors can be done with ranges;
+  section~\ref{sec:arrayrange}.
+\item Anything that obeys a scope should be created through a
+  \indexterm{constructor}, rather than using \indextermtt{malloc}.
+\end{itemize}
+
+Legitimate needs:
+\begin{itemize}
+\item Linked lists and \acp{DAG}; see the example in section~\ref{sec:linklist}.
+\item Objects on the heap.
+\item Use \indextermtt{nullptr} as a signal.
+\end{itemize}
 

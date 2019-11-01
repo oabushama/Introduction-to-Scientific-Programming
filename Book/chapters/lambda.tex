@@ -9,7 +9,8 @@
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The mechanism of \indextermbus{lambda}{expression}s makes
+The mechanism of \indextermbus{lambda}{expression}s (added in
+\emph{C++}\index{C++!C++11}) makes
 dynamic definition of functions possible.
 
 \begin{block}{Lambda expressions}
@@ -50,6 +51,12 @@ that argument to a fixed power.
   \snippetwithoutput{lambdapowercall}{func}{lambdait}
 \end{slide}
 
+The lambda notation can be even shorter if the output is void and
+there are no parameters:
+\begin{lstlisting}
+[] { /* computation */ }
+\end{lstlisting}
+
 \Level 1 {Lambda members of classes}
 
 Storing a lambda in a class is hard because it has unique
@@ -87,6 +94,17 @@ type. Solution: use \lstinline{std::}\indextermtt{function}.
   %
   \verbatimsnippet{newtonlambda1}
 \end{exercise}
+
+\Level 1 {Generic lambdas}
+\label{sec:lambda-generic}
+
+The \lstinline{auto} keyword can be used, almost abused, for
+\indextermsub{generic}{lambda}s:
+\begin{lstlisting}
+auto compare = [] (auto a,auto b) { return a<b; };
+\end{lstlisting}
+Here the return type is clear, but the input types are generic.
+
 
 \Level 1 {Lambda in algorithm}
 

@@ -732,7 +732,6 @@ constexpr int get_value() {
 \index{C++!C++11|)}
 
 \Level 1 {C++14}
-
 \index{C++!C++14|(textbf}
 
 C++14\index{C++!C++14|textbf} can be considered a bug fix on C++1.
@@ -748,7 +747,7 @@ It simplifies a number of things and makes them more elegant.
   }
 \end{lstlisting}
 
-\item Generic lambdas
+\item Generic lambdas (section~\ref{sec:lambda-generic})
 \begin{lstlisting}
 const auto count = std::count(begin(vec),end(vec),
     [] ( const auto i ) { return i<3; }    
@@ -792,7 +791,8 @@ constexpr int get_value() {
   specification than using
   \emph{header files}\index{header file!vs modules}.
 \item   \indexterm{coroutines}, another form of parallelism.
-\item   \indexterm{concepts} including in the standard library via ranges
+\item   \indexterm{concepts} including in the standard library via
+  ranges; section~\ref{sec:cpp-concepts}.
 \item   \indextermsub{spaceship}{operator} including in the standard library
 \item   broad use of normal C++ for direct compile-time programming, without
   resorting to template metaprogramming (see last trip reports)

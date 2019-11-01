@@ -23,9 +23,9 @@ if ( test ) statement
 The full if-statement is:
 \begin{lstlisting}
 if ( something ) then
-  do something
+  !! something_doing
 else
-  do otherwise
+  !! otherwise_else
 end if
 \end{lstlisting}
 The `else' part is optional; you can nest conditionals.
@@ -67,6 +67,7 @@ The logical operators such as \n{.AND.} are not short-cut as
 in~C++. Clauses can be evaluated in any order.
 
 \begin{exercise}
+  \label{ex:fgrades}
   Read in three grades: Algebra, Biology, Chemistry, each on a scale
   $1\cdots 10$. Compute the average grade, with the conditions:
   \begin{itemize}

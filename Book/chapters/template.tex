@@ -80,7 +80,7 @@ public:
 \end{lstlisting}
 \end{block}
 
-\Level 0 {Specific implementation}
+\Level 1 {Specific implementation}
 
 \begin{lstlisting}
 template <typename T>
@@ -90,6 +90,49 @@ void f(char c) { /* code with c */ };
 template <>
 void f(double d) { /* code with d */ };
 \end{lstlisting}
+
+\Level 0 {Concepts}
+\label{sec:cpp-concepts}
+
+Coming in \emph{C++}\index{C++!C++20}.
+
+Templates can be too generic. For instance, one could write a
+templated \lstinline{gcd} function
+\begin{lstlisting}
+template <typename T>
+T gcd( T a, T b ) {
+  if (b==0) return a;
+  else return gcd(b,a%b);
+}
+\end{lstlisting}
+which will work for various integral types. To prevent it being
+applied to non-integral types, you can specify a \indexterm{concept}
+to the type:
+\begin{lstlisting}
+template<typename T>
+concept bool Integral() {
+  return std::is_integral<T>::value;
+}
+\end{lstlisting}
+used as:
+\begin{lstlisting}
+template <typename T>
+requires Integral<T>{}
+T gcd( T a, T b ) { /* ... */ }
+\end{lstlisting}
+or
+\begin{lstlisting}
+template <Integral T>
+T gcd( T a, T b ) { /* ... */ }
+\end{lstlisting}
+Abbreviated function templates:
+\begin{lstlisting}
+Integral auto gcd
+    ( Integral auto a, Integral auto b )
+  { /* ... */ }
+\end{lstlisting}
+
+\endinput
 
 \Level 0 {Templating over non-types}
 

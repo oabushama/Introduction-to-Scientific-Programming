@@ -862,6 +862,22 @@ We can now also understand how arrays are passed to functions:
 \Level 1 {Stack and heap allocation}
 \label{sec:stack-heap}
 
+Entities stored in memory (variables, structures, objects) can exist
+in two locations: the \indextermdef{stack} and the
+\indextermdef{heap}.
+\begin{itemize}
+\item Every time a program enters a new
+  \emph{scope}\index{scope!and stack}, entities declared there are
+  placed on top of the stack, and they are removed by the end of the
+  scope.
+\item The heap is for entities that transcend scope, for instance
+  because they are pointed-to by a
+  \emph{pointer}\index{pointer!and heap}.
+  The space of such objects can be returned to the free store at any
+  time, so the heap can suffer from
+  \emph{fragmentation}\index{heap!fragmentation|textbf}.
+\end{itemize}
+
 The concepts of \indexterm{stack} and \indexterm{heap} do not appear
 in the \indextermbus{C++}{standard}. However, the following
 description generally applies:
@@ -886,7 +902,7 @@ goes out of scope.
 
 If you want heap memory that transcends scope you can use the
 \indextermsub{smart}{pointer} mechanism, which also guarantees against
-memory leaks. See chapter~\ref{pointer}.
+memory leaks. See chapter~\ref{ch:pointer}.
 
 \Level 1 {The Array class}
 
