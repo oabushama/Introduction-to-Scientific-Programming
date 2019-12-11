@@ -9,13 +9,22 @@
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Fortran's way of bundling up data, and naming that bundle, is a
-\indextermfort{type}.
+Fortran has structures for bundling up data, but there is no
+\n{struct} keyword: instead you declare both the structure type and
+variables of that \indextermsub{derived}{type} with the 
+\indextermfort{type} keyword. 
 
 \begin{slide}{Structures: \noexpand\texttt{type}}
   \label{sl:ftype}
-  The Fortran name for structures is \indextermtt{type} or
-  \indextermsub{derived}{type}.
+  \begin{itemize}
+  \item Fortran has structures too.
+  \item Structures are a \indextermsub{derived}{type}: you can create
+    variables of that type, but it's not a built-in type.
+  \item  Fortran derived types are declared in a \indextermfort{type}
+    definition;
+  \item the \indextermfort{type} keyword is also used for making
+    structure variables.    
+  \end{itemize}
 \end{slide}
 
 Now you need to
@@ -26,10 +35,10 @@ Now you need to
   values.
 \end{itemize}
 
-\begin{block}{Type definition}
+\begin{block}{Type declaration}
   \label{sl:ftype-def}
   \n{Type name} / \n{End Type} block.\\
-  Variable declarations inside the block
+  Component declarations inside the block:
 \begin{lstlisting}
 type mytype
   integer :: number
@@ -61,7 +70,7 @@ object2 = object1
   Access structure members with \verb+%+
 \begin{lstlisting}
 Type(mytype) :: typed_object
-type_object%member = ....  
+typed_object%member = ....  
 \end{lstlisting}
 \end{block}
 
@@ -72,7 +81,8 @@ type_object%member = ....
     \columnbreak
     \verbatimsnippet{ftypeuse}
   \end{multicols}
-  Type definitions can go in the main program
+  Type definitions can go in the main program\\
+  (or use a \indextermfort{module}; see later)
 \end{block}
 
 You can have arrays of types:
@@ -81,11 +91,21 @@ type(my_struct) :: data
 type(my_struct),dimension(1) :: data_array
 \end{lstlisting}
 
-\begin{block}{Types as subprogram argument}
+\begin{block}{Structures as subprogram argument}
   \label{sl:ftype-pass}
+  Structures can be passed as subprogram argument, just like any other
+  datatype. This example:
+  \begin{itemize}
+  \item Takes a structure of \lstinline{type(point)} as argument; and
+  \item returns a \lstinline{real(4)} result.
+  \item The structure is declared as \lstinline{intent(in)}.
+  \end{itemize}
+
   \begin{multicols}{2}
+    Function with structure argument:
     \verbatimsnippet{ftypepass}
     \columnbreak
+    Function call
     \verbatimsnippet{ftypecall}
   \end{multicols}
 
@@ -93,7 +113,12 @@ type(my_struct),dimension(1) :: data_array
 
 \begin{exercise}
   \label{ex:ftype-rect}
-  Define a type \n{Point} that contains real numbers~\n{x,y}.\\
-  Define a type \n{Rectangle} that contains two \n{Point}s.\\
-  Write a function \n{area} that has one argument, a \n{Rectangle}.
+  Write a program that has the following:
+  \begin{itemize}
+  \item A type \n{Point} that contains real numbers~\n{x,y};
+  \item a type \n{Rectangle} that contains two \n{Point}s,
+    corresponding to the lower left and upper right point;
+  \item a function \n{area} that has one argument: a \n{Rectangle}.
+  \end{itemize}
+  Test your program.
 \end{exercise}

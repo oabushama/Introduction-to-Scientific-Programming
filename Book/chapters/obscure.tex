@@ -694,6 +694,16 @@ libraries such as \indexterm{OpenFrameworks},
 Each standard has many changes over the previous. That said, here are
 some of the highlights of recent standards.
 
+\Level 1 {C++98/C++03}
+
+Of the C++98\index{C++!C++98|textbf} standard
+we only highlight deprecated features.
+\begin{itemize}
+\item \indextermtt{auto_ptr} was an early attempt at smart
+  pointers. It is deprecated, and C++17 compilers will actually issue
+  an error on it. For current smart pointers see chapter~\ref{ch:pointer}.
+\end{itemize}
+
 \Level 1 {C++11}
 \index{C++!C++11|(textbf}
 
@@ -778,7 +788,11 @@ constexpr int get_value() {
 \index{C++!C++17|(textbf}
 \begin{itemize}
 \item  Optional; section~\label{sec:std-optional}.
+\item Structured binding declarations as an easier way of dissecting
+  tuples; section~\ref{sec:tuple}.
+\item Init statement in conditionals; section~\ref{sec:if-init}.
 \end{itemize}
+
 \index{C++!C++17|)}
 
 \Level 1 {C++20}

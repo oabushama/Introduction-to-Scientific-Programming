@@ -204,7 +204,8 @@ for ( auto c : some_string)
   \end{itemize}
 \end{exercise}
 
-\Level 1 {String streams}
+\Level 0 {String streams}
+\label{sec:stringstream}
 
 You can concatenate string with the \lstinline{+} operator.
 The less-less operator also does a sort of concatenation. It is
@@ -241,9 +242,25 @@ cout << s.str() << endl;
   with numbers that fit this format.
 \end{exercise}
 
+\Level 0 {Advanced topics}
+
 \Level 1 {Conversation to/from string}
 
-\n{to_string}
+There are various mechanisms for converting between strings and numbers.
+\begin{itemize}
+\item The C legacy mechanisms \indextermtt{sprintf} and \indextermtt{itoa}.
+\item  \indextermtt{to_string}
+\item Above you saw the \indextermtt{stringstream}; section~\ref{sec:stringstream}.
+\item The \indexterm{Boost} library has a \indextermsub{lexical}{cast}.
+\end{itemize}
+
+Additionally, in \emph{C++17}\index{C++!C++17} there is the
+\indextermdef{charconv} header with \indextermtt{to_chars} and
+\indextermtt{from_chars}. These are low level routines that do not
+throw exceptions, do not allocate, and are each other's inverses. The
+low level nature is for instance apparent in the fact that they work
+on character buffers (not null-terminated). Thus, they can be used to
+build more sophisticated tools on top of.
 
 \Level 1 {Unicode}
 

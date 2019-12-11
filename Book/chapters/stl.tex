@@ -52,6 +52,7 @@ Vectors (section~\ref{sec:stdvector}) and strings
 apply to all containers.
 
 \Level 1 {Maps: associative arrays}
+\label{sec:map}
 
 Arrays use an integer-valued index. Sometimes you may wish to use an
 index that is not ordered, or for which the ordering is not relevant.
@@ -64,7 +65,7 @@ In C++ this is implemented through a \indextermttdef{map}:
 \begin{lstlisting}
 #include <map>
 using std::map;
-map<string,int> age;
+map<string,int> ages;
 \end{lstlisting}
 is set of
 pairs where the first item (which is used for indexing) is of type
@@ -74,15 +75,25 @@ A map is made by inserting the elements one-by-one:
 \begin{lstlisting}
 #include <map>
 using std::make_pair;
-age.insert(make_pair("Alice",29));
-age["Bob"] = 32;
+ages.insert(make_pair("Alice",29));
+ages["Bob"] = 32;
 \end{lstlisting}
 
 You can range over a map:
 \begin{lstlisting}
-for ( auto person : age )
+for ( auto person : ages )
   cout << person.first << " has age " << person.second << endl;
 \end{lstlisting}
+A more elegant solution uses structured bindings (section~\ref{sec:tuple}):
+\begin{lstlisting}
+for ( auto [person,age] : ages )
+  cout << person << " has age " << age << endl;
+\end{lstlisting}
+
+Searching for a key gives either the iterator of the key/value pair,
+or the \lstinline{end} iterator if not found:
+%
+\verbatimsnippet{intcountfind}
 
 \Level 1 {Iterators}
 \label{sec:iterator-class}
@@ -144,22 +155,29 @@ Iterators can be used to construct a \indextermtt{vector}. This can
 for instance be used to create a
 \emph{subvector}\index{vector!subvector}:
 %
-\snippetwithoutput[iter]{subvector}{iter}{subvector}
+\snippetwithoutput[iter]{subvectorcopy}{iter}{subvector}
 
-\Level 0 {Union-like stuff: tuples, optionals, variants}
+\Level 0 {Regular expression}
 
-There are cases where you need a value that is one type or another,
-for instance, a number if a computation succeeded, and an error
-indicator if not.
+The header \indextermtt{regex} gives C++ the functionality for
+\indexterm{regular expression} matching. For instance,
+\indextermttdef{regex_match} returns whether or not an expression matches:
 
-The simplest solution is to have a function that returns both a bool
-and a number:
-%
-\verbatimsnippet{rootorerror}
+\snippetwithoutput{regexname}{regexp}{regexp}
 
-We will now consider some more idiomatically C++17 solutions to this.
+You can do further analysis with \indextermttdef{regex_search}:
+\begin{itemize}
+\item the function itself evaluates to a \lstinline{bool};
+\item there is a return parameter of type \indexterm{smatch} which can
+  be queried:
+\item the method \lstinline{smatch::position} states where the expression
+  was matched, while \lstinline{smatch::str} returns the string that
+  was matched.
+\end{itemize}
 
-\Level 1 {Tuples}
+\snippetwithoutput{regsearch}{regexp}{search}
+
+\Level 0 {Tuples and structured bindings}
 \label{sec:tuple}
 
 Remember how in section~\ref{sec:pass-by-ref} we said that if you
@@ -214,7 +232,28 @@ but more interestingly, you can use a
   This is known as \indexterm{structured binding}.
 \end{block}
 
-The solution to the above `a~number or an error' now becomes:
+An interesting use of structured bindings is iterating over a map (section~\ref{sec:map}):
+\begin{lstlisting}
+for ( const auto &[key,value] : mymap ) ....
+\end{lstlisting}
+
+\Level 0 {Union-like stuff: tuples, optionals, variants}
+
+There are cases where you need a value that is one type or another,
+for instance, a number if a computation succeeded, and an error
+indicator if not.
+
+The simplest solution is to have a function that returns both a bool
+and a number:
+%
+\verbatimsnippet{rootorerror}
+
+We will now consider some more idiomatically C++17 solutions to this.
+
+\Level 1 {Tuples}
+
+Using tuples (section~\ref{sec:tuple}) 
+the solution to the above `a~number or an error' now becomes:
 %
 \verbatimsnippet{rootandvalid}
 

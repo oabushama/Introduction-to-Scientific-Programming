@@ -71,7 +71,7 @@ to the empty program, and compile and run it.
 \end{exercise}
 
 Fortran ignores \emph{case}\index{Fortran!case ignores}.
-Both keywords such as \n{Begin} or \n{Program} can just as well be written as
+Both keywords such as \indextermfort{Begin} or \indextermfort{Program} can just as well be written as
 \n{bEGIN} or \n{PrOgRaM}.
 %% \footnote{Fortran also ignores spaces. Please
 %%   don't use that fact; it only makes your program confusing to read.}.
@@ -86,8 +86,8 @@ return a message to the \ac{OS}.
 Fortran does not use curly brackets to delineate blocks, instead you
 will find \indextermtt{end} statements. The very first one appears
 right when you start writing your program:
-a~Fortran program needs to start with a \n{Program} line, and end with
-\n{End Program}. The program needs to have a name on both lines:
+a~Fortran program needs to start with a \indextermfort{Program} line, and end with
+\indextermfort{End Program}. The program needs to have a name on both lines:
 %
 \verbatimsnippet{emptyf}
 %
@@ -230,10 +230,10 @@ where
 \begin{itemize}
 \item we use the common grammar shorthand that \n{[ something ]}
   stands for an optional `something';
-\item \textit{type} is most commonly \n{integer}, \n{real(4)}, \n{real(8)},
-  \n{logical}. See below; section~\ref{sec:ftype}.
-\item \textit{attributes} can be \n{dimension}, \n{allocatable},
-  \n{intent}, \n{parameters} et cetera.
+\item \textit{type} is most commonly \indextermfort{integer}, \indextermfort{real(4)}, \indextermfort{real(8)},
+  \indextermfort{logical}. See below; section~\ref{sec:ftype}.
+\item \textit{attributes} can be \indextermfort{dimension}, \indextermfort{allocatable},
+  \indextermfort{intent}, \indextermfort{parameters} et cetera.
 \item \textit{name} is something you come up with. This has to start
   with a letter.
 \end{itemize}
@@ -249,10 +249,12 @@ type, attributes :: name1, name2, ....
 \end{lstlisting}
 where
 \begin{itemize}
-\item \textit{type} is most commonly \n{integer}, \n{real(4)}, \n{real(8)},
-  \n{logical}
-\item \textit{attributes} can be \n{dimension}, \n{allocatable},
-  \n{intent}, \n{parameters} et cetera.
+\item \textit{type} is most commonly \indextermfort{integer},
+  \indextermfort{real(4)}, \indextermfort{real(8)},
+  \indextermfort{logical}
+\item \textit{attributes} can be \indextermfort{dimension},
+  \indextermfort{allocatable}, \indextermfort{intent},
+  \indextermfort{parameter} et cetera.
 \end{itemize}
 \item Keywords and variables are
   \emph{case-insensitive}\index{Fortran!case-insensitive}
@@ -269,6 +271,20 @@ where
     arrays of characters.
   \end{itemize}  
 \end{block}
+
+\begin{block}{Parameter}
+  \label{sl:fparameter}
+  Sometimes an identifier corresponds to a constant:\\
+  use the \indextermfort{parameter} attribute
+\begin{lstlisting}
+real,parameter :: pi = 3.141592    
+\end{lstlisting}
+  This can not be changed like an ordinary variable.
+\end{block}
+
+In chapter~\ref{ch:arrayf} you will see that
+\indextermfort{parameter}s are often used for defining the size of an
+array.
 
 \begin{slide}{Strings}
   \label{sl:fchar20}
@@ -326,13 +342,13 @@ You can the number of bytes for numerical types in the declaration:
 In Fortran you can actually ask for a type with specified precision.
 \begin{itemize}
 \item For integers you can specify the number of decimal digits with
-  \indextermttdef{selected_int_kind}\n{($n$)}.
+  \indextermfortdef{selected_int_kind}\n{($n$)}.
 \item For floating point numbers can specify the number of
   significant digits, and optionally the decimal exponent range with
-  \indextermttdef{selected_real_kind}\n{($p$[,$r$])}.
+  \indextermfortdef{selected_real_kind}\n{($p$[,$r$])}.
   of significant digits.
 \item To query the type of a variable, use the function
-  \indextermttdef{kind}, which returns an integer.
+  \indextermfortdef{kind}, which returns an integer.
 \end{itemize}
 
 Likewise, you can specify the precision of a constant.
@@ -345,7 +361,7 @@ real.
 \end{block}
 
 You can query how many bytes a data type takes with
-\indextermttdef{kind}.
+\indextermfortdef{kind}.
 
 \begin{block}{Numerical precision}
   \label{sl:fprecision48}
@@ -358,15 +374,15 @@ You can query how many bytes a data type takes with
 \end{block}
 
 \begin{block}{Storage size}
-  F08: \indextermtt{storage_size} reports number of bits.
+  F08: \indextermfort{storage_size} reports number of bits.
 
-  F95: \indextermtt{bit_size} works on integers only.
+  F95: \indextermfort{bit_size} works on integers only.
 
-  \indextermtt{c_sizeof} reports number of bytes, requires
-  \indextermtt{iso_c_binding} module.
+  \indextermfort{c_sizeof} reports number of bytes, requires
+  \indextermfort{iso_c_binding} module.
 \end{block}
 
-Force a constant to be \n{real(8)}:
+Force a constant to be \indextermfort{real(8)}:
 \begin{block}{Double precision constants}
   \label{sl:fdouble}
 \begin{lstlisting}
@@ -425,7 +441,7 @@ READ *,n
 PRINT *,n
 \end{lstlisting}
   \end{itemize}
-  There is also \n{WRITE}.
+  There is also \indextermfort{Write}.
 
   The `star' indicates that default formatting is used.\\
   Other syntax for read/write with files and formats.
@@ -459,9 +475,9 @@ PRINT *,n
 \begin{block}{Conversion and casting}
   Conversion is done through functions.
   \begin{itemize}
-  \item \n{INT}: truncation; \n{NINT} rounding
-  \item \n{REAL}, \n{FLOAT}, \n{SNGL}, \n{DBLE}
-  \item \n{CMPLX}, \n{CONJG}, \n{AIMIG}
+  \item \indextermfort{INT}: truncation; \indextermfort{NINT} rounding
+  \item \indextermfort{REAL}, \indextermfort{FLOAT}, \indextermfort{SNGL}, \indextermfort{DBLE}
+  \item \indextermfort{CMPLX}, \indextermfort{CONJG}, \indextermfort{AIMIG}
   \end{itemize}
 \url{http://userweb.eng.gla.ac.uk/peter.smart/com/com/f77-conv.htm}
 \end{block}

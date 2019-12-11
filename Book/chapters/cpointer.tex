@@ -12,11 +12,12 @@
 \Level 0 {What is a pointer}
 
 The term pointer is used to denote a reference to a quantity. The
-reason that people like to use C as high performance language is
-that pointers are actually memory addresses. So you're programming
-`close to the bare metal' and are in fargoing control over what your program
+reason that people like to use C as high performance language is that
+pointers are actually memory addresses. So you're programming `close
+to the bare metal' and are in fargoing control over what your program
 does. C++~also has pointers, but there are fewer uses for them than
-for C~pointers. When possible, references should be used.
+for C~pointers: vectors and references have made many of the uses
+of C-style pointers obsolete.
 
 \Level 0 {Pointers and addresses, C style}
 \label{sec:cderef}
@@ -40,11 +41,7 @@ its range is actually greater than of the \n{int} type.
 
 \begin{block}{Memory addresses}
   \label{sl:ampersand}
-  If you have an
-\begin{lstlisting}
-int i;
-\end{lstlisting}
-then \n{&i} is the address of~\n{i}.
+  If you have an \lstinline{int i}, then \lstinline{&i} is the address of~\lstinline{i}.
 
 An address is a (long) integer, denoting a memory address. Usually it
 is rendered in \indexterm{hexadecimal} notation. C~style:
@@ -57,6 +54,11 @@ and C++:
 %\verbatimsnippet{coutpoint}
 \end{block}
 
+Note that this use of the ampersand is different from defining
+references; compare section~\ref{sec:pass-by-ref}. However, there is
+never a confusion which is which since they are syntactically
+different.
+
 You could just print out the address of a variable, which is sometimes
 useful for debugging. If you want to store the address, you need to
 create a variable of the appropriate type. This is done by taking a
@@ -64,7 +66,7 @@ type and affixing a star to it.
 
 \begin{block}{Address types}
   \label{sl:intstar}
-  The type of `\n{&i}' is \n{int*}, pronounced `int-star',\\
+  The type of `\lstinline{&i}' is \lstinline{int*}, pronounced `int-star',\\
   or more
   formally: `pointer-to-int'.
 
@@ -86,7 +88,7 @@ the pointer points to, you need to \indexterm{dereference} it.
 
 \begin{block}{Dereferencing}
   \label{sl:starderef}
-  Using \n{*addr} `dereferences' the pointer: gives the thing it
+  Using \lstinline{*addr} `dereferences' the pointer: gives the thing it
   points to;\\
   the value of what
   is in the memory location.
@@ -105,15 +107,15 @@ the pointer points to, you need to \indexterm{dereference} it.
 \end{block}
 
 \begin{itemize}
-\item \n{addr} is the address of~\n{i}.
-\item You set \n{i} to~5; nothing changes about \n{addr}. This has the
-  effect of writing \n{5} in the memory location of~\n{i}.
-\item The first \n{cout} line dereferences \n{addr}, that is, looks up
+\item \lstinline{addr} is the address of~\lstinline{i}.
+\item You set \lstinline{i} to~5; nothing changes about \lstinline{addr}. This has the
+  effect of writing \lstinline{5} in the memory location of~\lstinline{i}.
+\item The first \lstinline{cout} line dereferences \lstinline{addr}, that is, looks up
   what is in that memory location.
-\item Next you change \n{i} to~\n{6}, that is, you write \n{6} in its
+\item Next you change \lstinline{i} to~\lstinline{6}, that is, you write \lstinline{6} in its
   memory location.
-\item The second \n{cout} looks in the same memory location as before,
-  and now finds~\n{6}.
+\item The second \lstinline{cout} looks in the same memory location as before,
+  and now finds~\lstinline{6}.
 \end{itemize}
 
 The syntax for declaring a pointer-to-sometype allows for a small
@@ -123,14 +125,14 @@ variation, which indicates the two way you can interpret such a declaration.
   \label{sl:starstuff}
   Equivalent:
   \begin{itemize}
-  \item \n{int* addr}: \n{addr} is an int-star, or
-  \item \n{int *addr}: \n{*addr} is an int.
+  \item \lstinline{int* addr}: \lstinline{addr} is an int-star, or
+  \item \lstinline{int *addr}: \lstinline{*addr} is an int.
   \end{itemize}
 \end{block}
 
-The notion \n{int* addr} is equivalent to \n{int *addr}, and
-semantically they are also the same: you could say that \n{addr} is an
-int-star, or you could say that \n{*addr} is an int.
+The notion \lstinline{int* addr} is equivalent to \lstinline{int *addr}, and
+semantically they are also the same: you could say that \lstinline{addr} is an
+int-star, or you could say that \lstinline{*addr} is an int.
 
 \Level 0 {Arrays and pointers}
 \label{sec:arraypointer}
@@ -160,13 +162,26 @@ So you could pass an array like this:
 
 \begin{block}{Dynamic allocation}
   \label{sl:newstar}
-  \n{new} gives a something-star:
+  You can dynamically reserve memory with \lstinline{new}, which gives
+  a something-star:
 \begin{lstlisting}
 double *x;
 x = new double[27];
 \end{lstlisting}
-(Actually, C uses \indextermttdef{malloc}, but that looks similar.)
 \end{block}
+
+The \lstinline{new} operator is only for C++: 
+in C you would use  \indextermttdef{malloc} to dynamically allocate memory.
+The above example would become:
+\begin{lstlisting}
+double *x;
+x = (double*) malloc( 27 * sizeof(double) );
+\end{lstlisting}
+Note that \lstinline{new} takes the number of elements, and deduces
+the type (and therefore the number of bytes per element) from the
+context; \lstinline{malloc} takes an argument that is the number of
+bytes. The \indextermttdef{sizeof} operator then helps you in
+determining the number of bytes per element.
 
 \Level 0 {Pointer arithmetic}
 
@@ -195,7 +210,7 @@ After
 \begin{lstlisting}
 double x[10][20];
 \end{lstlisting}
-a row \n{x[3]} is a \n{double*}, so is \n{x} a \n{double**}?
+a row \lstinline{x[3]} is a \lstinline{double*}, so is \lstinline{x} a \lstinline{double**}?
 
 Was it created as:
 \begin{lstlisting}
@@ -226,7 +241,7 @@ int main() {
 \begin{block}{C-style pass by reference}
   \label{sl:c-pass-ref}
   In C you can not pass-by-reference like this. Instead, you pass the
-  address of the variable~\n{i} by value:
+  address of the variable~\lstinline{i} by value:
 \begin{lstlisting}
 void inc(int *i) { *i += 1; }
 int main() {
@@ -236,13 +251,17 @@ int main() {
   return 0;
 }
 \end{lstlisting}
-Now the function gets an argument that is a memory address: \n{i}~is
-an int-star. It then increases \n{*i}, which is an int variable, by one.
+Now the function gets an argument that is a memory address: \lstinline{i}~is
+an int-star. It then increases \lstinline{*i}, which is an int variable, by one.
 \end{block}
+
+Note how again there are two different uses of the ampersand
+character.  While the compiler has no trouble distinguishing them, it
+is a little confusing to the programmer.
 
 \begin{exercise}
   \label{ex:c-star-swap}
-  Write another version of the \n{swap} function:
+  Write another version of the \lstinline{swap} function:
 \begin{lstlisting}
 void swapij( /* something with i and j */ {
   /* your code */
@@ -275,7 +294,7 @@ ar[0] = // there is no array!
 \end{lstlisting}
 \end{block}
 
-The array \n{ar} is created depending on if the condition is true, but
+The array \lstinline{ar} is created depending on if the condition is true, but
 after
 the conditional it disappears again. The mechanism of using
 \indextermtt{new} (section~\ref{sec:cnew}) allows you to allocate
@@ -330,27 +349,27 @@ for (int i=0; i<large_num; i++) {
 
 \begin{block}{De-allocation}
   \label{sl:c-array-del}
-  Memory allocated with \n{new} does not disappear when you leave a
+  Memory allocated with \lstinline{new} does not disappear when you leave a
   scope. Therefore you have to delete the memory explicitly:
 \begin{lstlisting}
 delete(array);
 \end{lstlisting}
-The C++ \n{vector} does not have this problem, because it obeys scope rules.
+The C++ \lstinline{vector} does not have this problem, because it obeys scope rules.
 \end{block}
 
 \begin{block}{Stop using C!}
   \label{sl:no-c-malloc}
-  No need for \n{malloc} or \n{new}
+  No need for \lstinline{malloc} or \lstinline{new}
   \begin{itemize}
-  \item Use \n{std::string} for character arrays, and
-  \item \n{std::vector} for everything else.
+  \item Use \lstinline{std::string} for character arrays, and
+  \item \lstinline{std::vector} for everything else.
   \end{itemize}
   No performance hit if you don't dynamically alter the size.
 \end{block}
 
 \Level 2 {Malloc}
 
-The keywords \n{new} and \n{delete} are in the spirit of C~style
+The keywords \lstinline{new} and \lstinline{delete} are in the spirit of C~style
 programming, but don't exist in~C. Instead, you use
 \indextermtt{malloc}, which creates a memory area with a size
 expressed in bytes. Use the function \indextermtt{sizeof} to translate
@@ -387,12 +406,12 @@ int main() {
 
 Note that this requires a `double-star' or `star-star' argument:
 \begin{itemize}
-\item The variable \n{a} will contain an array, so it needs to be of
-  type \n{double*};
+\item The variable \lstinline{a} will contain an array, so it needs to be of
+  type \lstinline{double*};
 \item but it needs to be passed by reference to the function, making
-  the argument type~\n{double**};
+  the argument type~\lstinline{double**};
 \item inside the function you then assign the new storage to the
-  \n{double*} variable, which is~\n{*a}.
+  \lstinline{double*} variable, which is~\lstinline{*a}.
 \end{itemize}
 Tricky, I~know.
 
@@ -414,13 +433,13 @@ Since this is not scoped, you have to free the memory yourself:
 \verbatimsnippet{arrayinclass}
 
 Notice how you have to remember the array length yourself? This is all
-much easier by using a \n{std::vector}. See
+much easier by using a \lstinline{std::vector}. See
 \url{http://www.cplusplus.com/articles/37Mf92yv/}.
 
 The \indextermtt{new} mechanism is a cleaner variant of \indextermtt{malloc},
 which was the dynamic allocation mechanism in~C. Malloc is still
 available, but should not be used. There are even very few legitimate
-uses for \n{new}.
+uses for \lstinline{new}.
 
 \index{C!parameter passing|)}
 

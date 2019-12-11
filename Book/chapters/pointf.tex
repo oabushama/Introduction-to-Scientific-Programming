@@ -32,15 +32,15 @@ object of elementary or derived data type. You can access the object
 through the alias. The difference with actually using the object, is
 that you can decide what object the pointer points at.
 
-\begin{block}{C++ vs Fortran pointers}
+\begin{block}{Dereferencing}
   \label{sl:cpoint-vs-fpoint}
-  Fortran pointers are automatically
+  Fortran pointers are often automatically
   \emph{dereferenced}\index{pointer!dereferencing}: if you print a
   pointer you print the object it references, not some representation
   of the pointer.
 \end{block}
 
-The \indextermtt{pointer} definition
+The \indextermfort{pointer} definition
 \begin{lstlisting}
 real,pointer :: point_at_real
 \end{lstlisting}
@@ -65,7 +65,7 @@ print *,point_at_real ! will print the value of x
 \end{block}
 
 Pointers can not just point at anything: the thing pointed at needs to
-be declared as \indextermtt{target}
+be declared as \indextermfort{target}
 \begin{lstlisting}
 real,target :: x
 \end{lstlisting}
@@ -237,6 +237,12 @@ a node and assign it as the head of the list:
   \verbatimsnippet{listattachf}
 \end{block}
 
+\begin{exercise}
+  \label{ex:flist-attach}
+  Write function \lstinline{attach} that takes an integer, and
+  attaches a new node at the end of the list with that value.
+\end{exercise}
+
 Adding a value to a list can be done two ways. If the new element is
 larger than all elements in the list, a new node needs to be appended
 to the last one. Let's assume we have managed
@@ -264,6 +270,24 @@ First of all, you need to find the two nodes,
   %
   \verbatimsnippet{listinsertf}
 \end{block}
+
+\begin{exercise}
+  \label{ex:flist-print}
+  Write a \lstinline{print} function for the linked list.\\
+  For the simplest solution, print each element on a line by itself.
+
+  More sophisticated: use the \indextermfort{Write} function and the
+  \indextermfort{advance} keyword:
+\begin{lstlisting}
+write(*,'(i1",")',advance="no") current%value  
+\end{lstlisting}
+\end{exercise}
+
+\begin{exercise}
+  \label{ex:flist-length}
+  Write a \lstinline{length} function for the linked list.\\
+  Try it both with a loop, and recursively.
+\end{exercise}
 
 \index{list!linked!in Fortran|)}
 

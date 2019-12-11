@@ -284,8 +284,8 @@ if (n<5)
 else
   cout << "Not small" << endl;
 \end{lstlisting}
-
 \end{exercise}
+
 \Level 0 {Scopes}
 
 The true and false branch of a conditional can consist of a single
@@ -320,3 +320,20 @@ Good practice: only define variable where needed.
 Braces induce a \indexterm{scope}.
 \end{slide}
 
+\Level 0 {Init statements}
+
+The \cppstandard{17} introduced a new form of the \indextermtt{if} and
+\indextermtt{switch} statement: it is possible to have a single
+statement of declaration prior to the test.
+
+\snippetwithoutput{ifinitchar}{basic}{ifinit}
+
+This is particularly elegant if the init statement is a declaration,
+because the declared variable is then local to the
+conditional. Previously one would have had to write
+\begin{lstlisting}
+char c;
+c = getchar();
+if ( c!='a' ) /* ... */
+\end{lstlisting}
+with the variable globally defined.

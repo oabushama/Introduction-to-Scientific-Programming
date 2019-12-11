@@ -2,7 +2,7 @@
 !****
 !**** This file belongs with the course
 !**** Introduction to Scientific Programming in C++/Fortran2003
-!**** copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+!**** copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 !****
 !**** pointmain.F90 : make a Point class just for exercise
 !****

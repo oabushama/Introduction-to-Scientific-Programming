@@ -9,22 +9,25 @@
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Fortran has a clean mechanism for importing data, functions, types
+Fortran has a clean mechanism for importing data (including numeric
+constants such as~$\pi$), functions, types
 that are defined in another file.
 
 \begin{block}{Module definition}
   \label{sl:fmod-def}
   Modules look like a program, but without executable code:
   %
-  \verbatimsnippet{pointmod}
+  \verbatimsnippet{pointmod}% in structf
+  %
+  Note also the numeric constant.
 \end{block}
 
 \begin{block}{Module use}
   \label{sl:fmod-use}
   Module imported through \indextermfort{use} statement;\\
-  comes before \n{implicit none}
+  comes before \indextermfort{implicit none}
   %
-  \verbatimsnippet{pointmodprog}
+  \snippetwithoutput{pointmodprog}{structf}{typemod}
 \end{block}
 
 \begin{exercise}
@@ -36,22 +39,27 @@ that are defined in another file.
 \Level 0 {Modules for program modularization}
 
 Modules are Fortran's mechanism for supporting
-\indextermsub{separate}{compilation}: you can put yuor module in one
+\indextermsub{separate}{compilation}: you can put your module in one
 file, your main program in another, and compile them separately.
 
 \begin{block}{Separate compilation of modules}
   \label{sl:fcompile-mods}
-  Suppose program is split over \n{theprogram.F90} and \n{themodule.F90}.
+  Suppose program is split over two files:\\
+  \n{theprogram.F90} and \n{themodule.F90}.
   \begin{itemize}
-  \item \n{icpc -c themodule.F90}; this gives
-  \item an \indextermsub{object}{file} that will be linked later, and
-  \item a \n{.mod} file (with the name of the module, not of the
-    file);
-  \item \n{icpc -c theprogram.F90} will read the \n{.mod} file; and finally
-  \item \n{icpc -o myprogram theprogram.o themodule.o} uses the
-    compiler as \indexterm{linker} to form the executable.
+  \item Compile the module: \n{ifort -c themodule.F90}; this gives
+  \item an \indextermsub{object}{file} (extension:~\n{.o})
+    that will be linked later, and
+  \item a module file \n{modulename.mod}.
+  \item Compile the main program:\\
+    \n{ifort -c theprogram.F90} will read the \n{.mod} file; and finally
+  \item Link the object files into an \indexterm{executable}:\\
+    \n{ifort -o myprogram theprogram.o themodule.o}\\
+    The compiler is used as \indexterm{linker}: there is no compiling
+    in this step.
   \end{itemize}
-  The module needs to be compiled before the program.
+  Important: the module needs to be compiled before any (sub)program
+  that uses it.
 \end{block}
 
 \Level 0 {Modules}
@@ -80,10 +88,10 @@ What do you use a module for?
 \end{itemize}
 %
 
-Any routines come after the \n{contains}\index{contains!in modules}
+Any routines come after the \indextermfort{contains}\index{contains!in modules}
 
-A module is made available with the \indextermtt{use} keyword, which
-needs to go before the \n{implicit none}.
+A module is made available with the \indextermfort{use} keyword, which
+needs to go before the \indextermfort{implicit none}.
 %
 \begin{block}{Module use}
   \label{sl:moduleuse}
@@ -96,24 +104,24 @@ Use mymodule, func1 => new_name1
 \end{block}
 
 By default, all the contents of a module is usable by a subprogram
-that uses it. However, a keyword \indextermtt{private} make module
+that uses it. However, a keyword \indextermfort{private} make module
 contents available only inside the module.
 You can make the default behaviour explicit by using the
-\indextermtt{public} keyword. Both \n{public,private} can be used as
+\indextermfort{public} keyword. Both \indextermfort{public} and \indextermfort{private} can be used as
 attributes on definitions in the module.
-There is a keyword \indextermtt{protected} for data members that
+There is a keyword \indextermfort{protected} for data members that
 are public, but can not be altered by code outside the module.
 
 If you compile a module, you will find a \n{.mod} file in your
 directory. (This is little like a~\n{.h} file in~C++.)
-If this file is not present, you can not \n{use} the module in another
+If this file is not present, you can not \lstinline{use} the module in another
 program unit, so you need to compile the file containing the module
 first.
 
 \begin{exercise}
   \label{ex:fpointmod}
-  Write a module \n{PointMod} that defines a type \n{Point} and a
-  function \n{distance} to make this code work:
+  Write a module \lstinline{PointMod} that defines a type \lstinline{Point} and a
+  function \lstinline{distance} to make this code work:
   %
   \verbatimsnippet{pointmainex}
   %

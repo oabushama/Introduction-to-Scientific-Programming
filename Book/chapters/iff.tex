@@ -49,13 +49,13 @@ checky:   if ( ... some test on y ... ) then
   \begin{tabular}{|l|l|l|l|}
     \hline
     Operator&old style&meaning&example\\ \hline
-    \texttt{==}&\n{.eq.}&equals&\texttt{x==y-1}\\
-    \texttt{/=}&\n{.ne.}&not equals&\texttt{x*x*!=5}\\
-    \texttt{>} &\n{.gt.}&greater&\texttt{y>x-1}\\
-    \texttt{>=}&\n{.ge.}&greater or equal&\texttt{sqrt(y)>=7}\\
-    \texttt{<} &\n{.lt.}&less than\\
-    \texttt{<=}&\n{.le.}&less equal&\texttt{}\\
-    &\n{.and.} \n{.or.}&and, or&\n{x<1 .and. x>0}\\
+    \texttt{==}&\indextermfort{.eq.}&equals&\texttt{x==y-1}\\
+    \texttt{/=}&\indextermfort{.ne.}&not equals&\texttt{x*x*!=5}\\
+    \texttt{>} &\indextermfort{.gt.}&greater&\texttt{y>x-1}\\
+    \texttt{>=}&\indextermfort{.ge.}&greater or equal&\texttt{sqrt(y)>=7}\\
+    \texttt{<} &\indextermfort{.lt.}&less than\\
+    \texttt{<=}&\indextermfort{.le.}&less equal&\texttt{}\\
+    &\indextermfort{.and.} \indextermfort{.or.}&and, or&\n{x<1 .and. x>0}\\
     &\texttt{.not.}&not&\n{.not.( x>1 .and. x<2 )}\\
     &\texttt{.eqv.}&equiv&$ (x\wedge y)\vee (\neg x\wedge \neg y)$\\
     &\texttt{.neqv.}&not equiv&$ (x\wedge \neg y)\vee (\neg x\wedge  y)$\\
@@ -63,7 +63,7 @@ checky:   if ( ... some test on y ... ) then
   \end{tabular}
 \end{block}
 
-The logical operators such as \n{.AND.} are not short-cut as
+The logical operators such as \indextermfort{.AND.} are not short-cut as
 in~C++. Clauses can be evaluated in any order.
 
 \begin{exercise}
@@ -79,7 +79,7 @@ in~C++. Clauses can be evaluated in any order.
 
 \Level 0 {Select statement}
 
-The Fortran equivalent of the C++ \n{case} statement is \indextermfort{select}. It takes
+The Fortran equivalent of the C++ \indextermfort{case} statement is \indextermfort{select}. It takes
 single values or ranges; works for integers and characters.
 
 \begin{block}{Select statement}
@@ -95,7 +95,7 @@ single values or ranges; works for integers and characters.
 
 The Fortran type for booleans is \indextermfort{Logical}.
 
-The two literals are \n{.true.} and \n{.false.}
+The two literals are \indextermfort{.true.} and \indextermfort{.false.}
 
 \begin{exercise}
   \label{ex:fprintbool}
@@ -108,5 +108,5 @@ The two literals are \n{.true.} and \n{.false.}
 \begin{exercise}
   \label{ex:select-vs-switch}
   What is a conceptual difference between the C++ \n{switch} and the
-  Fortran \n{Select} statement?
+  Fortran \indextermfort{Select} statement?
 \end{exercise}

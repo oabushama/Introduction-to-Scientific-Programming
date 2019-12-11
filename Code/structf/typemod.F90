@@ -1,8 +1,9 @@
+! -*- f90 -*-
 !****************************************************************
 !***
 !*** This file belongs with the course
 !*** Introduction to Scientific Programming in C++/Fortran2003
-!*** copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+!*** copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 !***
 !*** typemod.F90 : modules containing types and such
 !***
@@ -13,11 +14,12 @@ Module definitions
   type point
      real :: x,y
   end type point
+  real(8),parameter :: pi = 3.14159265359
 contains
   real(4) function length(p)
     implicit none
     type(point),intent(in) :: p
-    length = sqrt( p%x**2 + p%y )
+    length = sqrt( p%x**2 + p%y**2 )
   end function length
 end Module definitions
 !!codesnippet end
@@ -32,6 +34,8 @@ Program size
 
   p2 = p1
   print *,p2%x,p2%y
+  print *,"length:",length(p2)
+  print *,2*pi
 
 end Program size
 !!codesnippet end

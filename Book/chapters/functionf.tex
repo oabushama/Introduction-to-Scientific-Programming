@@ -9,10 +9,11 @@
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\Level 0 {Procedures}
-
 Programs can have subprograms: parts of code that for some reason you
-want to separate from the main program. If you structure your code in a single
+want to separate from the main program. The term for these is
+\indextermdef{procedure}, but this is not a language keyword.
+
+If you structure your code in a single
 file, this is the recommended structure:
 
 \begin{block}{Subprograms in contains clause}
@@ -22,25 +23,26 @@ Program foo
   < declarations>
   < executable statements >
   Contains
-    < subprogram definitions >
+    < procedure definitions >
 End Program foo
 \end{lstlisting}
 \end{block}
 
-That is, subprograms are placed after the main program statements,
+That is, procedure are placed after the main program statements,
 separated by a \indextermfort{Contains} clause.
 
-In general, these are the  placements of subprograms:
+In general, these are the  placements of procedures:
 \begin{itemize}
-\item Internal: after the \n{Contains} clause of a program
+\item Internal: after the \indextermfort{Contains} clause of a program
 \item In a \indextermfort{Module}; see section~\ref{sec:modulef}.
-\item Externally: the subprogram is not internal to a \n{Program} or
-  \n{Module}. In this case it's safest to declare it through an
+\item Externally: the procedure is not internal to a \indextermfort{Program} or
+  \indextermfort{Module}. In this case it's safest to declare it through an
   \indextermfort{Interface} specification; section~\ref{sec:finterface}.
 \end{itemize}
-\Level 1 {Subroutines and functions}
 
-Fortran has two types of subprograms:
+\Level 0 {Subroutines and functions}
+
+Fortran has two types of procedures:
 \begin{itemize}
 \item Subroutines, which are somewhat like \n{void} functions in C++:
   they can be used to structure the code, and they can only return
@@ -67,7 +69,7 @@ end subroutine foo
 Exit from a procedure can happen two ways:
 \begin{enumerate}
 \item the flow of control reaches the end of the procedure body, or
-\item execution is finished by an explicit \indextermtt{return}
+\item execution is finished by an explicit \indextermfort{return}
   statement.
 \begin{lstlisting}
 subroutine foo()
@@ -77,15 +79,15 @@ subroutine foo()
 end subroutine foo
 \end{lstlisting}
 \end{enumerate}
-The \n{return} statement is optional in the first case.
-The \n{return} statement is different from C++ in that it does not
+The \indextermfort{return} statement is optional in the first case.
+The \indextermfort{return} statement is different from C++ in that it does not
 indicate the return result of a function.
 
 \begin{exercise}
-  Rewrite the above subroutine \n{foo} without a \n{return} statement.
+  Rewrite the above subroutine \n{foo} without a \indextermfort{return} statement.
 \end{exercise}
 
-A subroutine is invoked with a \indextermtt{call} statement:
+A subroutine is invoked with a \indextermfort{call} statement:
 \begin{lstlisting}
 call foo()
 \end{lstlisting}
@@ -102,8 +104,8 @@ end subroutine foo
 \end{lstlisting}
 \begin{itemize}
 \item Looks much like a main program
-\item Ends at the end, or when \n{return} is reached
-\item Note: \n{return} does not return anything
+\item Ends at the end, or when \indextermfort{return} is reached
+\item Note: \indextermfort{return} does not return anything
 \item Activated with 
 \begin{lstlisting}
   call foo()
@@ -124,16 +126,16 @@ end subroutine foo
 
 \begin{block}{Recursion}
   \label{sl:funcf:recursion}
-  Declare function as \indextermfort{Recursive}~\n{Function}
+  Declare function as \indextermfort{Recursive}~\indextermfort{Function}
   %
   \snippetwithoutput{frecursf}{funcf}{fact}
   %
   Note the \indextermfort{result} clause. This prevents ambiguity.
 \end{block}
 
-\Level 1 {Return results}
+\Level 0 {Return results}
 
-While a \n{subroutine} can only return information through its parameters,
+While a \indextermfort{subroutine} can only return information through its parameters,
 a~\indexterm{function} procedure returns an explicit result:
 \begin{lstlisting}
 logical function test(x)
@@ -144,12 +146,12 @@ logical function test(x)
   return ! optional, see above
 end function test
 \end{lstlisting}
-You see that the result is not returned in the \n{return} statement,
-but rather through assignment to the function name. The \n{return}
+You see that the result is not returned in the \indextermfort{return} statement,
+but rather through assignment to the function name. The \indextermfort{return}
 statement, as before, is optional and only indicates where the flow of
 control ends.
 
-A \indextermdef{function} in Fortran is a subprogram that return a
+A \indextermdef{function} in Fortran is a procedure that return a
 result to its calling program, much like a non-void function in~C++
 
 \begin{block}{Function definition and usage}
@@ -157,7 +159,7 @@ result to its calling program, much like a non-void function in~C++
   \begin{itemize}
   \item \lstinline$subroutine$ vs \lstinline$function$:\\
     compare \lstinline$void$ functions vs non-void in~C++.
-  \item Return type, keyword \n{function}, name, parameters
+  \item Return type, keyword \indextermfort{function}, name, parameters
   \item Function body has statements
   \item Result is returned by assigning to the function name
   \item Use: \n{y = f(x)}
@@ -169,7 +171,7 @@ result to its calling program, much like a non-void function in~C++
   \snippetwithoutput{fplusone}{funcf}{plusone}
 \end{block}
 
-A function is not invoked with \n{call}, but rather through being used
+A function is not invoked with \indextermfort{call}, but rather through being used
 in an expression:
 \begin{lstlisting}
 if (test(3.0) .and. something_else) ...
@@ -177,16 +179,16 @@ if (test(3.0) .and. something_else) ...
 You now have the following cases to make the function known in the
 main program:
 \begin{itemize}
-\item If the function is in a \n{contains} section, its type is known
+\item If the function is in a \indextermfort{contains} section, its type is known
   in the main program.
 \item If the function is in a module (see section~\ref{sec:modulef}
-  below), it becomes known through a \n{use} statement.
+  below), it becomes known through a \indextermfort{use} statement.
 \end{itemize}
 
 \begin{f77note}
-  Without modules and \n{contains} sections, you need to declare the
+  Without modules and \indextermfort{contains} sections, you need to declare the
   function type explitly in the calling program. The safe way is
-  through using an \indextermtt{interface} specification.
+  through using an \indextermfort{interface} specification.
 \end{f77note}
 
 \begin{exercise}
@@ -216,11 +218,11 @@ main program:
   maybe you have made this error.
 \end{block}
 
-\Level 1 {Arguments}
+\Level 0 {Arguments}
 
-\begin{block}{Subprogram arguments}
+\begin{block}{Procedure arguments}
   \label{sl:farguments}
- Arguments are declared in subprogram body:
+ Arguments are declared in procedure body:
 \begin{lstlisting}
 subroutine f(x,y,i)
   implicit none
@@ -241,7 +243,7 @@ declaring the `intent' is optional, but highly advisable.
   \item Everything is passed by reference.\\
     Don't worry about large objects being copied.
   \item Optional intent declarations:\\
-    Use \n{in}, \n{out}, \n{inout} qualifiers to clarify semantics
+    Use \indextermfort{in}, \indextermfort{out}, \indextermfort{inout} qualifiers to clarify semantics
     to compiler.
   \end{itemize}
 \end{block}
@@ -249,8 +251,8 @@ declaring the `intent' is optional, but highly advisable.
 \begin{block}{Fortran nomenclature}
   \label{sl:fortran-dummy}
   The term \indextermsub{dummy}{argument} is what Fortran calls the
-  parameters in the subprogram definition. The arguments in the
-  subprogram call are the \indextermsub{actual}{argument}s.
+  parameters in the procedure definition. The arguments in the
+  procedure call are the \indextermsub{actual}{argument}s.
 \end{block}
 
 \begin{block}{Intent checking}
@@ -295,10 +297,10 @@ do i=1,1000
   environment.
 \end{exercise}
 
-\Level 1 {Types of procedures}
+\Level 0 {Types of procedures}
 
 Procedures that are in the main program (or another type of program
-unit), separated by a \n{contains} clause, are known as
+unit), separated by a \indextermfort{contains} clause, are known as
 \indextermsub{internal}{procedures}. This is as opposed to
 \indextermsub{module}{procedures}.
 
@@ -307,9 +309,9 @@ single-statement functions, usually to identify commonly used
 complicated expressions in a program unit. Presumably the compiler
 will \indexterm{inline} them for efficiency.
 
-The \n{entry} statement is so bizarre that I refuse to discuss it.
+The \indextermfort{entry} statement is so bizarre that I refuse to discuss it.
 
-\Level 1 {More about arguments}
+\Level 0 {More about arguments}
 
 \begin{block}{Keyword arguments}
   \label{sl:funcf:keyword}
@@ -329,45 +331,20 @@ The \n{entry} statement is so bizarre that I refuse to discuss it.
   \end{itemize}
 \end{block}
 
-\Level 0 {Interfaces}
-\label{sec:finterface}
+Fortran behaves slightly counterintuitive if you try to initialize
+local variables: they initialization is only executed once, and the
+second time you call the procedure it will have retained its previous
+value. (Technically: the variable has an implicit \indextermfort{Save}
+attribute.)
 
-If you want to use a subprogram in your main program, the compiler
-needs to know the signature of the subprogram: how many arguments, of
-what type, and with what intent. You have seen how the
-\indextermtt{contains} clause can be used for this purpose if the
-subprogram resides in the same file as the main program.
+This may trip you up as the following example shows:
 
-If the subprogram is in a separate file, the compiler does not see
-definition and usage in one go. To allowed the compiler to do checking
-on proper usage, we can use an \indextermttdef{interface} block. This
-is placed at the calling site, declaring the signature of the
-subprogram.
+\begin{block}{Saved values}
+  \label{sl:func-param-save}
+  Local variable is initialized only once,\\
+  second time it uses its retained value.
+  
+  \snippetwithoutput{unsafesave}{funcf}{save}
+\end{block}
 
-\begin{multicols}{2}
-\textbf{Main program:}
-\verbatimsnippet{interfacemain}
-\vfill\columnbreak
-\textbf{Subprogram:}
-\verbatimsnippet{interfunc}
-\end{multicols}
-
-The \indextermtt{interface} block is not required (an older
-\indextermtt{external} mechanism exists for functions), but is
-recommended.
-It is required if the function takes function arguments.
-
-\Level 1 {Polymorphism}
-
-The \indextermtt{interface} block can be used to define a generic
-function:
-\begin{lstlisting}
-interface f
-function f1( ..... )
-function f2( ..... )
-end interface f
-\end{lstlisting}
-where \n{f1},\n{f2} are functions that can be distinguished by their
-argument types. The generic function~\n{f} then becomes either \n{f1}
-or \n{f2} depending on what type of argument it is called with.
 

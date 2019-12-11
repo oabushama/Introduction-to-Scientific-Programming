@@ -2,7 +2,7 @@
 !***
 !*** This file belongs with the course
 !*** Introduction to Scientific Programming in C++/Fortran2003
-!*** copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+!*** copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 !***
 !*** arraypass1d.F90 : passing a 1d array
 !***
@@ -15,10 +15,10 @@ contains
   real(8) function arraysum(x)
     implicit none
     real(8),intent(in),dimension(:) :: x
-
-    real(8) :: tmp = 0.
+    real(8) :: tmp
     integer i
 
+    tmp = 0.
     do i=1,size(x)
        tmp = tmp+x(i)
     end do
@@ -28,25 +28,25 @@ contains
 
 End Module ArrayFunction
 
-#define N 100
-!!codesnippet fpass1dmain
+#define N 10
 Program ArrayComputations1D
     use ArrayFunction
     implicit none
 
-    real(8),dimension(:) :: x(N)
-  !!codesnippet end
-    real(8),dimension(:) :: y(0:N-1)
     integer :: i
+    real(8) :: sx,sy
 
-    do i=1,N
-       x(i) = i
-       y(i-1) = i
-    end do
-!!codesnippet fpass1dmain
-    print *,"Sum of one-based array:",arraysum(x)
-!!codesnippet end
-    print *,"Sum of zero-based array:",arraysum(y)
+    !!codesnippet fpass1dmain
+    real(8),dimension(:) :: x(N) &
+         = [ (i,i=1,N) ]
+    real(8),dimension(:) :: y(0:N-1) &
+         = [ (i,i=1,N) ]
+
+    sx = arraysum(x)
+    sy = arraysum(y)
+    print '("Sum of one-based array:",/,4x,f6.3)', sx
+    print '("Sum of zero-based array:",/,4x,f6.3)', sy
+    !!codesnippet end
 
 End Program ArrayComputations1D
 

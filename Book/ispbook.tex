@@ -19,7 +19,7 @@
 \usepackage[pdftex,colorlinks]{hyperref}
 \usepackage{amssymb}
 \usepackage[fleqn]{amsmath}
-\usepackage{graphicx,undertilde,arydshln,wrapfig,xifthen}
+\usepackage{graphicx,arydshln,wrapfig,xifthen}
 \usepackage{times,makeidx,multirow,multicol}
 \usepackage{dirtree}
 
@@ -93,7 +93,7 @@
 \CHAPTER{Conditionals}{iff}
 \CHAPTER{Loop constructs}{loopf}
 \CHAPTER{Scope}{scopef}
-\CHAPTER{Subprograms and modules}{functionf}
+\CHAPTER{Procedures}{functionf}
 \CHAPTER{String handling}{stringf}
 \CHAPTER{Structures, eh, types}{structf}
 \CHAPTER{Modules}{modulef}
@@ -107,6 +107,7 @@
 \part{Exercises and projects}
 \lstset{language=C++}
 
+\CHAPTER{Style guide for project submissions}{projectstyle}
 \CHAPTER{Prime numbers}{prime}
 \CHAPTER{Geometry}{geom}
 \CHAPTER{Infectuous disease simulation}{infect}
@@ -130,10 +131,17 @@
 
 \part{Index and such}
 
-\Level 0 {Index}
-\begin{multicols}{2}
+\Level 0 {General Index}
+
+\begin{multicols*}{2}
 \printindex
-\end{multicols}
+\end{multicols*}
+
+\Level 0 {Index of Fortran keywords}
+
+\begin{multicols*}{2}
+\printindex[f90]
+\end{multicols*}
 
 \Level 0 {Bibliography}
 

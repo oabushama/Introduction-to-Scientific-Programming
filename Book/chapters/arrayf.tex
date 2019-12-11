@@ -42,25 +42,29 @@ Such an array, with size explicitly indicated, is called a
 (See section~\ref{sec:allocatable} for
 dynamic arrays.)
 
-Array indexing in Fortran is 1-based:
 \begin{block}{1-based Indexing}
   \label{sl:farray-base1}
+Array indexing in Fortran is 1-based by default:
 \begin{lstlisting}
 integer,parameter :: N=8
 real(4),dimension(N) :: x
 do i=1,N
   ... x(i) ...
 \end{lstlisting}
+Note the use of \lstinline{parameter}:
+\indexterm{compile-time constant}
 \end{block}
 
-Unlike C++, Fortran can specify the lower bound explicitly:
 \begin{block}{Lower bound}
   \label{sl:farray-lower}
+Unlike C++, Fortran can specify the lower bound explicitly:
 \begin{lstlisting}
 real,dimension(-1:7) :: x
 do i=-1,7
   ... x(i) ...
 \end{lstlisting}
+Safer:
+\snippetwithoutput{lubound}{arrayf}{lubound}
 \end{block}
 
 Such arrays, as in~C++, obey the scope: they disappear at the end of
@@ -259,8 +263,8 @@ We have the following properties of an array:
 integer,dimension(-1:1,-2:2) :: symm
 \end{lstlisting}
 the array \n{symm} has a lower bound of~\n{-1} in the first dimension
-and \n{-2} in the second. The functions \indextermttdef{Lbound} and
-\indextermttdef{Ubound} give these bounds as array or scalar:
+and \n{-2} in the second. The functions \indextermfortdef{Lbound} and
+\indextermfortdef{Ubound} give these bounds as array or scalar:
 \begin{lstlisting}
 array_of_lower = Lbound(symm)
 upper_in_dim_2 = Ubound(symm,2)
@@ -272,7 +276,7 @@ upper_in_dim_2 = Ubound(symm,2)
   of elements in a certain dimension, and the
   \emph{shape}\index{shape!of array} is the array of extents.
 
-\item The \indextermttdef{size} is the number of elements, either for
+\item The \indextermfortdef{size} is the number of elements, either for
   the whole array, or for a specified dimension.
 \begin{lstlisting}
 integer :: x(8), y(5,4)
@@ -284,8 +288,8 @@ size(y,2)
 \begin{slide}{Query functions}
   \label{sl:farray-query}
   \begin{itemize}
-  \item Bounds: \n{lbound}, \n{ubound}
-  \item \n{size}
+  \item Bounds: \indextermfort{lbound}, \indextermfort{ubound}
+  \item \indextermfort{size}
   \item Can be used per dimension, or overall giving array of bounds/sizes.
   \end{itemize}
   \snippetwithoutput{farrayquery}{arrayf}{query}
@@ -309,15 +313,15 @@ Example:
 
 Subprogram needs to know the shape of an array, not the actual bounds:
 
-\begin{block}{Pass array: calling site}
+\begin{block}{Pass array: main program}
   \label{sl:farray-pass1d-main}
   Passing array as one symbol:
-  \verbatimsnippet{fpass1dmain}
+  \snippetwithoutput{fpass1dmain}{arrayf}{arraypass1d}
 \end{block}
 
 \begin{block}{Pass array: subprogram}
   \label{sl:farray-pass1d-subr}
-  Note declaration as \n{dimension(:)}\\
+  Note declaration as \indextermfort{dimension(:)}\\
   actual size is queried
   \verbatimsnippet{fpass1dsubr}
 \end{block}
@@ -340,7 +344,7 @@ there are two main arguments against using them at large sizes.
 \end{itemize}
 
 A better strategy is to indicate the shape of the array, and use
-\indextermtt{allocate} to specify
+\indextermfort{allocate} to specify
 the size later, presumably in terms of run-time program parameters.
 
 \begin{block}{Array allocation}
@@ -351,12 +355,12 @@ real(8), dimension(:), allocatable :: x,y
 n = 100
 allocate(x(n), y(n))
 \end{lstlisting}
-You can \indextermtt{deallocate} the array when you don't need the
+You can \indextermfort{deallocate} the array when you don't need the
 space anymore.
 \end{block}
 
 If you are in danger of running out of memory, it can be a good idea
-to add a \n{stat=ierror} clause to the \n{allocate} statement:
+to add a \indextermfort{stat=ierror} clause to the \indextermfort{allocate} statement:
 \begin{lstlisting}
 integer :: ierr
 allocate( x(n), stat=ierr )
@@ -397,32 +401,54 @@ The following intrinsic functions are avaible for arrays:
 \begin{block}{Array intrinsics}
   \label{sl:array-funcf}
   \begin{itemize}
-  \item \indextermtt{MaxVal} finds the maximum value in an array.
-  \item \indextermtt{MinVal} finds the minimum value in an array.
-  \item \indextermtt{Sum} returns the sum of all elements.
-  \item \indextermtt{Product} return the product of all elements.
+  \item \indextermfort{Abs} creates the matrix of pointwise absolute values.
+  \item \indextermfort{MaxVal} finds the maximum value in an array.
+  \item \indextermfort{MinVal} finds the minimum value in an array.
+  \item \indextermfort{Sum} returns the sum of all elements.
+  \item \indextermfort{Product} return the product of all elements.
   \item \indextermfort{MaxLoc} returns the index of the maximum
     element.
-\begin{lstlisting}
-i = MAXLOC( array [, mask ] )
-\end{lstlisting}
-  \item \indextermtt{MinLoc} returns the index of the minimum element.
-  \item \indextermtt{MatMul} returns the matrix product of two matrices.
-  \item \indextermtt{Dot_Product} returns the dot product of two
+  \item \indextermfort{MinLoc} returns the index of the minimum element.
+  \item \indextermfort{MatMul} returns the matrix product of two matrices.
+  \item \indextermfort{Dot_Product} returns the dot product of two
     arrays.
-  \item \indextermtt{Transpose} returns the transpose of a matrix.
-  \item \indextermtt{Cshift} rotates elements through an array.
+  \item \indextermfort{Transpose} returns the transpose of a matrix.
+  \item \indextermfort{Cshift} rotates elements through an array.
+  \end{itemize}
+\end{block}
+
+\begin{block}{Multi-dimensional intrinsics}
+  \label{sl:array-funcfmd}
+  \begin{itemize}
+  \item
+    Functions such as \indextermfort{Sum} operate on a whole array by
+    default.
+  \item To
+    restrict such a function to one subdimension add a keyword
+    parameter \indextermfort{DIM}:
+\begin{lstlisting}
+s = Sum(A,DIM=1)
+\end{lstlisting}
+where the keyword is optional.
+\item Likewise, the operation can be restricted to a \indextermfort{MASK}:
+\begin{lstlisting}
+s = Sum(A,MASK=B)
+\end{lstlisting}
   \end{itemize}
 \end{block}
 
 \begin{exercise}
   \label{ex:fmatnorm}
-  The 1-norm of a matrix is defined as the maximum sum of absolute
+  The 1-norm of a matrix is defined as the maximum of all sums of absolute
   values in any column:
   \[ \|A\|_1 = \max_j \sum_i |A_{ij}| \]
   while the infinity-norm is defined as the maximum row sum:
   \[ \|A\|_\infty = \max_i \sum_j |A_{ij}| \]
-  Implement these functions using array intrinsics.
+  Compute these norms using array functions as much as possible, that
+  is, try to avoid using loops.
+  
+  For bonus points, write Fortran \lstinline{Function}s that compute
+  these norms.
 \end{exercise}
 
 \begin{exercise}
@@ -431,10 +457,10 @@ i = MAXLOC( array [, mask ] )
   \begin{enumerate}
   \item Write the regular \n{i,j,k} implementation, and store it as
     reference.
-  \item Use the \n{DOT_PRODUCT} function, which eliminates the \n{k}
+  \item Use the \indextermfort{DOT_PRODUCT} function, which eliminates the \n{k}
     index. How does the timing change? Print the maximum absolute
     distance between this and the reference result.
-  \item Use the \n{MATMUL} function. Same questions.
+  \item Use the \indextermfort{MATMUL} function. Same questions.
   \item Bonus question: investigate the \n{j,k,i} and \n{i,k,j}
     variants. Write them both with array sections and individual array
     elements. Is there a difference in timing?
@@ -494,7 +520,7 @@ positive_col = ALL( A>0,2 )
   whether the sum is close enough to~\n{A}.
 \end{exercise}
 
-Similar to \n{all}, there is a function~\indextermfort{any} that tests
+Similar to \indextermfort{all}, there is a function~\indextermfort{any} that tests
 if any array element satisfies the test.
 \begin{lstlisting}
 if ( Any( Abs(A-B)>
@@ -518,7 +544,7 @@ c(1:n) = d(2:n+1)
 
 \Level 2 {`forall' keyword}
 
-The \indextermtt{forall} keyword also indicates an array assignment:
+The \indextermfort{forall} keyword also indicates an array assignment:
 \begin{lstlisting}
 forall (i=1:n)
   a(i) = b(i)
@@ -538,7 +564,7 @@ It is not a parallel loop! For that, the following mechanism is preferred.
   \label{sl:farray-concurrent}
 
   The \indexterm{do concurrent} is a true do-loop. With the
-  \n{concurrent} keyword the user specifies that the
+  \indextermfort{concurrent} keyword the user specifies that the
   iterations of a loop are independent, and can therefore possibly be
   done in parallel:
 \begin{lstlisting}
@@ -547,7 +573,7 @@ do concurrent (i=1:n)
   c(i) = d(i+1)
 end do
 \end{lstlisting}
-(Do not use \n{for all})
+(Do not use \indextermfort{for all})
 \end{block}
 
 \Level 1 {Loops without dependencies}

@@ -2,7 +2,7 @@
 !***
 !*** This file belongs with the course
 !*** Introduction to Scientific Programming in C++/Fortran2003
-!*** copyright 2017 Victor Eijkhout eijkhout@tacc.utexas.edu
+!*** copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
 !***
 !*** mult1.F90 : Fortran OO program
 !***
@@ -14,19 +14,19 @@ Module multmod
   type Scalar
      real(4) :: value
    contains
-     procedure,public :: print
-     procedure,public :: scaled
+     procedure,public :: &
+          printme,scaled
   end type Scalar
 
 contains ! methods
   !!codesnippet end
 
   !!codesnippet fmult1method
-  subroutine print(me)
+  subroutine printme(me)
     implicit none
     class(Scalar) :: me
     print '("The value is",f7.3)',me%value
-  end subroutine print
+  end subroutine printme
   function scaled(me,factor)
     implicit none
     class(Scalar) :: me
@@ -45,7 +45,7 @@ Program Multiply
   type(Scalar) :: x
   real(4) :: y
   x = Scalar(-3.14)
-  call x%print()
+  call x%printme()
   y = x%scaled(2.)
   print '(f7.3)',y
 

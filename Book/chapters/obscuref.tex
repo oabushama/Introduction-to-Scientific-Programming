@@ -9,6 +9,48 @@
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\Level 0 {Interfaces}
+\label{sec:finterface}
+
+If you want to use a procedure in your main program, the compiler
+needs to know the signature of the procedure: how many arguments, of
+what type, and with what intent. You have seen how the
+\indextermfort{contains} clause can be used for this purpose if the
+procedure resides in the same file as the main program.
+
+If the procedure is in a separate file, the compiler does not see
+definition and usage in one go. To allowed the compiler to do checking
+on proper usage, we can use an \indextermfortdef{interface} block. This
+is placed at the calling site, declaring the signature of the
+procedure.
+
+\begin{multicols}{2}
+\textbf{Main program:}
+\verbatimsnippet{interfacemain}
+\vfill\columnbreak
+\textbf{Procedure:}
+\verbatimsnippet{interfunc}
+\end{multicols}
+
+The \indextermfort{interface} block is not required (an older
+\indextermfort{external} mechanism exists for functions), but is
+recommended.
+It is required if the function takes function arguments.
+
+\Level 1 {Polymorphism}
+
+The \indextermfort{interface} block can be used to define a generic
+function:
+\begin{lstlisting}
+interface f
+function f1( ..... )
+function f2( ..... )
+end interface f
+\end{lstlisting}
+where \n{f1},\n{f2} are functions that can be distinguished by their
+argument types. The generic function~\n{f} then becomes either \n{f1}
+or \n{f2} depending on what type of argument it is called with.
+
 \Level 0 {Random numbers}
 
 In this section we briefly discuss the Fortran \emph{random number

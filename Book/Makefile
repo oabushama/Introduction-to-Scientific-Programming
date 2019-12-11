@@ -25,7 +25,7 @@ info ::
 	@echo "make onepass/format book [FILE=(default: ${FILE})]"
 format onepass :
 	@mkdir -p frames
-	@TEXINPUTS=${TEXINPUTS}:chapters:macros:snippets.code:graphics \
+	@TEXINPUTS=chapters:macros:snippets.code:graphics:${TEXINPUTS} \
 	  pdflatex --shell-escape ${FILE}
 BOOKNAME = EijkhoutIntroSciProgramming
 book :

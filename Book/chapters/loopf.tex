@@ -55,8 +55,8 @@ outer: do i=1,10
     end do inner
 end do outer
 \end{lstlisting}
-The label needs to be on the same line as the \n{do}, and if you use a
-label, you need to mention it on the \n{end do} line.
+The label needs to be on the same line as the \indextermfort{do}, and if you use a
+label, you need to mention it on the \indextermfort{end do} line.
 
 \begin{f77note}
   Do not use label-terminated loops. Do not use non-integer loop variables.
@@ -64,7 +64,7 @@ label, you need to mention it on the \n{end do} line.
 
 \Level 0 {Interruptions of the control flow}
 
-For indeterminate looping, you can use the \n{while} test,
+For indeterminate looping, you can use the \indextermfort{while} test,
 or leave out the loop parameter altogether.
 In that case you need the \indextermtt{exit} statement to stop the iteration.
 

@@ -138,6 +138,12 @@ cout << x.at(2);
 Safer, slower.
 \end{slide}
 
+\begin{block}{Array index out of bounds}
+  Indexing out of bounds can go undetected for a while:
+  
+  \snippetwithoutput{vectoroutofbound}{array}{segmentation}
+\end{block}
+
 \Level 1 {Initialization}
 
 In some applications you will create an array, and gradually fill it,

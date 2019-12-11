@@ -14,7 +14,7 @@
 
 \begin{block}{Classes and objects}
   \label{sl:fclass}
-Fortran classes are based on \n{type} objects, a little like the
+Fortran classes are based on \indextermfort{type} objects, a little like the
 analogy between C++ \n{struct} and \n{class} constructs.
 
 New syntax for specifying methods.
@@ -23,7 +23,7 @@ New syntax for specifying methods.
 \begin{block}{Object is type with methods}
   \label{sl:fclass-prog}
   You define a type as before, with its data members, but now the type
-  has a \n{contains}\index{contains!for class functions} for the
+  has a \indextermfort{contains}\index{contains!for class functions} for the
   methods:
   %
   \footnotesize
@@ -40,8 +40,8 @@ New syntax for specifying methods.
 \begin{block}{Methods have object as argument}
   \label{sl:fclass-self}
   You define functions that accept the type as first argument, but
-  instead of declaring the argument as \n{type}, you define it as
-  \indextermtt{class}.
+  instead of declaring the argument as \indextermfort{type}, you define it as
+  \indextermfort{class}.
 
   The members of the class object have to be accessed through the
   \verb+%+~operator.
@@ -52,11 +52,11 @@ New syntax for specifying methods.
 \begin{block}{Class organization}
   \label{sl:fclass-org}
   \begin{itemize}
-  \item You're pretty much forced to use \n{Module}
-  \item A class is a \n{Type} with a \n{contains} clause\\
-    followed by \indextermtt{procedure} declaration
-  \item Actual methods go in the \n{contains} part of the module
-  \item First argument of method is the object itself.
+  \item You're pretty much forced to use \indextermfort{Module}
+  \item A class is a \indextermfort{Type} with a \indextermfort{contains} clause\\
+    followed by \indextermfort{procedure} declaration
+  \item Actual methods go in the \indextermfort{contains} part of the module
+  \item $\Rightarrow$ First argument of method is the object itself. $\Leftarrow$
   \end{itemize}
 \end{block}
 
@@ -65,31 +65,9 @@ New syntax for specifying methods.
   \footnotesize
   
   \begin{multicols}{2}
-\begin{lstlisting}
-Module PointClass
-  Type,public :: Point
-     real(8) :: x,y
-   contains
-     procedure, public :: distance
-  End type Point
-contains
-  ! ....
-End Module PointClass
-\end{lstlisting}
-\columnbreak
-\begin{lstlisting}
-Program PointTest
-  use PointClass
-  implicit none
-  type(Point) :: p1,p2
-
-  p1 = point(1.d0,1.d0)
-  p2 = point(4.d0,5.d0)
-
-  print *,"Distance:",p1%distance(p2)
-
-End Program PointTest
-\end{lstlisting}
+    \verbatimsnippet{pointexmod}
+    \columnbreak
+    \verbatimsnippet{pointexmain}
   \end{multicols}  
 \end{block}
 
@@ -98,9 +76,9 @@ End Program PointTest
   Take the point example program and add a distance function:
 \begin{lstlisting}
   Type(Point) :: p1,p2
-  
-  ! initialize
+  ! ... initialize p1,p2
   dist = p1%distance(p2)
+  ! ... print distance
 \end{lstlisting}
 \end{exercise}
 
@@ -109,7 +87,7 @@ End Program PointTest
   Write a method \n{add} for the \n{Point} type:
 \begin{lstlisting}
   Type(Point) :: p1,p2,sum
-  ! initialize
+  ! ... initialize p1,p2
   sum = p1%add(p2)
 \end{lstlisting}
   What is the return type of the function \n{add}?
@@ -136,10 +114,10 @@ type,abstract
 \begin{block}{Use modules!}
   \label{sl:fclass-module}
    It is of course best to put the type definition and method
-   definitions in a module, so that you can \n{use} it.
+   definitions in a module, so that you can \indextermfort{use} it.
 
-   Mark methods as \n{private} so that they can only be used as part
-   of the \n{type}:
+   Mark methods as \indextermfort{private} so that they can only be used as part
+   of the \indextermfort{type}:
 
    \verbatimsnippet{classmodule}
 \end{block}

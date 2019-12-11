@@ -16,7 +16,7 @@ Fortran can deal with input/output in ASCII format, which is called
 \emph{unformatted}\index{I/O!unformatted}~I/O.  Formatted I/O can use
 default formatting, but you can specify detailed formatting
 instructions, in the I/O statement itself, or separately in a
-\n{Format} statement.
+\indextermfort{Format} statement.
 
 Fortran I/O can be described as \indextermsub{list-directed}{I/O}:
 both input and output commands take a list of item, possibly with
@@ -252,7 +252,7 @@ need the \indextermfort{write} statement, which looks like:
 \begin{lstlisting}
 write (unit,format) data
 \end{lstlisting}
-where \n{format} and \n{data} are as described above. The new element
+where \indextermfort{format} and \indextermfort{data} are as described above. The new element
 is the \indexterm{unit}, which is a numerical indication of an output
 device, such as a file.
 
