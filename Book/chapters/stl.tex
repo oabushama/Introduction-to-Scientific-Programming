@@ -419,6 +419,16 @@ cout << numeric_limits<long>::max();
   \snippetwithoutput{stllimits}{stl}{limits}
 \end{block}
 
+\begin{block}{Limits of floating point values}
+  \label{sl:float-limits}
+  \begin{itemize}
+  \item \lstinline{min} is the smallest positive number;
+  \item use \indextermdef{lowest} for `most negative'.
+  \item There is an \indextermdef{epsilon} function for machine precision:
+  \end{itemize}
+  \snippetwithoutput{stllimitfloat}{stl}{eps}
+\end{block}
+
 \begin{exercise}
   \label{ex:big-factorial}
   Write a program to discover what the maximal~$n$ is so that~$n!$,

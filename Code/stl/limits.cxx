@@ -22,6 +22,7 @@ using std::numeric_limits;
 int main() {
   int lasttest;
 
+  cout << "Limit" << endl;
   //codesnippet stllimits
   cout << "Signed int: "
        << numeric_limits<int>::min() << " "
@@ -40,6 +41,22 @@ int main() {
        << numeric_limits<double>::max()
        << endl;
   //codesnippet end
+  cout << ".. limit" << endl;
+
+  cout << "Macheps" << endl;
+  //codesnippet stllimitfloat
+  cout << "Single lowest "
+       << numeric_limits<float>::lowest()
+       << " and epsilon "
+       << numeric_limits<float>::epsilon()
+       << endl;
+  cout << "Double lowest "
+       << numeric_limits<double>::lowest()
+       << " and epsilon "
+       << numeric_limits<double>::epsilon()
+       << endl;
+  //codesnippet end
+  cout << ".. macheps" << endl;
 
   return 0;
 }

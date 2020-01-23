@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-2020 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% arrayf.tex : arrays in Fortran
 %%%%
@@ -132,7 +132,27 @@ x(2:5) = x(1:4)
   you draw about internal mechanisms used in array sections?
 \end{exercise}
 
-You can even use a stride:
+The above exercise illustrates a point about the
+\emph{semantics of array operations}\index{array!operations, semantics of}:
+an array statement behaves as if all inputs are gathered together
+before any results are stored.
+Conceptually, it is as if the right-hand side is assembled an copied
+to some temporary locations before being written to the left-hand side.
+In practice, this may require large temporary arrays
+(and negatively affect performance by lessening \indexterm{locality})
+so you hope that the compiler does something smarter.
+However, the exercise showed that an array assignment can not trivially
+be converted to a simply loop.
+
+\begin{exercise}
+  Can you formalize the sort of array statement for which a simple
+  translation to a loop changes the semantics? (In compiler
+  terminology this is called a \indexterm{dependence}.)
+\end{exercise}
+
+Array operations can be more sophistaced than assigning to a whole
+array or a section of it.
+For instance, you can use a stride:
 
 \begin{block}{Strided sections}
   \label{sl:farray-strideassign}
