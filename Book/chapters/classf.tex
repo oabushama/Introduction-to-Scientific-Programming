@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-2020 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% classf.tex : object oriented programming in Fortran
 %%%%
@@ -92,6 +92,26 @@ New syntax for specifying methods.
 \end{lstlisting}
   What is the return type of the function \n{add}?
 \end{exercise}
+
+\Level 1 {Final proceduares: destructors}
+
+The Fortran equivalent of
+\emph{destructors}\index{destructor!in Fortran|see{final procedure}}
+is a \indextermsub{final}{procedure},
+designated by the \indextermdef{final} keyword.
+
+\verbatimsnippet{finaldecl}
+
+A final procedure has a single argument of the type that it applies to:
+
+\verbatimsnippet{finalproc}
+
+The final procedure is invoked when a derived type object is deleted,
+except at the conclusion of a program:
+
+\verbatimsnippet{finaluse}
+
+\Level 1 {Inheritance}
 
 \begin{block}{More OOP}
   \label{sl:oopf}

@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-2020 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% pointer.tex : about pointers
 %%%%
@@ -20,7 +20,7 @@ name. Consider for instance self-referential data structures:
 \begin{block}{Recursive data structures}
   \label{sl:recursive-node}
 \begin{lstlisting}
-clast Node {
+class Node {
 private:
   int value;
   Node tail;
@@ -29,7 +29,7 @@ private:
 \end{lstlisting}
 This does not work: would take infinite memory.
 \begin{lstlisting}
-clast Node {
+class Node {
 private:
   int value;
   PointToNode tail;
@@ -466,6 +466,8 @@ void f(int*);
 \end{lstlisting}
 Note: dereferencing is undefined behaviour; does not throw an exception.
 \end{slide}
+
+Unfortunately, \indextermttbus{dereferencing a}{nullptr} does not give an exception.
 
 \Level 1 {Opaque pointer}
 

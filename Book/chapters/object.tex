@@ -29,8 +29,10 @@ to give a new level of abstraction:
   data, the
   \emph{members}\index{object!members}\index{members|see{object, members}}.
 
-  When designing an object, first ask yourself: `what functionality
-  should this support'.
+  Objects comes in \indexterm{class}es: compare simple variables and datatypes.
+
+  When designing a class, first ask yourself: `what functionality
+  should the objects support'.
 
 \end{block}
 
@@ -181,17 +183,22 @@ or you could ask it to scale its length by some number.
 
 \begin{block}{Class methods}
   \label{sl:method-define}
-  Let's define methods \lstinline{length} and \lstinline{scaleby}. These are defined inside the
-  class:
-  %
-  \verbatimsnippet{functionalitymethod}
-  %
+  Let's define methods \lstinline{length} and \lstinline{scaleby}.
+
+  \begin{multicols}{2}
+    Definition in the class:
+    \verbatimsnippet{functionalitymethod}
+    \columnbreak
+    Use in the program:
+    \verbatimsnippet{functionalitymethoduse}
+  \end{multicols}
+
   \begin{itemize}
   \item They look like ordinary functions,
   \item except that they can use the data members of the class, for
     instance~\lstinline{x};
-  \item Methods can only be used on an object:
-    \verbatimsnippet{functionalitymethoduse}
+  \item Methods can only be used on an object with the `dot' notation.
+    They are not independently defined.
   \end{itemize}
 \end{block}
 

@@ -137,6 +137,15 @@ try {
 \end{lstlisting}
 \end{block}
 
+\begin{exercise}
+  \label{ex:primegenbreak}
+  Revisit the pime generator class (exercise~\ref{ex:prime:sequence})
+  and let it throw an exception once the candidate number is too large.
+  (You can hardwire this maximum, or use a limit; section~\ref{sec:limits}.)
+
+  \snippetwithoutput{primegenbreakuse}{primes}{genx}
+\end{exercise}
+
 You can throw integers to indicate an error code, a string with an
 actual error message. You could even make an error class:
 

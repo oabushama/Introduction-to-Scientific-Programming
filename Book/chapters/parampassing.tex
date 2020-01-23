@@ -278,19 +278,3 @@ else
   \verbatimsnippet{constrefarray}
 \end{block}
 
-\begin{block}{Parameter passing summary}
-  \label{sl:pass-summary}
-  \begin{itemize}
-  \item Standard mechanism: call by value, copying.
-  \item Using \lstinline{Type &var}:
-    \begin{itemize}
-    \item call by reference,\item no copy, \item data in calling
-      environment can be altered.
-    \end{itemize}
-  \item Using \lstinline{const Type &var}: 
-    \begin{itemize}
-    \item const-reference, \item by reference so no copy, \item but
-      data in calling environment can not be changed.
-    \end{itemize}
-  \end{itemize}
-\end{block}
