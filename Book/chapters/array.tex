@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-2020 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% array.tex : basic language elements
 %%%%
@@ -11,11 +11,11 @@
 
 \Level 0 {Introduction}
 
-An \indextermdef{array} is an indexed data structure, that for each
+An \indextermdef{array} is an indexed data structure that for each
 index stores an integer, floating point number, character,
 object, et cetera.
 In scientific applications, arrays often correspond to vectors and
-matrices, potentialy of quite large size. (If you know about the
+matrices, potentially of quite large size. (If you know about the
 \acf{FEM}, you know that vectors can have sizes in the millions or beyond.)
 
 In this chapter you will see the C++ \indextermtt{vector} construct,
@@ -64,7 +64,7 @@ determine it later, dynamically.
 
 \begin{block}{Vector definition}
   \label{sl:vector-def}
-  Definition, mostly without initialization.
+  Definition and/or initialization:
 \begin{lstlisting}
 #include <vector>
 using std::vector;
@@ -99,22 +99,6 @@ the bounds may abort your code, typically with a
 \indexterm{segmentation fault}, but your code may just as well
 proceed, using invalid data.
 
-As you see in this example, if \n{a}~is a vector, and \n{i} an
-integer, then \n{a.at(i)} is the i'th element.
-\begin{itemize}
-\item The expression \n{a.at(i)} can be used to get the value of a
-  vector element, or it can occur in the left-hand side of an
-  assignment to set the value.
-\item The \indextermbus{array}{index} (or
-  \indextermbus{array}{subscript}) \n{i} starts numbering at zero.
-\item Therefore, if a vector has $n$ elements, its last element has
-  index~\n{n-1}.
-\item If you try to get an element outside the bounds of the vector,
-  the compiler will only detect this in simple cases. More likely,
-  your program may give a runtime error, but that does not necessarily
-  happen. You could just get some random value.
-\end{itemize}
-
 There is a safer way to access elements:
 \begin{lstlisting}
 x.at(1) = 3.14;
@@ -137,6 +121,37 @@ cout << x.at(2);
 \end{lstlisting}
 Safer, slower.
 \end{slide}
+
+As you see in this example, if \n{a}~is a vector, and \n{i} an
+integer, then \n{a.at(i)} is the i'th element.
+\begin{itemize}
+\item The expression \n{a.at(i)} can be used to get the value of a
+  vector element, or it can occur in the left-hand side of an
+  assignment to set the value.
+\item The \indextermbus{array}{index} (or
+  \indextermbus{array}{subscript}) \n{i} starts numbering at zero.
+\item Therefore, if a vector has $n$ elements, its last element has
+  index~\n{n-1}.
+\end{itemize}
+
+Accessing an element outside the array bounds is hard to detect at
+compile time. Most likely, it will only be detected at runtime.
+There are now two cases:
+\begin{enumerate}
+\item Using the \lstinline{at} method will always do a bounds test,
+  and abort your program immediately if you access an element
+  outside the array bounds.
+\item The bracket notation \lstinline{a[i]} performs no bounds tests,
+  and is therefore more efficient, but it can lead to trouble:
+  \begin{itemize}
+  \item Your program may crash with a \indexterm{segmentation fault}
+    or \indexterm{bus error}, but no clear indication where and why this happened.
+    Such a crash can be caused by other things than array access out of bounds.
+  \item Your program may continue running, but  giving wrong results,
+    since reading from outside the array probably gives you meaningless values.
+  \end{itemize}
+\end{enumerate}
+For now, it is best to use the \lstinline{at} method throughout.
 
 \begin{block}{Array index out of bounds}
   Indexing out of bounds can go undetected for a while:
@@ -164,20 +179,37 @@ which gives a vector of size~25, with all elements initialized to~3.15.
 \end{block}
 
 If your vector is short enough, you can set all elements explicitly with an
-\indexterm{initializer list}:
+\indexterm{initializer list}, and note that the size is not specified here:
 
-\begin{block}{Vector initialization}
+\snippetwithoutput{dynamicinit}{array}{dynamicinit}
+
+\begin{slide}{Vector initialization}
   \label{sl:vector-init}
   You can initialize a vector as a whole:
   %
-  \snippetwithoutput{dynamicinit}{array}{dynamicinit}
-\end{block}
 
-\Level 0 {Ranging over a vector}
+  (Note: no size given)
+\end{slide}
+
+\Level 0 {Going over all array alements}
 \label{sec:arrayrange}
 
 If you need to consider all the elements in a vector, you typically
 use a \lstinline{for} loop. There are various ways of doing this.
+
+\begin{block}{A philosophical point}
+  \label{sl:vector-access-types}
+
+  Conceptually, a \lstinline{vector} can correspond to a set of things,
+  and the fact that they are indexed is purely incidental,
+  or it can correspond to an ordered set,
+  and the index is essential.
+  If your algorithm requires you to access all elements,
+  it is important to think about which of these cases apply,
+  since there are two different mechanism.
+\end{block}
+
+\Level 1 {Ranging over a vector}
 
 First of all consider the cases where you consider the vector as a
 collection of elements, and the loop functions like a mathematical
@@ -198,15 +230,6 @@ for ( auto e : array )
 \snippetwithoutput{dynamicmax}{array}{dynamicmax}
 \end{block}
 
-\begin{block}{Ranging over a vector}
-  \label{sl:vector-range}
-\begin{lstlisting}
-for ( auto e : my_vector)
-  cout << e;
-\end{lstlisting}
-(Technical note: \lstinline{e}~is a copy of the array element.)
-\end{block}
-
 (You can spell out the type of the vector element, but such type
 specifications can be complex. In that case, using \indextermtt{auto} is
 quite convenient.)
@@ -218,6 +241,8 @@ can also be used as a list denotation:
   \label{sl:range-denote}
   \snippetwithoutput{rangedenote}{array}{rangedenote}  
 \end{block}
+
+\Level 1 {Ranging over the indices}
 
 If you actually need the index of the element, you can use a
 traditional \lstinline{for} loop with loop variable.
@@ -274,6 +299,8 @@ absx = abs(x);
   Check whether a vector is sorted.
 \end{exercise}
 
+\Level 1 {Ranging by reference}
+
 \begin{block}{Range over elements by reference}
   \label{sl:array-range-ref}
   Range-based loop indexing makes a copy of the vector element. If you
@@ -304,17 +331,21 @@ y = b.at(++i); /* is */ i++; y = b.at(i);
 \end{block}
 
 \begin{block}{Example of increment indexing}
+  \label{sl:plusplusexample}
   \snippetwithoutput{plusplustest1}{loop}{plusplus}
-  %
-  Exercise: modify this so that after the while loop \n{index} is the
-  number of leading odd elements.
 \end{block}
+
+\begin{exercise}
+  Exercise: modify the preceeding code so that after the while loop
+  \n{index} is the number of leading odd elements.
+\end{exercise}
 
 \Level 0 {Vector are a class}
 \label{sec:stdvector}
 
-You wouldn't tell it from the above examples, but vectors actually
-form a \indextermttdef{vector} class. You can have a vector of ints,
+Above, you created vectors and used functions \lstinline{at} and \lstinline{size}
+on them. They used the dot-notation of class methods, and in fact
+vector form a \indextermttdef{vector} class. You can have a vector of ints,
 floats, doubles, et cetera; 
 the angle bracket notation indicates what the specific type stored in
 the vector is.
@@ -431,8 +462,8 @@ while ( ... )
   \label{sl:vector-arg}
   You can pass a vector to a function:
 \begin{lstlisting}
-void print0( vector<double> v ) {
-  cout << v.at(0) << endl;
+double slope( vector<double> v ) {
+  return v.at(1)/v.at(0);
 };
 \end{lstlisting}
 Vectors, like any argument, are passed by value, so the vector is
@@ -515,78 +546,86 @@ output:
 
 \Level 0 {Vectors in classes}
 
-You may want an object that contains a vector, where the size of the
-vector is passed to the constructor. Since the class definition is an
-abstract definition of all possible objects, clearly you can not have the
-vector size there.
-
+You may want a class of objects that contain a vector.
+For instance, you may want to name your vectors.
 \begin{lstlisting}
-class witharray {
+class named_field {
 private:
-  vector<int> the_array( ???? );
-public:
-  witharray( int n ) {
-    thearray( ???? n ???? );
-  }
-}
+  vector<double> values;
+  string name;
 \end{lstlisting}
+The problem here is when and how that vector is going to be created.
 
 \begin{slide}{Can you make a class around a vector?}
   \label{sl:class-with-vector}
-  Vector needs to be created with the object, so you can not have the
-  size in the class definition
+You may want a class of objects that contain a vector.
+For instance, you may want to name your vectors.
 \begin{lstlisting}
-class witharray {
+class named_field {
 private:
-  vector<int> the_array( ???? );
-public:
-  witharray( int n ) {
-    thearray( ???? n ???? );
-  }
-}
+  vector<double> values;
+  string name;
 \end{lstlisting}
+The problem here is when and how that vector is going to be created.
 \end{slide}
 
-The solution is to specify a vector without size in the class
-definition, which creates a vector of size zero. When you create an
-object, you then create a vector of the right size, and use that as
-the vector member of the object.
+\begin{itemize}
+\item If the size of the vector is statically determined, you can of course declare it with that size:
+\begin{lstlisting}
+class named_field {
+private:
+  vector<double> values(25);
+  string name;
+\end{lstlisting}
+\item \ldots~but in the more interesting case the size is determined
+  during the runtime of the program. In that case you would to declare:
+\begin{lstlisting}
+named_field velocity_field(25,"velocity");
+\end{lstlisting}
+specifying the size in the constructor of the object.
+\end{itemize}
 
-\begin{block}{Create and assign}
+So now the question is, how do you allocate that vector
+in the object constructor?
+
+One solution would be to specify a vector without size in the class
+definition, create a vector in the constructor, and assign that
+to the vector member of the object:
+\begin{lstlisting}
+named_field( int n ) {
+  values = vector<int>(n);
+};
+\end{lstlisting}
+However, this has the effect that
+\begin{itemize}
+\item The constructor first creates \lstinline{values} as a zero size vector,
+\item then it creates an anonymous vector of size~\lstinline{n},
+\item and by assigning it, destroys the earlier created zero size vector.
+\end{itemize}
+This is somewhat inefficient, and the optimal solution is
+to create the vector as part of the
+\indextermbus{member}{initializer list}:
+
+\begin{slide}{Create and assign}
   \label{sl:class-has-vector}
   The following mechanism works:
 \begin{lstlisting}
-class witharray {
+class named_field {
 private:
-  vector<int> the_array;
+  vector<int> values;
 public:
-  witharray( int n )
-    : the_array(vector<int>(n)) {
+  named_field( int n )
+    : values(vector<int>(n)) {
   };
 };
 \end{lstlisting}
 Better than
 \begin{lstlisting}
-  witharray( int n ) {
-    the_array = vector<int>(n);
+  named_field( int n ) {
+    values = vector<int>(n);
   };
 \end{lstlisting}
-\end{block}
-
-The two cases behave slightly differently.
-\begin{itemize}
-\item The expression \lstinline{vector<int>(n)} creates an anonymous vector
-  of size~\lstinline{n};
-  \begin{itemize}
-  \item In the first case, that anonymous vector is moved to become
-    the value of the \n{the_array} variable;
-  \item in the second case, the object is first created with
-    \n{the_array} being an empty
-    vector, and the size-$n$ is then written over it. This is less
-    efficient and less elegant.
-  \end{itemize}
-\item Either way, now you have an object with a vector of size~\n{n} internally.
-\end{itemize}
+\end{slide}
 
 \Level 1 {Timing}
 

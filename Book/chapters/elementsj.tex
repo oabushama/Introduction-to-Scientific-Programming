@@ -301,6 +301,8 @@ book.
   \snippetwithoutput{returnone}{basic}{return}
 \end{block}
 
+\end{comment}
+
 \Level 0 {Variables}
 \label{sec:variables}
 
@@ -334,27 +336,36 @@ Think of a variable as a labeled placed in memory.
   \indextermbus{variable}{assignment}.
 \end{slide}
 
-\begin{block}{Typical variable lifetime}
-  \label{sl:varlife}
-  \begin{lstlisting}
-    int i,j; // declaration
-    i = 5;   // set a value
-    i = 6;   // set a new value
-    j = i+1; // use the value of i
-    i = 8; // change the value of i
-    // but this doesn't affect j:
-    // it is still 7.
-  \end{lstlisting}
-\end{block}
+\begin{comment}
+  \begin{block}{Typical variable lifetime}
+    \label{sl:varlife}
+    \begin{lstlisting}
+      int i,j; // declaration
+      i = 5;   // set a value
+      i = 6;   // set a new value
+      j = i+1; // use the value of i
+      i = 8; // change the value of i
+      // but this doesn't affect j:
+      // it is still 7.
+    \end{lstlisting}
+  \end{block}
+\end{comment}
 
 \Level 1 {Variable declarations}
 
-A variable is defined once
-in a \indextermbus{variable}{declaration},
-but it can be given a (new) value multiple
-times. It is not an error to use a variable that has not been given a
-value, but it may lead to strange behaviour at runtime, since the
-variable may contain random memory contents.
+Variable names are more liberal than in other programming languages:
+many \indexterm{Unicode} characters are allowed.
+
+Variables have
+\begin{itemize}
+\item a name
+\item a type
+\item a value.
+\end{itemize}
+The type of the variable is determined by when a value is assigned to it.
+This is like \jvp, and unlike~C.
+
+\begin{comment}
 
 \begin{block}{Variable names}
   \label{sl:varname}

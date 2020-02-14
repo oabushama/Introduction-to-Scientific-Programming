@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++/Fortran2003
-%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-2020 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% prime.tex : exercises for prime number finding
 %%%%
@@ -33,16 +33,10 @@ the earlier chapters.
 
 \begin{exercise}
   \label{ex:prime:divtest}
-  Read two numbers and print a message like
-\begin{verbatim}
-3 is a divisor of 9
-\end{verbatim}
-  if the first is an exact
-  divisor of the second, and another message
-\begin{verbatim}
-4 is not a divisor of 9
-\end{verbatim}
-if it is not.
+  Read two numbers and print a message stating
+  whether the second is as divisor of the first:
+  %
+  \snippetwithoutput{divideask}{primes}{division}
 \end{exercise}
 
 \Level 0 {Looping}
@@ -207,6 +201,55 @@ The number 10 is 3+7
   found. Print some elementary statistics, for instance: what is the average, do the
   distances increase or decrease with~$p$?
 \end{exercise}
+
+\Level 1 {Exceptions}
+
+\prerequisite{\ref{sec:exception}}
+
+\begin{exercise}
+  \label{ex:primegenbreak}
+  Revisit the pime generator class (exercise~\ref{ex:prime:sequence})
+  and let it throw an exception once the candidate number is too large.
+  (You can hardwire this maximum, or use a limit; section~\ref{sec:limits}.)
+
+  \snippetwithoutput{primegenbreakuse}{primes}{genx}
+\end{exercise}
+
+\Level 1 {Prime number decomposition}
+\label{sec:prime-decomp}
+
+\prerequisite{\ref{sec:map}}
+
+Design a class \lstinline{Integer} which stores its value
+as its prime number decomposition. For instance,
+\[ 180=2^2\cdot 3^3\cdot 5 \qquad \Rightarrow \qquad \hbox{\n{[ 2:2, 3:2, 5:1 ]}} \]
+You can implement this decomposition itself as a \indexterm{vector},
+(the $i$-th location stores the exponent of the $i$-th prime)
+but let's use a \indextermtt{map} instead.
+
+\begin{exercise}
+  Write a constructor of an \lstinline{Integer} from an \lstinline{int},
+  and methods \lstinline{as_int}~/ \lstinline{as_string} that convert the
+  decomposition back to something classical. Start by assuming that each prime factor
+  appears only once.
+  %
+  \answerwithoutput{decomp26}{primes}{decomposition26}
+\end{exercise}
+
+\begin{exercise}
+  Extend the previous exercise to having multiplicity~$>1$ for the prime factors.
+  %
+  \answerwithoutput{decomp180}{primes}{decomposition180}
+\end{exercise}
+
+Implement addition and multiplication for \lstinline{Integer}s.
+
+Implement a class \lstinline{Rational} for rational numbers, which
+are implemented as two \lstinline{Integer} objects.
+This class should have methods for addition and multiplication.
+Write these through operator overloading if you've learned this.
+
+Make sure you always divide out common factors in the numerator and denominator.
 
 \Level 0 {Eratosthenes sieve}
 
