@@ -193,6 +193,7 @@ or
 \end{verbatim}
   \end{itemize}
 \end{slide}
+\end{comment}
 
 \Level 0 {Statements}
 \label{sec:statements}
@@ -208,24 +209,30 @@ book.
   \label{sl:cstatement}
   \begin{itemize}
   \item
-    A program contains statements, each terminated by a semicolon.
-  \item `Curly braces' can enclose multiple statements.
-  \item A statement can correspond to some action when the program is
-    executed.
-  \item Some statements are definitions, of data or of possible actions.
-  \item Comments are `Note to self', short:
-    \begin{lstlisting}
-      cout << "Hello world" << endl; // say hi!
-    \end{lstlisting}
-    and arbitrary:
-    \begin{lstlisting}
-      cout << /* we are now going
-      to say hello
-      */ "Hello!" << /* with newline: */ endl;
-    \end{lstlisting}
+    A program contains statements. A~simple statement
+    is one that fits on one line. No need for a semicolon:
+    the line end terminates it.
+\begin{lstlisting}
+a = 1
+\end{lstlisting}
+  \item You can multiple statements on one line by using semicolons:
+\begin{lstlisting}
+a = 1; b = 2
+\end{lstlisting}
+  \item Compound statements, such as conditionals, take up mutiple lines;
+\begin{lstlisting}
+if a == 1
+  println("It was one")
+end
+\end{lstlisting}
+\item Comments are `Note to self', short:
+\begin{lstlisting}
+c = 3 # set c to three
+\end{lstlisting}
   \end{itemize}
 \end{block}
 
+\begin{comment}
 \begin{exercise}
   \label{ex:hello-line}
   Take the `hello world' program you wrote above, and duplicate the
@@ -264,18 +271,26 @@ book.
   \item If you run your program and you get the right output, it is correct.
   \end{itemize}  
 \end{review}
+\end{comment}
 
-\begin{block}{Fixed elements}
-  \label{sl:fixedstuff}
-  You see that certain parts of your program are inviolable:
-  \begin{itemize}
-  \item There are \indexterm{keywords} such as \lstinline{return} or \lstinline{cout}; you
-    can not change their definition.
-  \item Curly braces and parentheses need to be matched.
-  \item There has to be a \lstinline{main} keyword.
-  \item The \lstinline{iostream} and \lstinline{std} are usually needed.
-  \end{itemize}
+\begin{block}{Printing stuff}
+  The basics of interacting with a program are through the output
+  statements \indextermtt{print} and \indextermtt{println},
+  and input \indextermtt{readline}.
+  \begin{lstlisting}
+a = 1; b = 2
+print("a and b: ")
+print(a)
+print(" ")
+println(b)
+  \end{lstlisting}
+or simpler:
+  \begin{lstlisting}
+println("a and b: $a $b")
+  \end{lstlisting}
 \end{block}
+
+\begin{comment}
 
 \begin{exercise}
   \label{ex:cout-what}
@@ -505,21 +520,17 @@ not the same as defining a mathematical equality
   \end{enumerate}
 \end{exercise}
 
+\end{comment}
+
 \begin{block}{Terminal input}
   \label{sl:cin}
   To make a program run dynamic, you can set starting values from
-  keyboard input. For this, use \indextermtt{cin}, which takes
-  keyboard input and puts it in a numerical (or string) variable.
-  \begin{lstlisting}
-    // add at the top of your program:
-    using std::cin;
+  keyboard input. For this, use \indextermtt{readline}, which takes
+  keyboard input. To assign this input to a variable you need to parse
+  that as the desired type, using the function \indextermtt{parse}.
 
-    // then in your main:
-    int i;
-    cin >> i;
-  \end{lstlisting}
+  \verbatimsnippet{readi64j}
 \end{block}
-\end{comment}
 
 \Level 1 {Datatypes}
 \label{sec:jtypes}

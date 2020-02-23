@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Introduction to Scientific Programming in C++11/Fortran2003
-%%%% copyright 2017-9 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2017-2020 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% if.tex : conditionals
 %%%%
@@ -236,31 +236,6 @@ if ( x == true )
 \end{lstlisting}
 \end{review}
 
-\Level 1 {Short-circuit operators}
-
-C++ logic operators have a feature called short-circuiting:
-a \indextermsub{short-circuit}{operator} stops evaluating when the
-result is clear. For instance, in
-\begin{lstlisting}
-clause1 and clause2
-\end{lstlisting}
-the second clause is not evaluated if the first one is
-\lstinline{false}, because the truth value of this conjunction is
-already determined.
-
-Likewise, in
-\begin{lstlisting}
-clause1 or clause2
-\end{lstlisting}
-the second clause is not evaluated if the first one is \lstinline{true}.
-
-This mechanism allows you to write
-\begin{lstlisting}
-if ( x>=0 and sqrt(x)<10 ) { /* ... */ }
-\end{lstlisting}
-Without short-circuiting the square root operator could be applied to
-negative numbers.
-
 \Level 0 {Switch statement}
 
 If you have a number of cases corresponding to specific integer
@@ -320,7 +295,64 @@ Good practice: only define variable where needed.
 Braces induce a \indexterm{scope}.
 \end{slide}
 
-\Level 0 {Init statements}
+\Level 0 {Advanced topics}
+
+\Level 1 {Short-circuit operators}
+
+C++ logic operators have a feature called short-circuiting:
+a \indextermsub{short-circuit}{operator} stops evaluating when the
+result is clear. For instance, in
+\begin{lstlisting}
+clause1 and clause2
+\end{lstlisting}
+the second clause is not evaluated if the first one is
+\lstinline{false}, because the truth value of this conjunction is
+already determined.
+
+Likewise, in
+\begin{lstlisting}
+clause1 or clause2
+\end{lstlisting}
+the second clause is not evaluated if the first one is \lstinline{true}.
+
+This mechanism allows you to write
+\begin{lstlisting}
+if ( x>=0 and sqrt(x)<10 ) { /* ... */ }
+\end{lstlisting}
+Without short-circuiting the square root operator could be applied to
+negative numbers.
+
+\Level 1 {Ternary if}
+
+The true and false branch of a conditional contain whole statements.
+For example
+\begin{lstlisting}
+if (foo)
+  x = 5;
+else
+  y = 6;
+\end{lstlisting}
+But what about the case where the true and false branch perform
+in effect the same action, and only differ by an expression?
+\begin{lstlisting}
+if (foo)
+  x = 5;
+else
+  x = 6;
+\end{lstlisting}
+For this case there is the \indextermsub{ternary}{if},
+which acts as if it's an expression itself, but chosen
+between two expressions.
+The previous assignment to~\lstinline{x} then becomes:
+\begin{lstlisting}
+x = foo ? 5 : 6;
+\end{lstlisting}
+Surprisingly, this expression can even be in the left-hand side:
+\begin{lstlisting}
+foo ? x : y = 7;
+\end{lstlisting}
+
+\Level 1 {Init statements}
 
 The \cppstandard{17} introduced a new form of the \indextermtt{if} and
 \indextermtt{switch} statement: it is possible to have a single
